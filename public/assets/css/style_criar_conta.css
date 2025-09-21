@@ -1,0 +1,274 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+*{
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body{
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(#93bef5, #a0c6ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+}
+
+.container{
+    display: flex;
+    width: 70%;
+    background-color: #fafafa;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px rgb(189, 189, 189);
+    height: auto;
+    overflow: hidden;
+}
+
+#title{
+    font-size: 30px;
+    margin: 0;
+    margin-top: 10px;
+}  
+.container-left {
+    box-shadow: 2px 2px 5px rgb(189, 189, 189);
+    width: 40%;
+    padding: 10px;
+    background-color: #1f67d3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;  /* Os itens aparecem um em baixo do outro */
+    color: white;
+    position: relative; /* Necessário para o posicionamento absoluto funcionar */
+}
+    .container-left p {
+    margin-left: 50px;
+    margin-right: 50px;
+    text-align: justify;
+    font-size: 20px;
+    }
+
+    .container-left h2 {
+    font-size: 35px;
+    margin:
+     10px;
+    }
+    .btn-back {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#btn-logar{
+    width: 130px;
+    height: 40px;
+    border-radius: 30px;
+    background-color: #1f67d3;
+    border: 1px solid rgb(255, 255, 255);
+    cursor: pointer;
+}
+a #btn-logar{
+    font-size: 20px;
+    color: #fafafa;
+}
+
+.form {
+    padding: 0 40px 30px;
+    width: 60%; /* ou a largura que você estiver usando */
+    display: flex;
+    flex-direction: column;
+    align-items: center;      /* centraliza horizontalmente */
+    justify-content: center;  /* centraliza verticalmente */
+    height: 100%;             /* precisa disso pra o conteúdo ficar no meio vertical */
+}
+
+.form-control {
+    padding-bottom: 10px;
+    position: relative;
+}
+
+.form-control label {
+    color: #000000;
+}
+
+
+.form-control input, select {
+    border-radius: 5px;
+    outline: 0;
+    display: block;
+    font-size: 14px;
+    width: 380px;
+    padding: 10px;
+    height: 45px;
+    border: 1px solid black;
+}
+
+.form-control input:focus{
+    border: 1px solid #1f67d3;
+}
+
+.form-control img{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 350px;
+    top: 37px; /* pode ajustar dependendo da altura do seu input */  
+}
+
+.form-control img, small{
+    visibility: hidden;
+}
+
+#btn-criar-conta{
+    background-color: #2576f0f8;
+    border: 2px solid #2576f0f8;
+    color: #fff;
+    font-size: 18px;
+    width: 380px;
+    border-radius: 10px;
+    padding: 7px;
+    transition: .1s;
+    cursor: pointer;
+}
+
+#btn-criar-conta:hover{
+    background-color: #1b6de7;
+}
+
+#tenho-conta{
+    padding-top: 10px;
+}
+
+
+.radios{
+    margin-bottom: 3%;
+}
+
+
+
+/* Renponsive */
+@media (max-width: 950px) {
+
+    body {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding-bottom: 10px;
+        position: relative;
+    }
+    .container {
+        flex-direction: column;
+        width: 100%;
+        margin: 0 auto;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .container-left {
+        width: 100%;
+        padding: 40px 20px;
+        border-radius: 0;
+    }
+
+    .container-left h2 {
+        font-size: 28px;
+        text-align: center;
+    }
+
+    .container-left p {
+        font-size: 16px;
+        text-align: center;
+    }
+
+    #btn-logar {
+        width: 100px;
+    }
+
+    .form {
+        width: 100%;
+        padding: 30px 20px;
+    }
+
+    .form-control input {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .form-control img {
+        left: auto;
+        right: 10px;
+    }
+
+    #btn-criar-conta {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    #title {
+        font-size: 24px;
+        text-align: center;
+    }
+
+    #tenho-conta {
+        text-align: center;
+        font-size: 14px;
+    }
+}
+
+@media (min-width: 1920px) {
+    .container {
+        width: 60%;
+    }
+
+    .container-left h2 {
+        font-size: 40px;
+    }
+
+    .container-left p {
+        font-size: 22px;
+    }
+
+    #title {
+        font-size: 36px;
+    }
+
+    .form-control input {
+        height: 50px;
+        font-size: 16px;
+    }
+
+    #btn-criar-conta {
+        font-size: 20px;
+        padding: 10px;
+    }
+}
+
+
+
+/* Error e Success */
+.form-control.success input{
+    border: 1px solid #24C100;
+}
+
+.form-control.error input{
+    border: 1px solid #FF0000;
+}
+
+.form-control.success .img_success {
+    visibility: visible;
+}
+
+.form-control.error .img_error {
+    visibility: visible;
+}
+
+.form-control.error small{
+    visibility: visible;
+    color: #FF0000;
+}
