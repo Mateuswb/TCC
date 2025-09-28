@@ -22,7 +22,7 @@
             $mail->CharSet = 'UTF-8';
             $mail->Encoding = 'base64';
 
-            $mail->setFrom('warmlingmateusberti@gmail.com', 'Clínica XYZ');
+            $mail->setFrom('warmlingmateusberti@gmail.com', 'Clínica MedHub');
             $mail->addAddress($emailPaciente, $nomePaciente);
 
             $mail->isHTML(true);

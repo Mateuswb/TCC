@@ -93,15 +93,10 @@
                         ON a.id_paciente = p.id_paciente
                     INNER JOIN encaminhamentos e
                         ON e.id_agendamento_consulta = a.id_agendamento
-                    WHERE a.id_agendamento = :idAgendamento;
-                    ;
-            ");
+                    WHERE a.id_agendamento = :idAgendamento");
             $stmt->execute(['idAgendamento' => $idAgendamento]);
             return $stmt->fetch(PDO::FETCH_ASSOC);
         }
 
-
-
-
-}
+    }
 ?>
