@@ -1,5 +1,19 @@
 <?php
+    session_start();
+    $idProfissional = $_SESSION['idProfissional'];
     include '../../public/includes/profissional/sidebar.php';
+    require_once '../../controllers/RelatorioController.php';
+    
+    $controller = new RelatorioController($conn);
+    $agendamentosHoje = $controller->agendamentosHoje($idProfissional);
+    $agendamentosMes = $controller->agendamentosMes($idProfissional);
+    $totalConsultasRetorno = $controller->totalConsultasRetorno($idProfissional);
+    $cancelamentos = $controller->cancelamentos($idProfissional);
+    $principalDiaAgendamento = $controller->principalDiaAgendamento($idProfissional);
+    $principalHoraAgendamento = $controller->principalHoraAgendamento($idProfissional);
+    $novosPacientesMes = $controller->novosPacientesMes($idProfissional);
+    $totalPacientes = $controller->totalPacientesPorProfissional($idProfissional);
+
 ?>
 <!doctype html>
 <html lang="pt-BR">
@@ -164,42 +178,42 @@
       <!-- top cards -->
       <div class="top-grid">
         <div class="card">
-          <div class="left"><small>Agendamentos Hoje</small><strong>8</strong></div>
+          <div class="left"><small>Agendamentos Hoje</small><strong> <?php echo $agendamentosHoje ?> </strong></div>
           <div class="icon blue"><i class="fa-solid fa-sitemap"></i></div>
         </div>
 
         <div class="card">
-          <div class="left"><small>Pacientes Ativos</small><strong>gg</strong></div>
+          <div class="left"><small>Total de agendamentos do mês</small><strong> <?php echo $agendamentosMes ?></strong></div>
           <div class="icon green"><i class="fa-solid fa-user-md"></i></div>
         </div>
 
         <div class="card">
-          <div class="left"><small>Exames CONCLUIDOS do mês </small><strong>gg</strong></div>
+          <div class="left"><small>Total de consultas de retorno</small><strong> <?php echo $totalConsultasRetorno ?></strong></div>
           <div class="icon blue"><i class="fa-solid fa-user"></i></div>
         </div>
 
         <div class="card">
-          <div class="left"><small>agendametos cancelados do mês</small><strong>3</strong></div>
+          <div class="left"><small>Taxa de cancelamento</small><strong> <?php echo $cancelamentos ?></strong></div>
           <div class="icon yellow"><i class="fa-solid fa-calendar-check"></i></div>
         </div>
 
         <div class="card">
-          <div class="left"><small>Taxa de comparecimento</small><strong>0</strong></div>
+          <div class="left"><small>Principal dia de agendamento</small><strong> <?php echo $principalDiaAgendamento ?></strong></div>
           <div class="icon yellow"><i class="fa-solid fa-file-lines"></i></div>
         </div>
 
         <div class="card">
-          <div class="left"><small>Invoice</small><strong>0</strong></div>
+          <div class="left"><small>Horarios com maior concentração de agendamentos</small><strong> <?php echo $principalHoraAgendamento ?></strong></div>
           <div class="icon blue"><i class="fa-solid fa-receipt"></i></div>
         </div>
 
         <div class="card">
-          <div class="left"><small>Prescription</small><strong>0</strong></div>
+          <div class="left"><small>Total de novos pacientes do mês</small><strong> <?php echo $novosPacientesMes ?></strong></div>
           <div class="icon green"><i class="fa-solid fa-prescription"></i></div>
         </div>
 
         <div class="card">
-          <div class="left"><small>Payment</small><strong>0</strong></div>
+          <div class="left"><small>Total de pacientes</small><strong><?php echo $totalPacientes; ?></strong></div>
           <div class="icon blue"><i class="fa-solid fa-credit-card"></i></div>
         </div>
       </div>

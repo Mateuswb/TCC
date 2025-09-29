@@ -55,21 +55,40 @@
 
 
         # agendamentos consultas
-        public function listarConsultas($idProfissional) {
-            return $this->relatorioModel->listarConsultas($idProfissional);
+        public function agendamentosHoje($idProfissional) {
+            return $this->relatorioModel->agendamentosHoje($idProfissional);
         }
 
-        public function totalConsultasProfissional($idProfissional) {
-            return $this->relatorioModel->totalConsultasProfissional($idProfissional);
+        public function agendamentosMes($idProfissional) {
+            return $this->relatorioModel->agendamentosMes($idProfissional);
         }
 
-        public function totalConsultasConcluidas($idProfissional) {
-            return $this->relatorioModel->totalConsultasConcluidas($idProfissional);
+        public function totalConsultasRetorno($idProfissional) {
+            return $this->relatorioModel->totalConsultasRetorno($idProfissional);
         }
 
-        public function totalConsultasCanceladas($idProfissional) {
-            return $this->relatorioModel->totalConsultasCanceladas($idProfissional);
+        public function cancelamentos($idProfissional) {
+            return $this->relatorioModel->cancelamentos($idProfissional);
         }
+
+        public function principalDiaAgendamento($idProfissional) {
+            return $this->relatorioModel->principalDiaAgendamento($idProfissional);
+        }
+
+        public function principalHoraAgendamento($idProfissional) {
+            return $this->relatorioModel->principalHoraAgendamento($idProfissional);
+        }
+
+        public function novosPacientesMes($idProfissional) {
+            return $this->relatorioModel->novosPacientesMes($idProfissional);
+        }
+        
+        public function totalPacientesPorProfissional($idProfissional) {
+            return $this->relatorioModel->totalPacientesPorProfissional($idProfissional);
+        }
+
+
+        #home do profissinal
 
 
     }
