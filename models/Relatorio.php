@@ -136,5 +136,20 @@
             return $stmt->fetch(PDO::FETCH_ASSOC);
         }
 
+
+        # listar os paciente que já realizaram uma consulta com um profissional
+        public function listarPacientesPorProfissional($profissionalId) {
+            $sql = "SELECT DISTINCT p.*
+                    FROM pacientes p
+                    JOIN agendamentos_consultas a ON p.id_paciente = a.id_paciente
+                    JOIN horarios_profissionais h ON a.id_horario_profissional = h.id_horario
+                    WHERE h.id_profissional = :idProfissional
+                    AND a.status = 'realizada'";
+
+            $query = $this->conn->prepare($sql);
+            $query->execute([
+                ':idProfissional' => $profissionalId]);
+            return $query->fetchALL(PDO::FETCH_ASSOC);
+        }
     }
 ?>

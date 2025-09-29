@@ -19,7 +19,7 @@
         <i class="fas fa-calendar-check"></i> <span>Meus Agendamentos </span>
     </a>
 
-    <a href="<?= BASE_URL ?>/profissional/agendamentos/consultas.php">
+    <a href="<?= BASE_URL ?>/profissional/paciente/listar_pacientes.php">
       <i class="fas fa-user-injured"></i> <span>Pacientes </span>
     </a>
        <a href="<?= BASE_URL ?>/profissional/historico_consultas/listar_consultas.php">

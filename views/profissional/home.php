@@ -27,6 +27,7 @@
     }
     *{box-sizing:border-box}
     body{
+      padding: 0;
       margin:0;
       font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
       background: linear-gradient(180deg,#f3f4f8 0%, #eaeaf0 100%);
@@ -36,8 +37,8 @@
     }
 
     .sidebar {
-  position: fixed;
-}
+      position: fixed;
+} 
 
 
     /* Layout */

@@ -7,6 +7,7 @@
     require_once dirname(__DIR__) . "/models/AgendamentoConsulta.php";
     require_once dirname(__DIR__) . "/models/Paciente.php";
     require_once dirname(__DIR__) . "/models/Exame.php";
+    require_once dirname(__DIR__) . "/models/Relatorio.php";
 
 
     class ProfissionalController {
@@ -17,6 +18,7 @@
         private $pacienteModel;
         private $agendamentoConsultaModel;
         private $exameModel;
+        private $relatorioModel;
         private $emailController;
 
         public function __construct($conn) {
@@ -26,10 +28,9 @@
             $this->agendamentoConsultaModel = new AgendamentoConsulta($conn);
             $this->pacienteModel = new Paciente($conn);
             $this->exameModel = new Exame($conn);
+            $this->relatorioModel = new Relatorio($conn);
             $this->emailController = new Email();
         }
-
-
 
 
         public function listarDadosProfissional() {
@@ -66,6 +67,7 @@
                 echo "Erro ao atualizar dados.";
             }
         }
+
 
         public function realizarEncaminhamento(){
 
@@ -223,9 +225,8 @@
                 </html>
                 ';
 
-
-
-            if($cancelar){
+            
+                if($cancelar){
                 try {
                     $this->emailController->enviarEmail($dados['paciente_email'],
                     $dados['paciente_nome'],
@@ -253,6 +254,14 @@
                 echo "Erro ao cancelar finalizada";
             }
         }
+        
+
+
+        public function listarPacientesPorProfissional(){
+            $idProfissional = $_SESSION['idProfissional'];
+            return $this->relatorioModel->listarPacientesPorProfissional($idProfissional);
+        }
+
 
         #relatorio
         // public function totalAgendamentosProfissional(){
