@@ -1,139 +1,320 @@
 <?php
-    require_once "../../autentica/verifica_login.php";
-    require_once "../../controllers/PacienteController.php";
-
-    $idPaciente = $_SESSION['idPaciente'];
-    $nomePaciente = $_SESSION['nomePaciente'];
-    $idUsuario = $_SESSION['idUsuario'];
-
-
-    $controller = new PacienteController($conn);
-    $profissionais = $controller->listarProfissionaisDisponiveis();
-
-    $icones = [
-        'cardiologista' => '../../public/assets/imgs/cardiologista.jpg',
-        'ortopedista' => '../assets/imgs/ortopedista.jpg',
-        'oftamologista' => '../assets/imgs/oftamologista.webp',
-        'neurologista' => '../public/assets/imgs/neurologista.jpg'
-    ];
+   include '../../public/includes/paciente/sidebar.php';
+   include '../../public/includes/paciente/header.php';
+   include '../../public/includes/paciente/footer.php';
 ?>
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Página Inicial</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MedHub — Agende suas consultas e exames</title>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="/tcc02/public/assets/css/style_home.css" />
+  <!-- Fonte -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+   rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <!-- Alertas -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/tcc02/public/assets/alertas/alerta_entrada.js"></script>
-    <script src="../../public/assets/alertas/alerta_padrao_pos.js"></script>
-    <script src="../../public/assets/js/"></script>
-    <script src="../../public/assets/js/recarrega_pagina.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
 
+    body {
+      background-color: #f4f6fa;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+   
+   
+
+    /* CONTEÚDO PRINCIPAL */
+    main {
+      flex: 1;
+      margin-top: 60px;
+      padding: 30px;
+      overflow-y: auto;
+    }
+
+    main h1 {
+      font-size: 28px;
+      color: #003366;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    main h1 span {
+      color: #007bff;
+    }
+
+    /* ====================== LAYOUT DOS CARDS ====================== */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 18px;
+      align-items: start;
+      margin-top: 30px;
+    }
+
+    .carousel-card {
+      background: linear-gradient(180deg, #ffffff, #f7fbff);
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 8px 18px rgba(14,40,70,0.06);
+      margin-bottom: 24px;
+      width: 95%;
+    }
+
+    /* BIG CAROUSEL */
+    .carousel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      background: #ddd;
+      min-height: 260px;
+    }
+
+    .carousel .slides {
+      display: flex;
+      transition: transform 400ms ease;
+      will-change: transform;
+    }
+    
+
+    .slide {
+      min-width: 100%;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      color: white;
+      height: 260px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 12px;
+    }
+
+    .slide .overlay {
+      width: 100%;
+      background: linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,0.45) 100%);
+      padding: 18px;
+      border-radius: 12px;
+    }
+
+    .slide h3 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+      text-shadow: 0 3px 14px rgba(0,0,0,0.25);
+    }
+
+    .carousel .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(17,40,70,0.08);
+      border: 1px solid rgba(20,78,138,0.06);
+      z-index: 5;
+    }
+
+    .carousel .arrow.left { left: 10px; }
+    .carousel .arrow.right { right: 10px; }
+
+    .carousel-dots {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 12px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      cursor: pointer;
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .dot.active {
+      background: white;
+      width: 12px;
+      height: 12px;
+    }
+
+    /* RIGHT COLUMN */
+    .right-tall {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .tall-card {
+      flex: 1;
+      border-radius: 14px;
+      overflow: hidden;
+      position: relative;
+      background-size: cover;
+      background-position: center;
+      min-height: 360px;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .tall-card .card-footer {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 100%);
+      color: white;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    
+  </style>
 </head>
 
-
 <body>
-    <header>
-        <div class="interface">
-            <div class="logo">
-                <a href="#"><img src="../assets/imgs/logo_site.avif" alt="Logo site" class="logo"></a>
-            </div>
-            <nav class="menu">
-                <ul>
-                    <li><a href="#">Contatos</a></li>
-                    <li><a href="#">Serviços</a></li>
-                    <li><a href="../agendamento/agendar.html">Consultas Agendadas</a></li>
-                    <li><a href="historico_consultas.php">Histórico de Consultas</a></li>
-                </ul>
-            </nav>
-            <div class="avatar" id="avatar">GGG</div>
-        </div>
-    </header>
+  <main>
+    <h1>Agende suas <span>consultas</span> e <span>exames</span></h1>
 
-    <!-- SUB-MENU -->
-    <div class="sub-menu-wrap" id="subMenu">
-        <div class="sub-menu">
-            <div class="user-info">
-                <div class="avatar-sub-menu">TESTE</div>
-                <h2>Teste</h2>
+    <div class="content-grid">
+      <!-- LEFT SIDE -->
+      <div>
+        <!-- Primeiro Carrossel -->
+        <div class="carousel-card">
+          <div class="carousel" id="mainCarousel">
+            <div class="slides">
+              <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1586773860417-9f72e1a4f8f5');">
+                <div class="overlay"><h3>Ambiente agradável</h3></div>
+              </div>
+              <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1580281657521-66a86aa9e6fa');">
+                <div class="overlay"><h3>Exames</h3></div>
+              </div>
+              <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1580281656962-52c49c3ad7d5');">
+                <div class="overlay"><h3>Profissionais de qualidade</h3></div>
+              </div>
             </div>
-            <hr>
-            <a href="perfil.php" class="sub-menu-link">
-                <img class="img-sub-menu" src="../../public/assets/icones/editar.png" alt="Editar Perfil">
-                <p>Editar Perfil</p>
-                <span>></span>
-            </a>
-            <a href="historico_consultas.php" class="sub-menu-link">
-                <img class="img-sub-menu" src="../../public/assets/icones/editar.png" alt="Editar Perfil">
-                <p>Histórico de consultas</p>
-                <span>></span>
-            </a>
-            <a href="../logout/logout.php" class="sub-menu-link">
-                <img class="img-sub-menu" src="../../public/assets/icones/sair.png" alt="Sair">
-                <p>Sair</p>
-                <span>></span>
-            </a>
+            <div class="arrow left">&#10094;</div>
+            <div class="arrow right">&#10095;</div>
+            <div class="carousel-dots"></div>
+          </div>
         </div>
+
+        <!-- Segundo Carrossel -->
+        <div class="carousel-card">
+          <div class="carousel" id="secondCarousel">
+            <div class="slides">
+              <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1605296867304-46d5465a13f1');">
+                <div class="overlay"><h3>Novos recursos</h3></div>
+              </div>
+              <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1584515933487-779824d29309');">
+                <div class="overlay"><h3>Salas modernas</h3></div>
+              </div>
+              <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1580281780119-9a4c30f2a9f0');">
+                <div class="overlay"><h3>Equipamentos avançados</h3></div>
+              </div>
+            </div>
+            <div class="arrow left">&#10094;</div>
+            <div class="arrow right">&#10095;</div>
+            <div class="carousel-dots"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="right-tall">
+        <div class="carousel-card">
+          <div class="carousel" id="rightCarousel">
+            <div class="slides">
+              <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1607746882042-944635dfe10e');">
+                <div class="overlay"><h3>Atendimento de qualidade</h3></div>
+              </div>
+              <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1606761568499-6c1d520b03b6');">
+                <div class="overlay"><h3>Cuidado humanizado</h3></div>
+              </div>
+              <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1583912268181-5562b52b90a9');">
+                <div class="overlay"><h3>Equipe especializada</h3></div>
+              </div>
+            </div>
+            <div class="arrow left">&#10094;</div>
+            <div class="arrow right">&#10095;</div>
+            <div class="carousel-dots"></div>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <p>ID do Paciente logado: <?php echo $idPaciente; ?></p>
-    <p>nomePaciente: <?php echo $nomePaciente; ?></p>
-    <p>idUsuario: <?php echo $idUsuario; ?></p>
+  </main>
 
 
-    <!-- SEÇÃO PRINCIPAL -->
-    <section class="main-top">
-        <h1>Agende suas consultas de forma rápida</h1>
-        <p>Simplifique sua rotina de saúde com nosso sistema inteligente, agende suas consultas de <br> forma rápida e sem complicações</p>
-    </section>
+  <button class="btn-fale">💬 Fale Conosco</button>
 
-    <h2 class="sub-title">Profissionais qualificados prontos para cuidar de você.</h2>
+  <script>
+    // Função genérica para criar carrosséis
+    function setupCarousel(carouselId) {
 
-    <!-- CARDS DE PROFISSIONAIS -->
-    <section class="cards-container">
-        <?php foreach($profissionais as $profissional){
-            $img_card = $icones[$profissional['especialidade']] ?? '';
-        ?>
-            <div class="card-servico">
-                <img src="<?php echo $img_card ?>" class="imagem-topo">
-                <div class="conteudo">
-                    <h3><?php echo $profissional['nome']; ?></h3>
-                    <h3 class="titulos">Especialidade: <?php echo $profissional['especialidade'] ?></h3>
-                    <p><?php echo $profissional['observacoes']; ?></p>
-                    <a href="../agendamento/agendar_consulta.php?idProfissional=<?php echo $profissional['id_profissional']; ?>" class="btn-agendar">
-                        Agendar Consulta
-                    </a>
-                </div>
-            </div>
-        <?php }?>
-    </section>
+       
 
-    <!-- SCRIPT SUB-MENU -->
-    <script>
-        const subMenu = document.getElementById("subMenu");
-        const avatar = document.getElementById("avatar");
+      const carousel = document.getElementById(carouselId);
+      const slidesContainer = carousel.querySelector('.slides');
+      const slides = carousel.querySelectorAll('.slide');
+      const prevBtn = carousel.querySelector('.arrow.left');
+      const nextBtn = carousel.querySelector('.arrow.right');
+      const dotsContainer = carousel.querySelector('.carousel-dots');
 
-        avatar.addEventListener('click', (e) => {
-            e.stopPropagation();
-            subMenu.classList.toggle("open-menu");
-        });
+      let currentIndex = 0;
 
-        document.addEventListener('click', (event) => {
-            if (!subMenu.contains(event.target) && event.target !== avatar) {
-                subMenu.classList.remove('open-menu');
-            }
-        });
-    </script>
+      slides.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+        if (index === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => goToSlide(index));
+        dotsContainer.appendChild(dot);
+      });
 
-    <!-- FOOTER -->
-    <footer id="sobre" class="rodape">
-        <p>&copy; 2025 - Projeto desenvolvido por Henrique Luiz e Mateus Warmling. Todos os direitos reservados.</p>
-    </footer>
+      const dots = dotsContainer.querySelectorAll('.dot');
+
+      function goToSlide(index) {
+        slidesContainer.style.transform = `translateX(-${index * 100}%)`;
+        dots.forEach(dot => dot.classList.remove('active'));
+        dots[index].classList.add('active');
+        currentIndex = index;
+      }
+
+      nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % slides.length;
+        goToSlide(currentIndex);
+      });
+
+      prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        goToSlide(currentIndex);
+      });
+
+      setInterval(() => {
+        currentIndex = (currentIndex + 1) % slides.length;
+        goToSlide(currentIndex);
+      }, 4000);
+    }
+
+    setupCarousel('mainCarousel');
+    setupCarousel('secondCarousel');
+    setupCarousel('rightCarousel');
+  </script>
 </body>
 </html>

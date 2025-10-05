@@ -216,7 +216,11 @@
             $queryCancelados->execute([':idProfissional' => $idProfissional]);
             $cancelados = $queryCancelados->fetch(PDO::FETCH_ASSOC)['total'];
 
-            $taxaCancelamento = round(($cancelados / $total) * 100);
+            if ($total > 0) {
+                $taxaCancelamento = round(($cancelados / $total) * 100, 2);
+            } else {
+                $taxaCancelamento = 0;
+            }
 
             return $taxaCancelamento; 
         }

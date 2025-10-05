@@ -54,7 +54,7 @@
         }
 
 
-        # agendamentos consultas
+        # home do profissinal
         public function agendamentosHoje($idProfissional) {
             return $this->relatorioModel->agendamentosHoje($idProfissional);
         }
@@ -86,10 +86,6 @@
         public function totalPacientesPorProfissional($idProfissional) {
             return $this->relatorioModel->totalPacientesPorProfissional($idProfissional);
         }
-
-
-        #home do profissinal
-
 
     }
 
