@@ -1,13 +1,13 @@
 <?php
 session_start();
-   include '../../../public/includes/paciente/sidebar.php';
-   include '../../../public/includes/paciente/header.php';
-   include '../../../public/includes/paciente/footer.php';
+   include '../../../../public/includes/paciente/sidebar.php';
+   include '../../../../public/includes/paciente/header.php';
+   include '../../../../public/includes/paciente/footer.php';
 
    
    $idPaciente = $_SESSION['idPaciente'];
 
-   require_once "../../../controllers/EncaminhamentoController.php";
+   require_once "../../../../controllers/EncaminhamentoController.php";
 
    $controller = new EncaminhamentoController($conn);
    $encaminhamentos = $controller->listarEncaminhamentosPorPaciente($idPaciente);
@@ -48,12 +48,6 @@ session_start();
       overflow: hidden;
     }
 
-    /* CONTEÚDO PRINCIPAL */
-    main {
-    flex: 2; /* ocupa todo espaço disponível */
-    overflow-x: auto; /* permite rolar só o conteúdo */
-    }
-
     main {
       flex: 1;
       margin-top: 60px;
@@ -62,6 +56,9 @@ session_start();
       display: flex;
       flex-direction: column;
       align-items: center;
+      flex: 2; /* ocupa todo espaço disponível */
+      overflow-x: auto; /* permite rolar só o conteúdo */
+      margin-bottom: 50px;
     }
 
     main h1 {
@@ -167,6 +164,92 @@ session_start();
     .btn:hover {
       background: linear-gradient(180deg,#0c8bdb,#0b5fa0);
     }
+
+
+
+
+    /* MODAL FUNDO */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+/* CONTEÚDO DO MODAL */
+.modal-content {
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    min-width: 350px;
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+}
+
+/* BOTAO FECHAR */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* FORMULARIO */
+.modal-content form label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+    color: #333;
+}
+
+.modal-content form input,
+.modal-content form textarea {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+/* BOTOES */
+.modal-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.modal-buttons .cancel {
+    background-color: #ccc;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal-buttons .agendar {
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal-buttons .cancel:hover {
+    background-color: #999;
+}
+
+.modal-buttons .agendar:hover {
+    background-color: #004999;
+}
   </style>
 </head>
 
@@ -177,7 +260,7 @@ session_start();
     <section class="cards" aria-live="polite" id="cardsContainer">
       <?php if (!empty($encaminhamentos)): ?>
         <?php foreach ($encaminhamentos as $p): ?>
-          <article class="card" role="article" aria-label="Encaminhamento de <?php echo htmlspecialchars($p['profissional_encaminhou']); ?>">
+          <article class="card" role="article" aria-label="Encaminhamento de <?php echo $p['profissional_encaminhou']; ?>">
             <span class="badge">Pendente</span>
             <div class="top">
               <div class="icon-box" aria-hidden="true">
@@ -202,7 +285,7 @@ session_start();
             <div class="meta">
               <div>Detalhes do encaminhamento</div>
               <div>
-                <a class="btn" href="agendar.php?id_prof=<?php echo urlencode($p['id_profissional'] ?? ''); ?>">Agendar Exame</a>
+                <a class="btn openModalExame" id="">Agendar Exame</a>
               </div>
             </div>
           </article>
@@ -212,5 +295,62 @@ session_start();
       <?php endif; ?>
     </section>
   </main>
+
+
+  <!-- MODAL -->
+<div id="modalExame" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Agendar Exame</h2>
+    
+    <form id="formAgendamentoExame">
+      <!-- Dia do Agendamento -->
+      <label for="dataExame">Data:</label>
+      <input type="date" id="dataExame" name="dataExame" required>
+
+      <!-- Horário -->
+      <label for="horarioExame">Horário:</label>
+      <input type="time" id="horarioExame" name="horarioExame" required>
+
+      <!-- Observações -->
+      <label for="observacoesExame">Observações:</label>
+      <textarea id="observacoesExame" name="observacoesExame" placeholder="Digite observações..." rows="4"></textarea>
+
+      <!-- BOTOES -->
+      <div class="modal-buttons">
+        <button type="button" class="cancel">Cancelar</button>
+        <button type="submit" class="agendar">Agendar</button>
+      </div>
+    </form>
+  </div>
+</div>
+        
 </body>
 </html>
+
+<script>
+
+// ABRIR MODAL EM TODOS OS BOTÕES
+document.querySelectorAll('.openModalExame').forEach(function(btn){
+    btn.addEventListener('click', function() {
+        document.getElementById('modalExame').style.display = 'flex';
+    });
+});
+
+
+// FECHAR MODAL
+document.querySelectorAll('.close, .cancel').forEach(function(btn){
+    btn.addEventListener('click', function() {
+        this.closest('.modal').style.display = 'none';
+    });
+});
+
+// FECHAR AO CLICAR FORA DO MODAL
+window.addEventListener('click', function(e) {
+    const modal = document.getElementById('modalExame');
+    if(e.target == modal) {
+        modal.style.display = 'none';
+    }
+});
+
+</script>

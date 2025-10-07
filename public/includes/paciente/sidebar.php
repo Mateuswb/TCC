@@ -25,12 +25,12 @@
 
     <h4>Gestão de Exames</h4>
     <li>
-    <a href="<?= BASE_URL ?>/paciente/encaminhamento/listar_encaminhamentos.php">
+    <a href="<?= BASE_URL ?>/paciente/exames/encaminhamento/listar_encaminhamentos.php">
         <i class="fa-solid fa-file-lines"></i> Encaminhamentos
     </a>
     </li>
-    <li><a href="#"><i class="fa-solid fa-vial"></i> Exames agendados</a></li>
-    <li><a href="#"><i class="fa-solid fa-file-medical "></i> Histórico de exames</a></li>
+    <li><a href="<?= BASE_URL ?>/paciente/exames/exames_agendados/listar_agendamentos.php"><i class="fa-solid fa-vial"></i> Exames agendados</a></li>
+    <li><a href="<?= BASE_URL ?>/paciente/exames/historico/historico_exames.php"><i class="fa-solid fa-file-medical "></i> Histórico de exames</a></li>
     <li><a href="#"><i class="fa-solid fa-chart-column"></i> Resultado dos exames</a></li>
 
     </ul>

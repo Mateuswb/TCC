@@ -87,6 +87,22 @@
             return $this->relatorioModel->totalPacientesPorProfissional($idProfissional);
         }
 
+
+        # paciente 
+        public function totalExamesPaciente($idPaciente) {
+            return $this->relatorioModel->totalExamesPaciente($idPaciente);
+        }
+
+        public function exameMaisRecorrente($idPaciente) {
+            return $this->relatorioModel->exameMaisRecorrente($idPaciente);
+        }
+
+        public function totalExamesCancelados($idPaciente) {
+            return $this->relatorioModel->totalExamesCancelados($idPaciente);
+        }
+
+
+
     }
 
     $controller = new RelatorioController($conn);

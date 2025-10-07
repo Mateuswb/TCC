@@ -245,7 +245,7 @@
                         WHERE hp.id_profissional = :idProfissional
                         GROUP BY hora
                         ORDER BY total DESC
-                        LIMIT 1;";
+                        LIMIT 1";
             $query = $this->conn->prepare($sql);
             $query->execute([':idProfissional' => $idProfissional]);
             return $query->fetch(PDO::FETCH_ASSOC)['hora'] ?? null;
@@ -274,5 +274,63 @@
             $query->execute([':idProfissional' => $idProfissional]);
             return $query->fetch(PDO::FETCH_ASSOC)['total'];
         }
+
+
+        #paciente
+        public function totalExamesPaciente($pacienteId){
+            $sql = "SELECT COUNT(ae.id_agendamento) AS total_agendamentos_exame
+                    FROM agendamentos_exames ae
+                    INNER JOIN encaminhamentos e ON ae.id_encaminhamento = e.id_encaminhamento
+                    INNER JOIN agendamentos_consultas ac ON e.id_agendamento_consulta = ac.id_agendamento
+                    INNER JOIN pacientes p ON ac.id_paciente = p.id_paciente
+                    WHERE p.id_paciente = :idPaciente";
+            
+            $query = $this->conn->prepare($sql);
+            $query->execute([
+                'idPaciente' => $pacienteId
+            ]);
+
+            return $query->fetch(PDO::FETCH_ASSOC)['total_agendamentos_exame'];
+        }
+
+        public function exameMaisRecorrente($pacienteId){
+            $sql = "SELECT 
+                        te.nome AS exame
+                    FROM agendamentos_exames ae
+                    INNER JOIN encaminhamentos e ON ae.id_encaminhamento = e.id_encaminhamento
+                    INNER JOIN agendamentos_consultas ac ON e.id_agendamento_consulta = ac.id_agendamento
+                    INNER JOIN pacientes p ON ac.id_paciente = p.id_paciente
+                    INNER JOIN tipos_exames te ON e.id_exame = te.id_exame
+                    WHERE p.id_paciente = :idPaciente
+                    GROUP BY te.nome
+                    ORDER BY COUNT(ae.id_agendamento) DESC
+                    LIMIT 1";
+            
+            $query = $this->conn->prepare($sql);
+            $query->execute([
+                'idPaciente' => $pacienteId
+            ]);
+
+            return $query->fetch(PDO::FETCH_ASSOC)['exame'];
+        }
+
+        public function totalExamesCancelados($pacienteId){
+            $sql = "SELECT 
+                        COUNT(ae.id_agendamento) AS total_cancelados
+                    FROM agendamentos_exames ae
+                    INNER JOIN encaminhamentos e ON ae.id_encaminhamento = e.id_encaminhamento
+                    INNER JOIN agendamentos_consultas ac ON e.id_agendamento_consulta = ac.id_agendamento
+                    INNER JOIN pacientes p ON ac.id_paciente = p.id_paciente
+                    WHERE p.id_paciente = :idPaciente
+                    AND ae.status = 'cancelado'"; 
+
+            $query = $this->conn->prepare($sql);
+            $query->execute([
+                'idPaciente' => $pacienteId
+            ]);
+
+            return $query->fetch(PDO::FETCH_ASSOC)['total_cancelados'];
+        }
+
     }
 ?>

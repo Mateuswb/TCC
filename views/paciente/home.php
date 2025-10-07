@@ -17,22 +17,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
+     * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
     }
 
     body {
-      background-color: #f4f6fa;
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
+    background: #f5f6fa;
+    min-height: 100vh;
+    display: flex;
     }
 
-   
-   
 
     /* CONTEÚDO PRINCIPAL */
     main {
@@ -40,6 +37,7 @@
       margin-top: 60px;
       padding: 30px;
       overflow-y: auto;
+      margin-bottom: 50px;
     }
 
     main h1 {
@@ -200,13 +198,13 @@
         <div class="carousel-card">
           <div class="carousel" id="mainCarousel">
             <div class="slides">
-              <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1586773860417-9f72e1a4f8f5');">
+              <div class="slide" style="background-image:url('https://s2.glbimg.com/Gh6C6zC8UwOfGpwxydR5NRlgLoM=/e.glbimg.com/og/ed/f/original/2021/11/19/clinicadacidadepiracicaba_fotos-42.jpg');">
                 <div class="overlay"><h3>Ambiente agradável</h3></div>
               </div>
-              <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1580281657521-66a86aa9e6fa');">
+              <div class="slide" style="background-image:url('https://s2.glbimg.com/Gh6C6zC8UwOfGpwxydR5NRlgLoM=/e.glbimg.com/og/ed/f/original/2021/11/19/clinicadacidadepiracicaba_fotos-42.jpg');">
                 <div class="overlay"><h3>Exames</h3></div>
               </div>
-              <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1580281656962-52c49c3ad7d5');">
+              <div class="slide" style="background-image:url('https://s2.glbimg.com/Gh6C6zC8UwOfGpwxydR5NRlgLoM=/e.glbimg.com/og/ed/f/original/2021/11/19/clinicadacidadepiracicaba_fotos-42.jpg');">
                 <div class="overlay"><h3>Profissionais de qualidade</h3></div>
               </div>
             </div>
@@ -220,13 +218,13 @@
         <div class="carousel-card">
           <div class="carousel" id="secondCarousel">
             <div class="slides">
-              <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1605296867304-46d5465a13f1');">
+              <div class="slide" style="background-image:url('https://s2.glbimg.com/Gh6C6zC8UwOfGpwxydR5NRlgLoM=/e.glbimg.com/og/ed/f/original/2021/11/19/clinicadacidadepiracicaba_fotos-42.jpg');">
                 <div class="overlay"><h3>Novos recursos</h3></div>
               </div>
-              <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1584515933487-779824d29309');">
+              <div class="slide" style="background-image:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQt-hr_dQhi-1PquvLYJO2ggK3ZnXfLY43OiQ&s');">
                 <div class="overlay"><h3>Salas modernas</h3></div>
               </div>
-              <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1580281780119-9a4c30f2a9f0');">
+              <div class="slide" style="background-image:url('https://s2.glbimg.com/Gh6C6zC8UwOfGpwxydR5NRlgLoM=/e.glbimg.com/og/ed/f/original/2021/11/19/clinicadacidadepiracicaba_fotos-42.jpg');">
                 <div class="overlay"><h3>Equipamentos avançados</h3></div>
               </div>
             </div>
@@ -242,13 +240,13 @@
         <div class="carousel-card">
           <div class="carousel" id="rightCarousel">
             <div class="slides">
-              <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1607746882042-944635dfe10e');">
+              <div class="slide" style="background-image:url('https://s2.glbimg.com/Gh6C6zC8UwOfGpwxydR5NRlgLoM=/e.glbimg.com/og/ed/f/original/2021/11/19/clinicadacidadepiracicaba_fotos-42.jpg');">
                 <div class="overlay"><h3>Atendimento de qualidade</h3></div>
               </div>
-              <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1606761568499-6c1d520b03b6');">
+              <div class="slide" style="background-image:url('https://s2.glbimg.com/Gh6C6zC8UwOfGpwxydR5NRlgLoM=/e.glbimg.com/og/ed/f/original/2021/11/19/clinicadacidadepiracicaba_fotos-42.jpg');">
                 <div class="overlay"><h3>Cuidado humanizado</h3></div>
               </div>
-              <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1583912268181-5562b52b90a9');">
+              <div class="slide" style="background-image:url('https://s2.glbimg.com/Gh6C6zC8UwOfGpwxydR5NRlgLoM=/e.glbimg.com/og/ed/f/original/2021/11/19/clinicadacidadepiracicaba_fotos-42.jpg');">
                 <div class="overlay"><h3>Equipe especializada</h3></div>
               </div>
             </div>

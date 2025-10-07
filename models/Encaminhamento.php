@@ -7,16 +7,17 @@
         }
 
         public function cadastrarEncaminhamento($exameID, $observacoes, $agendamentoConsultaId) {
-            // Coloque o nome da tabela no INSERT INTO
-            $sql = "INSERT INTO encaminhamentos (id_exame, observacoes, id_agendamento_consulta) 
-                    VALUES (:idExame, :observacoes, :idAgendamentoConsulta)";
+            $status = 'pendente';
+            $sql = "INSERT INTO encaminhamentos (id_exame, observacoes, id_agendamento_consulta, status) 
+                    VALUES (:idExame, :observacoes, :idAgendamentoConsulta, :status)";
 
             $query = $this->conn->prepare($sql);
 
             $resultado = $query->execute([
                 'idExame' => $exameID,
                 'observacoes' => $observacoes,
-                'idAgendamentoConsulta' => $agendamentoConsultaId
+                'idAgendamentoConsulta' => $agendamentoConsultaId,
+                'status' => $status
             ]);
 
             return $resultado;
@@ -38,7 +39,8 @@
                     ON ac.id_horario_profissional = hp.id_horario
                 INNER JOIN profissionais p 
                     ON hp.id_profissional = p.id_profissional
-                    WHERE ac.id_paciente = :id_paciente
+                    WHERE ac.id_paciente = :id_paciente AND
+                    e.status = 'pendente'
                 ORDER BY ac.id_paciente
             ";
 
@@ -49,6 +51,8 @@
 
             return $query->fetchAll(PDO::FETCH_ASSOC);
         }
+
+        
 
     }
 

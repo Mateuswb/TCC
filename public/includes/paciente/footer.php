@@ -6,18 +6,17 @@
   <style>
     /* RODAPÉ */
     footer {
-      text-align: center;
-      padding: 10px;
-      background-color: #003366;
-      color: #fff;
-      font-size: 13px;
-      position: fixed;
-      bottom: 0;
-      left: 250px;
-      right: 0;
-      z-index: 9999; /* garante que fique sempre sobreposto */
+        text-align: center;
+        padding: 10px;
+        background-color: #003366;
+        color: #fff;
+        font-size: 13px;
+        position: fixed;
+        bottom: 0;
+        left: 250px;
+        right: 0;
+        z-index: 9999; /* garante que fique sempre sobreposto */
     }
-
 
     .btn-fale {
       position: fixed;
