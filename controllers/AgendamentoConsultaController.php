@@ -50,7 +50,6 @@
             else{
                 echo "Erro";
             }
-            
         }
 
         public function listarAgendamentosDoProfissional($idProfissional) {

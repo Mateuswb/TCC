@@ -1,0 +1,165 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+.conteudo-principal {
+    font-family: "Poppins", sans-serif;
+    background-color: #f7f9fb;
+    padding: 20px 40px;
+    min-height: 100vh;
+    margin-left: 250px; /* Ajuste conforme a largura real do seu sidebar */
+}
+
+.titulo-pagina h1 {
+  font-size: 1.8rem;
+  color: #1e3a8a;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+.sidebar{
+    position: fixed;
+}
+
+.indicadores {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.card-indicador {
+  flex: 1;
+  min-width: 250px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-radius: 12px;
+  color: #fff;
+  padding: 15px 20px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-indicador i {
+  font-size: 1.8rem;
+}
+
+.card-indicador p {
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.card-indicador h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.card-indicador.azul {
+  background: #3b82f6;
+}
+
+.card-indicador.cinza {
+  background: #6b7280;
+}
+
+.card-indicador.vermelho {
+  background: #ef4444;
+}
+
+/* Cards dos exames */
+.cards-exames {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.card-exame {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.card-exame:hover {
+  transform: translateY(-4px);
+}
+
+.header-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.header-card h3 {
+  margin: 0;
+  color: #1e3a8a;
+  font-size: 1.1rem;
+}
+
+.status {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.status.realizado {
+  background: #10b981;
+}
+
+.status.cancelado {
+  background: #ef4444;
+}
+
+.categoria {
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.data {
+  color: #374151;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+.acoes {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-ver,
+.btn-baixar {
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 8px 14px;
+  transition: background 0.3s ease;
+}
+
+.btn-ver {
+  background: #e5e7eb;
+  color: #1e3a8a;
+}
+
+.btn-ver:hover {
+  background: #d1d5db;
+}
+
+.btn-baixar {
+  background: #3b82f6;
+  color: #fff;
+}
+
+.btn-baixar:hover {
+  background: #2563eb;
+}

@@ -22,6 +22,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Dashboard - HealthEase (Clone)</title>
 
+  <!-- STYLE  CSS-->
+  <link rel="stylesheet" href="../../public/assets/css/profissional/home.css">
+
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
@@ -31,146 +34,9 @@
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <style>
-    :root{
-      --bg:#f1f3f7;
-      --card:#ffffff;
-      --muted:#9aa3b2;
-      --accent:#0d9957;
-      --purple:#f0eef6;
-    }
-    *{box-sizing:border-box}
-    body{
-      padding: 0;
-      margin:0;
-      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: linear-gradient(180deg,#f3f4f8 0%, #eaeaf0 100%);
-      color:#263244;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
-
-    .sidebar {
-      position: fixed;
-} 
-
-
-    /* Layout */
-    .app{
-      display:flex;
-      min-height:100vh;
-      gap:24px;
-      padding:24px;
-    }
-
-
-    .logo{
-      width:36px;height:36px;border-radius:6px;background:linear-gradient(45deg,#1da1f2,#2de6a3);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;
-    }
-    .brand h1{font-size:14px;margin:0;color:#137a54}
-    .user{
-      display:flex;align-items:center;gap:10px;margin-top:6px;
-    }
-    .avatar{width:36px;height:36px;border-radius:50%;background:#ddd;display:block}
-    .menu{width:100%;margin-top:6px}
-    .menu a{display:flex;gap:10px;align-items:center;padding:10px;border-radius:8px;color:#2a3b46;text-decoration:none;font-size:14px}
-    .menu a.active{background:linear-gradient(90deg, #0e7049, #0b6b44);color:#fff}
-    .menu a i{min-width:18px;text-align:center}
-    .logout{margin-top:auto;color:#e14a4a;font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px}
-
-    /* Main content */
-    .main{
-      flex:1;
-      display:flex;
-      flex-direction:column;
-      gap:18px;
-      margin-left: 240px;
-    }
-
-    /* Top info cards grid */
-    .top-grid{
-      display:grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap:14px;
-    }
-    .card{
-      background:var(--card);
-      border-radius:10px;
-      padding:16px;
-      box-shadow: 0 6px 20px rgba(20,24,40,0.04);
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-    }
-    .card .left{
-      display:flex;flex-direction:column;gap:6px;
-    }
-    .card .left small{color:var(--muted);font-size:13px}
-    .card .left strong{font-size:20px}
-    .card .icon{
-      width:44px;height:44px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;
-    }
-    .icon.blue{background:linear-gradient(180deg,#1f77f6,#3aa0ff)}
-    .icon.green{background:linear-gradient(180deg,#27ae60,#2ecc71)}
-    .icon.yellow{background:linear-gradient(180deg,#f1c40f,#f6d365)}
-    .icon.red{background:linear-gradient(180deg,#ff6b6b,#ff8a8a)}
-
-    /* Big content area with graph and right panel */
-    .content-row{
-      display:grid;
-      grid-template-columns: 2fr 1fr;
-      gap:18px;
-      align-items:start;
-    }
-    .chart-card{
-      background:var(--card);
-      border-radius:10px;
-      padding:20px;
-      box-shadow: 0 6px 20px rgba(20,24,40,0.04);
-    }
-    .chart-card h3{margin:0 0 10px 0;color:#4b5563;text-align:center}
-
-    /* Right panel earnings */
-    .right-panel{
-      background:var(--card);
-      border-radius:10px;
-      padding:18px;
-      box-shadow: 0 6px 20px rgba(20,24,40,0.04);
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      align-items:stretch;
-    }
-    .right-panel .toggle{
-      display:flex;gap:8px;align-self:flex-end;
-    }
-    .btn-toggle{
-      border:1px solid #e6e9ee;padding:6px 10px;border-radius:6px;font-size:13px;background:#fff;cursor:pointer;
-    }
-    .btn-toggle.active{background:#0d9957;color:#fff;border:1px solid #0d9957}
-
-    .earn-value{font-size:20px;font-weight:700}
-    .small-muted{color:var(--muted);font-size:13px}
-
-    .donut-row{display:flex;gap:12px;justify-content:space-evenly;padding-top:8px}
-    .donut-box{flex:1;text-align:center;padding:8px}
-
-    /* footer style */
-    footer{margin-top:18px;background:transparent;padding:12px;border-radius:8px;color:var(--muted);font-size:13px;text-align:center}
-
-    /* responsive */
-    @media (max-width:1100px){
-      .top-grid{grid-template-columns: repeat(2,1fr)}
-      .content-row{grid-template-columns:1fr}
-      aside.sidebar{display:none}
-      .app{padding:12px}
-    }
-  </style>
 </head>
 <body>
   <div class="app">
-    <!-- sidebar -->
 
 
     <!-- main -->
