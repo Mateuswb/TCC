@@ -30,6 +30,7 @@
                 'inicioIntervalo'=> $inicioIntervalo,
                 'fimIntervalo'   => $fimIntervalo
             ]);
+            //$query->debugDumpParams();
             return $resultado;
         }
 

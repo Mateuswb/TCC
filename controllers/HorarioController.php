@@ -11,26 +11,25 @@
 
         public function cadastrarHorarios() {
             $idProfissional   = $_POST['idProfissional'];
-            $diasSemana       = $_POST['diasSemana'] ?? [];
-            $horaInicio       = $_POST['horaInicio'][0] ?? null;
-            $horaFim          = $_POST['horaFim'][0] ?? null;
-            $inicioIntervalo  = $_POST['inicioIntervalo'][0] ?? null;
-            $fimIntervalo     = $_POST['fimIntervalo'][0] ?? null;
+            $diaSemana        = $_POST['diaSemana'] ?? [];
+            $horaInicio       = $_POST['horaInicio'] ?? [];
+            $horaFim          = $_POST['horaFim'] ?? [];
+            $inicioIntervalo  = $_POST['inicioIntervalo'] ?? [];
+            $fimIntervalo     = $_POST['fimIntervalo'] ?? [];
 
             $sucesso = true;
-            foreach ($diasSemana as $dia) {
+            for ($i = 0; $i < count($diaSemana); $i++) {
                 $cadastro = $this->horarioModel->cadastrarHorario(
                     $idProfissional,
-                    $dia,
-                    $horaInicio,
-                    $horaFim,
-                    $inicioIntervalo,
-                    $fimIntervalo
+                    $diaSemana[$i],
+                    $horaInicio[$i] ?? null,
+                    $horaFim[$i] ?? null,
+                    $inicioIntervalo[$i] ?? null,
+                    $fimIntervalo[$i] ?? null
                 );
 
                 if (!$cadastro) {
                     $sucesso = false;
-                    break;
                 }
             }
 
@@ -71,7 +70,7 @@
 
     if (isset($_GET['acao'])) {
         switch ($_GET['acao']) {
-            case 'cadastrarHorario':
+            case 'cadastrarHorarios':
                 $controller->cadastrarHorarios();
                 break;
             case 'editarHorario':
