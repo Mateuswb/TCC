@@ -11,57 +11,214 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Planilha de Horários</title>
 <style>
-  :root{
-    --bg:#eef6ff;
-    --card:#ffffff;
-    --primary:#3b82f6;
-    --muted:#6b7280;
-    --green-400:#34d399;
-    --shadow:0 8px 24px rgba(15,23,42,0.08);
-    --accent:#4f46e5;
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0;
-    font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
-    background:linear-gradient(180deg,var(--bg),#f8fbff);
-    color:#111827;
-    padding:40px 20px;
-  }
-  .page{max-width:1200px;margin:0 auto 40px;}
-  .header{text-align:center;margin-bottom:18px;}
-  h1{font-size:22px;margin:8px 0 6px}
-  p.subtitle{margin:0;color:var(--muted);font-size:13px}
-  .prof-id{font-size:12px;color:#9ca3af;margin-top:8px}
-  .sheet{background:var(--card);border-radius:12px;padding:18px;box-shadow:var(--shadow);}
-  .sheet-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;}
-  .save-btn{
-    background:linear-gradient(180deg,#4f46e5,#3b82f6);
-    color:#fff;padding:10px 16px;border-radius:10px;border:0;
-    box-shadow:0 8px 18px rgba(59,130,246,0.18);
-    cursor:pointer;font-weight:600;display:inline-flex;gap:10px;align-items:center;
-  }
-  .sheet-table{width:100%;border-collapse:collapse;table-layout:fixed;}
-  .sheet-table thead th{background:#f3f6fb;color:#374151;padding:12px 10px;text-align:left;font-size:13px;border-bottom:1px solid #e6eefc;}
-  .sheet-table tbody td{padding:10px;border-bottom:1px solid #f1f5f9;font-size:14px;}
-  .col-day{width:210px}
-  .col-time{width:160px;text-align:center}
-  .col-actions{width:120px;text-align:center}
-  .day-cell{display:flex;align-items:center;gap:12px;}
-  .day-dot{width:12px;height:12px;border-radius:50%}
-  .day-title{font-weight:600}
-  .day-sub{display:block;font-size:12px;color:#7c8a9b;margin-top:4px}
-  .time-card{display:flex;gap:8px;align-items:center;justify-content:center;}
-  .time-input{background:#fff;border:1px solid #e6eefc;padding:8px 10px;border-radius:8px;min-width:96px;}
-  .time-input input{border:0;outline:none;background:transparent;font-size:14px;}
-  .btn-small{border:0;padding:6px 8px;border-radius:8px;font-weight:600;cursor:pointer;}
-  .btn-clone{background:#f97316;color:#fff;}
-  .btn-small:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,0.06)}
-  .toast{position:fixed;right:20px;bottom:20px;background:#111827;color:#fff;padding:12px 14px;border-radius:10px;
-    box-shadow:0 10px 30px rgba(2,6,23,0.35);opacity:0;transform:translateY(20px);transition:all .36s;z-index:9999;}
-  .toast.show{opacity:1;transform:translateY(0)}
-  .sheet-footer{display:flex;justify-content:space-between;align-items:center;margin-top:14px;color:#6b7280}
-  .period-counter{font-size:13px}
+    :root {
+        --bg: #eef6ff;
+        --card: #ffffff;
+        --primary: #3b82f6;
+        --muted: #6b7280;
+        --green-400: #34d399;
+        --shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+        --accent: #4f46e5;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+        background: linear-gradient(180deg, var(--bg), #f8fbff);
+        color: #111827;
+        padding: 40px 20px;
+    }
+
+    .page {
+        max-width: 1200px;
+        margin: 0 auto 40px;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 18px;
+    }
+
+    h1 {
+        font-size: 22px;
+        margin: 8px 0 6px;
+    }
+
+    p.subtitle {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+    }
+
+    .prof-id {
+        font-size: 12px;
+        color: #9ca3af;
+        margin-top: 8px;
+    }
+
+    .sheet {
+        background: var(--card);
+        border-radius: 12px;
+        padding: 18px;
+        box-shadow: var(--shadow);
+    }
+
+    .sheet-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 14px;
+    }
+
+    .save-btn {
+        background: linear-gradient(180deg, #4f46e5, #3b82f6);
+        color: #fff;
+        padding: 10px 16px;
+        border-radius: 10px;
+        border: 0;
+        box-shadow: 0 8px 18px rgba(59, 130, 246, 0.18);
+        cursor: pointer;
+        font-weight: 600;
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .sheet-table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
+
+    .sheet-table thead th {
+        background: #f3f6fb;
+        color: #374151;
+        padding: 12px 10px;
+        text-align: left;
+        font-size: 13px;
+        border-bottom: 1px solid #e6eefc;
+    }
+
+    .sheet-table tbody td {
+        padding: 10px;
+        border-bottom: 1px solid #f1f5f9;
+        font-size: 14px;
+    }
+
+    .col-day {
+        width: 210px;
+    }
+
+    .col-time {
+        width: 160px;
+        text-align: center;
+    }
+
+    .col-actions {
+        width: 120px;
+        text-align: center;
+    }
+
+    .day-cell {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .day-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+    }
+
+    .day-title {
+        font-weight: 600;
+    }
+
+    .day-sub {
+        display: block;
+        font-size: 12px;
+        color: #7c8a9b;
+        margin-top: 4px;
+    }
+
+    .time-card {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .time-input {
+        background: #fff;
+        border: 1px solid #e6eefc;
+        padding: 8px 10px;
+        border-radius: 8px;
+        min-width: 96px;
+    }
+
+    .time-input input {
+        border: 0;
+        outline: none;
+        background: transparent;
+        font-size: 14px;
+    }
+
+    .btn-small {
+        border: 0;
+        padding: 6px 8px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .btn-clone {
+        background: #f97316;
+        color: #fff;
+    }
+
+    .btn-small:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+    }
+
+    .toast {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        background: #111827;
+        color: #fff;
+        padding: 12px 14px;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(2, 6, 23, 0.35);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.36s;
+        z-index: 9999;
+    }
+
+    .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .sheet-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 14px;
+        color: #6b7280;
+    }
+
+    .period-counter {
+        font-size: 13px;
+    }
+
 </style>
 </head>
 <body>
