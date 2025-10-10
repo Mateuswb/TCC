@@ -35,7 +35,10 @@
         <i class="fas fa-vials"></i> <span>Exames Agendados</span>
     </a>
     <a href="<?= BASE_URL ?>/administrador/usuario/listar_usuarios.php">
-        <i class="fas fa-vials"></i> <span>Usuarios</span>
+        <i class="fas fa-vials"></i> <span>Usuários</span>
+    </a>
+    <a href="<?= BASE_URL ?>/administrador/usuario/listar_usuarios.php">
+        <i class="fas fa-vials"></i> <span>Relatórios</span>
     </a>
 
     <a href="<?= BASE_URL ?>/logout/logout.php" class="logout">

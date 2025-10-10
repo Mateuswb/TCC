@@ -13,7 +13,7 @@
 
   
   <!-- STYLE  CSS-->
-  <link rel="stylesheet" href="../../../public/assets/css/paciente/home.css">
+  <link rel="stylesheet" href="../../public/assets/css/paciente/home.css">
   
 
   <!-- Fonte -->
@@ -34,13 +34,13 @@
         <div class="carousel-card">
           <div class="carousel" id="mainCarousel">
             <div class="slides">
-              <div class="slide" style="background-image:url('https://s2.glbimg.com/Gh6C6zC8UwOfGpwxydR5NRlgLoM=/e.glbimg.com/og/ed/f/original/2021/11/19/clinicadacidadepiracicaba_fotos-42.jpg');">
+              <div class="slide" style="background-image:url('../../public/assets/imgs/fundo_1.png');">
                 <div class="overlay"><h3>Ambiente agradável</h3></div>
               </div>
-              <div class="slide" style="background-image:url('https://s2.glbimg.com/Gh6C6zC8UwOfGpwxydR5NRlgLoM=/e.glbimg.com/og/ed/f/original/2021/11/19/clinicadacidadepiracicaba_fotos-42.jpg');">
+              <div class="slide" style="background-image:url('../../public/assets/imgs/fundo_1.png');">
                 <div class="overlay"><h3>Exames</h3></div>
               </div>
-              <div class="slide" style="background-image:url('https://s2.glbimg.com/Gh6C6zC8UwOfGpwxydR5NRlgLoM=/e.glbimg.com/og/ed/f/original/2021/11/19/clinicadacidadepiracicaba_fotos-42.jpg');">
+              <div class="slide" style="background-image:url('../../public/assets/imgs/fundo_1.png');">
                 <div class="overlay"><h3>Profissionais de qualidade</h3></div>
               </div>
             </div>
@@ -54,13 +54,13 @@
         <div class="carousel-card">
           <div class="carousel" id="secondCarousel">
             <div class="slides">
-              <div class="slide" style="background-image:url('https://s2.glbimg.com/Gh6C6zC8UwOfGpwxydR5NRlgLoM=/e.glbimg.com/og/ed/f/original/2021/11/19/clinicadacidadepiracicaba_fotos-42.jpg');">
+              <div class="slide" style="background-image:url('../../public/assets/imgs/fundo_1.png');">
                 <div class="overlay"><h3>Novos recursos</h3></div>
               </div>
-              <div class="slide" style="background-image:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQt-hr_dQhi-1PquvLYJO2ggK3ZnXfLY43OiQ&s');">
+              <div class="slide" style="background-image:url('../../public/assets/imgs/fundo_1.png');">
                 <div class="overlay"><h3>Salas modernas</h3></div>
               </div>
-              <div class="slide" style="background-image:url('https://s2.glbimg.com/Gh6C6zC8UwOfGpwxydR5NRlgLoM=/e.glbimg.com/og/ed/f/original/2021/11/19/clinicadacidadepiracicaba_fotos-42.jpg');">
+              <div class="slide" style="background-image:url('../../public/assets/imgs/fundo_1.png');">
                 <div class="overlay"><h3>Equipamentos avançados</h3></div>
               </div>
             </div>
@@ -76,13 +76,13 @@
         <div class="carousel-card">
           <div class="carousel" id="rightCarousel">
             <div class="slides">
-              <div class="slide" style="background-image:url('https://s2.glbimg.com/Gh6C6zC8UwOfGpwxydR5NRlgLoM=/e.glbimg.com/og/ed/f/original/2021/11/19/clinicadacidadepiracicaba_fotos-42.jpg');">
+              <div class="slide" style="background-image:url('../../public/assets/imgs/fundo_1.png');">
                 <div class="overlay"><h3>Atendimento de qualidade</h3></div>
               </div>
-              <div class="slide" style="background-image:url('https://s2.glbimg.com/Gh6C6zC8UwOfGpwxydR5NRlgLoM=/e.glbimg.com/og/ed/f/original/2021/11/19/clinicadacidadepiracicaba_fotos-42.jpg');">
+              <div class="slide" style="background-image:url('../../public/assets/imgs/fundo_1.png');">
                 <div class="overlay"><h3>Cuidado humanizado</h3></div>
               </div>
-              <div class="slide" style="background-image:url('https://s2.glbimg.com/Gh6C6zC8UwOfGpwxydR5NRlgLoM=/e.glbimg.com/og/ed/f/original/2021/11/19/clinicadacidadepiracicaba_fotos-42.jpg');">
+              <div class="slide" style="background-image:url('../../public/assets/imgs/fundo_1.png');">
                 <div class="overlay"><h3>Equipe especializada</h3></div>
               </div>
             </div>

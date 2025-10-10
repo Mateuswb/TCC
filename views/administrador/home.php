@@ -1,5 +1,7 @@
 <?php
-    include "../../public/includes/sidebar.php"; 
+    include "../../public/includes/administrador/sidebar.php"; 
+    include "../../public/includes/administrador/header.html"; 
+    include "../../public/includes/administrador/footer.php"; 
     require_once "../../controllers/RelatorioController.php";
 
     $controller = new RelatorioController($conn);
@@ -47,7 +49,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    transition: margin-left 0.3s;
+    margin-top: 50px;
     }
 
     .sidebar.collapsed ~ .main {

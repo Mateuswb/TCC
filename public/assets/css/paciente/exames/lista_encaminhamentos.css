@@ -129,8 +129,9 @@
       text-decoration: none;
       font-weight: 600;
       font-size: 13px;
+      width: 150px;
       box-shadow: 0 6px 14px rgba(11,59,90,0.12);
-      transition: background 0.2s ease;
+      cursor: pointer;
     }
 
     .btn:hover {

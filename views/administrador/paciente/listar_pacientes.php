@@ -1,7 +1,9 @@
 <?php
-  include "../../../public/includes/sidebar.php";
-  require_once "../../../controllers/AdministradorController.php";
+  include "../../../public/includes/administrador/sidebar.php"; 
+  include "../../../public/includes/administrador/header.html"; 
+  include "../../../public/includes/administrador/footer.php"; 
 
+  require_once "../../../controllers/AdministradorController.php";
   $controller = new AdministradorController($conn);
   $pacientes = $controller->listarPacientes();
 ?>
@@ -38,37 +40,10 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      transition: margin-left 0.3s;
+      margin-bottom: 70px;
     }
 
-    /* Header */
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #085274ff;
-      color: #fff;
-      padding: 15px 30px;
-    }
-    .header input {
-      padding: 8px 12px;
-      border: none;
-      border-radius: 20px;
-      outline: none;
-      width: 200px;
-    }
-    .profile {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    }
-
-    .profile img {
-      width: 35px;
-      height: 35px;
-      border-radius: 2  0%;
-    }
-
+   
     /* Conteúdo */
     .content { padding: 20px; }
 
@@ -122,17 +97,7 @@
 
   <!-- Main -->
   <div class="main">
-    <!-- Header -->
-    <div class="header">
-      <input type="text" placeholder="Pesquisar...">
-      <div class="profile">
-        <img src="../../../public/assets/icones/icon_admin.png" alt="user">
-        <div>
-          <strong>Mateus lendia</strong><br>
-          <small>Administrador</small>
-        </div>
-      </div>
-    </div>
+
 
     <!-- Conteúdo -->
     <div class="content">

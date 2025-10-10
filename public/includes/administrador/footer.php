@@ -8,7 +8,7 @@
     footer {
         text-align: center;
         padding: 10px;
-        background-color: #003366;
+        background-color: #142753ff;
         color: #fff;
         font-size: 13px;
         position: fixed;

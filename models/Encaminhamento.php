@@ -28,6 +28,7 @@
             $sql = "
                 SELECT 
                     ac.id_paciente,
+                    e.id_encaminhamento,
                     te.nome AS exame,
                     p.nome AS profissional_encaminhou
                 FROM encaminhamentos e
@@ -51,9 +52,6 @@
 
             return $query->fetchAll(PDO::FETCH_ASSOC);
         }
-
-        
-
     }
 
 ?>

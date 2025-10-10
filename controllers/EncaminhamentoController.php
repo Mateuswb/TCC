@@ -12,5 +12,8 @@
         function listarEncaminhamentosPorPaciente($pacienteId){
             return $this->encaminhamentoModel->listarEncaminhamentosPorPaciente($pacienteId);
         }
+
+        
+
     }
 ?>

@@ -1,9 +1,11 @@
 <?php
-include "../../../public/includes/sidebar.php";
-require_once "../../../controllers/AdministradorController.php";
+  include "../../../public/includes/administrador/sidebar.php"; 
+  include "../../../public/includes/administrador/header.html"; 
+  include "../../../public/includes/administrador/footer.php"; 
+  require_once "../../../controllers/AdministradorController.php";
 
-$controller = new AdministradorController($conn);
-$usuarios = $controller->listarUsuarios();
+  $controller = new AdministradorController($conn);
+  $usuarios = $controller->listarUsuarios();
 ?>
 
 <!DOCTYPE html>

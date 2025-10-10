@@ -1,9 +1,12 @@
 <?php
-  include "../../../public/includes/sidebar.php";
+  include "../../../public/includes/administrador/sidebar.php"; 
+  include "../../../public/includes/administrador/header.html"; 
+  include "../../../public/includes/administrador/footer.php";
+  
   require_once "../../../controllers/AdministradorController.php";
-
   $controller = new AdministradorController($conn);
   $profissionais = $controller->listarProfissionais();
+
 ?>
 
 <!DOCTYPE html>
@@ -41,48 +44,14 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      transition: margin-left 0.3s;
+      margin-top: 50px;
+      margin-bottom: 100px;
     }
 
     .sidebar.collapsed ~ .main {
       margin-left: 80px;
     }
 
-    /* Header */
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #085274;
-      color: #fff;
-      padding: 15px 30px;
-    }
-
-    .header input {
-      padding: 8px 12px;
-      border: none;
-      border-radius: 20px;
-      outline: none;
-      width: 200px;
-    }
-
-    .profile {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    }
-
-    .profile img {
-      width: 35px;
-      height: 35px;
-      border-radius: 2  0%;
-    }
-
-    .menu-btn {
-      cursor: pointer;
-      font-size: 20px;
-      margin-right: 15px;
-    }
 
     /* Conteúdo */
     .content {
@@ -179,19 +148,7 @@
   <!-- Main -->
   <div class="main">
     <!-- Header -->
-    <div class="header">
-      <div class="menu-btn" onclick="toggleSidebar()">
-        <i class="fas fa-bars"></i>
-      </div>
-      <input type="text" placeholder="Pesquisar...">
-      <div class="profile">
-        <img src="../../../public/assets/icones/icon_admin.png" alt="user">
-        <div>
-          <strong>Administrador</strong><br>
-          <small>Admin</small>
-        </div>
-      </div>
-    </div>
+    
 
     <!-- Conteúdo -->
     <div class="content">
