@@ -15,11 +15,11 @@
 
       <h3>Confirme os dados para o agendamento</h3>
 
-      <form action="../../../controllers/AgendamentoConsultaController.php?acao=agendarConsulta" 
+      <form action="../../../../controllers/AgendamentoExameController.php?acao=agendarExame" 
             method="post" id="formAgendar" enctype="multipart/form-data">
 
         <input type="int" name="idPaciente" value="<?php echo $_SESSION['idPaciente']; ?>">
-        <input type="int" name="idProfissional" id="idProfissional">
+        <input type="hidden" name="nomeExame" id="exame">
 
 
         <div class="form-control" id="box-anexo" style="display:none;">
@@ -178,26 +178,22 @@ textarea {
 </style>
 
 <script>
-// Mostrar ou esconder campo de anexo conforme o tipo de consulta
-document.getElementById('tipoConsulta').addEventListener('change', function() {
-  document.getElementById('box-anexo').style.display = this.value === 'r' ? 'block' : 'none';
-});
 
 // Carregar horários disponíveis
 document.getElementById('diaAgendamento').addEventListener('change', function() {
   const data = this.value;
-  const idProfissional = document.getElementById('idProfissional').value;
+  const exame = document.getElementById('exame').value;
 
-  fetch('../../../controllers/PacienteController.php', {
+  fetch('../../../../controllers/ExameController.php', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: `data=${encodeURIComponent(data)}&idProfissional=${encodeURIComponent(idProfissional)}`
+    body: `data=${encodeURIComponent(data)}&exame=${encodeURIComponent(exame)}`
   })
   .then(r => r.json())
   .then(retorno => {
     const container = document.getElementById('times');
     container.innerHTML = '';
-
+    
     if (!retorno?.disponiveis) return;
 
     retorno.disponiveis.forEach(h => {
