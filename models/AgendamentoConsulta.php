@@ -8,9 +8,10 @@
 
         public function criarAgendamento(
             $idPaciente, $idHorarioProfissional, 
-            $tipoConsulta, $anexo, $status, 
+            $tipoConsulta, $anexo, 
             $horarioAgendamento, $diaAgendamento, $observacoes
         ) {
+            $status = "agendada";
             $sql = "INSERT INTO agendamentos_consultas (
                         id_paciente, id_horario_profissional, tipo_consulta, anexo, 
                         status, horario_agendamento, dia_agendamento, observacoes

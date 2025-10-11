@@ -19,7 +19,7 @@
 
     <h4>Gestão de Consultas</h4>
 
-    <li><a href="#"><i class="fa-solid fa-stethoscope"></i> Marcar consulta</a></li>
+    <li><a href="<?= BASE_URL ?>/paciente/consultas/listar_profissionais.php"><i class="fa-solid fa-stethoscope"></i> Marcar consulta</a></li>
     <li><a href="#"><i class="fa-solid fa-calendar-check"></i> Consultas agendadas</a></li>
     <li><a href="#"><i class="fa-solid fa-book"></i> Histórico de consultas</a></li>
 

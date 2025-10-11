@@ -15,40 +15,45 @@
             $this->horarioModel = new Horario($conn);
         }
 
-        public function agendarConsulta() {
+       public function agendarConsulta() {
             $idProfissional        = $_POST['idProfissional'];
             $idPaciente            = $_POST['idPaciente'];
             $tipoConsulta          = $_POST['tipoConsulta'];
-            $anexoConteudo         = null;
-            $status                = $_POST['status'];
             $horarioAgendamento    = $_POST['horarioAgendamento'];
             $diaAgendamento        = $_POST['diaAgendamento'];
             $observacao            = $_POST['observacao'] ?? null;
             $idHorarioProfissional = $this->horarioModel->recuperaIdHorario($diaAgendamento, $idProfissional);
 
+            $anexo = null;
+
             // Só salva anexo se for retorno
-            if ($tipoConsulta === "r" && isset($_FILES['anexo']) && $_FILES['anexo']['error'] === UPLOAD_ERR_OK){
-                $anexoConteudo = file_get_contents($_FILES['anexo']['tmp_name']);
+           if ($tipoConsulta === "r" && !empty($_FILES['anexo']) && $_FILES['anexo']['error'] === UPLOAD_ERR_OK) {
+                $ext = strtolower(pathinfo($_FILES['anexo']['name'], PATHINFO_EXTENSION));
+                $permitidas = ['pdf', 'jpg', 'jpeg', 'png'];
+                if (!in_array($ext, $permitidas)) {
+                    throw new Exception("Tipo de arquivo inválido. Use PDF ou imagem.");
+                }
+
+                $anexo = file_get_contents($_FILES['anexo']['tmp_name']);
             }
 
-            $agendar = $this->agendamentoModel->criarAgendamento(
+    
+            $agendar = $this->agendamentoConsultaModel->criarAgendamento(
                 $idPaciente,
                 $idHorarioProfissional,
                 $tipoConsulta,
-                $anexoConteudo,
-                $status,
+                $anexo, 
                 $horarioAgendamento,
                 $diaAgendamento,
                 $observacao
             );
 
-            if($agendar){
+            if ($agendar) {
                 echo "Agendou !!!!!!!!!!";
                 // header("Location: ../views/paciente/home.php");
                 exit;
-            }
-            else{
-                echo "Erro";
+            } else {
+                echo "Erro ao agendar consulta.";
             }
         }
 
