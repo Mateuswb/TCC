@@ -83,7 +83,7 @@
             $sexo           = $_POST['sexo'];
             $estadoCivil    = $_POST['estadoCivil'];
             $crmCrp         = $_POST['crmCrp'];
-            $especialidade  = $_POST['especialidade'];
+            $especialidade  = $_POST['especialidades'] ?? [];
             $endereco       = $_POST['endereco'];
             $numeroCasa     = $_POST['numCasa'];
             $bairro         = $_POST['bairro'];

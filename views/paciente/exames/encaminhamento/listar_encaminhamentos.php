@@ -3,6 +3,7 @@ session_start();
    include '../../../../public/includes/paciente/sidebar.php';
    include '../../../../public/includes/paciente/header.php';
    include '../../../../public/includes/paciente/footer.php';
+   include 'agendar_exame.php';
 
    
    $idPaciente = $_SESSION['idPaciente'];
@@ -62,9 +63,11 @@ session_start();
 
             <div class="meta">
               <div>Detalhes do encaminhamento</div>
-              <div>
-                <a class="btn openModalExame" id="">Agendar Exame</a>
-              </div>
+               <button class="btn-agendar" 
+                  onclick="abrirModalAgendamento()">
+                  Agendar consulta
+                </button>
+
             </div>
           </article>
         <?php endforeach; ?>
@@ -74,61 +77,31 @@ session_start();
     </section>
   </main>
 
-
-  <!-- MODAL -->
-<div id="modalExame" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>Agendar Exame</h2>
-    
-    <form id="formAgendamentoExame">
-      <!-- Dia do Agendamento -->
-      <label for="dataExame">Data:</label>
-      <input type="date" id="dataExame" name="dataExame" required>
-
-      <!-- Horário -->
-      <label for="horarioExame">Horário:</label>
-      <input type="time" id="horarioExame" name="horarioExame" required>
-
-      <!-- Observações -->
-      <label for="observacoesExame">Observações:</label>
-      <textarea id="observacoesExame" name="observacoesExame" placeholder="Digite observações..." rows="4"></textarea>
-
-      <!-- BOTOES -->
-      <div class="modal-buttons">
-        <button type="button" class="cancel">Cancelar</button>
-        <button type="submit" class="agendar">Agendar</button>
-      </div>
-    </form>
-  </div>
-</div>
         
 </body>
 </html>
 
 <script>
+  const modalAgendamento = document.getElementById('modalAgendamento');
+  const fecharModalAgendamento = document.getElementById('fecharModalAgendamento');
 
-// ABRIR MODAL EM TODOS OS BOTÕES
-document.querySelectorAll('.openModalExame').forEach(function(btn){
-    btn.addEventListener('click', function() {
-        document.getElementById('modalExame').style.display = 'flex';
-    });
-});
+  // Função para abrir o modal (chame quando clicar em um profissional)
+  function abrirModalAgendamento() {
+    modalAgendamento.style.display = 'flex';
+  }
 
 
-// FECHAR MODAL
-document.querySelectorAll('.close, .cancel').forEach(function(btn){
-    btn.addEventListener('click', function() {
-        this.closest('.modal').style.display = 'none';
-    });
-});
 
-// FECHAR AO CLICAR FORA DO MODAL
-window.addEventListener('click', function(e) {
-    const modal = document.getElementById('modalExame');
-    if(e.target == modal) {
-        modal.style.display = 'none';
+  // Fecha o modal ao clicar no "X"
+  fecharModalAgendamento.addEventListener('click', () => {
+    modalAgendamento.style.display = 'none';
+  });
+
+  // Fecha ao clicar fora do conteúdo
+  window.addEventListener('click', (e) => {
+    if (e.target === modalAgendamento) {
+      modalAgendamento.style.display = 'none';
     }
-});
+  });
 
 </script>

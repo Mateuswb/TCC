@@ -1,219 +1,236 @@
-<!-- ===== MODAL AGENDAMENTO ===== -->
-<div id="modalAgendamento" class="modal">
-  <div class="modal-content">
-    <span class="fechar-modal" id="fecharModalAgendamento">&times;</span>
+<?php
+session_start();
+require_once "../../../controllers/PacienteController.php";
 
-    <div class="container-modal">
-      <div class="profile">
-        <img src="https://cdn-icons-png.flaticon.com/512/3870/3870822.png" alt="Foto do Profissional">
-        <div class="profile-info">
-          <h2 id="nomeProfissional">Nome do Profissional</h2>
-          <p id="especialidadeProfissional">Especialidade</p>
-          <p>Atendimento Particular</p>
-        </div>
-      </div>
+include '../../../public/includes/paciente/sidebar.php';
+include '../../../public/includes/paciente/header.php';
+include '../../../public/includes/paciente/footer.php';
+?>
 
-      <h3>Confirme os dados para o agendamento</h3>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MedHub — Histórico de Consultas</title>
 
-      <form action="../../../controllers/AgendamentoConsultaController.php?acao=agendarConsulta" 
-            method="post" id="formAgendar" enctype="multipart/form-data">
-
-        <input type="int" name="idPaciente" value="<?php echo $_SESSION['idPaciente']; ?>">
-        <input type="int" name="idProfissional" id="idProfissional">
-
-        <div class="form-control">
-          <label for="tipoConsulta">Tipo de Consulta</label>
-          <select name="tipoConsulta" id="tipoConsulta">
-            <option value="c">Consulta</option>
-            <option value="r">Retorno</option>
-          </select>
-        </div>
-
-        <div class="form-control" id="box-anexo" style="display:none;">
-          <label for="anexo">Anexar Arquivo (apenas para retorno)</label>
-          <input type="file" name="anexo" id="anexo" accept=".pdf,.jpg,.png,.jpeg">
-        </div>
-
-        <div class="form-control">
-          <label for="diaAgendamento">Dia da Consulta</label>
-          <input type="date" id="diaAgendamento" name="diaAgendamento" required>
-        </div>
-
-        <div class="form-control">
-          <label for="horarioAgendamento">Escolha o Horário</label>
-          <div id="times" class="times"></div>
-        </div>
-
-        <div class="form-control">
-          <label for="observacao">Observações</label>
-          <textarea id="observacao" name="observacao" placeholder="Escreva alguma observação..."></textarea>
-        </div>
-
-        <button type="submit" class="btn-agendar">Agendar</button>
-      </form>
-
-      <div class="clinic-info">
-        <h3>Local da Consulta</h3>
-        <p>Clínica Synapse</p>
-        <p>Av. Santa, 9999 - Centro, Santa Catarina - SC</p>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- Fonte -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-/* ===== MODAL ===== */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 9999999999;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  overflow-y: auto;
-}
+    /* ===== RESET ===== */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+    }
 
-.modal-content {
-  background: #fff;
-  margin: 60px auto;
-  width: 100%;
-  max-width: 1100px;
-  border-radius: 15px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-  position: relative;
-  padding: 30px;
-  height: 800px;
-}
+    body {
+        background: #f5f6fa;
+        min-height: 100vh;
+        display: flex;
+    }
 
+    .conteudo-principal {
+        flex: 1;
+        padding: 2rem 3rem;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        margin: 70px 0 70px 0;
+    }
 
-@keyframes slideIn {
-  from { transform: translateY(-30px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
+    /* ===== TÍTULO ===== */
+    .content h1 {
+        color: #023e8a;
+        font-weight: 700;
+        margin-bottom: 35px;
+        text-align: center;
+    }
 
-.fechar-modal {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  font-size: 1.8rem;
-  color: #555;
-  cursor: pointer;
-}
-.fechar-modal:hover { color: #000; }
+    /* ===== CARDS DE INFORMAÇÃO ===== */
+    .cards-info {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 40px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
 
-.profile {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 15px;
-}
-.profile img {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-}
-.profile-info h2 { margin: 0; font-size: 1.4rem; }
-.profile-info p { margin: 3px 0; color: #555; }
+    .card-info {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 25px 20px;
+        border-radius: 12px;
+        font-weight: 600;
+        color: #023e8a;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        transition: 0.3s;
+        min-width: 280px;
+    }
 
-.form-control {
-  margin-top: 20px;
-}
-label {
-  font-weight: 500;
-  display: block;
-  margin-bottom: 6px;
-  color: #333;
-}
-select, input[type="date"], input[type="file"], textarea {
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-}
-textarea {
-  min-height: 80px;
-  resize: vertical;
-}
+    .card-info:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+    }
 
-.times {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: 10px;
-  margin-top: 10px;
-}
+    .card-info i {
+        font-size: 28px;
+        flex-shrink: 0;
+    }
 
-.time-slot, .time-slot-bloqueado {
-  text-align: center;
-  padding: 10px;
-  border-radius: 10px;
-  font-size: 14px;
-  cursor: pointer;
-  border: 1px solid #4a90e2;
-}
-.time-slot { background: #eaf3ff; color: #333; }
-.time-slot:hover { background: #4a90e2; color: #fff; }
-.time-slot-bloqueado {
-  background: #f1f1f1;
-  color: #aaa;
-  border: 1px dashed #ccc;
-  cursor: not-allowed;
-}
+    .card-info .texto {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+    }
 
-.btn-agendar {
-  margin-top: 25px;
-  width: 100%;
-  padding: 14px;
-  border: none;
-  background: #4a90e2;
-  color: #fff;
-  font-size: 16px;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.btn-agendar:hover { background: #357abd; }
+    .card-info .texto span {
+        font-size: 18px;
+        font-weight: 700;
+        color: #000;
+    }
 
-.clinic-info {
-  margin-top: 40px;
-  padding: 20px;
-  background: #f8f9fc;
-  border-radius: 10px;
-  border: 1px solid #e1e1e1;
-  font-size: 14px;
-  line-height: 1.5;
-}
+    .card-info.azul { background: #d0e8ff; color: #0a4b8a; }
+    .card-info.verde { background: #d7f9d7; color: #126d12; }
+    .card-info.vermelho { background: #ffd7d7; color: #a02020; }
+
+    /* ===== CONSULTAS ===== */
+    .consultas {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+        gap: 25px;
+    }
+
+    .card-consulta {
+        background: #fff;
+        border-radius: 14px;
+        padding: 25px 20px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+        transition: 0.3s ease;
+        border: 1px solid #e5e5e5;
+    }
+
+    .card-consulta:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+    }
+
+    .topo-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .topo-card h3 {
+        font-size: 1.1rem;
+        color: #023e8a;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-delete {
+        background: #dc3545;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 8px 14px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    .btn-delete:hover {
+        background: #b91c1c;
+    }
+
+    .card-consulta p {
+        font-size: 15px;
+        margin-bottom: 6px;
+    }
+
+    .status {
+        padding: 4px 12px;
+        border-radius: 10px;
+        color: #fff;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .status.realizada { background: #28a745; }
+    .status.cancelada { background: #dc3545; }
+
 </style>
+</head>
 
-<script>
-// Mostrar ou esconder campo de anexo conforme o tipo de consulta
-document.getElementById('tipoConsulta').addEventListener('change', function() {
-  document.getElementById('box-anexo').style.display = this.value === 'r' ? 'block' : 'none';
-});
+<body>
+<main class="conteudo-principal">
+    <div class="content">
+        <h1>Histórico de Consultas</h1>
 
-// Carregar horários disponíveis
-document.getElementById('diaAgendamento').addEventListener('change', function() {
-  const data = this.value;
-  const idProfissional = document.getElementById('idProfissional').value;
+        <div class="cards-info">
+            <div class="card-info azul"><i class="fa-solid fa-file-medical"></i>Total de consultas Já realizadas<span>36</span></div>
+            <div class="card-info verde"><i class="fa-solid fa-rotate-left"></i>Total de consultas de retorno<span>10</span></div>
+            <div class="card-info vermelho"><i class="fa-solid fa-ban"></i>Total de consultas canceladas<span>6</span></div>
+        </div>
 
-  fetch('../../../controllers/PacienteController.php', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: `data=${encodeURIComponent(data)}&idProfissional=${encodeURIComponent(idProfissional)}`
-  })
-  .then(r => r.json())
-  .then(retorno => {
-    const container = document.getElementById('times');
-    container.innerHTML = '';
+       <div class="consultas">
+    <div class="card-consulta">
+        <div class="topo-card">
+            <h3>Agendamento #4</h3>
+            <button class="btn-delete">Deletar</button>
+        </div>
+        <p><strong>Data:</strong> 2025-10-01</p>
+        <p><strong>Hora:</strong> 13:30:00</p>
+        <p><strong>Status:</strong> <span class="status realizada">Realizada</span></p>
+        <p><strong>Profissional:</strong> Dr. Luiz - Cardiologista</p>
+        <p><strong>Obs:</strong> ---</p>
+    </div>
 
-    if (!retorno?.disponiveis) return;
+    <div class="card-consulta">
+        <div class="topo-card">
+            <h3>Agendamento #3</h3>
+            <button class="btn-delete">Deletar</button>
+        </div>
+        <p><strong>Data:</strong> 2025-09-14</p>
+        <p><strong>Hora:</strong> 09:30:00</p>
+        <p><strong>Status:</strong> <span class="status cancelada">Cancelada</span></p>
+        <p><strong>Profissional:</strong> Dr. Marcos - Oftalmologista</p>
+        <p><strong>Obs:</strong> ---</p>
+    </div>
 
-    retorno.disponiveis.forEach(h => {
-      const bloqueado = retorno.agendamento?.includes(h);
-      container.innerHTML += bloqueado
-        ? `<label class="time-slot-bloqueado">${h}</label>`
-        : `<label class="time-slot"><input type="radio" name="horarioAgendamento" value="${h}"><span>${h}</span></label>`;
-    });
-  })
-  .catch(err => console.error("Erro:", err));
-});
-</script>
+    <div class="card-consulta">
+        <div class="topo-card">
+            <h3>Agendamento #2</h3>
+            <button class="btn-delete">Deletar</button>
+        </div>
+        <p><strong>Data:</strong> 2025-08-03</p>
+        <p><strong>Hora:</strong> 15:00:00</p>
+        <p><strong>Status:</strong> <span class="status cancelada">Cancelada</span></p>
+        <p><strong>Profissional:</strong> Dr. Pedro - Neurologista</p>
+        <p><strong>Obs:</strong> ---</p>
+    </div>
+
+    <div class="card-consulta">
+        <div class="topo-card">
+            <h3>Agendamento #1</h3>
+            <button class="btn-delete">Deletar</button>
+        </div>
+        <p><strong>Data:</strong> 2025-07-02</p>
+        <p><strong>Hora:</strong> 10:00:00</p>
+        <p><strong>Status:</strong> <span class="status cancelada">Cancelada</span></p>
+        <p><strong>Profissional:</strong> Dr. João - Pediatra</p>
+        <p><strong>Obs:</strong> ---</p>
+    </div>
+</div>
+
+    </div>
+</main>
+</body>
+</html>

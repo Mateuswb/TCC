@@ -96,8 +96,6 @@
   </main>
 
 
-  <button class="btn-fale">💬 Fale Conosco</button>
-
   <script>
     // Função genérica para criar carrosséis
     function setupCarousel(carouselId) {

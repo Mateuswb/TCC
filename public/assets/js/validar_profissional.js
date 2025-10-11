@@ -3,7 +3,7 @@ const form = document.getElementById('form');
 const username = document.getElementById('nome');
 const rg = document.getElementById('rg');
 const crm = document.getElementById('crmCrp');
-const especialidade = document.getElementById('especialidade');
+
 const dataNascimento = document.getElementById('dataNascimento');
 const telefone = document.getElementById('telefone');
 const sexo = document.getElementById('sexo');
@@ -74,12 +74,6 @@ function validaCamposEtapa1() {
         successValidation(crm);
     }
 
-    if (especialidade.value.trim() === '') {
-        errorValidation(especialidade, 'Preencha sua especialidade.');
-        valido = false;
-    } else {
-        successValidation(especialidade);
-    }
 
     if (dataNascimento.value.trim() === '') {
         errorValidation(dataNascimento, 'Preencha a data de nascimento.');

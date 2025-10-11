@@ -1,13 +1,12 @@
 <?php
-
     session_start();
-    include 'teste.php';
-
     require_once "../../../controllers/PacienteController.php";
     
+
     include '../../../public/includes/paciente/sidebar.php';
     include '../../../public/includes/paciente/header.php';
     include '../../../public/includes/paciente/footer.php';
+    include 'agendar_consulta.php';
     
 
     $idPaciente = $_SESSION['idPaciente'];
@@ -243,7 +242,6 @@
 </head>
 
 <body>
-     <?php include 'teste.php'; ?>
     <main class="conteudo-principal">
 
         <!-- Barra de Pesquisa -->
@@ -263,13 +261,13 @@
 
         <!-- Info -->
         <div class="info-profissionais">
-            <p><strong>5</strong> Profissionais encontrados</p>
+            <p><strong><?php echo $profissionais['total']; ?></strong> Profissionais encontrados</p>
             <span class="disponiveis">🟢 Disponíveis agora</span>
         </div>
 
         <!-- Cards -->
         <section class="cards-profissionais">
-            <?php foreach($profissionais as $profissional){ ?>
+            <?php foreach($profissionais['dados'] as $profissional){ ?>
             <div class="card">
                 <img src="../../../public/assets/imgs/cardiologista.jpg" alt="Dr. Luiz">
                 <div class="card-info">

@@ -18,9 +18,16 @@ class Profissional {
                 INNER JOIN usuarios u ON u.login = p.cpf
                 INNER JOIN horarios_profissionais h ON h.id_profissional = p.id_profissional
                 WHERE u.status = 'ativo'";
+
         $query = $this->conn->query($sql);
-        return $query->fetchAll(PDO::FETCH_ASSOC);
+        $resultados = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        return [
+            'dados' => $resultados,
+            'total' => count($resultados)
+        ];
     }
+
 
     public function listarDadosProfissional($idProfissional) {
         $sql = "SELECT * FROM profissionais WHERE id_profissional = :id_profissional";
@@ -95,7 +102,7 @@ class Profissional {
             ':sexo' => $sexo,
             ':estado_civil' => $estadoCivil,
             ':crm_crp' => $crmCrp,
-            ':especialidade' => $especialidade,
+            ':especialidade' => json_encode($especialidade),
             ':endereco' => $endereco,
             ':numero_casa' => $numeroCasa,
             ':bairro' => $bairro,

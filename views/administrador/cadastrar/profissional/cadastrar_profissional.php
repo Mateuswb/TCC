@@ -7,7 +7,16 @@
 
     <!-- Import do CSS -->
     <link rel="stylesheet" href="../../../../public/assets/css/style_paciente.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+
+    <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
 </head>
+
+
 <body>
 
     <div class="container">
@@ -50,14 +59,7 @@
                         <small>Msg de erro</small>
                     </div>
 
-                    <div class="form-control">
-                        <label for="especialidade">Especialidade</label>
-                        <input type="text" id="especialidade" name="especialidade">
-                        <img class="img_success" src="../../assets/icones/check.png" alt="">
-                        <img class="img_error" src="../../assets/icones/exclamation.png" alt="">
-                        <small>Msg de erro</small>
-                    </div>
-
+                    
                     <!-- Linha 3 -->
                     <div class="form-control">
                         <label for="dataNascimento">Data de Nascimento</label>
@@ -66,7 +68,7 @@
                         <img class="img_error" src="../../assets/icones/exclamation.png" alt="">
                         <small>Msg de erro</small>
                     </div>
-
+                    
                     <div class="form-control">
                         <label for="telefone">Telefone</label>
                         <input type="tel" id="telefone" name="telefone" placeholder="(99) 99999-9999">
@@ -83,6 +85,29 @@
                             <option value="F">Feminino</option>
                             <option value="O">Outro</option>
                         </select>
+                        <small>Msg de erro</small>
+                    </div>
+                    
+                    <div class="form-contro">
+                        <label for="especialidade">Especialidade</label>
+                            <select id="multiple" name="especialidades[]" multiple>
+                                <hr />
+                                <optgroup label="ESPECIALIDADES">
+                                    <option value="clinico_geral">Clínico Geral</option>
+                                    <option value="pediatria">Pediatria</option>
+                                    <option value="cardiologia">Cardiologia</option>
+                                    <option value="crtopedia">Ortopedia</option>
+                                </optgroup>
+                                <hr />
+                                <optgroup label="EXAMES">
+                                    <option value="exame_radiologia">Radiologia</option>
+                                    <option value="exame_neurofisiologia">Neurofisiologia</option>
+                                    <option value="exame_patologista">Patologista</option>
+                                    <option value="exame_medicina_laboratorial">Medicina Laboratorial</option>
+
+                                </optgroup>
+
+                            </select>
                         <small>Msg de erro</small>
                     </div>
                     
@@ -165,5 +190,15 @@
     </div>
 
     <script src="../../../../public/assets/js/validar_profissional.js"></script>
+    <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const frutasSelect = document.getElementById('multiple');
+    const choices = new Choices(frutasSelect, {
+      removeItemButton: true, // mostra botão de remover cada item selecionado
+      searchEnabled: true     // habilita busca dentro da lista
+    });
+  });
+</script>
+
 </body>
 </html>
