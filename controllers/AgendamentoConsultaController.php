@@ -63,6 +63,7 @@
 
     }
     
+    
     $controller = new AgendamentoConsultaController($conn);
     if (isset($_GET['acao'])) {
         switch ($_GET['acao']) {

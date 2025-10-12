@@ -1,3 +1,5 @@
+
+
 <?php
     // Pega a pasta raiz do projeto
     $parts = explode('/', trim($_SERVER['SCRIPT_NAME'], '/'));
@@ -38,6 +40,14 @@
 </div>
 
 <style>
+  html {
+  scroll-behavior: auto !important;
+}
+
+.sidebar {
+  min-height: 100vh;
+}
+
      /* MENU LATERAL */
     .sidebar {
       width: 250px;

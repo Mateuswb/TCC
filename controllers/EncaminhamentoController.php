@@ -13,7 +13,5 @@
             return $this->encaminhamentoModel->listarEncaminhamentosPorPaciente($pacienteId);
         }
 
-        
-
     }
 ?>

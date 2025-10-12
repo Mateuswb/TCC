@@ -1,11 +1,15 @@
 <?php
     session_start();
+    $idPaciente = $_SESSION['idPaciente'];
     require_once "../../../controllers/PacienteController.php";
     
 
     include '../../../public/includes/paciente/sidebar.php';
     include '../../../public/includes/paciente/header.php';
     include '../../../public/includes/paciente/footer.php';
+
+    $controllar = new PacienteController($conn);
+    $agendamentos = $controllar->listarAgendamentosConsulta($idPaciente)
 ?>
 
 <!DOCTYPE html>
@@ -156,73 +160,20 @@
             <h1 class="titulo">Consultas Agendadas</h1>
 
             <div class="agendamentos-container">
-                <!-- Card 1 -->
+                <?php foreach($agendamentos as $consulta){ ?>
                 <div class="card-agendamento">
                 <h3>Agendamento #1</h3>
-                <p><strong>Data:</strong> 2025-08-04</p>
-                <p><strong>Hora:</strong> 10:30:00</p>
-                <p><strong>Status:</strong> <span class="status agendado">Agendado</span></p>
-                <p><strong>Profissional:</strong> Dr. Marcos</p>
-                <p><strong>Obs:</strong> ---</p>
+                <p><strong>Data:</strong> <?php echo $consulta['dia_agendamento']?></p>
+                <p><strong>Hora:</strong>  <?php echo $consulta['horario_agendamento']?></p>
+                <p><strong>Status:</strong> <span class="status  <?php echo $consulta['status']?>"> <?php echo $consulta['status']?></span></p>
+                <p><strong>Profissional:</strong> <?php echo $consulta['nome_profissional']?> </p>
+                <p><strong>Obs:</strong> <?php echo $consulta['observacoes']?></p>
                 <div class="botoes">
                     <button class="btn editar">✏️ Editar</button>
                     <button class="btn cancelar">❌ Cancelar</button>
                 </div>
                 </div>
-
-                <!-- Card 2 -->
-                <div class="card-agendamento">
-                <h3>Agendamento #2</h3>
-                <p><strong>Data:</strong> 2025-10-09</p>
-                <p><strong>Hora:</strong> 14:30:00</p>
-                <p><strong>Status:</strong> <span class="status agendado">Agendado</span></p>
-                <p><strong>Profissional:</strong> Dr. Luiz</p>
-                <p><strong>Obs:</strong> ---</p>
-                <div class="botoes">
-                    <button class="btn editar">✏️ Editar</button>
-                    <button class="btn cancelar">❌ Cancelar</button>
-                </div>
-                </div>
-                <!-- Card 2 -->
-                <div class="card-agendamento">
-                <h3>Agendamento #2</h3>
-                <p><strong>Data:</strong> 2025-10-09</p>
-                <p><strong>Hora:</strong> 14:30:00</p>
-                <p><strong>Status:</strong> <span class="status agendado">Agendado</span></p>
-                <p><strong>Profissional:</strong> Dr. Luiz</p>
-                <p><strong>Obs:</strong> ---</p>
-                <div class="botoes">
-                    <button class="btn editar">✏️ Editar</button>
-                    <button class="btn cancelar">❌ Cancelar</button>
-                </div>
-                </div>
-                <!-- Card 2 -->
-                <div class="card-agendamento">
-                <h3>Agendamento #2</h3>
-                <p><strong>Data:</strong> 2025-10-09</p>
-                <p><strong>Hora:</strong> 14:30:00</p>
-                <p><strong>Status:</strong> <span class="status agendado">Agendado</span></p>
-                <p><strong>Profissional:</strong> Dr. Luiz</p>
-                <p><strong>Obs:</strong> ---</p>
-                <div class="botoes">
-                    <button class="btn editar">✏️ Editar</button>
-                    <button class="btn cancelar">❌ Cancelar</button>
-                </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="card-agendamento">
-                <h3>Agendamento #3</h3>
-                <p><strong>Data:</strong> 2025-11-01</p>
-                <p><strong>Hora:</strong> 08:30:00</p>
-                <p><strong>Status:</strong> <span class="status agendado">Agendado</span></p>
-                <p><strong>Profissional:</strong> Dr. Luiz</p>
-                <p><strong>Obs:</strong> ---</p>
-                <div class="botoes">
-                    <button class="btn editar">✏️ Editar</button>
-                    <button class="btn cancelar">❌ Cancelar</button>
-                </div>
-                </div>
+                <?php } ?>
             </div>
         </div>
     </main>

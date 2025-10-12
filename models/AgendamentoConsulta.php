@@ -99,5 +99,46 @@
             return $stmt->fetch(PDO::FETCH_ASSOC);
         }
 
+        public function listarAgendamentosConsulta($idPaciente){
+            $sql = "SELECT 
+                        ac.*, 
+                        p.nome AS nome_profissional
+                    FROM agendamentos_consultas AS ac
+                    JOIN horarios_profissionais AS hp 
+                        ON ac.id_horario_profissional = hp.id_horario
+                    JOIN profissionais AS p 
+                        ON hp.id_profissional = p.id_profissional
+                    WHERE 
+                        ac.id_paciente = :idPaciente
+                        AND ac.status = 'agendada'";
+            $query = $this->conn->prepare($sql);
+            $query->execute([
+                'idPaciente'=> $idPaciente
+            ]);
+
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function historicoAgendamentosConsulta($idPaciente){
+            $sql = "SELECT 
+                        ac.*, 
+                        p.nome AS nome_profissional
+                    FROM agendamentos_consultas AS ac
+                    JOIN horarios_profissionais AS hp 
+                        ON ac.id_horario_profissional = hp.id_horario
+                    JOIN profissionais AS p 
+                        ON hp.id_profissional = p.id_profissional
+                    WHERE 
+                        ac.id_paciente = :idPaciente
+                        AND ac.status != 'agendada'";
+            $query = $this->conn->prepare($sql);
+            $query->execute([
+                'idPaciente'=> $idPaciente
+            ]);
+
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+
     }
 ?>

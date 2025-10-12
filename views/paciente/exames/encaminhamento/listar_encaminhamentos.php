@@ -65,7 +65,8 @@ session_start();
               <div>Detalhes do encaminhamento</div>
                <button class="btn-agendar" 
                   onclick="abrirModalAgendamento(
-                  '<?= $p['exame']; ?>')">
+                  '<?= $p['exame']; ?>',
+                  '<?= $p['id_encaminhamento']; ?>')">
                   Agendar consulta
                 </button>
 
@@ -87,8 +88,9 @@ session_start();
   const fecharModalAgendamento = document.getElementById('fecharModalAgendamento');
 
   // Função para abrir o modal (chame quando clicar em um profissional)
-  function abrirModalAgendamento(nomeExame) {
+  function abrirModalAgendamento(nomeExame, idEncaminhamento) {
      document.getElementById('exame').value = nomeExame;
+     document.getElementById('id_encaminhamento').value = idEncaminhamento;
     modalAgendamento.style.display = 'flex';
   }
 

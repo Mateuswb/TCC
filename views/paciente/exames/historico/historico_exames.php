@@ -5,14 +5,19 @@
   include '../../../../public/includes/paciente/footer.php';
 
   require_once "../../../../controllers/RelatorioController.php";
+  require_once "../../../../controllers/PacienteController.php";
 
   $idPaciente = $_SESSION['idPaciente'];
 
   $controller = new RelatorioController($conn);
+  $pacienteController = new PacienteController($conn);
 
   $totalExames = $controller->totalExamesPaciente($idPaciente);
   $exameMaisComum = $controller->exameMaisRecorrente($idPaciente);
   $totalExamesCancelados = $controller->totalExamesCancelados($idPaciente);
+
+  $agendamentos = $pacienteController->historicoAgendamentosExame($idPaciente);
+
 ?>
 
 <!doctype html>
@@ -67,46 +72,21 @@
 
   <!-- Cards dos exames -->
   <div class="cards-exames">
-    <!-- Exame 1 -->
-    <div class="card-exame">
-      <div class="header-card">
-        <h3>Hemograma Completo</h3>
-        <span class="status realizado">Realizado</span>
-      </div>
-      <p class="categoria">Sangue</p>
-      <p class="data">Exame realizado em: <strong>2025-08-01</strong> às <strong>10:30</strong></p>
-      <div class="acoes">
-        <button class="btn-ver">Ver detalhes</button>
-        <button class="btn-baixar">Baixar Resultado</button>
-      </div>
-    </div>
 
-    <!-- Exame 2 -->
-    <div class="card-exame">
-      <div class="header-card">
-        <h3>Ressonância Magnética</h3>
-        <span class="status realizado">Realizado</span>
+    <?php foreach($agendamentos as $agendamento){ ?>
+      <div class="card-exame">
+        <div class="header-card">
+          <h3><?php echo $agendamento['nome_exame']; ?></h3>
+          <span class="status <?php echo $agendamento['status_agendamento']; ?> "><?php echo $agendamento['status_agendamento']; ?> </span>
+        </div>
+        <p class="categoria"><?php echo $agendamento['nome_categoria']; ?> </p>
+        <p class="data">Exame realizado em: <strong><?php echo $agendamento['dia_agendamento']; ?> </strong> às <strong><?php echo $agendamento['horario_agendamento']; ?> </strong></p>
+        <div class="acoes">
+          <button class="btn-ver">Ver detalhes</button>
+          <button class="btn-baixar">Baixar Resultado</button>
+        </div>
       </div>
-      <p class="categoria">Imagem</p>
-      <p class="data">Exame realizado em: <strong>2025-07-03</strong> às <strong>09:00</strong></p>
-      <div class="acoes">
-        <button class="btn-ver">Ver detalhes</button>
-        <button class="btn-baixar">Baixar Resultado</button>
-      </div>
-    </div>
-
-    <!-- Exame 3 -->
-    <div class="card-exame">
-      <div class="header-card">
-        <h3>Endoscopia Digestiva</h3>
-        <span class="status cancelado">Cancelado</span>
-      </div>
-      <p class="categoria">Clínico</p>
-      <p class="data">Exame cancelado em: <strong>2025-09-15</strong> às <strong>11:00</strong></p>
-      <div class="acoes">
-        <button class="btn-ver">Ver detalhes</button>
-      </div>
-    </div>
+    <?php } ?>
   </div>
 </main>
 

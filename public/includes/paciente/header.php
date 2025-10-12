@@ -1,5 +1,7 @@
 
-  
+<?php
+  // $nomePaciente = $_SESSION['nomePaciente'];
+?>
   <header>
     <div class="menu-btn" id="menu-btn">
       <i class="fas fa-bars"></i>
@@ -11,7 +13,7 @@
     </div>
 
     <div class="profile">
-      <img src="" alt="Usuário">
+      <img src="" alt="nome paciente">
     </div>
   </header>
 

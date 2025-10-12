@@ -52,6 +52,16 @@
 
             return $query->fetchAll(PDO::FETCH_ASSOC);
         }
+
+        public function trocarStatus($idEncaminhamento){
+            $sql =  "UPDATE encaminhamentos SET
+                        status = 'agendado';
+                        WHERE id_encaminhamento = :idEncaminhamento";
+            $query = $this->conn->prepare($sql);
+            $query->execute([
+                'idEncaminhamento' => $idEncaminhamento
+            ]);
+        }
     }
 
 ?>

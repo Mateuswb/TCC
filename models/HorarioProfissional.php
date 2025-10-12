@@ -196,9 +196,31 @@
                 "Friday"    => "sexta",
                 "Saturday"  => "sabado"
             ];
-            $nomeExames = [
-                "Tomografia"    => "exame_radiologia"
+
+           $nomeExames = [
+                # nome do exame             especialidade do profissional que realiza
+                "Hemograma"                 => "hematologia",
+                "Glicemia"                  => "endocrinologia",
+                "Urina tipo 1"              => "patologia_clinica",
+                "Teste de gravidez"         => "obstetricia",
+                "Raio-X"                    => "radiologia",
+                "Tomografia"                => "exame_radiologia",
+                "Ressonância magnética"     => "radiologia",
+                "Ultrassonografia"          => "radiologia",
+                "Eletrocardiograma"         => "cardiologia",
+                "Ecocardiograma"            => "cardiologia",
+                "Endoscopia digestiva"      => "gastroenterologia",
+                "Colonoscopia"              => "gastroenterologia",
+                "Mamografia"                => "mastologia",
+                "Densitometria óssea"       => "reumatologia",
+                "Teste de esforço"           => "cardiologia",
+                "Audiometria"               => "fonoaudiologia",
+                "Espirometria"              => "pneumologia",
+                "Cultura de sangue"         => "microbiologia",
+                "Sorologia (HIV, Hepatite)" => "infectologia",
+                "Biópsia"                   => "anatomia_patologica"
             ];
+
 
             $diaSemana = $nomeDias[date("l", strtotime($dataSelecionada))];
             $sql = "

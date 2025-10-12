@@ -6,10 +6,10 @@
 
   $idPaciente = $_SESSION['idPaciente'];
 
-  require_once "../../../../controllers/EncaminhamentoController.php";
+  require_once "../../../../controllers/PacienteController.php";
 
-  $controller = new EncaminhamentoController($conn);
-  $encaminhamentos = $controller->listarEncaminhamentosPorPaciente($idPaciente);
+  $controller = new PacienteController($conn);
+  $agendamentos = $controller->listarAgendamentosExame($idPaciente);
 ?>
 
 <!doctype html>
@@ -34,16 +34,16 @@
     <h1>Exames Agendados</h1>
 
     <section class="cards" aria-live="polite" id="cardsContainer">
-      <?php if (!empty($encaminhamentos)): ?>
-        <?php foreach ($encaminhamentos as $p): ?>
+      <?php if (!empty($agendamentos)): ?>
+        <?php foreach ($agendamentos as $agendamento): ?>
           <article class="card">
             <span class="badge">Agendado</span>
-            <h3><?php echo htmlspecialchars($p['exame']); ?></h3>
+            <h3><?php echo htmlspecialchars($agendamento['nome_exame']); ?></h3>
 
             <div class="meta">
-              <div><i class="fas fa-user-md"></i> Encaminhado por: <strong><?php echo htmlspecialchars($p['profissional_encaminhou']); ?></strong></div>
-              <div><i class="fas fa-calendar"></i> <?php echo htmlspecialchars($p['data_exame'] ?? '----/--/--'); ?></div>
-              <div><i class="fas fa-clock"></i> <?php echo htmlspecialchars($p['hora_exame'] ?? '--:--'); ?></div>
+              <div><i class="fas fa-user-md"></i> Encaminhado por: <strong><?php echo htmlspecialchars($agendamento['nome_profissional']); ?></strong></div>
+              <div><i class="fas fa-calendar"></i> <?php echo htmlspecialchars($agendamento['dia_agendamento'] ?? '----/--/--'); ?></div>
+              <div><i class="fas fa-clock"></i> <?php echo htmlspecialchars($agendamento['horario_agendamento'] ?? '--:--'); ?></div>
             </div>
 
             <div class="btns">

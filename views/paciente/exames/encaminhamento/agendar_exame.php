@@ -18,7 +18,7 @@
       <form action="../../../../controllers/AgendamentoExameController.php?acao=agendarExame" 
             method="post" id="formAgendar" enctype="multipart/form-data">
 
-        <input type="int" name="idPaciente" value="<?php echo $_SESSION['idPaciente']; ?>">
+        <input type="hidden" name="idEncaminhamento" id="id_encaminhamento">
         <input type="hidden" name="nomeExame" id="exame">
 
 

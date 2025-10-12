@@ -4,18 +4,24 @@
     require_once dirname(__DIR__) . "/models/Paciente.php";
     require_once dirname(__DIR__) . "/models/Profissional.php";
     require_once dirname(__DIR__) . "/models/HorarioProfissional.php";
+    require_once dirname(__DIR__) . "/models/AgendamentoConsulta.php"; 
+    require_once dirname(__DIR__) . "/models/AgendamentoExame.php"; 
 
     class PacienteController {
         private $usuarioController;
         private $pacienteModel;
         private $profissionalModel;
         private $horarioModel;
+        private $agendamentoConsultaModel;
+        private $agendamentoExameModel;
 
         public function __construct($conn) {
             $this->usuarioController = new UsuarioController($conn);
             $this->pacienteModel = new Paciente($conn);
             $this->profissionalModel = new Profissional($conn);
             $this->horarioModel = new Horario($conn);
+            $this->agendamentoConsultaModel = new AgendamentoConsulta($conn);
+            $this->agendamentoExameModel = new AgendamentoExame($conn);
         }
 
         public function cadastrarPaciente() {
@@ -126,6 +132,28 @@
             echo json_encode($horariosDisponiveis);
         }
 
+        #consultas
+        public function listarAgendamentosConsulta($idPaciente) {
+            $agendametos = $this->agendamentoConsultaModel->listarAgendamentosConsulta($idPaciente);
+            return $agendametos;
+        }
+
+        public function historicoAgendamentosConsulta($idPaciente) {
+            $agendametos = $this->agendamentoConsultaModel->historicoAgendamentosConsulta($idPaciente);
+            return $agendametos;
+        }
+        
+        #exames
+        public function listarAgendamentosExame($idPaciente) {
+            $agendametos = $this->agendamentoExameModel->listarAgendamentosExame($idPaciente);
+            return $agendametos;
+        }
+
+        public function historicoAgendamentosExame($idPaciente) {
+            $agendametos = $this->agendamentoExameModel->historicoAgendamentosExame($idPaciente);
+            return $agendametos;
+        }
+        
     }
 
     

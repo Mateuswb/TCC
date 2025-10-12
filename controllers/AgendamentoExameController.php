@@ -1,30 +1,33 @@
 <?php
     require_once dirname(__DIR__) . "/config/conexao.php";
     require_once dirname(__DIR__) . "/models/AgendamentoExame.php"; 
+    require_once dirname(__DIR__) . "/models/Encaminhamento.php"; 
 
 
     class AgendamentoExameController {
         private $agendamentoExameModel;
+        private $encaminhamentoModel;
 
         public function __construct($conn){
             $this->agendamentoExameModel = new AgendamentoExame($conn);
+            $this->encaminhamentoModel = new Encaminhamento($conn);
      
         }
 
         public function agendarExame(){
             $idEncaminhamento = $_POST['idEncaminhamento']; 
-            $status = $_POST['status']; 
             $horarioAgendamento = $_POST['horarioAgendamento']; 
             $diaAgendamento = $_POST['diaAgendamento']; 
-            $observacoes = $_POST['observacoes']; 
+            $observacao = $_POST['observacao']; 
 
             $agendar = $this->agendamentoExameModel->criarAgendamento(
-                $idEncaminhamento, $status, $horarioAgendamento.
-                $diaAgendamento, $observacoes
+                $idEncaminhamento, $horarioAgendamento,
+                $diaAgendamento, $observacao
             );
 
             if($agendar){
                 echo "Exame agendado";
+                $encaminhamento = $this->encaminhamentoModel->trocarStatus($idEncaminhamento);
             }
             else{
                 echo "Errooo no agendamento";

@@ -8,7 +8,6 @@
     include '../../../public/includes/paciente/footer.php';
     include 'agendar_consulta.php';
     
-
     $idPaciente = $_SESSION['idPaciente'];
     $nomePaciente = $_SESSION['nomePaciente'];
     $idUsuario = $_SESSION['idUsuario'];

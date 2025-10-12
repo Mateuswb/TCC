@@ -283,7 +283,8 @@
                     INNER JOIN encaminhamentos e ON ae.id_encaminhamento = e.id_encaminhamento
                     INNER JOIN agendamentos_consultas ac ON e.id_agendamento_consulta = ac.id_agendamento
                     INNER JOIN pacientes p ON ac.id_paciente = p.id_paciente
-                    WHERE p.id_paciente = :idPaciente";
+                    WHERE p.id_paciente = :idPaciente
+                    AND ae.status != 'agendado'";
             
             $query = $this->conn->prepare($sql);
             $query->execute([

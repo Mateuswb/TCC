@@ -35,13 +35,36 @@ main h1 span {
 }
 
 /* ====================== LAYOUT DOS CARDS ====================== */
+/* ====================== LAYOUT DOS CARDS ====================== */
 .content-grid {
     display: grid;
-    grid-template-columns: 1fr 320px;
-    gap: 18px;
-    align-items: start;
+    grid-template-columns: 1fr 400px; /* esquerda e direita */
+    gap: 10px;
+    align-items: stretch;
     margin-top: 30px;
 }
+
+/* ====================== CARROSSEL DIREITO ====================== */
+.right-tall {
+    display: flex;
+    flex-direction: column;
+    height: 97%;
+}
+
+.right-tall .carousel-card {
+    flex: 1;
+    margin: 0;
+    padding: 15;
+}
+
+
+.right-tall .slides,
+.right-tall .slide {
+    height: 100%;
+}
+
+
+
 
 .carousel-card {
     background: linear-gradient(180deg, #ffffff, #f7fbff);
@@ -57,7 +80,6 @@ main h1 span {
     position: relative;
     overflow: hidden;
     border-radius: 12px;
-    background: #ddd;
     min-height: 260px;
 }
 
@@ -74,7 +96,7 @@ main h1 span {
     display: flex;
     align-items: flex-end;
     color: white;
-    height: 260px;
+    height: 265px;
     background-size: cover;
     background-position: center;
     border-radius: 12px;
@@ -138,31 +160,5 @@ main h1 span {
     height: 12px;
 }
 
-/* RIGHT COLUMN */
-.right-tall {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
 
-.tall-card {
-    flex: 1;
-    border-radius: 14px;
-    overflow: hidden;
-    position: relative;
-    background-size: cover;
-    background-position: center;
-    min-height: 360px;
-    display: flex;
-    align-items: flex-end;
-}
-
-.tall-card .card-footer {
-    width: 100%;
-    padding: 18px;
-    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 100%);
-    color: white;
-    font-weight: 700;
-    font-size: 18px;
-}
 
