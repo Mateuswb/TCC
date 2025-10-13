@@ -152,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
     cancelModalEdicao.addEventListener("click", fecharModalEdicao);
     window.addEventListener("click", e => { if(e.target === modalEdicao) fecharModalEdicao(); });
 
-    // 👉 captura clique no ícone de editar
+    //  captura clique no ícone de editar
     document.querySelectorAll(".fa-edit").forEach(btn => {
         btn.addEventListener("click", () => {
             // pega os dados

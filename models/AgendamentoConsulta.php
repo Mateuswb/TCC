@@ -35,6 +35,37 @@
             // $query->debugDumpParams();
         }
 
+        public function editarConsulta(
+            $idAgendamento,
+            $tipoConsulta,
+            $anexo,
+            $horarioAgendamento,
+            $diaAgendamento,
+            $observacoes
+        ) {
+            $sql = "UPDATE agendamentos_consultas SET
+                        tipo_consulta = :tipoConsulta,
+                        anexo = :anexo,
+                        horario_agendamento = :horarioAgendamento,
+                        dia_agendamento = :diaAgendamento,
+                        observacoes = :observacoes
+                    WHERE id_agendamento = :idAgendamento";
+
+            $query = $this->conn->prepare($sql);
+
+            $query->execute([
+                ':idAgendamento' => $idAgendamento,
+                ':tipoConsulta' => $tipoConsulta,
+                ':anexo' => $anexo,
+                ':horarioAgendamento' => $horarioAgendamento,
+                ':diaAgendamento' => $diaAgendamento,
+                ':observacoes' => $observacoes
+            ]);
+            
+            return $query;
+        }
+
+
         public function listarAgendamentosDoProfissional($idProfissional) {
             $hoje = date('Y-m-d');
             $sql = "SELECT a.id_agendamento,
@@ -102,7 +133,8 @@
         public function listarAgendamentosConsulta($idPaciente){
             $sql = "SELECT 
                         ac.*, 
-                        p.nome AS nome_profissional
+                        p.nome AS nome_profissional,
+                        p.id_profissional as id_profissional
                     FROM agendamentos_consultas AS ac
                     JOIN horarios_profissionais AS hp 
                         ON ac.id_horario_profissional = hp.id_horario

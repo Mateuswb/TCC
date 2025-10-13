@@ -1,15 +1,18 @@
 <?php
-    session_start();
-    $idPaciente = $_SESSION['idPaciente'];
-    require_once "../../../controllers/PacienteController.php";
-    
+  session_start();
 
-    include '../../../public/includes/paciente/sidebar.php';
-    include '../../../public/includes/paciente/header.php';
-    include '../../../public/includes/paciente/footer.php';
+  $idPaciente = $_SESSION['idPaciente'];
+  include '../../../public/includes/paciente/sidebar.php'; 
+  include '../../../public/includes/paciente/header.php'; 
+  include '../../../public/includes/paciente/footer.php'; 
+  include 'modal_editar_consulta.php';
 
-    $controllar = new PacienteController($conn);
-    $agendamentos = $controllar->listarAgendamentosConsulta($idPaciente)
+  
+  require_once "../../../controllers/PacienteController.php";
+
+  $controller = new PacienteController($conn);
+  $agendamentos = $controller->listarAgendamentosConsulta($idPaciente);
+
 ?>
 
 <!DOCTYPE html>
@@ -23,6 +26,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <style>
+      .flash-success {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #c3e6cb;
+}
+
+.flash-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #f5c6cb;
+}
+
+
         /* ===== RESET ===== */
         * {
             margin: 0;
@@ -146,8 +168,34 @@
   color: white;
 }
 
+.btn.editar {
+  color: #fff;
+
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn.editar:hover {
+  background-color: #0056b3;
+}
+
 .btn.cancelar:hover {
   background-color: #b02a37;
+}
+.msg-msg {
+    position: fixed;          /* fixa na tela */
+    top: 50%;                 /* central vertical */
+    left: 50%;                /* central horizontal */
+    transform: translate(-50%, -50%); /* ajuste perfeito */
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    z-index: 9999;            /* garante que fique acima de tudo */
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 
@@ -155,8 +203,12 @@
 </head>
 
 <body>
+
     <main class="conteudo-principal">
          <div class="content">
+            <?php
+              include 'flash.php';
+            ?>
             <h1 class="titulo">Consultas Agendadas</h1>
 
             <div class="agendamentos-container">
@@ -169,13 +221,48 @@
                 <p><strong>Profissional:</strong> <?php echo $consulta['nome_profissional']?> </p>
                 <p><strong>Obs:</strong> <?php echo $consulta['observacoes']?></p>
                 <div class="botoes">
-                    <button class="btn editar">✏️ Editar</button>
-                    <button class="btn cancelar">❌ Cancelar</button>
+                       <button 
+                          class="btn editar"
+                          data-id="<?= $consulta['id_agendamento'] ?>"
+                          data-tipo="<?= $consulta['tipo_consulta'] ?>"
+                          data-dia="<?= $consulta['dia_agendamento'] ?>"
+                          data-hora="<?= $consulta['horario_agendamento'] ?>"
+                          data-observacao="<?= htmlspecialchars($consulta['observacoes']) ?>"
+                          data-profissional="<?= htmlspecialchars($consulta['nome_profissional']) ?>"
+                          data-id-profissional="<?= htmlspecialchars($consulta['id_profissional']) ?>"
+  
+                          onclick="abrirModal(this)"> 
+                          <i class="fa-solid fa-pencil"></i> Editar
+                        </button>
+
+                    <button class="btn cancelar"><i class="fa-solid fa-xmark"></i> Cancelar</button>
                 </div>
                 </div>
                 <?php } ?>
             </div>
         </div>
     </main>
+
 </body>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+  const botoesEditar = document.querySelectorAll(".btn.editar");
+  const modal = document.getElementById("modalEditarConsulta");
+  const btnFechar = modal.querySelector(".fechar-modal");
+
+  botoesEditar.forEach(btn => {
+    btn.addEventListener("click", function(e) {
+      e.preventDefault(); // impede o link de recarregar
+      modal.style.display = "block";
+    });
+  });
+
+  btnFechar.addEventListener("click", () => modal.style.display = "none");
+
+  window.addEventListener("click", e => {
+    if (e.target === modal) modal.style.display = "none";
+  });
+});
+
+</script>
 </html>

@@ -1,0 +1,255 @@
+<!-- ===== MODAL EDIÇÃO DE CONSULTA ===== -->
+<div id="modalEditarConsulta" class="modal">
+  <div class="modal-content">
+    <span class="fechar-modal" id="fecharModalEditarConsulta">&times;</span>
+
+    <div class="container-modal">
+      <!-- PERFIL DO PROFISSIONAL -->
+      <div class="profile">
+        <img src="https://cdn-icons-png.flaticon.com/512/3870/3870822.png" alt="Foto do Profissional">
+        <div class="profile-info">
+          <h2 id="nomeProfissionalEditar">Nome do Profissional</h2>
+          <p id="especialidadeProfissionalEditar">Especialidade</p>
+          <p>Atendimento Particular</p>
+        </div>
+      </div>
+
+      <h3>Editar dados da consulta</h3>
+
+      <form action="../../../controllers/AgendamentoConsultaController.php?acao=editarConsulta" method="post"  enctype="multipart/form-data">
+        <input type="int" name="idAgendamento" value="idAgendamento">
+        <input type="int" name="idProfissional" id="idProfissional">
+
+        <label>Tipo de Consulta</label>
+        <select name="tipoConsulta">
+          <option value="c">Consulta</option>
+          <option value="r">Retorno</option>
+        </select>
+
+        <label>Dia da Consulta</label>
+        <input type="date" name="diaAgendamento" id="diaAgendamento">
+
+        <label>Horário da Consulta</label>
+        <input type="time" name="horarioAgendamento" class="times">
+
+        <div class="form-control">
+          <label for="horarioAgendamento">Horarios ainda disponíveis</label>
+          <div id="times" class="times"></div>
+        </div>
+
+        <label>Observações</label>
+        <textarea name="observacao" placeholder="Adicione alguma observação..."></textarea>
+
+        <input type="submit"  class="btn_editar" value="salvar">
+      </form>
+
+      <div class="clinic-info">
+        <h3>Local da Consulta</h3>
+        <p>Clínica Synapse</p>
+        <p>Av. Santa, 9999 - Centro, Santa Catarina - SC</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ESTILO MODAL ===== -->
+<style>
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 9999;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-y: auto;
+  padding-top: 50px;
+  font-family: "Poppins", sans-serif;
+}
+
+
+.times {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.time-slot, .time-slot-bloqueado {
+  text-align: center;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid #4a90e2;
+}
+.time-slot { background: #eaf3ff; color: #333; }
+.time-slot:hover { background: #4a90e2; color: #fff; }
+.time-slot-bloqueado {
+  background: #f1f1f1;
+  color: #aaa;
+  border: 1px dashed #ccc;
+  cursor: not-allowed;
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 0 auto;
+  max-width: 700px;
+  width: 95%;
+  border-radius: 14px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+  padding: 25px 30px;
+  position: relative;
+}
+
+.fechar-modal {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 1.8rem;
+  color: #555;
+  cursor: pointer;
+}
+
+.fechar-modal:hover { color: #000; }
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.profile img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+
+.profile-info h2 { color: #083d6a; margin: 0; font-size: 1.4rem; }
+.profile-info p { color: #555; margin: 2px 0; }
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+label {
+  font-weight: 500;
+  color: #333;
+}
+
+select, input[type="date"], input[type="time"], textarea {
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #e5e5e5;
+  font-size: 0.9rem;
+  transition: 0.2s;
+}
+
+select:focus, input:focus, textarea:focus {
+  outline: none;
+  border-color: #004aad;
+}
+
+textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.input-time {
+  width: 100%;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #e5e5e5;
+  font-size: 0.9rem;
+  color: #083d6a;
+  font-weight: 500;
+}
+
+.btn.editar {
+  background-color: #085274;
+  color: white;
+  border-radius: 20px;
+  padding: 10px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.2s;
+  border: none;
+}
+
+.btn.editar:hover { background-color: #0056b3; }
+
+.clinic-info {
+  margin-top: 30px;
+  padding: 15px;
+  background: #f8f9fc;
+  border-radius: 14px;
+  border: 1px solid #e5e5e5;
+  font-size: 0.9rem;
+  color: #333;
+}
+</style>
+
+<!-- ===== SCRIPT ===== -->
+<script>
+  
+document.addEventListener("DOMContentLoaded", () => {
+  const modal = document.getElementById("modalEditarConsulta");
+  const closeModal = document.getElementById("fecharModalEditarConsulta");
+  const openButtons = document.querySelectorAll(".btn.editar");
+
+  const abrirModal = () => modal.style.display = "flex";
+  const fecharModal = () => modal.style.display = "none";
+
+  closeModal.addEventListener("click", fecharModal);
+  window.addEventListener("click", e => { if (e.target === modal) fecharModal(); });
+
+  openButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelector('input[name="idAgendamento"]').value = btn.dataset.id;
+      document.querySelector('select[name="tipoConsulta"]').value = btn.dataset.tipo;
+      document.querySelector('input[name="diaAgendamento"]').value = btn.dataset.dia;
+      document.querySelector('input[name="horarioAgendamento"]').value = btn.dataset.hora;
+      document.querySelector('textarea[name="observacao"]').value = btn.dataset.observacao;
+      document.querySelector('input[name="idProfissional"]').value = btn.dataset.idProfissional;
+
+
+      document.getElementById("nomeProfissionalEditar").innerText = btn.dataset.profissional || "Profissional";
+      document.getElementById("especialidadeProfissionalEditar").innerText = btn.dataset.especialidade || "Especialidade";
+
+      abrirModal();
+    });
+  });
+});
+
+
+// Carregar horários disponíveis
+document.getElementById('diaAgendamento').addEventListener('change', function() {
+  const data = this.value;
+  const idProfissional = document.getElementById('idProfissional').value;
+
+  fetch('../../../controllers/PacienteController.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: `data=${encodeURIComponent(data)}&idProfissional=${encodeURIComponent(idProfissional)}`
+  })
+  .then(r => r.json())
+  .then(retorno => {
+    const container = document.getElementById('times');
+    container.innerHTML = '';
+
+    if (!retorno?.disponiveis) return;
+
+    retorno.disponiveis.forEach(h => {
+      const bloqueado = retorno.agendamento?.includes(h);
+      container.innerHTML += bloqueado
+        ? `<label class="time-slot-bloqueado">${h}</label>`
+        : `<label class="time-slot"><input type="radio" name="horarioAgendamento" value="${h}"><span>${h}</span></label>`;
+    });
+  })
+  .catch(err => console.error("Erro:", err));
+});
+</script>

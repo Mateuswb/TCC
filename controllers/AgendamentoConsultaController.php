@@ -56,6 +56,51 @@
                 echo "Erro ao agendar consulta.";
             }
         }
+       
+        public function editarConsulta() {
+            $idAgendamento         = $_POST['idAgendamento'];
+            $tipoConsulta          = $_POST['tipoConsulta'];
+            $horarioAgendamento    = $_POST['horarioAgendamento'];
+            $diaAgendamento        = $_POST['diaAgendamento'];
+            $observacao            = $_POST['observacao'] ?? null;
+            $anexo = null;
+
+            // Só salva anexo se for retorno
+           if ($tipoConsulta === "r" && !empty($_FILES['anexo']) && $_FILES['anexo']['error'] === UPLOAD_ERR_OK) {
+                $ext = strtolower(pathinfo($_FILES['anexo']['name'], PATHINFO_EXTENSION));
+                $permitidas = ['pdf', 'jpg', 'jpeg', 'png'];
+                if (!in_array($ext, $permitidas)) {
+                    throw new Exception("Tipo de arquivo inválido. Use PDF ou imagem.");
+                }
+
+                $anexo = file_get_contents($_FILES['anexo']['tmp_name']);
+            }
+
+            $editar = $this->agendamentoConsultaModel->editarConsulta(
+                $idAgendamento,
+                $tipoConsulta,
+                $anexo,     
+                $horarioAgendamento,
+                $diaAgendamento,
+                $observacao
+            );
+            session_start();
+            
+            if ($editar) {
+                $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => 'Consulta editada com sucesso!'
+                ];
+            } else {
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => 'Erro ao editar consulta.'
+                ];
+            }
+
+            header("Location: ../views/paciente/consultas/consultas_agendadas.php");
+            exit;
+        }
 
         public function listarAgendamentosDoProfissional($idProfissional) {
             return $this->agendamentoConsultaModel->listarAgendamentosDoProfissional($idProfissional);
@@ -69,6 +114,9 @@
         switch ($_GET['acao']) {
             case 'agendarConsulta':
                 $controller->agendarConsulta();
+                break;
+            case 'editarConsulta':
+                $controller->editarConsulta();
                 break;
             default:
                 echo "Ação inválida";

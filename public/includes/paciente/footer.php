@@ -10,7 +10,7 @@
     </div>
 
     <div class="footer-right">
-      <button class="btn-fale">💬 Fale Conosco</button>
+      <button class="btn-fale"><i class="fa-solid fa-envelope"></i> Fale Conosco</button>
     </div>
   </div>
 </footer>
