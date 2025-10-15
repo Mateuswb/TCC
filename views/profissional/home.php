@@ -2,6 +2,8 @@
     session_start();
     $idProfissional = $_SESSION['idProfissional'];
     include '../../public/includes/profissional/sidebar.php';
+    include '../../public/includes/profissional/header.php';
+    include '../../public/includes/profissional/footer.html';
     require_once '../../controllers/RelatorioController.php';
     
     $controller = new RelatorioController($conn);
@@ -38,9 +40,9 @@
 <body>
   <div class="app">
 
-
     <!-- main -->
     <main class="main">
+      <h2><?php echo $_SESSION['especialidades']; ?></h2>
       <!-- top cards -->
       <div class="top-grid">
         <div class="card">
@@ -119,7 +121,7 @@
         </aside>
       </div>
 
-      <footer>Copyright © 2025 HealthEase Medical. All rights reserved.</footer>
+      
     </main>
   </div>
 

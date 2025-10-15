@@ -72,7 +72,7 @@
         }
 
 
-        # agendamentos
+        # agendamentos consulta
         public function listarConsultas($idProfissional){
             $sql = "
                 SELECT 

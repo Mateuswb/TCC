@@ -62,7 +62,6 @@ session_start();
             </div>
 
             <div class="meta">
-              <div>Detalhes do encaminhamento</div>
                <button class="btn-agendar" 
                   onclick="abrirModalAgendamento(
                   '<?= $p['exame']; ?>',

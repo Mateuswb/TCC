@@ -1,18 +1,15 @@
 <?php
-  session_start();
+session_start();
+include '../../../../public/includes/paciente/sidebar.php';
+include '../../../../public/includes/paciente/header.php';
+include '../../../../public/includes/paciente/footer.php';
 
-  $idPaciente = $_SESSION['idPaciente'];
-  include '../../../public/includes/paciente/sidebar.php'; 
-  include '../../../public/includes/paciente/header.php'; 
-  include '../../../public/includes/paciente/footer.php'; 
-  include '../../../public/modals/paciente/modal_cancelamento_consulta.html';
-  include '../../../public/modals/paciente/modal_editar_consulta.html';
+require_once "../../../../controllers/ResultadoExameController.php";
 
-  require_once "../../../controllers/PacienteController.php";
+$idPaciente = $_SESSION['idPaciente'];
 
-  $controller = new PacienteController($conn);
-  $agendamentos = $controller->listarAgendamentosConsulta($idPaciente);
-
+$controller = new ResultadoExameController($conn);
+$resultados = $controller->listarResultadosPorPaciente($idPaciente);
 ?>
 
 <!DOCTYPE html>
@@ -210,41 +207,41 @@
             ?>
             <h1 class="titulo">Consultas Agendadas</h1>
 
-            <div class="agendamentos-container">
-                <?php foreach($agendamentos as $consulta){ ?>
+              <div class="agendamento-container">
+        <?php foreach($resultados as $resultado): ?>
+        <div class="card">
+            <div>
                 <div class="card-agendamento">
-                <h3>Agendamento #1</h3>
-                <p><strong>Data:</strong> <?php echo $consulta['dia_agendamento']?></p>
-                <p><strong>Hora:</strong>  <?php echo $consulta['horario_agendamento']?></p>
-                <p><strong>Status:</strong> <span class="status  <?php echo $consulta['status']?>"> <?php echo $consulta['status']?></span></p>
-                <p><strong>Profissional:</strong> <?php echo $consulta['nome_profissional']?> </p>
-                <p><strong>Obs:</strong> <?php echo $consulta['observacoes']?></p>
-                <div class="botoes">
-                       <button 
-                          class="btn editar"
-                          data-id-consulta="<?= $consulta['id_agendamento'] ?>"
-                          data-tipo="<?= $consulta['tipo_consulta'] ?>"
-                          data-dia="<?= $consulta['dia_agendamento'] ?>"
-                          data-hora="<?= $consulta['horario_agendamento'] ?>"
-                          data-observacao="<?= htmlspecialchars($consulta['observacoes']) ?>"
-                          data-profissional="<?= htmlspecialchars($consulta['nome_profissional']) ?>"
-                          data-id-profissional="<?= $consulta['id_profissional'] ?>"
-  
-                          onclick="abrirModal(this)"> 
-                          <i class="fa-solid fa-pencil"></i> Editar
-                        </button>
-
-                      <button 
-                        class="btn cancelar" 
-                        data-id="<?= $consulta['id_agendamento'] ?>"
-                        onclick="abrirModalCancelar(this)">
-                        <i class="fa-solid fa-xmark"></i> Cancelar
-                      </button>
-
+                    <h3><?= htmlspecialchars($resultado['nome_exame']); ?></h3>
+                    <?php 
+                        $status = strtolower($resultado['status']);
+                        $classeStatus = $status == 'finalizado' ? 'finalizado' : 'pendente';
+                    ?>
+                    <span class="status <?= $classeStatus; ?>">
+                        <?= ucfirst($resultado['status']); ?>
+                    </span>
                 </div>
-                </div>
-                <?php } ?>
+                <p class="info">
+                    <i class="fa-regular fa-calendar"></i>
+                    <strong>Data do Lançamento:</strong>
+                    <?= date('d/m/Y', strtotime($resultado['data_resultado'])); ?>
+                </p>
+                <p class="info">
+                    <i class="fa-regular fa-calendar-days"></i>
+                    <strong>Data do Exame:</strong>
+                    <?= date('d/m/Y', strtotime($resultado['data_exame'])); ?>
+                </p>
             </div>
+
+            <div class="botoes">
+                <a href="#" class="btn-detalhes"><i class="fa-regular fa-eye"></i> Ver detalhes</a>
+                <a href="download_resultado.php?idResultado=<?= $resultado['id_resultado']; ?>" class="btn-baixar">
+                    <i class="fa-solid fa-file-arrow-down"></i> Baixar Resultado
+                </a>
+            </div>
+        </div>
+        <?php endforeach; ?>
+    </div>
         </div>
     </main>
 </body>

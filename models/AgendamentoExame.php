@@ -50,6 +50,17 @@
             ]);
         }
 
+        public function cancelarAgendamentoExame($idExame) {
+            $sql = "UPDATE agendamentos_exames
+                    SET status = 'cancelada' 
+                    WHERE id_agendamento = :idExame";
+            $query = $this->conn->prepare($sql);
+
+            return $query->execute([
+                'idExame' => $idExame
+            ]);
+        }
+
         public function listarAgendamentosExame($idPaciente){
             $sql = "SELECT 
                     ae.id_agendamento,
@@ -108,6 +119,8 @@
 
             return $query->fetchAll(PDO::FETCH_ASSOC);
         }
+
+        
 
     }
 ?>

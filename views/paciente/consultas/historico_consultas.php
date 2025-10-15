@@ -9,8 +9,12 @@
   include '../../../public/includes/paciente/footer.php';
 
 
-    $controllar = new PacienteController($conn);
-    $agendamentos = $controllar->historicoAgendamentosConsulta($idPaciente)
+  $controller = new PacienteController($conn);
+  $agendamentos = $controller->historicoAgendamentosConsulta($idPaciente);
+
+  $totalConsultas = $controller->totalConsultasRealizadas($idPaciente);
+  $totalConsultasRetorno = $controller->totalConsultasRetorno($idPaciente);
+  $totalConsultasCanceladas = $controller->totalConsultasCanceladas($idPaciente);
 ?>
 
 <!DOCTYPE html>
@@ -185,7 +189,7 @@
             <i class="fa-solid fa-file-medical"></i>
             <div>
               <p>Total Consultas já realizadas</p>
-              <h2><?php  ?></h2>
+              <h2><?php echo $totalConsultas ?></h2>
             </div>
           </div>
 
@@ -193,7 +197,7 @@
             <i class="fa-solid fa-flask"></i>
             <div>
               <p>Total de consultas de retorno</p>
-              <h2><?php  ?></h2>
+              <h2><?php echo $totalConsultasRetorno ?></h2>
             </div>
           </div>
 
@@ -201,7 +205,7 @@
             <i class="fa-solid fa-ban"></i>
             <div>
               <p>Total de consultas Canceladas</p>
-              <h2><?php  ?></h2>
+              <h2><?php echo $totalConsultasCanceladas?></h2>
             </div>
           </div>
         </div>

@@ -20,7 +20,7 @@
 <title>Histórico de Consultas</title>
 
   <!-- STYLE  CSS-->
-  <link rel="stylesheet" href="../../public/assets/css/profissional/historico_consultas.css">
+  <link rel="stylesheet" href="../../../public/assets/css/profissional/historico_consultas.css">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 

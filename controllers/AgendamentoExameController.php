@@ -53,6 +53,20 @@
                 echo "erro ao editar";
             }
         }
+        
+
+        public function cancelarExame(){
+            $idAgendamento = $_POST['idAgendamento'];
+
+            $cancelar = $this->agendamentoExameModel->cancelarAgendamentoExame($idAgendamento);
+
+            if($cancelar){
+                echo "Cancelado";
+            }
+            else{
+                echo "erro";
+            }
+        }
 
     }
 
@@ -64,6 +78,9 @@
                 break;
             case 'editarExame':
                 $controller->editarExame();
+                break;
+            case 'cancelarExame':
+                $controller->cancelarExame();
                 break;
             default:
                 echo "Ação inválida";

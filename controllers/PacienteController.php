@@ -143,6 +143,18 @@
             return $agendametos;
         }
         
+        public function totalConsultasRealizadas($idPaciente) {
+            return $this->agendamentoConsultaModel->totalConsultasRealizadas($idPaciente);
+        }
+        public function totalConsultasRetorno($idPaciente) {
+            return $this->agendamentoConsultaModel->totalConsultasRetorno($idPaciente);
+        }
+        public function totalConsultasCanceladas($idPaciente) {
+            return $this->agendamentoConsultaModel->totalConsultasCanceladas($idPaciente);
+        }
+
+
+        
         #exames
         public function listarAgendamentosExame($idPaciente) {
             $agendametos = $this->agendamentoExameModel->listarAgendamentosExame($idPaciente);

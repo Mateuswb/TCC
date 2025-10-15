@@ -185,6 +185,7 @@
             return $idHorario;
         }
 
+
         # exames
         public function listarHorariosDisponiveisExame($dataSelecionada, $exame) {
             $nomeDias = [
@@ -205,7 +206,7 @@
                 "Teste de gravidez"         => "obstetricia",
                 "Raio-X"                    => "radiologia",
                 "Tomografia"                => "exame_radiologia",
-                "Ressonância magnética"     => "radiologia",
+                "Hemograma Completo"        => "exame_laboratorio",
                 "Ultrassonografia"          => "radiologia",
                 "Eletrocardiograma"         => "cardiologia",
                 "Ecocardiograma"            => "cardiologia",

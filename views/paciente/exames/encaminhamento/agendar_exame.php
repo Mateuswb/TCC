@@ -28,7 +28,7 @@
         </div>
 
         <div class="form-control">
-          <label for="diaAgendamento">Dia da Consulta</label>
+          <label for="diaAgendamento">Dia do Exame</label>
           <input type="date" id="diaAgendamento" name="diaAgendamento" required>
         </div>
 

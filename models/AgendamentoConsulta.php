@@ -65,7 +65,6 @@
             return $query;
         }
 
-
         public function listarAgendamentosDoProfissional($idProfissional) {
             $hoje = date('Y-m-d');
             $sql = "SELECT a.id_agendamento,
@@ -169,6 +168,44 @@
             ]);
 
             return $query->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function totalConsultasRealizadas($idPaciente){
+            $sql = "SELECT COUNT(*) as total_consultas
+                    FROM agendamentos_consultas
+                    WHERE id_paciente = :idPaciente";
+            $query = $this->conn->prepare($sql);
+            $query->execute([
+                'idPaciente'=> $idPaciente
+            ]);
+
+            return $query->fetch(PDO::FETCH_ASSOC)['total_consultas'];
+        }
+
+        public function totalConsultasRetorno($idPaciente){
+            $sql = "SELECT COUNT(*) as total_cons_retorno
+                    FROM agendamentos_consultas
+                    WHERE id_paciente = :idPaciente
+                    AND tipo_consulta = 'retorno' ";
+            $query = $this->conn->prepare($sql);
+            $query->execute([
+                'idPaciente'=> $idPaciente
+            ]);
+
+            return $query->fetch(PDO::FETCH_ASSOC)['total_cons_retorno'];
+        }
+
+        public function totalConsultasCanceladas($idPaciente){
+            $sql = "SELECT COUNT(*) as total_cons_canceladas
+                    FROM agendamentos_consultas
+                    WHERE id_paciente = :idPaciente
+                    AND status = 'cancelada'";
+            $query = $this->conn->prepare($sql);
+            $query->execute([
+                'idPaciente'=> $idPaciente
+            ]);
+
+            return $query->fetch(PDO::FETCH_ASSOC)['total_cons_canceladas'];
         }
 
 

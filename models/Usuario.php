@@ -7,7 +7,7 @@
         }
 
         public function buscarPorCPF($cpfUsuario) {
-            $sql = "SELECT u.id_usuario, u.login, u.senha, u.tipo_usuario,
+            $sql = "SELECT u.id_usuario, u.login, u.senha, u.tipo_usuario, pr.especialidade,
                         p.nome AS paciente_nome, p.id_paciente,
                         pr.nome AS profissional_nome, pr.id_profissional
                     FROM usuarios u

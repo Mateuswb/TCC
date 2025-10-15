@@ -1,39 +1,32 @@
-
-
 <?php
-    // Pega a pasta raiz do projeto
-    $parts = explode('/', trim($_SERVER['SCRIPT_NAME'], '/'));
-    $root = $parts[0]; 
-
-    define("BASE_URL", "/$root/views");
+  include 'config.php';
 ?>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-
 <div class="sidebar" id="sidebar"> 
 <div class="logo">
-    <img src="https://i.imgur.com/o0F1W1Z.png" alt="MedHub">
+    <img src="<?= BASE_URL ?>/public/includes/paciente/img.png" alt="">
 </div>
 <nav>
     <ul>
-   <li><a href="<?= BASE_URL ?>/paciente/home.php"><i class="fa-solid fa-house"></i> Início</a></li>
+   <li><a href="<?= BASE_URL ?>/views/paciente/home.php"><i class="fa-solid fa-house"></i> Início</a></li>
 
     <h4>Gestão de Consultas</h4>
 
-    <li><a href="<?= BASE_URL ?>/paciente/consultas/listar_profissionais.php"><i class="fa-solid fa-stethoscope"></i> Marcar consulta</a></li>
-    <li><a href="<?= BASE_URL ?>/paciente/consultas/consultas_agendadas.php"><i class="fa-solid fa-calendar-check"></i> Consultas agendadas</a></li>
-    <li><a href="<?= BASE_URL ?>/paciente/consultas/historico_consultas.php"><i class="fa-solid fa-book"></i> Histórico de consultas</a></li>
+    <li><a href="<?= BASE_URL ?>/views/paciente/consultas/listar_profissionais.php"><i class="fa-solid fa-stethoscope"></i> Marcar consulta</a></li>
+    <li><a href="<?= BASE_URL ?>/views/paciente/consultas/consultas_agendadas.php"><i class="fa-solid fa-calendar-check"></i> Consultas agendadas</a></li>
+    <li><a href="<?= BASE_URL ?>/views/paciente/consultas/historico_consultas.php"><i class="fa-solid fa-book"></i> Histórico de consultas</a></li>
 
     <h4>Gestão de Exames</h4>
     <li>
-    <a href="<?= BASE_URL ?>/paciente/exames/encaminhamento/listar_encaminhamentos.php">
+    <a href="<?= BASE_URL ?>/views/paciente/exames/encaminhamento/listar_encaminhamentos.php">
         <i class="fa-solid fa-file-lines"></i> Encaminhamentos
     </a>
     </li>
-    <li><a href="<?= BASE_URL ?>/paciente/exames/exames_agendados/listar_agendamentos.php"><i class="fa-solid fa-vial"></i> Exames agendados</a></li>
-    <li><a href="<?= BASE_URL ?>/paciente/exames/historico/historico_exames.php"><i class="fa-solid fa-file-medical "></i> Histórico de exames</a></li>
-    <li><a href="#"><i class="fa-solid fa-chart-column"></i> Resultado dos exames</a></li>
+    <li><a href="<?= BASE_URL ?>/views/paciente/exames/exames_agendados/listar_agendamentos.php"><i class="fa-solid fa-vial"></i> Exames agendados</a></li>
+    <li><a href="<?= BASE_URL ?>/views/paciente/exames/historico/historico_exames.php"><i class="fa-solid fa-file-medical "></i> Histórico de exames</a></li>
+    <li><a href="<?= BASE_URL ?>/views/paciente/exames/resultados/listar_resultados.php"><i class="fa-solid fa-chart-column"></i> Resultado dos exames</a></li>
 
     </ul>
 </nav>
@@ -70,7 +63,7 @@
     }
 
     .sidebar .logo img {
-      width: 120px;
+      width: 150px;
     }
 
     .sidebar nav {

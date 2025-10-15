@@ -268,6 +268,7 @@
         <section class="cards-profissionais">
             <?php foreach($profissionais['dados'] as $profissional){ ?>
             <div class="card">
+                
                 <img src="../../../public/assets/imgs/cardiologista.jpg" alt="Dr. Luiz">
                 <div class="card-info">
                     <h3><?php echo $profissional['nome']; ?></h3>

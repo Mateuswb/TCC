@@ -31,6 +31,15 @@
   
   <style>
     body { margin:0; font-family: Arial, sans-serif; display:flex; height:100vh; background:#f7f9fb; }
+     *{box-sizing:border-box}
+    body{
+      padding: 0;
+      margin:0;
+     
+      color:#263244;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
     .main { flex:1; display:flex; flex-direction:column; }
     .header { background:#f5f6fa; padding:10px 20px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #ddd; }
     .header h1 { font-size:18px; margin:0; }

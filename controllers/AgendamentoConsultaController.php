@@ -56,9 +56,10 @@
                 echo "Erro ao agendar consulta.";
             }
         }
+        
        
         public function editarConsulta() {
-            $idAgendamento         = $_POST['idAgendamento'];
+            $idAgendamento         = $_POST['idAgendamentoConsulta'];
             $tipoConsulta          = $_POST['tipoConsulta'];
             $horarioAgendamento    = $_POST['horarioAgendamento'];
             $diaAgendamento        = $_POST['diaAgendamento'];
@@ -102,10 +103,22 @@
             exit;
         }
 
+        public function cancelarConsulta(){
+            $idAgendamento = $_POST['idAgendamento'];
+
+            $cancelar = $this->agendamentoConsultaModel->cancelarAgendamentoConsulta($idAgendamento);
+
+            if($cancelar){
+                echo "Cancelado";
+            }
+            else{
+                echo "erro";
+            }
+        }
+
         public function listarAgendamentosDoProfissional($idProfissional) {
             return $this->agendamentoConsultaModel->listarAgendamentosDoProfissional($idProfissional);
         }
-
     }
     
     
@@ -117,6 +130,9 @@
                 break;
             case 'editarConsulta':
                 $controller->editarConsulta();
+                break;
+            case 'cancelarConsulta':
+                $controller->cancelarConsulta();
                 break;
             default:
                 echo "Ação inválida";

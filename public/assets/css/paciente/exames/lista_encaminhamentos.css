@@ -46,96 +46,119 @@
     }
 
     /* Grid de cards */
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 40px;
-      width: 100%;
-      max-width: 1500px;
-    }
+    :root {
+  --blue: #003366;
+  --accent: #0b7fc1;
+  --muted: #6c757d;
+  --card-bg: #fff;
+  --shadow: 0 8px 24px rgba(0,0,0,0.1);
+  --accent-hover: #0a6da1;
+}
 
-    .card {
-      background: var(--card-bg);
-      border-radius: 12px;
-      padding: 18px;
-      box-shadow: var(--shadow);
-      position: relative;
-      min-height: 140px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      border: 1px solid rgba(11,59,90,0.06);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 40px;
+  max-width: 1500px;
+}
 
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-    }
+.card {
+  background: var(--card-bg);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  position: relative;
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid rgba(11,59,90,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
 
-    .top {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-    }
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+  border-color: rgba(11,59,90,0.15);
+}
 
-    .icon-box {
-      width: 54px;
-      height: 54px;
-      border-radius: 10px;
-      background: linear-gradient(180deg,#eef7ff,#dff3ff);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 10px rgba(11,59,90,0.04);
-      flex-shrink: 0;
-    }
+.top {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
 
-    .card h3 {
-      margin: 0;
-      font-size: 16px;
-      color: var(--blue);
-      font-weight: 600;
-    }
+.icon-box {
+  width: 60px;
+  height: 60px;
+  border-radius: 14px;
+  background: linear-gradient(180deg,#eef7ff,#d0eaff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 16px rgba(11,59,90,0.06);
+  flex-shrink: 0;
+}
 
-    .badge {
-      position: absolute;
-      right: 14px;
-      top: 14px;
-      background: #fff7d6;
-      color: #8a6a00;
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-weight: 600;
-      font-size: 12px;
-      border: 1px solid rgba(0,0,0,0.05);
-    }
+.card h3 {
+  margin: 0;
+  font-size: 18px;
+  color: var(--blue);
+  font-weight: 700;
+}
 
-    .card .meta {
-      color: var(--muted);
-      font-size: 13px;
-      margin-top: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+.badge {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  background: #fff7d6;
+  color: #8a6a00;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 13px;
+  border: 1px solid rgba(0,0,0,0.07);
+}
 
-    .btn {
-      display: inline-block;
-      padding: 8px 14px;
-      background: linear-gradient(180deg,var(--accent),#0b5fa0);
-      color: #fff;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 13px;
-      width: 150px;
-      box-shadow: 0 6px 14px rgba(11,59,90,0.12);
-      cursor: pointer;
-    }
+.card .meta {
+  color: var(--muted);
+  font-size: 14px;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
 
-    .btn:hover {
-      background: linear-gradient(180deg,#0c8bdb,#0b5fa0);
-    }
+.btn-agendar, .btn-detalhes {
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
 
+.btn-agendar {
+  background: linear-gradient(180deg,var(--accent),#0b5fa0);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(11,59,90,0.15);
+}
 
+.btn-agendar:hover {
+  background: linear-gradient(180deg,#0c8bdb,#0b5fa0);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(11,59,90,0.2);
+}
+
+.btn-detalhes {
+  background: #eaf4ff;
+  color: var(--blue);
+  border: 1px solid #0b3b5a33;
+}
+
+.btn-detalhes:hover {
+  background: #d0eaff;
+  transform: translateY(-2px);
+}

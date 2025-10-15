@@ -26,7 +26,6 @@
             echo $horariosDisponiveis;
         }
 
-
     }
 
     $controller = new ExameController($conn);

@@ -4,7 +4,9 @@
     $root = $parts[0]; 
 
     define("BASE_URL", "/$root/views");
+$especialidades = isset($_SESSION['especialidades']) ? json_decode($_SESSION['especialidades'], true) : ['cardiologista'];
 ?>
+
 
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -18,6 +20,14 @@
     <a href="<?= BASE_URL ?>/profissional/agendamentos/consultas.php">
         <i class="fas fa-calendar-check"></i> <span>Meus Agendamentos </span>
     </a>
+
+    <?php if(in_array('exame_laboratorio', $especialidades) || in_array('exame_radiologia', $especialidades)) : ?>
+
+       <a href="<?= BASE_URL ?>/profissional/lancar_resultado_exames/listar_exames.php">
+        <i class="fas fa-calendar-check"></i> <span>Lançar Resultado Exame</span>
+    </a>
+
+<?php endif; ?>
 
     <a href="<?= BASE_URL ?>/profissional/paciente/listar_pacientes.php">
       <i class="fas fa-user-injured"></i> <span>Pacientes </span>
@@ -47,7 +57,7 @@
   /* Sidebar */
     .sidebar {
         width: 250px;
-        background: #073a52ff;
+        background: #0e204bff;
         color: #fff;
         height: 100vh;
         padding: 10px;

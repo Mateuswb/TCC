@@ -1,3 +1,4 @@
+  
 <?php
    include '../../public/includes/paciente/sidebar.php';
    include '../../public/includes/paciente/header.php';
@@ -26,7 +27,7 @@
 <body>
   <main>
     <h1>Agende suas <span>consultas</span> e <span>exames</span></h1>
-
+  
     <div class="content-grid">
       <!-- LEFT SIDE -->
       <div>

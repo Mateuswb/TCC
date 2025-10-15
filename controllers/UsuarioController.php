@@ -33,6 +33,7 @@
                 } else if ($usuario['tipo_usuario'] == 'profissional') {
                     $_SESSION['idProfissional']   = $usuario['id_profissional'];
                     $_SESSION['nomeProfissional'] = $usuario['profissional_nome'];
+                    $_SESSION['especialidades'] = $usuario['especialidade'];
 
                     if (!$this->horarioModel->verificaHorario($_SESSION['idProfissional'])) {
                         $_SESSION['msg'] = "Antes de continuar, cadastre seus horários";

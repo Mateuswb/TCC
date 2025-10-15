@@ -83,9 +83,28 @@
             return $this->relatorioModel->novosPacientesMes($idProfissional);
         }
         
+        // consultas profissional
         public function totalPacientesPorProfissional($idProfissional) {
             return $this->relatorioModel->totalPacientesPorProfissional($idProfissional);
         }
+
+        public function listarConsultas($idProfissional) {
+            return $this->relatorioModel->listarConsultas($idProfissional);
+        }
+
+        public function totalConsultasProfissional($idProfissional) {
+            return $this->relatorioModel->totalConsultasProfissional($idProfissional);
+        }
+        public function totalConsultasConcluidas($idProfissional) {
+            return $this->relatorioModel->totalConsultasConcluidas($idProfissional);
+        }
+        public function totalConsultasCanceladas($idProfissional) {
+            return $this->relatorioModel->totalConsultasCanceladas($idProfissional);
+        }
+
+
+
+        
 
 
         # paciente 

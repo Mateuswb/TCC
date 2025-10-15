@@ -3,16 +3,19 @@
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
 }
-.container{
+.container {
     display: flex;
-    width: 70%;
-    background-color: #fafafa;
+     width: 100%;       /* largura relativa */
+    max-width: 100px; /* limite máximo */
+
+    background-color: rgba(250, 250, 250, 0.95);
     border-radius: 10px;
-    box-shadow: 2px 2px 5px rgb(189, 189, 189);
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.15);
     height: auto;
     overflow: hidden;
+    margin: 50px auto;
+    flex-wrap: wrap; /* permite quebra de linha em telas pequenas */
 }
-
 .container-left {
     box-shadow: 2px 2px 5px rgb(189, 189, 189);
     padding: 80px;
@@ -190,6 +193,7 @@ a #btn-logar{
 
 .modal-box {
     background-color: white;
+    
     width: 70%;
     display: flex;
     border-radius: 12px;
@@ -244,16 +248,37 @@ a #btn-logar{
     color: #000;
 }
 
-/* Responsividade da modal */
-@media (max-width: 768px) {
-    .modal-box {
-        flex-direction: column;
-        width: 95%;
-    }
-
-    .modal-box .container-left,
-    .modal-box .form {
-        width: 100%;
+/* Responsividade */
+@media (max-width: 1024px) {
+    .container {
+        width: 90%;
     }
 }
 
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .container-left,
+    .form {
+        width: 100%;
+        padding: 30px 20px;
+    }
+
+    .container-left h2 {
+        font-size: 1.8rem;
+    }
+
+    .container-left p {
+        font-size: 0.95rem;
+    }
+
+    .form-control input {
+        max-width: 100%;
+    }
+
+    #btn-criar-conta {
+        max-width: 100%;
+    }
+}

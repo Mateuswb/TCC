@@ -3,6 +3,8 @@
   include '../../../../public/includes/paciente/sidebar.php';
   include '../../../../public/includes/paciente/header.php';
   include '../../../../public/includes/paciente/footer.php';
+  include '../../../../public/modals/paciente/exames/modal_editar_exame.html';
+  include '../../../../public/modals/paciente/exames/modal_cancelamento_exame.html';
 
   $idPaciente = $_SESSION['idPaciente'];
 
@@ -39,6 +41,7 @@
           <article class="card">
             <span class="badge">Agendado</span>
             <h3><?php echo htmlspecialchars($agendamento['nome_exame']); ?></h3>
+            <h3><?php echo htmlspecialchars($agendamento['id_agendamento']); ?></h3>
 
             <div class="meta">
               <div><i class="fas fa-user-md"></i> Encaminhado por: <strong><?php echo htmlspecialchars($agendamento['nome_profissional']); ?></strong></div>
@@ -47,9 +50,24 @@
             </div>
 
             <div class="btns">
-                <!-- colocar o id aqqqqq -->
-              <a class="btn btn-primary" href="editar.php?id=">Editar Dados do Exame</a>
-              <a class="btn btn-danger" href="cancelar.php?id=">Cancelar</a>
+            <button 
+              class="btn editar"
+              data-id-exame="<?= $agendamento['id_agendamento'] ?>"
+              data-dia="<?= $agendamento['dia_agendamento'] ?>"
+              data-hora="<?= $agendamento['horario_agendamento'] ?>"
+              data-profissional="<?= htmlspecialchars($agendamento['nome_profissional']) ?>"
+
+              onclick="abrirModal(this)"> 
+              <i class="fa-solid fa-pencil"></i> Editar
+            </button>
+
+            <button 
+              class="btn cancelar" 
+              data-id="<?= $agendamento['id_agendamento'] ?>"
+              onclick="abrirModalCancelar(this)">
+              <i class="fa-solid fa-xmark"></i> Cancelar
+            </button>
+
             </div>
           </article>
         <?php endforeach; ?>

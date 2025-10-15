@@ -1,15 +1,19 @@
 <?php
-session_start();
-    include '../../controllers/UsuarioController.php';
-    
-    require_once "../../controllers/PacienteController.php";
+  session_start();
+  include '../../public/includes/paciente/sidebar.php';
+  include '../../public/includes/paciente/header.php';
+  include '../../public/includes/paciente/footer.php';
+  include '../../controllers/UsuarioController.php';
+  
+  require_once "../../controllers/PacienteController.php";
 
-    $controllerPaciente = new PacienteController($conn);
-    $paciente = $controllerPaciente->exibirDadosPaciente();
+  $controllerPaciente = new PacienteController($conn);
+  $paciente = $controllerPaciente->exibirDadosPaciente();
 
-    $controllerUsuario = new UsuarioController($conn);
-    $usuario = $controllerUsuario->exibirPerfil();
+  $controllerUsuario = new UsuarioController($conn);
+  $usuario = $controllerUsuario->exibirPerfil();
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -26,84 +30,22 @@ session_start();
 
     body {
         display: flex;
-        background: #f5f8fa;
+        background: #f0f0f0ff;
         height: 100vh;
     }
-
-    /* Sidebar */
-    .sidebar {
-        width: 220px;
-        background: #fff;
-        border-right: 1px solid #e0e0e0;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-
-    .sidebar .logo {
-        padding: 20px;
-        font-size: 18px;
-        font-weight: bold;
-        color: #007B8F;
-    }
-
-    .sidebar .logo small {
-        font-size: 12px;
-        color: #888;
-        display: block;
-    }
-
-    .menu {
-        flex: 1;
-        padding: 10px 0;
-    }
-
-    .menu a {
-        display: flex;
-        align-items: center;
-        padding: 12px 20px;
-        color: #333;
-        text-decoration: none;
-        font-size: 15px;
-    }
-
-    .menu a i {
-        margin-right: 10px;
-        color: #007B8F;
-    }
-
-    .menu a:hover,
-    .menu a.active {
-        background: #e6f7f9;
-        color: #007B8F;
-        border-left: 4px solid #007B8F;
-    }
-
+  
     /* Main */
     .main {
         flex: 1;
         display: flex;
         flex-direction: column;
+        margin-top: 70px;
     }
 
-    .topbar {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        background: #fff;
-        padding: 10px 20px;
-        border-bottom: 1px solid #ddd;
-    }
-
-    .topbar i {
-        margin-left: 20px;
-        font-size: 18px;
-        cursor: pointer;
-    }
-
+ 
     /* Profile header */
     .profile-header {
-        background: #007B8F;
+        background: #005EB5;
         color: #fff;
         padding: 20px;
         border-radius: 8px;
@@ -124,7 +66,7 @@ session_start();
     }
 
     .profile-header button {
-        background: #0ca4b9;
+        background: #005EB5;
         border: none;
         padding: 10px 20px;
         border-radius: 5px;
@@ -135,7 +77,7 @@ session_start();
     /* Tabs */
     .tabs {
         margin: 0 20px;
-        background: #fff;
+        background: #ffffffff;
         border-radius: 8px;
         padding: 15px;
     }
@@ -156,8 +98,8 @@ session_start();
     }
 
     .tab-buttons button.active {
-        border-bottom: 3px solid #007B8F;
-        color: #007B8F;
+        border-bottom: 3px solid #005EB5;
+        color: #005EB5;
     }
 
     .tab-content {
@@ -202,7 +144,7 @@ session_start();
     /* Botão */
     input[type="submit"],
     button[type="submit"] {
-        background: #0ca4b9;
+        background: #005EB5;
         color: #fff;
         padding: 10px 20px;
         border: none;
@@ -220,28 +162,11 @@ session_start();
   </style>
 </head>
 <body>
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <div>
-      <div class="logo">
-        MedHub <br><small>Sempre o Melhor para Você</small>
-      </div>
-      <div class="menu">
-        <a href="#"><i class="fa fa-home"></i> Dashboard</a>
-        <a href="#"><i class="fa fa-calendar"></i> Consultas</a>
-        <a href="#"><i class="fa fa-user-md"></i> Profissionais</a>
-        <a href="#" class="active"><i class="fa fa-user"></i> Perfil</a>
-      </div>
-    </div>
-  </div>
+ 
 
   <!-- Main -->
   <div class="main">
-    <div class="topbar">
-      <i class="fa fa-bell"></i>
-      <i class="fa fa-cog"></i>
-      <i class="fa fa-user-circle"></i>
-    </div>
+
 
     <div class="profile-header">
       <div class="info">

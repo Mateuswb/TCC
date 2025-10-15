@@ -88,7 +88,7 @@
                 <a href="usuario/cadastro.php" id="tenho-conta">Ainda não tenho uma conta</a>
             </form>
         </div>
-        <script src="../assets/js/validar_login.js"></script>
+        <script src="../public/assets/js/validar_login.js"></script>
     </div>
 
     <div class="conteudo">
