@@ -4,7 +4,7 @@
     $root = $parts[0]; 
 
     define("BASE_URL", "/$root/views");
-$especialidades = isset($_SESSION['especialidades']) ? json_decode($_SESSION['especialidades'], true) : ['cardiologista'];
+    $especialidades = isset($_SESSION['especialidades']) ? json_decode($_SESSION['especialidades'], true) : ['cardiologista'];
 ?>
 
 

@@ -9,13 +9,13 @@
   <title>Med Hub — Agende Consultas e Exames</title>
 
   <style>
-/* ===== RESET ===== */
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html, body {
-  font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
-  background: #FAFDFF;
-  color: #002E53;
-}
+  html, body {
+    font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+    background: #FAFDFF;
+    color: #002E53;
+  }
 
 :root {
   --azul-escuro: #002E53;
@@ -24,7 +24,7 @@ html, body {
   --radius: 16px;
   --shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
-/* ===== HEADER ===== */
+/* header */
 header {
   background: var(--azul-escuro);
   display: flex;
@@ -55,18 +55,18 @@ header nav a {
   text-decoration: none;
   font-weight: 600;
   font-size: 17px;
-  position: relative; /* necessário para o ::after */
+  position: relative;
 }
 
 header nav a::after {
   content: "";
   width: 0%;
   height: 2px;
-  background-color: #ffffff; /* cor do sublinhado */
+  background-color: #ffffff;
   position: absolute;
-  bottom: -4px; /* distância do texto */
+  bottom: -4px; 
   left: 0;
-  transition: 0.4s; /* animação */
+  transition: 0.4s;
   border-radius: 5px;
 }
 
@@ -265,7 +265,7 @@ header .btn-login:hover {
   font-weight: 700;
 }
 
-/* ===== EXAMES ===== */
+/*  EXAMES*/
 .exames {
   background: var(--azul-escuro);
   color: #fff;
@@ -292,7 +292,7 @@ header .btn-login:hover {
   color: #e2ecf8;
 }
 
-/* ===== ACESSO ===== */
+/*  ACESSO */
 .acesso {
   background: #EAF3FF;
   padding: 100px 10%;
@@ -312,7 +312,7 @@ header .btn-login:hover {
   width: 100%;
 }
 
-/* ===== FOOTER ===== */
+/* FOOTER */
 footer {
   background: var(--azul-escuro);
   color: #CFE9FF;
@@ -332,7 +332,7 @@ footer p {
   color: #a8cce6;
 }
 
-/* ===== RESPONSIVO ===== */
+/* RESPONSIVO  */
 @media (max-width: 900px) {
   .hero {
     flex-direction: column;
