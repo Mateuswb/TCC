@@ -1,5 +1,6 @@
 <?php
   include 'config.php';
+  $currentFile = basename($_SERVER['PHP_SELF']); 
 ?>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -14,8 +15,20 @@
 
     <h4>Gestão de Consultas</h4>
 
-    <li><a href="<?= BASE_URL ?>/views/paciente/consultas/listar_profissionais.php"><i class="fa-solid fa-stethoscope"></i> Marcar consulta</a></li>
-    <li><a href="<?= BASE_URL ?>/views/paciente/consultas/consultas_agendadas.php"><i class="fa-solid fa-calendar-check"></i> Consultas agendadas</a></li>
+  <li>
+    <a href="<?= BASE_URL ?>/views/paciente/consultas/listar_profissionais.php" 
+      class="<?= ($currentFile == 'listar_profissionais.php') ? 'active' : '' ?>">
+      <i class="fa-solid fa-stethoscope"></i> Marcar consulta
+    </a>
+  </li>
+
+  <li>
+    <a href="<?= BASE_URL ?>/views/paciente/consultas/consultas_agendadas.php"
+      class="<?= ($currentFile == 'consultas_agendadas.php') ? 'active' : '' ?>">
+      <i class="fa-solid fa-calendar-check"></i> Consultas agendadas
+    </a>
+  </li>
+
     <li><a href="<?= BASE_URL ?>/views/paciente/consultas/historico_consultas.php"><i class="fa-solid fa-book"></i> Histórico de consultas</a></li>
 
     <h4>Gestão de Exames</h4>
@@ -35,6 +48,10 @@
 <style>
   html {
   scroll-behavior: auto !important;
+}
+.sidebar nav ul li a.active {
+  background-color: #e6f0ff;
+  color: #003366;
 }
 
 .sidebar {

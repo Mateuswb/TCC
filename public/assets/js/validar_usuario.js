@@ -8,7 +8,9 @@ form.addEventListener("submit", (e) => {
   checkInputs();
 });
 
+
 function checkInputs() {
+  console.log("ger");
   const cpfValue = cpf.value.trim();
   const passwordValue = password.value.trim();
   const passwordConfirmationValue = passwordConfirmation.value.trim();

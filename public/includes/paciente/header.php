@@ -26,7 +26,7 @@
     <span class="close-menu" id="close-menu">&times;</span>
   </div>
   <ul>
-  <li onclick="location.href='<?= BASE_URL ?>/paciente/perfil.php'">
+  <li onclick="location.href='<?= BASE_URL ?>/views/paciente/perfil.php'">
     <i class="fas fa-user"></i> Perfil
   </li>
   <li onclick="location.href='#'">
@@ -35,7 +35,7 @@
   <li onclick="location.href='#'">
     <i class="fas fa-file-medical-alt"></i> Histórico de Exames
   </li>
-  <li onclick="location.href='<?= BASE_URL ?>/logout/logout.php'">
+  <li onclick="location.href='<?= BASE_URL ?>/views/logout/logout.php'">
     <i class="fas fa-sign-out-alt"></i> Sair
   </li>
 </ul>

@@ -1,0 +1,281 @@
+
+<div class="modal-bg" id="modal-login">
+    <div class="modal-box">
+        <button class="close-btn" onclick="fecharModal()">&times;</button>
+
+        <!-- Lado esquerdo do modal -->
+        <div class="container-left">
+            <h2>Bem Vindo</h2>
+            <p>Organize atendimentos com mais agilidade e segurança. Aqui, sua saúde é prioridade.</p>
+        </div>
+
+        <!-- Formulário -->
+        <form action="../controllers/UsuarioController.php" method="post" class="form" id="form-login">
+            <h1 class="titleLogin">Login</h1>
+            <input type="hidden" name="acao" value="login">
+
+            <div class="form-control">
+                <label for="cpf">CPF</label>
+                <input type="text" id="cpf" name="cpf" placeholder="Digite seu CPF">
+                <img class="img_success" src="../assets/icones/check.png" alt="">
+                <img class="img_error" src="../assets/icones/exclamation.png" alt="">
+                <small>Msg de erro</small>
+            </div>
+
+            <div class="form-control">
+                <label for="password">Senha</label>
+                <input type="password" id="password" name="password" placeholder="Digite sua senha">
+                <img class="img_success" src="../assets/icones/check.png" alt="">
+                <img class="img_error" src="../assets/icones/exclamation.png" alt="">
+                <small>Msg de erro</small>
+            </div>
+
+            <input type="submit" id="btn-criar-conta" value="Login">
+            <a href="usuario/cadastro.php" id="tenho-conta">Ainda não tenho uma conta</a>
+        </form>
+    </div>
+</div>
+
+<!-- ESTILOS DO MODAL -->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+*{
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+.container {
+    display: flex;
+    width: 90%; 
+    background-color: rgba(250, 250, 250, 0.95);
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.15);
+    height: auto;
+    overflow: hidden;
+    margin: 50px auto;
+    flex-wrap: wrap; 
+}
+.container-left {
+    box-shadow: 2px 2px 5px rgb(189, 189, 189);
+    padding: 80px;
+    padding-bottom: 150px;
+    width: 40%;
+    background: linear-gradient(135deg, 
+        #00497e 49%, 
+        #004577, 
+        #0161a1 51%
+    );
+        display: flex;
+    align-items: center;      
+    justify-content: center;  
+    flex-direction: column;   
+    color: white;
+  }
+    .container-left p {
+    text-align: justify;
+    font-size: 20px;
+    }
+    .container-left h2 {
+    font-size: 35px;
+    margin: 10px;
+    }
+
+
+.titleLogin{
+    margin-bottom: 40px;
+}
+
+#btn-logar{
+    width: 130px;
+    height: 40px;
+    border-radius: 30px;
+    background-color: #1f67d3;
+    border: 1px solid rgb(255, 255, 255);
+    cursor: pointer;
+}
+a #btn-logar{
+    font-size: 20px;
+    color: #fafafa;
+}
+
+.form {
+    padding: 0 40px 30px;
+    width: 60%; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;     
+    justify-content: center;  
+    height: 100%;            
+}
+
+.form-control {
+    padding-bottom: 10px;
+    position: relative;
+}
+
+.form-control label {
+    color: #000000;
+}
+
+.form-control input {
+    border-radius: 5px;
+    outline: 0;
+    display: block;
+    font-size: 14px;
+    width: 380px;
+    padding: 10px;
+    height: 45px;
+    border: 1px solid black;
+}
+.form-control input:focus{
+    border: 1px solid #1f67d3;
+}
+
+.form-control img{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 350px;
+    top: 37px; 
+   
+}
+
+.form-control img, small{
+    visibility: hidden;
+}
+
+#btn-criar-conta{
+    background-color: #09275E;
+    color: #fff;
+    font-size: 18px;
+    width: 380px;
+    border-radius: 10px;
+    padding: 7px;
+    transition: .1s;
+    cursor: pointer;
+}
+
+#btn-criar-conta:hover{
+    background-color: #043f83;
+}
+
+#tenho-conta{
+    padding-top: 10px;
+}
+
+
+/* Error e Success */
+.form-control.success input{
+    border: 1px solid #24C100;
+
+}
+
+.form-control.error input{
+    border: 1px solid #FF0000;
+
+}
+.form-control.success .img_success {
+    visibility: visible;
+}
+
+.form-control.error .img_error {
+    visibility: visible;
+}
+
+.form-control.error small{
+    visibility: visible;
+    color: #FF0000;
+}
+
+
+/* Style da msg de erro */
+#error-message{
+    background-color: #ffeef0;
+    color: #86181d;
+    border: 1px solid #e63042;
+    padding: 10px 15px;
+    margin-top: 0px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+
+.close-btn2 {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #86181d;
+    cursor: pointer;
+    padding: 0;
+}
+.close-btn2:hover {
+    color: #d73a49;
+}
+
+
+/* Style do  Modal de Login  */
+.modal-bg {
+    display: none; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); 
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;  
+}
+
+.modal-box {
+    background-color: white;
+    
+    width: 60%;
+    display: flex;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out;
+
+}
+
+.modal-box.fade-out {
+    animation: fadeOut 0.3s ease-in-out forwards;
+}
+
+/* Botão de fechar no canto */
+.modal-box .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    color: #444;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 10000;
+}
+
+.modal-box .close-btn:hover {
+    color: #000;
+}
+
+</style>
+
+
+<script>
+    const modal = document.getElementById("modal-login");
+
+    function abrirModal() { modal.style.display = "flex"; }
+    function fecharModal() { modal.style.display = "none"; }
+
+
+    window.onclick = function(event) {
+        if (event.target === modal) fecharModal();
+    }
+</script>
