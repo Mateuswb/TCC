@@ -22,16 +22,19 @@
         <input type="hidden" name="nomeExame" id="exame">
 
 
-        <div class="form-control" id="box-anexo" style="display:none;">
-          <label for="anexo">Anexar Arquivo (apenas para retorno)</label>
-          <input type="file" name="anexo" id="anexo" accept=".pdf,.jpg,.png,.jpeg">
-        </div>
-
         <div class="form-control">
           <label for="diaAgendamento">Dia do Exame</label>
           <input type="date" id="diaAgendamento" name="diaAgendamento" required>
         </div>
 
+        <div class="profissioanis">
+          <select name="profissional" id="profissionais">
+            <label>Profissional</label>
+            <option value=""></option>
+          </select>
+        </div>
+        
+        
         <div class="form-control">
           <label for="horarioAgendamento">Escolha o Horário</label>
           <div id="times" class="times"></div>
@@ -189,18 +192,39 @@ document.getElementById('diaAgendamento').addEventListener('change', function() 
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: `data=${encodeURIComponent(data)}&exame=${encodeURIComponent(exame)}`
   })
+  // .then(r => console.log(r.text()))
   .then(r => r.json())
   .then(retorno => {
     const container = document.getElementById('times');
-    container.innerHTML = '';
     
+  
     if (!retorno?.disponiveis) return;
 
-    retorno.disponiveis.forEach(h => {
-      const bloqueado = retorno.agendamento?.includes(h);
-      container.innerHTML += bloqueado
-        ? `<label class="time-slot-bloqueado">${h}</label>`
-        : `<label class="time-slot"><input type="radio" name="horarioAgendamento" value="${h}"><span>${h}</span></label>`;
+    console.log(retorno);
+    const select = document.getElementById("profissionais");
+    select.innerHTML = '<option value="">Selecione um profissional</option>';
+
+    for (const profissional in retorno.disponiveis) {
+      const option = document.createElement("option");
+      option.value = profissional;
+      option.textContent = profissional;
+      select.appendChild(option);
+    }
+
+    select.addEventListener("change", function() {
+      const profissionalSelecionado = this.value; 
+      const horarios = retorno.disponiveis[profissionalSelecionado];
+    
+      
+      if (profissionalSelecionado) {
+        container.innerHTML = '';
+        for (const h of horarios) {      
+          const bloqueado = retorno.agendamento?.includes(h);
+          container.innerHTML += bloqueado
+            ? `<label class="time-slot-bloqueado">${h}</label>`
+            : `<label class="time-slot"><input type="radio" name="horarioAgendamento" value="${h}"><span>${h}</span></label>`;
+        }
+      }
     });
   })
   .catch(err => console.error("Erro:", err));

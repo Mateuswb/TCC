@@ -196,6 +196,39 @@ textarea {
 <!-- ===== SCRIPT ===== -->
 <script>
 
+  function buscarHorarios(){
+    let data = this.value;
+    const idProfissional = document.getElementById('idProfissional').value;
+
+    if(data == null){
+      data = document.querySelector('input[name="diaAgendamento"]').value;
+    }
+    console.log(data);
+
+    fetch('../../../controllers/PacienteController.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `data=${encodeURIComponent(data)}&idProfissional=${encodeURIComponent(idProfissional)}`
+    })
+    .then(r => r.json())
+    .then(retorno => {
+      const container = document.getElementById('times');
+      container.innerHTML = '';
+
+      if (!retorno?.disponiveis) return;
+
+      console.log(retorno.agendamento);
+
+      retorno.disponiveis.forEach(h => {
+        const bloqueado = retorno.agendamento?.includes(h);
+        container.innerHTML += bloqueado
+          ? `<label class="time-slot-bloqueado">${h}</label>`
+          : `<label class="time-slot"><input type="radio" name="horarioAgendamento" value="${h}"><span>${h}</span></label>`;
+      });
+    })
+    .catch(err => console.error("Erro:", err));
+  }
+
 
 document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("modalEditarConsulta");
@@ -221,6 +254,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("especialidadeProfissionalEditar").innerText = btn.dataset.especialidade || "Especialidade";
 
     abrirModal();
+    buscarHorarios();
   });
 });
 
@@ -229,28 +263,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Carregar horários disponíveis
 document.getElementById('diaAgendamento').addEventListener('change', function() {
-  const data = this.value;
-  const idProfissional = document.getElementById('idProfissional').value;
-
-  fetch('../../../controllers/PacienteController.php', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: `data=${encodeURIComponent(data)}&idProfissional=${encodeURIComponent(idProfissional)}`
-  })
-  .then(r => r.json())
-  .then(retorno => {
-    const container = document.getElementById('times');
-    container.innerHTML = '';
-
-    if (!retorno?.disponiveis) return;
-
-    retorno.disponiveis.forEach(h => {
-      const bloqueado = retorno.agendamento?.includes(h);
-      container.innerHTML += bloqueado
-        ? `<label class="time-slot-bloqueado">${h}</label>`
-        : `<label class="time-slot"><input type="radio" name="horarioAgendamento" value="${h}"><span>${h}</span></label>`;
-    });
-  })
-  .catch(err => console.error("Erro:", err));
+  buscarHorarios();
 });
 </script>

@@ -34,13 +34,14 @@
             return $resultado;
         }
 
+        # lista os horarios de agendamento do profissional
         public function listarHorarios($profissionalId){
             $sql = "SELECT * FROM horarios_profissionais WHERE id_profissional = :idProfissional";
             $query = $this->conn->prepare($sql);
             $query->execute([
                 'idProfissional' => $profissionalId
             ]);
-            return $query->fetchAll(PDO::FETCH_ASSOC); // retorna todos os horários
+            return $query->fetchAll(PDO::FETCH_ASSOC); 
         }
 
         public function editarHorario(
@@ -149,7 +150,6 @@
 
             return $horarios;
         }
-
         public function recuperaIdHorario($dataSelecionada, $profissionalId) {
             $nomeDias = [
                 "Sunday"    => "domingo",
@@ -186,7 +186,7 @@
         }
 
 
-        # exames
+        # horarios disponiveis para agendamento do exame
         public function listarHorariosDisponiveisExame($dataSelecionada, $exame) {
             $nomeDias = [
                 "Sunday"    => "domingo",
@@ -199,37 +199,79 @@
             ];
 
            $nomeExames = [
-                # nome do exame             especialidade do profissional que realiza
-                "Hemograma"                 => "hematologia",
-                "Glicemia"                  => "endocrinologia",
-                "Urina tipo 1"              => "patologia_clinica",
-                "Teste de gravidez"         => "obstetricia",
-                "Raio-X"                    => "radiologia",
-                "Tomografia"                => "exame_radiologia",
-                "Hemograma Completo"        => "exame_laboratorio",
-                "Ultrassonografia"          => "radiologia",
-                "Eletrocardiograma"         => "cardiologia",
-                "Ecocardiograma"            => "cardiologia",
-                "Endoscopia digestiva"      => "gastroenterologia",
-                "Colonoscopia"              => "gastroenterologia",
-                "Mamografia"                => "mastologia",
-                "Densitometria óssea"       => "reumatologia",
-                "Teste de esforço"           => "cardiologia",
-                "Audiometria"               => "fonoaudiologia",
-                "Espirometria"              => "pneumologia",
-                "Cultura de sangue"         => "microbiologia",
-                "Sorologia (HIV, Hepatite)" => "infectologia",
-                "Biópsia"                   => "anatomia_patologica"
+                //  Exames laboratoriais gerais
+                "Hemograma"                 => "exame_hematologia",
+                "Hemograma Completo"        => "exame_hematologia",
+                "Glicemia"                  => "exame_endocrinologia",
+                "Colesterol total e frações"=> "exame_endocrinologia",
+                "Triglicerídeos"            => "exame_endocrinologia",
+                "Urina tipo 1"              => "exame_patologia_clinica",
+                "Parasitológico de fezes"   => "exame_patologia_clinica",
+                "Teste de gravidez"         => "exame_obstetricia",
+                "Tipagem sanguínea"         => "exame_hematologia",
+                "Cultura de sangue"         => "exame_microbiologia",
+                "Cultura de urina"          => "exame_microbiologia",
+                "Sorologia (HIV, Hepatite)" => "exame_infectologia",
+                "PCR"                       => "exame_microbiologia",
+                "Biópsia"                   => "exame_anatomia_patologica",
+                
+                //  Exames de imagem
+                "Raio-X"                    => "exame_radiologia",
+                "Tomografia Computadorizada"=> "exame_radiologia",
+                "Ressonância Magnética"     => "exame_radiologia",
+                "Ultrassonografia"          => "exame_radiologia",
+                "Mamografia"                => "exame_mastologia",
+                "Densitometria óssea"       => "exame_reumatologia",
+                
+                //  Exames cardiológicos
+                "Eletrocardiograma (ECG)"   => "exame_cardiologia",
+                "Ecocardiograma"            => "exame_cardiologia",
+                "Teste de esforço"          => "exame_cardiologia",
+                "Holter 24h"                => "exame_cardiologia",
+                "MAPA (Pressão arterial 24h)" => "exame_cardiologia",
+
+                //  Exames gastrointestinais
+                "Endoscopia digestiva alta" => "exame_gastroenterologia",
+                "Colonoscopia"              => "exame_gastroenterologia",
+                "Ultrassom abdominal"       => "exame_gastroenterologia",
+                
+                //  Exames respiratórios
+                "Espirometria"              => "exame_pneumologia",
+                "Teste de função pulmonar"  => "exame_pneumologia",
+                
+                //  Exames otorrinolaringológicos e audiológicos
+                "Audiometria"               => "exame_fonoaudiologia",
+                "Imitanciometria"           => "exame_fonoaudiologia",
+
+                //  Exames oftalmológicos
+                "Fundoscopia"               => "exame_oftalmologia",
+                "Campimetria visual"        => "exame_oftalmologia",
+                "Tonometria"                => "exame_oftalmologia",
+
+                //  Exames ginecológicos
+                "Papanicolau"               => "exame_ginecologia",
+                "Ultrassonografia pélvica"  => "exame_ginecologia",
+                "Ultrassonografia transvaginal" => "exame_ginecologia",
+
+                //  Exames neurológicos
+                "Eletroencefalograma (EEG)" => "exame_neurologia",
+                "Eletroneuromiografia"      => "exame_neurologia",
+
+                //  Exames ortopédicos
+                "Ressonância de articulação" => "exame_ortopedia",
+                "Ultrassom musculoesquelético" => "exame_ortopedia"
             ];
 
 
+
             $diaSemana = $nomeDias[date("l", strtotime($dataSelecionada))];
-            $sql = "
-                SELECT id_horario, hora_inicio, hora_fim, inicio_intervalo, fim_intervalo
-                FROM horarios_profissionais
-                WHERE id_profissional in (SELECT id_profissional FROM profissionais WHERE JSON_CONTAINS(especialidade, JSON_QUOTE(:nomeExame)))
+            $sql = "SELECT id_horario, nome, hora_inicio, hora_fim, inicio_intervalo, fim_intervalo
+                    FROM horarios_profissionais hp
+                    JOIN profissionais p ON hp.id_profissional = p.id_profissional
+                    WHERE p.id_profissional in (SELECT id_profissional FROM profissionais 
+                    WHERE JSON_CONTAINS(especialidade, JSON_QUOTE(:nomeExame)))
                                      AND dia_semana = :diaSemana
-                ORDER BY hora_inicio;
+                    ORDER BY hora_inicio;
             ";
             $query = $this->conn->prepare($sql);
             $query->execute([
@@ -253,6 +295,7 @@
                 $inicioIntervaloBd = $h['inicio_intervalo'];
                 $fimIntervaloBd    = $h['fim_intervalo'];
                 $idHorario         = $h['id_horario'];
+                $nomeProfissional  = $h['nome'];
 
                 $horaInicio      = strtotime($entrada);
                 $horaFim         = strtotime($saida);
@@ -264,14 +307,15 @@
 
                     // Pula o intervalo
                     if ($proximaHora <= $inicioIntervalo || $hora >= $fimIntervalo) {
-                        $horarios['disponiveis'][] = date("H:i", $hora) . " - " . date("H:i", $proximaHora);
+                        $horarios['disponiveis'][$nomeProfissional][] = date("H:i", $hora) . " - " . date("H:i", $proximaHora);
                     }
                 }
             }
 
-            $sql2 = "
-                SELECT horario_agendamento
-                FROM agendamentos_consultas
+            $sql2 = "SELECT horario_agendamento, p.nome
+                FROM agendamentos_consultas ac
+                JOIN horarios_profissionais hp ON ac.id_horario_profissional = hp.id_horario
+                JOIN profissionais p ON hp.id_profissional = p.id_profissional
                 WHERE id_horario_profissional = :idHorario and dia_agendamento = :dataSelecionada
                 ORDER BY horario_agendamento
             ";
@@ -284,10 +328,11 @@
 
             foreach ($horariosBd2 as $h) {
                 $entrada = $h['horario_agendamento'];
+                $nomeProfissional = $h['nome'];
 
                 $horaInicio = strtotime($entrada);
                 $proximaHora = $horaInicio + $intervaloMinutos * 60;
-                $horarios['agendamento'][] = date("H:i", $horaInicio) . " - " . date("H:i", $proximaHora);
+                $horarios['agendamento'][$nomeProfissional][] = date("H:i", $horaInicio) . " - " . date("H:i", $proximaHora);
             }
             
             return json_encode($horarios);

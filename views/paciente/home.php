@@ -11,9 +11,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>MedHub — Agende suas consultas e exames</title>
-
   
-  <!-- STYLE  CSS-->
+  <!-- CSS -->
   <link rel="stylesheet" href="../../public/assets/css/paciente/home.css">
 
 </head>
@@ -23,7 +22,6 @@
     <h1>Agende suas <span>consultas</span> e <span>exames</span></h1>
   
     <div class="content-grid">
-      <!-- LEFT SIDE -->
       <div>
         <!-- Primeiro Carrossel -->
         <div class="carousel-card">
@@ -90,18 +88,9 @@
     </div>
   </main>
 
-
   <script>
-    
-
-
-
-
-    // Função genérica para criar carrosséis
+    // criar carrosséis
     function setupCarousel(carouselId) {
-
-       
-
       const carousel = document.getElementById(carouselId);
       const slidesContainer = carousel.querySelector('.slides');
       const slides = carousel.querySelectorAll('.slide');

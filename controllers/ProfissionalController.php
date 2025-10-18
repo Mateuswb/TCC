@@ -75,7 +75,6 @@
             $observacoes = $_POST['observacoes'];
             $idAgendamentoConsulta = $_POST['idAgendamentoConsulta'];
 
-            
             $encaminhar = $this->encaminhamentoModel->cadastrarEncaminhamento($idExame, $observacoes, $idAgendamentoConsulta);
 
             $dados = $this->agendamentoConsultaModel->getAgendamento($idAgendamentoConsulta);

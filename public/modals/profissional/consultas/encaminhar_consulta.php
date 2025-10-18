@@ -11,7 +11,7 @@
     <h3>Encaminhar Consulta</h3>
     <form action="../../../controllers/ProfissionalController.php?acao=encaminharPaciente" method="POST">
       <!-- Id do agendamento -->
-      <input type="hidden" name="idAgendamentoConsulta" id="encaminharId">
+      <input type="int" name="idAgendamentoConsulta" id="encaminharId">
       <!-- <input type="hidden" name="acao" value="encaminhar"> -->
 
       <!-- Seleção do exame -->
