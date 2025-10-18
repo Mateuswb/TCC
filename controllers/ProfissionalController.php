@@ -254,12 +254,12 @@
                 echo "Erro ao cancelar finalizada";
             }
         }
-        
 
         public function listarPacientesPorProfissional(){
             $idProfissional = $_SESSION['idProfissional'];
             return $this->relatorioModel->listarPacientesPorProfissional($idProfissional);
         }
+
 
 
         #relatorio
@@ -288,6 +288,9 @@
                 break;
             case 'finalizarAgendamentoConsulta':
                 $controller->finalizarAgendamentoConsulta();
+                break;
+            case 'compararAtendimentosSemanais':
+                $controller->compararAtendimentosSemanais($_GET['idProfissional']);
                 break;
             default:
                 echo "Ação inválida";

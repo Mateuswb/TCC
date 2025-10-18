@@ -60,7 +60,7 @@ body {
 }
 
 .btn-new {
-    background: #4f46e5;
+    background: #005AC1;
     color: white;
     border: none;
     padding: 10px 16px;
@@ -73,7 +73,7 @@ body {
 }
 
 .btn-new:hover {
-    background: #4338ca;
+    background: #005AC1;
 }
 
 .exams-box {

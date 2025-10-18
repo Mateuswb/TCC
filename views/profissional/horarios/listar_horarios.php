@@ -6,6 +6,8 @@ $idProfissional = $_SESSION['idProfissional'];
 
 include '../../../controllers/HorarioController.php';
 include '../../../public/includes/profissional/sidebar.php'; 
+include '../../../public/includes/profissional/header.php';
+include '../../../public/includes/profissional/footer.html';
 
 $controller = new HorarioController($conn);
 $horarios = $controller->listarHorarios($idProfissional);
@@ -29,142 +31,7 @@ foreach($horarios as $h){
 <head>
 <meta charset="UTF-8">
 <title>Agenda Semanal</title>
-<style>
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-    }
-
-    body {
-        display: flex;
-        height: 100vh;
-        background: #ecf0f3;
-    }
-
-    .main {
-        flex: 1;
-        padding: 20px;
-        overflow-x: auto;
-    }
-
-    h1 {
-        margin-bottom: 20px;
-        color: #2c3e50;
-    }
-
-    .agenda-table {
-        border-collapse: collapse;
-        width: 100%;
-        min-width: 700px;
-    }
-
-    .agenda-table th,
-    .agenda-table td {
-        border: 1px solid #ddd;
-        text-align: center;
-        padding: 10px;
-    }
-
-    .agenda-table th {
-        background: #3498db;
-        color: #fff;
-        position: sticky;
-        top: 0;
-        z-index: 2;
-    }
-
-    .agenda-table td {
-        background: #fff;
-    }
-
-    .btn-Editar {
-        padding: 5px;
-        width: 70px;
-        font-weight: bold;
-        color: white;
-        background-color: rgba(0, 39, 148, 1);
-        font-size: 15px;
-        border-radius: 7px;
-        cursor: pointer;
-    }
-
-    .btn-adicionar {
-        padding: 5px;
-        width: 90px;
-        font-weight: bold;
-        color: white;
-        background-color: rgba(79, 148, 0, 1);
-        font-size: 15px;
-        border-radius: 7px;
-        cursor: pointer;
-    }
-
-    #modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        justify-content: center;
-        align-items: center;
-    }
-
-    .modal-content {
-        background: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        width: 350px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    }
-
-    .modal-content label {
-        font-weight: bold;
-    }
-
-    .modal-content input {
-        width: 100%;
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-
-    .modal-content button {
-        padding: 8px;
-        border: none;
-        border-radius: 4px;
-        background: #3498db;
-        color: #fff;
-        cursor: pointer;
-        font-weight: bold;
-    }
-
-    .modal-content button:hover {
-        background: #2980b9;
-    }
-
-    .modal-header {
-        font-size: 18px;
-        font-weight: bold;
-        margin-bottom: 10px;
-        color: #2c3e50;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .modal-close {
-        cursor: pointer;
-        font-weight: bold;
-        font-size: 18px;
-    }
-
-</style>
+<link rel="stylesheet" href="../../../public/assets/css/profissional/horarios/listar_horarios.css">
 </head>
 <body>
 

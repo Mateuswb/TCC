@@ -121,6 +121,25 @@
         }
 
 
+        #profissional
+        public function compararAtendimentosSemanais($idProfissional) {
+            $dados = $this->relatorioModel->compararAtendimentosSemanais($idProfissional);
+
+            // Define o cabeçalho para JSON e retorna direto
+            header('Content-Type: application/json');
+            echo json_encode($dados);
+            exit; 
+        }
+
+        public function contarConsultasERetornos($idProfissional) {
+            $dados = $this->relatorioModel->contarConsultasERetornos($idProfissional);
+            
+            header('Content-Type: application/json');
+            echo json_encode($dados);
+        }
+
+
+
 
     }
 
@@ -133,6 +152,12 @@
                 break;
             case 'atendimentosSemanaJson':
                 $controller->atendimentosSemanaJson();
+                break;
+            case 'compararAtendimentosSemanais':
+                $controller->compararAtendimentosSemanais($_GET['idProfissional']);
+                break;
+            case 'contarConsultasERetornos':
+                $controller->contarConsultasERetornos($_GET['idProfissional']);
                 break;
         }
     }

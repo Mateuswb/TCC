@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+*{
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body{
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(#5da0f8, #a0c6ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container{
+    display: flex;
+    width: 65%;
+    background-color: #fafafa;
+    border-radius: 10px;
+    justify-content: center;
+}
+
+.form {
+    padding-bottom: 10px;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;  
+    justify-content: center;  
+}
+
+.form-control {
+    padding-bottom: 10px;
+    position: relative;
+}
+
+.form-control label {
+    color: #000000;
+}
+
+.form-control input, select {
+    border-radius: 5px;
+    outline: 0;
+    display: block;
+    font-size: 14px;
+    width: 360px;
+    padding: 10px;
+    height: 45px;
+    border: 1px solid black;
+}
+
+.form-control input:focus{
+    border: 1px solid #1f67d3;
+}
+
+.form-control img{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 313px;
+    top: 37px;
+}
+
+
+/* Style etapas do form */
+.step{ 
+    display: none; 
+}
+
+.step.active { 
+    display: block; 
+}
+
+.botoes-back-next {
+    display: flex;
+    justify-content: space-between;
+}
+
+.botoes-back-next button {
+    padding: 10px 20px;
+    background-color: #2576f0f8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.contador{
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgba(27, 27, 27, 0.699);
+}
+
+.form-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 40px;
+}
+
+.form-control textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #646464;
+    border-radius: 10px;
+    font-size: 16px;
+    resize: none;
+    height: 100px;
+    background-color: #f9f9f9;
+}
+
+.form-control textarea:focus {
+    border-color: #2576f0f8;
+    box-shadow: 0 0 5px rgba(37, 118, 240, 0.3);
+    background-color: #fff;
+    outline: none;
+}
+
+#input_enviar{
+    padding: 10px 20px;
+    background-color: #2576f0f8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100px;
+    margin-left: 240px;
+}
+
+
+
+/* Error e Success */
+.form-control img, small{
+    visibility: hidden;
+}
+
+.form-control.success input{
+    border: 1px solid #24C100;
+}
+
+.form-control.error input{
+    border: 1px solid #FF0000;
+}
+
+.form-control.success .img_success {
+    visibility: visible;
+}
+
+.form-control.error .img_error {
+    visibility: visible;
+}
+
+.form-control.error small{
+    visibility: visible;
+    color: #FF0000;
+}

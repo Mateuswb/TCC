@@ -24,9 +24,9 @@
                 <label>Descrição</label>
                 <textarea name="descricao" id="descricaoEdicao" rows="3" required></textarea>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn cancel" id="cancelModalEdicao">Cancelar</button>
-                    <button type="submit" class="btn primary">Salvar Alterações</button>
+                <div class="footer">
+                    <input type="button" class="btn cancel"  id="cancelModalEdicao" value="Cancelar">
+                    <input type="submit" class="btn primary" value="Salvar">
                 </div>
             </form>
         </div>
@@ -34,90 +34,91 @@
 </div>
 
 <style>
-/* Overlay e Modal */
+/* anicação do modal */
 .overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.3); 
+    backdrop-filter: blur(1px);
     justify-content: center;
     align-items: center;
     z-index: 999;
 }
 
 .modal {
-    height: 530px;
     width: 900px;
     max-width: 95%;
     background: #fff;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
     animation: fadeIn 0.3s ease-in-out;
+    overflow: hidden; /* Impede conteúdo de sair da borda */
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-/* Header e Footer */
-.modal-header,
-.modal-footer {
-    padding: 16px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #e5e7eb;
-}
 
-.modal-footer {
-    border-top: 1px solid #e5e7eb;
-    border-bottom: none;
-}
 
-/* Fechar modal */
-.close {
-    border: none;
-    background: none;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-/* Corpo do Modal */
+/* ===== CORPO ===== */
 .modal-body {
-    padding: 20px;
+    padding: 25px 25px 10px 25px;
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+}
+
+.modal-body label {
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #333;
 }
 
 .modal-body input,
-.modal-body select,
 .modal-body textarea {
     width: 100%;
-    padding: 13px;
+    padding: 12px;
     border-radius: 8px;
     border: 1px solid #ccc;
-    outline: none;
     font-size: 14px;
-    margin-bottom: 20px;
+    outline: none;
+    margin-bottom: 16px;
+    resize: none;
+    
 }
+
 
 .modal-body input:focus,
-.modal-body select:focus,
 .modal-body textarea:focus {
-    border-color: #4f46e5;
+    border-color: #005AC1;
 }
 
-/* Botões */
+
+/* btns */
+.btn.cancel:focus,
+.btn.primary:focus {
+    border-color: #ffffffff;
+}
 .btn {
-    padding: 10px 16px;
+    flex: 1;
+    max-width: 150px;
+    padding: 10px 24px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     font-weight: 500;
+    text-align: center;
 }
 
 .btn.cancel {
@@ -125,19 +126,29 @@
     color: #374151;
 }
 
-.btn.primary {
-    background: #4f46e5;
-    color: #fff;
-}
-
 .btn.cancel:hover {
     background: #d1d5db;
 }
 
-.btn.primary:hover {
-    background: #4338ca;
+.btn.cadastrar {
+    background: #005AC1;
+    color: #fff;
 }
+
+.btn.cadastrar:hover {
+    background: #005AC1;
+}
+
+
+.footer {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 10px 20px; 
+}
+
 </style>
+
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {

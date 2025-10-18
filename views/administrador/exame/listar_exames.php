@@ -1,7 +1,7 @@
 <?php
-    include "cadastrar_exame.php";
-    include "editar_exame.php";
-    include "deletar_exame.php";
+    include "../../../public/modals/administrador/cadastrar_exame.php";
+    include "../../../public/modals/administrador/editar_exame.php";
+    include "../../../public/modals/administrador/deletar_exame.php";
     require_once "../../../controllers/AdministradorController.php";
     
     include "../../../public/includes/administrador/sidebar.php"; 
@@ -29,7 +29,7 @@
 <title>Painel Administrativo</title>
 
     <!-- STYLE  CSS-->
-    <link rel="stylesheet" href="../../../public/assets/css/administrador/exame/listar_exames.css">
+    <link rel="stylesheet" href="../../../public/assets/css/administrador/listar_exames.css">
 
     <!-- IMPORT DOS ICONS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">

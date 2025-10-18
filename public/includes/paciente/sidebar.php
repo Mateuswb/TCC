@@ -3,8 +3,11 @@
   $currentFile = basename($_SERVER['PHP_SELF']); 
 ?>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+ <!-- Fonte -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+   rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
 <div class="sidebar" id="sidebar"> 
 <div class="logo">
     <img src="<?= BASE_URL ?>/public/includes/paciente/img.png" alt="">
@@ -120,6 +123,5 @@
       background-color: #e6f0ff;
       color: #003366;
     }
-
 
 </style>

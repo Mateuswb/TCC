@@ -11,6 +11,15 @@
     $totalAgendamentos = $controllerRelatorio->totalConsultasProfissional($idProfissional);
     $totalConcluidas = $controllerRelatorio->totalConsultasConcluidas($idProfissional);
     $totalCanceladas = $controllerRelatorio->totalConsultasCanceladas($idProfissional);
+
+    $percentConcluidas = $totalAgendamentos['total_agendamentos'] > 0 
+    ? round(($totalConcluidas['total_concluidas'] / $totalAgendamentos['total_agendamentos']) * 100, 1)
+    : 0;
+
+$percentCanceladas = $totalAgendamentos['total_agendamentos'] > 0
+    ? round(($totalCanceladas['total_canceladas'] / $totalAgendamentos['total_agendamentos']) * 100, 1)
+    : 0;
+
 ?>
 
 <!DOCTYPE html>
@@ -62,12 +71,12 @@
       <div class="card green">
         <div class="title"><i class="fa fa-clock"></i> Consultas Concluídas</div>
         <div class="value"><?php echo $totalConcluidas['total_concluidas'] ?></div>
-        <div class="percent">75.0% do total</div>
+        <div class="percent"><?php echo $percentConcluidas; ?></div>
       </div>
       <div class="card red">
         <div class="title"><i class="fa fa-user"></i> Consultas Canceladas</div>
         <div class="value"><?php echo $totalCanceladas['total_canceladas'] ?></div>
-        <div class="percent">10.0% do total</div>
+        <div class="percent"><?php echo $percentCanceladas; ?></div>
       </div>
       <div class="card purple">
         <div class="title"><i class="fa fa-chart-line"></i> Total de atendimentos</div>

@@ -6,8 +6,7 @@
     <title>Document</title>
 
     <!-- Import do CSS -->
-    <link rel="stylesheet" href="../../../public/assets/css/style_criar_conta.css">
-    <link rel="stylesheet" href="../../../public/assets/css/efect_surgindo.css">
+    <link rel="stylesheet" href="../../../public/assets/css/administrador/cadastrar/cadastro_usuario.css">
 
      <!-- Import dos Icones-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">

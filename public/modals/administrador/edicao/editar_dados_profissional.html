@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Editar Dados do Profissional</title>
+
 <style>
   /* ===== BASE DO MODAL ===== */
   .modal-bg {
@@ -13,10 +8,10 @@
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.55);
-    display: none;
+    display: none; /* inicia invisível */
     align-items: center;
     justify-content: center;
-    z-index: 9999;
+    z-index: 99999; /* sobrepõe qualquer elemento da página */
   }
 
   .modal-box {
@@ -65,13 +60,13 @@
     padding: 25px 30px;
   }
 
-  form {
+  .modal-content form {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 18px 25px;
   }
 
-  label {
+  .modal-content label {
     font-weight: 600;
     font-size: 13px;
     margin-bottom: 5px;
@@ -79,7 +74,9 @@
     display: block;
   }
 
-  input, select, textarea {
+  .modal-content input,
+  .modal-content select,
+  .modal-content textarea {
     width: 100%;
     padding: 9px;
     border: 1px solid #ccc;
@@ -88,17 +85,19 @@
     transition: border 0.2s;
   }
 
-  input:focus, select:focus, textarea:focus {
+  .modal-content input:focus,
+  .modal-content select:focus,
+  .modal-content textarea:focus {
     border-color: #0d47a1;
     outline: none;
   }
 
-  textarea {
+  .modal-content textarea {
     resize: none;
     height: 80px;
   }
 
-  .full {
+  .modal-content .full {
     grid-column: 1 / -1;
   }
 
@@ -140,23 +139,18 @@
     background-color: #0b3b8a;
   }
 </style>
-</head>
-<body>
 
-<!-- BOTÃO DE EXEMPLO -->
-<button onclick="abrirModal()" style="padding:10px 20px; border:none; background:#0d47a1; color:white; border-radius:6px;">Abrir Modal</button>
-
-<!-- ===== MODAL ===== -->
-<div class="modal-bg" id="modalEditar">
+<div class="modal-bg" id="modalEditarProfissional">
   <div class="modal-box">
     <div class="modal-header">
-      <button class="close-btn" onclick="fecharModal()">&times;</button>
+      <button class="close-btn" onclick="fecharModalProfissional()">&times;</button>
       <h2>Editar dados do Profissional: João da Silva Santos</h2>
       <p>Atualize as informações cadastrais e profissionais.</p>
     </div>
 
-    <div class="modal-content">
+        <div class="modal-content">
       <form id="formEditarProfissional" action="atualizar_profissional.php" method="POST">
+        <input type="hidden" name="id_profissional" id="id_profissional">
         
         <div>
           <label>Nome</label>
@@ -165,7 +159,7 @@
 
         <div>
           <label>RG</label>
-          <input type="text" name="rg" value="98.675.678-76" required>
+          <input type="text" name="rg" id="rg" required>
         </div>
 
         <div>
@@ -185,12 +179,12 @@
 
         <div>
           <label>Especialidade</label>
-          <input type="text" name="especialidade" value="Cardiologia" required>
+          <input type="text" name="especialidade" required>
         </div>
 
         <div>
           <label>Telefone</label>
-          <input type="text" name="telefone" value="(48) 99897-8788" required>
+          <input type="text" name="telefone" required>
         </div>
 
         <div>
@@ -213,22 +207,22 @@
 
         <div class="full">
           <label>Endereço</label>
-          <input type="text" name="endereco" value="Rua das Palmeiras, nº 125">
+          <input type="text" name="endereco">
         </div>
 
         <div>
           <label>Bairro</label>
-          <input type="text" name="bairro" value="Jardim Esperança">
+          <input type="text" name="bairro">
         </div>
 
         <div>
           <label>Número</label>
-          <input type="text" name="numero" value="Nº 125">
+          <input type="text" name="numero">
         </div>
 
         <div>
           <label>Cidade</label>
-          <input type="text" name="cidade" value="Florença">
+          <input type="text" name="cidade">
         </div>
 
         <div class="full">
@@ -239,21 +233,40 @@
     </div>
 
     <div class="modal-footer">
-      <button class="btn btn-cancel" type="button" onclick="fecharModal()">Cancelar</button>
+      <button class="btn btn-cancel" type="button" onclick="fecharModalProfissional()">Cancelar</button>
       <button class="btn btn-save" type="submit" form="formEditarProfissional">Salvar</button>
     </div>
   </div>
 </div>
 
+
 <script>
-  function abrirModal() {
-    document.getElementById('modalEditar').style.display = 'flex';
-  }
+function abrirModalEditar(botao) {
+  const modal = document.getElementById('modalEditarProfissional');
+  modal.style.display = 'flex';
 
-  function fecharModal() {
-    document.getElementById('modalEditar').style.display = 'none';
-  }
+  // Obter dados do botão
+  const dados = botao.dataset;
+
+  // Preencher os campos do formulário
+  document.querySelector('[name="id_profissional"]').value = dados.id || '';
+  document.querySelector('[name="nome"]').value = dados.nome || '';
+  document.querySelector('[name="rg"]').value = dados.rg || '';
+  document.querySelector('[name="email"]').value = dados.email || '';
+  document.querySelector('[name="data_nascimento"]').value = dados.dataNascimento || '';
+  document.querySelector('[name="crm"]').value = dados.crm || '';
+  document.querySelector('[name="especialidade"]').value = dados.especialidade || '';
+  document.querySelector('[name="telefone"]').value = dados.telefone || '';
+  document.querySelector('[name="sexo"]').value = dados.sexo || '';
+  document.querySelector('[name="estado_civil"]').value = dados.estadoCivil || '';
+  document.querySelector('[name="endereco"]').value = dados.endereco || '';
+  document.querySelector('[name="bairro"]').value = dados.bairro || '';
+  document.querySelector('[name="numero"]').value = dados.numero || '';
+  document.querySelector('[name="cidade"]').value = dados.cidade || '';
+  document.querySelector('[name="observacoes"]').value = dados.observacoes || '';
+}
+
+function fecharModalProfissional() {
+  document.getElementById('modalEditarProfissional').style.display = 'none';
+}
 </script>
-
-</body>
-</html>

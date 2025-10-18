@@ -72,7 +72,8 @@
                     a.dia_agendamento AS dia,
                     a.horario_agendamento AS horario,
                     p.nome AS nome_paciente,
-                    a.tipo_consulta AS servico
+                    a.tipo_consulta,
+                    a.anexo
                 FROM agendamentos_consultas a
                 JOIN pacientes p 
                     ON a.id_paciente = p.id_paciente

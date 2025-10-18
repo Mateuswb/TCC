@@ -6,7 +6,7 @@
     <title>Cadastro Paciente- EM AMDAMENTO</title>
 
     <!-- Import do CSS -->
-    <link rel="stylesheet" href="../../../../public/assets/css/style_paciente.css">
+    <link rel="stylesheet" href="../../../../public/assets/css/administrador/cadastrar/cadastrar_profissional.css">
     
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />

@@ -71,7 +71,6 @@
             return $query->fetch(PDO::FETCH_ASSOC);
         }
 
-
         # agendamentos consulta
         public function listarConsultas($idProfissional){
             $sql = "
@@ -136,7 +135,6 @@
             return $stmt->fetch(PDO::FETCH_ASSOC);
         }
 
-
         # listar os paciente que já realizaram uma consulta com um profissional
         public function listarPacientesPorProfissional($profissionalId) {
             $sql = "SELECT DISTINCT p.*, 
@@ -155,7 +153,6 @@
                 ':idProfissional' => $profissionalId]);
             return $query->fetchALL(PDO::FETCH_ASSOC);
         }
-
 
         #profissional home
         public function agendamentosHoje($idProfissional) {
@@ -269,10 +266,115 @@
                     FROM pacientes p
                     JOIN agendamentos_consultas ac ON p.id_paciente = ac.id_paciente
                     JOIN horarios_profissionais hp ON ac.id_horario_profissional = hp.id_horario
-                    WHERE hp.id_profissional = :idProfissional";
+                    WHERE hp.id_profissional = :idProfissional AND ac.status = 'realizada';";
             $query = $this->conn->prepare($sql);
             $query->execute([':idProfissional' => $idProfissional]);
             return $query->fetch(PDO::FETCH_ASSOC)['total'];
+        }
+
+        # profissional 
+        public function compararAtendimentosSemanais($idProfissional) {
+            // Essa Semana
+            $sqlSemanaAtual = " SELECT 
+                                DAYNAME(ac.dia_agendamento) AS dia_semana,
+                                COUNT(ac.id_agendamento) AS total_agendamentos
+                            FROM 
+                                agendamentos_consultas ac
+                            INNER JOIN 
+                                horarios_profissionais hp ON ac.id_horario_profissional = hp.id_horario
+                            WHERE 
+                                hp.id_profissional = :idProfissional
+                                AND ac.dia_agendamento BETWEEN 
+                                    DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY)
+                                    AND DATE_ADD(CURDATE(), INTERVAL (6 - WEEKDAY(CURDATE())) DAY)
+                            GROUP BY 
+                                DAYNAME(ac.dia_agendamento)
+                            ORDER BY 
+                                ac.dia_agendamento";
+            $querySemanaAtual = $this->conn->prepare($sqlSemanaAtual);
+            $querySemanaAtual->execute([':idProfissional' => $idProfissional]);
+            $essaSemana = $querySemanaAtual->fetchAll(PDO::FETCH_ASSOC);
+
+            // Semana passada
+            $sqlSemanaPassada = "SELECT 
+                    DAYNAME(ac.dia_agendamento) AS dia_semana,
+                    COUNT(ac.id_agendamento) AS total_agendamentos
+                FROM 
+                    agendamentos_consultas ac
+                INNER JOIN 
+                    horarios_profissionais hp ON ac.id_horario_profissional = hp.id_horario
+                WHERE 
+                    hp.id_profissional = :idProfissional
+                    AND ac.dia_agendamento BETWEEN 
+                        DATE_SUB(DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY), INTERVAL 7 DAY)
+                        AND DATE_SUB(DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY), INTERVAL 1 DAY)
+                GROUP BY 
+                    DAYNAME(ac.dia_agendamento)
+                ORDER BY 
+                    ac.dia_agendamento ";
+
+            $querySemanaPassada = $this->conn->prepare($sqlSemanaPassada);
+            $querySemanaPassada->execute([':idProfissional' => $idProfissional]);
+            $semanaPassada = $querySemanaPassada->fetchAll(PDO::FETCH_ASSOC);
+
+            // configuração para o gráfico
+            $dias = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+
+            $dadosSemanaAtual = array_fill(0, 7, 0);
+            $dadosSemanaPassada = array_fill(0, 7, 0);
+
+            foreach ($essaSemana as $linha) {
+                $index = array_search($linha['dia_semana'], $dias);
+                if ($index !== false) $dadosSemanaAtual[$index] = (int)$linha['total_agendamentos'];
+            }
+
+            foreach ($semanaPassada as $linha) {
+                $index = array_search($linha['dia_semana'], $dias);
+                if ($index !== false) $dadosSemanaPassada[$index] = (int)$linha['total_agendamentos'];
+            }
+
+            return [
+                'labels' => ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                'essaSemana' => $dadosSemanaAtual,
+                'semanaPassada' => $dadosSemanaPassada
+            ];
+        }
+
+        public function contarConsultasERetornos($idProfissional) {
+            // total de primeiras consultas
+            $sqlConsulta = "
+                SELECT COUNT(*) AS total_consultas
+                FROM agendamentos_consultas ac
+                INNER JOIN horarios_profissionais hp 
+                    ON ac.id_horario_profissional = hp.id_horario
+                WHERE hp.id_profissional = :idProfissional
+                AND ac.tipo_consulta = 'c'
+            ";
+
+            $stmt1 = $this->conn->prepare($sqlConsulta);
+            $stmt1->bindParam(':idProfissional', $idProfissional, PDO::PARAM_INT);
+            $stmt1->execute();
+            $consulta = $stmt1->fetch(PDO::FETCH_ASSOC)['total_consultas'] ?? 0;
+
+            // total de retornos
+            $sqlRetorno = "
+                SELECT COUNT(*) AS total_retorno
+                FROM agendamentos_consultas ac
+                INNER JOIN horarios_profissionais hp 
+                    ON ac.id_horario_profissional = hp.id_horario
+                WHERE hp.id_profissional = :idProfissional
+                AND ac.tipo_consulta = 'r'
+            ";
+
+            $stmt2 = $this->conn->prepare($sqlRetorno);
+            $stmt2->bindParam(':idProfissional', $idProfissional, PDO::PARAM_INT);
+            $stmt2->execute();
+            $retorno = $stmt2->fetch(PDO::FETCH_ASSOC)['total_retorno'] ?? 0;
+
+            return [
+                'consultas' => (int)$consulta,
+                'retornos' => (int)$retorno
+            ];
         }
 
 

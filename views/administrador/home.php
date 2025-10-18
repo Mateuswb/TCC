@@ -223,23 +223,6 @@
 
   <!-- Main -->
   <div class="main">
-    <!-- Header -->
-    <div class="header">
-      <div class="menu-btn" onclick="toggleSidebar()">
-        <i class="fas fa-bars"></i>
-      </div>
-
-      <input type="text" placeholder="Pesquisar...">
-
-      <div class="profile">
-        <img src="../../public/assets/icones/icon_admin.png" alt="user">
-        <div>
-          <strong>Perfil Admin</strong><br>
-          <small>Administrador</small>
-        </div>
-      </div>
-    </div>
-
     <!-- Conteúdo -->
     <div class="content">
       <!-- Cards -->

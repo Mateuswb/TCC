@@ -27,9 +27,6 @@
   <!-- STYLE  CSS-->
   <link rel="stylesheet" href="../../public/assets/css/profissional/home.css">
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-
   <!-- Font Awesome para ícones -->
   <script src="https://kit.fontawesome.com/a2d9b7f7d2.js" crossorigin="anonymous"></script>
 
@@ -102,20 +99,11 @@
                 <span style="display:inline-block;background:#0d6efd;color:#fff;padding:4px 8px;border-radius:6px;font-size:13px">relaorio vai aq depois</span>
               </div>
             </div>
-            <div class="toggle">
-              <button class="btn-toggle active" id="btnWeekly">Weekly</button>
-              <button class="btn-toggle" id="btnMonthly">Monthly</button>
-            </div>
           </div>
 
           <div class="donut-row">
             <div class="donut-box">
               <canvas id="donut1" width="140" height="140"></canvas>
-              <div class="small-muted" style="margin-top:8px">mês passado</div>
-            </div>
-            <div class="donut-box">
-              <canvas id="donut2" width="140" height="140"></canvas>
-              <div class="small-muted" style="margin-top:8px">Esse mês</div>
             </div>
           </div>
         </aside>
@@ -125,102 +113,114 @@
     </main>
   </div>
 
-  <script>
-    // --- Bar chart (Monthly Registered Users) ---
-    const ctxBar = document.getElementById('barChart').getContext('2d');
-    const barChart = new Chart(ctxBar, {
-      type: 'bar',
+<script>
+
+// Gráfico da comparação de atendimentos
+fetch("../../controllers/RelatorioController.php?acao=compararAtendimentosSemanais&idProfissional=<?= $idProfissional ?>")
+  .then(res => res.json())
+  .then(dados => {
+    const ctxLine = document.getElementById('barChart').getContext('2d');
+
+    const lineChart = new Chart(ctxLine, {
+      type: 'line',
       data: {
-        labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+        labels: dados.labels,
         datasets: [
           {
-            label: 'Users',
-            data: [60, 75, 58, 85, 70, 78, 55, 70, 40, 8, 5, 10],
-            backgroundColor: [
-              '#4aa3ff','#2ecc71','#ff4d6d','#f6c23e','#4aa3ff','#2ecc71','#ff4d6d','#f6c23e','#4aa3ff','#2ecc71','#ff4d6d','#f6c23e'
-            ],
-            borderRadius:6,
-            maxBarThickness:28
+            label: 'Essa semana',
+            data: dados.essaSemana,
+            borderColor: '#f1c40f',
+            backgroundColor: 'rgba(241, 196, 15, 0.2)',
+            borderWidth: 3,
+            tension: 0.4,
+            pointRadius: 5,
+            pointBackgroundColor: '#f1c40f',
+            fill: false
+          },
+          {
+            label: 'Semana passada',
+            data: dados.semanaPassada,
+            borderColor: '#e74c3c',
+            backgroundColor: 'rgba(231, 76, 60, 0.2)',
+            borderWidth: 3,
+            tension: 0.4,
+            pointRadius: 5,
+            pointBackgroundColor: '#e74c3c',
+            fill: false
           }
         ]
       },
       options: {
+        responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend:{display:false},
-          tooltip:{mode:'index',intersect:false}
+          legend: {
+            position: 'bottom',
+            labels: { usePointStyle: true, boxWidth: 10, color: '#333' }
+          },
+          tooltip: { mode: 'index', intersect: false }
         },
         scales: {
-          x: { grid: { display:false }, ticks:{ color:'#6b7280' } },
+          x: {
+            grid: { display: false },
+            ticks: { color: '#555', font: { weight: '600' } }
+          },
           y: {
-            beginAtZero:true,
-            grid: { color:'rgba(0,0,0,0.04)' },
-            ticks: { stepSize:20, color:'#6b7280' }
+            beginAtZero: true,
+            grid: { color: 'rgba(0,0,0,0.05)' },
+            ticks: { color: '#555', stepSize: 5 }
           }
         }
       }
     });
 
-    // --- Donut charts ---
-    function createDonut(id, value, label){
-      const ctx = document.getElementById(id).getContext('2d');
-      return new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          labels: [label, 'Remaining'],
-          datasets: [{
-            data: [value, 100 - value],
-            backgroundColor: [ '#2d9cdb', '#e6eef8' ],
-            hoverOffset: 4,
-            cutout: '74%'
-          }]
-        },
-        options:{
-          maintainAspectRatio:true,
-          plugins:{legend:{display:false}, tooltip:{enabled:false}},
+    // Atualiza o card de agendamentos de hoje
+    const totalHoje = dados.essaSemana[dados.essaSemana.length - 1] || 0;
+    document.getElementById("agendamentosHoje").innerText = totalHoje;
+  })
+  .catch(err => console.error("Erro ao carregar dados:", err));
+
+// grafico de bola
+fetch("../../controllers/RelatorioController.php?acao=contarConsultasERetornos&idProfissional=<?= $idProfissional ?>")
+  .then(res => res.json())
+  .then(data => {
+    const labels = ['Primeiras Consultas', 'Retornos'];
+    const valores = [data.consultas, data.retornos];
+
+    new Chart(document.getElementById('donut1').getContext('2d'), {
+      type: 'doughnut',
+      data: {
+        labels: labels,
+        datasets: [{
+          data: valores,
+          backgroundColor: ['#2e86de', '#10ac84'],
+          borderWidth: 0,
+          cutout: '70%',
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: { usePointStyle: true, color: '#333' }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const total = context.dataset.data.reduce((a,b)=>a+b,0);
+                const value = context.raw;
+                const percent = ((value/total)*100).toFixed(1);
+                return `${context.label}: ${value} (${percent}%)`;
+              }
+            }
+          }
         }
-      });
-    }
-
-    const donut1 = createDonut('donut1', 40, 'Analytics');
-    const donut2 = createDonut('donut2', 60, 'Analytics');
-
-    // --- Toggle Weekly / Monthly (just visual) ---
-    const btnWeekly = document.getElementById('btnWeekly');
-    const btnMonthly = document.getElementById('btnMonthly');
-
-    btnWeekly.addEventListener('click', () => {
-      btnWeekly.classList.add('active'); btnMonthly.classList.remove('active');
-      // exemplo: atualizar dados do barChart (opcional)
-      barChart.data.datasets[0].data = [60, 75, 58, 85, 70, 78, 55, 70, 40, 8, 5, 10];
-      barChart.update();
+      }
     });
-    btnMonthly.addEventListener('click', () => {
-      btnMonthly.classList.add('active'); btnWeekly.classList.remove('active');
-      // exemplo: trocar para dados mensais
-      barChart.data.datasets[0].data = [400, 520, 450, 610, 520, 560, 480, 520, 330, 60, 40, 70];
-      barChart.update();
-    });
+  })
+  .catch(err => console.error("Erro ao carregar dados do gráfico:", err));
 
-    // Make canvas high dpi friendly
-    function fixRetina(){
-      document.querySelectorAll('canvas').forEach(c => {
-        const dpr = window.devicePixelRatio || 1;
-        const w = c.width;
-        const h = c.height;
-        c.width = w * dpr;
-        c.height = h * dpr;
-        c.style.width = w + 'px';
-        c.style.height = h + 'px';
-        const ctx = c.getContext('2d');
-        ctx.scale(dpr, dpr);
-      });
-    }
-    fixRetina();
-    // if resized, fix again
-    window.addEventListener('resize', () => {
-      setTimeout(() => { fixRetina(); }, 100);
-    });
-  </script>
+</script>
 </body>
 </html>

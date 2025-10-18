@@ -15,6 +15,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Lista de Pacientes</title>
 
+  <link rel="stylesheet" href="../../../public/assets/css/administrador/listar_pacientes.css">
+
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -22,75 +24,6 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="../../../public/assets/alertas/alerta_exclusao_paciente.js"></script>
   <script src="../../../public/assets/alertas/alerta_padrao_pos.js"></script>
-
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif; }
-
-    body {
-      background: #f5f6fa;
-      min-height: 100vh;
-      display: flex;
-    }
-
-   
-
-    /* Main */
-    .main {
-      margin-left: 250px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 70px;
-    }
-
-   
-    /* Conteúdo */
-    .content { padding: 20px; }
-
-    h1 { margin-bottom: 20px; color: #2980b9; }
-
-    /* Grid Cards Pacientes */
-    .grid-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 20px;
-    }
-
-    .card {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      padding: 20px;
-      transition: transform 0.2s;
-    }
-    .card:hover { transform: translateY(-5px); }
-    .card h2 {
-      margin-bottom: 14px;
-      font-size: 20px;
-      color: #2980b9;
-      border-bottom: 2px solid #2980b9;
-      padding-bottom: 6px;
-    }
-
-    .info-list { list-style: none; margin-bottom: 15px; }
-    .info-list li { margin-bottom: 6px; font-size: 14px; color: #333; }
-    .info-list li strong { color: #2980b9; margin-right: 5px; }
-
-    .footer { text-align: right; }
-    .btn-edit, .btn-delete {
-      padding: 8px 14px;
-      border-radius: 6px;
-      font-weight: 600;
-      text-decoration: none;
-      color: #fff;
-      margin-left: 8px;
-      transition: background 0.2s;
-    }
-    .btn-edit { background: #2980b9; }
-    .btn-edit:hover { background: #1f6391; }
-    .btn-delete { background: #c0392b; }
-    .btn-delete:hover { background: #a8281d; }
-  </style>
 </head>
 
 <body>

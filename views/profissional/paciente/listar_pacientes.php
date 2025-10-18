@@ -1,7 +1,8 @@
 <?php
   session_start();
   include '../../../public/includes/profissional/sidebar.php';
-
+  // include '../../../public/includes/profissional/header.php';
+  // include '../../../public/includes/profissional/footer.html';
   require_once "../../../controllers/ProfissionalController.php";
 
   $controller = new ProfissionalController($conn);
@@ -22,14 +23,6 @@
 </head>
 <body>
 
-  <!-- Topbar -->
-  <div class="topbar">
-    <span class="menu-icon">&#9776;</span>
-    <div class="search-bar">
-      <input type="text" placeholder="Pesquisar">
-    </div>
-    <div class="profile">Dr. João da Silva Santos</div>
-  </div>
 
   <!-- Conteúdo -->
   <div class="content">
