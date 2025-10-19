@@ -29,9 +29,6 @@
         <label>Dia da Consulta</label>
         <input type="date" name="diaAgendamento" id="diaAgendamento">
 
-        <label>Horário da Consulta</label>
-        <input type="time" name="horarioAgendamento" class="times">
-
         <div class="form-control">
           <label for="horarioAgendamento">Horarios ainda disponíveis</label>
           <div id="times" class="times"></div>
@@ -55,16 +52,18 @@
 <!-- ===== ESTILO MODAL ===== -->
 <style>
 .modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  z-index: 9999;
-  justify-content: center;
-  align-items: flex-start;
-  overflow-y: auto;
-  padding-top: 50px;
-  font-family: "Poppins", sans-serif;
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(3px);
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -101,7 +100,12 @@
   box-shadow: 0 3px 10px rgba(0,0,0,0.12);
   padding: 25px 30px;
   position: relative;
+  animation: fadeIn 0.25s ease-in-out;
 }
+    @keyframes fadeIn {
+    from { transform: translateY(-10px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+    }
 
 .fechar-modal {
   position: absolute;
@@ -246,7 +250,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector('input[name="idAgendamentoConsulta"]').value = btn.dataset.idConsulta;
     document.querySelector('select[name="tipoConsulta"]').value = btn.dataset.tipo;
     document.querySelector('input[name="diaAgendamento"]').value = btn.dataset.dia;
-    document.querySelector('input[name="horarioAgendamento"]').value = btn.dataset.hora;
     document.querySelector('textarea[name="observacao"]').value = btn.dataset.observacao;
     document.querySelector('input[name="idProfissional"]').value = btn.dataset.idProfissional;
 

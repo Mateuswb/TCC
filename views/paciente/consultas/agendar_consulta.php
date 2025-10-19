@@ -1,25 +1,33 @@
 <!-- ===== MODAL AGENDAMENTO ===== -->
 <div id="modalAgendamento" class="modal">
   <div class="modal-content">
-    <span class="fechar-modal" id="fecharModalAgendamento">&times;</span>
-
-    <div class="container-modal">
-      <div class="profile">
+    <!-- ===== CABEÇALHO AZUL ===== -->
+    <div class="modal-header">
+      <div class="header-left">
         <img src="https://cdn-icons-png.flaticon.com/512/3870/3870822.png" alt="Foto do Profissional">
-        <div class="profile-info">
+        <div class="header-info">
           <h2 id="nomeProfissional">Nome do Profissional</h2>
           <p id="especialidadeProfissional">Especialidade</p>
           <p>Atendimento Particular</p>
         </div>
       </div>
+      <div class="header-title">
+        <h3>Agendar Consulta</h3>
+        <span>Informe os detalhes necessários para realizar o agendamento</span>
+      </div>
+    </div>
 
-      <h3>Confirme os dados para o agendamento</h3>
+    <span class="fechar-modal" id="fecharModalAgendamento">&times;</span>
 
-      <form action="../../../controllers/AgendamentoConsultaController.php?acao=agendarConsulta" 
+    <!-- ===== CONTEÚDO ===== -->
+    <div class="container-modal">
+      <h3>Confirme seus dados para o Agendamento</h3>
+
+      <form action="../../../controllers/AgendamentoConsultaController.php?acao=agendarConsulta"
             method="post" id="formAgendar" enctype="multipart/form-data">
 
-        <input type="int" name="idPaciente" value="<?php echo $_SESSION['idPaciente']; ?>">
-        <input type="int" name="idProfissional" id="idProfissional">
+        <input type="hidden" name="idPaciente" value="<?php echo $_SESSION['idPaciente']; ?>">
+        <input type="hidden" name="idProfissional" id="idProfissional">
 
         <div class="form-control">
           <label for="tipoConsulta">Tipo de Consulta</label>
@@ -43,6 +51,7 @@
           <label for="horarioAgendamento">Escolha o Horário</label>
           <div id="times" class="times"></div>
         </div>
+        
 
         <div class="form-control">
           <label for="observacao">Observações</label>
@@ -51,39 +60,42 @@
 
         <button type="submit" class="btn-agendar">Agendar</button>
       </form>
+    </div>
 
-      <div class="clinic-info">
-        <h3>Local da Consulta</h3>
-        <p>Clínica Synapse</p>
-        <p>Av. Santa, 9999 - Centro, Santa Catarina - SC</p>
-      </div>
+    <!-- ===== FOOTER ===== -->
+    <div class="modal-footer">
+      <p><strong>Clínica MedHub</strong><br>
+      Av. Santa, 9999 - Centro, Santa Catarina - SC</p>
     </div>
   </div>
 </div>
 
 <style>
-/* ===== MODAL ===== */
+  /* ===== MODAL BASE ===== */
 .modal {
   display: none;
   position: fixed;
-  z-index: 9999999999;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(3px);
+  z-index: 9999999999;
   overflow-y: auto;
+  padding: 40px 20px;
 }
 
 .modal-content {
   background: #fff;
-  margin: 60px auto;
+  margin: auto;
   width: 100%;
   max-width: 1100px;
-  border-radius: 15px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  overflow: hidden;
   position: relative;
-  padding: 30px;
-  height: 800px;
+  animation: slideIn 0.3s ease;
+  display: flex;
+  flex-direction: column;
 }
-
 
 @keyframes slideIn {
   from { transform: translateY(-30px); opacity: 0; }
@@ -95,93 +107,204 @@
   top: 15px;
   right: 20px;
   font-size: 1.8rem;
-  color: #555;
+  color: #fff;
   cursor: pointer;
+  z-index: 100;
+  transition: 0.3s;
 }
-.fechar-modal:hover { color: #000; }
+.fechar-modal:hover { color: #ddd; }
 
-.profile {
+/* ===== CABEÇALHO ===== */
+.modal-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  background: #005baa;
+  color: #fff;
+  padding: 5px 10px;
+}
+
+/* Agrupa a imagem e infos do profissional na mesma linha */
+.header-left {
   display: flex;
   align-items: center;
-  gap: 15px;
-  margin-bottom: 15px;
+  gap: 12px;
 }
-.profile img {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
+
+.header-left img {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  object-fit: cover;
 }
-.profile-info h2 { margin: 0; font-size: 1.4rem; }
-.profile-info p { margin: 3px 0; color: #555; }
+
+.header-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.header-info h2 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.header-info p {
+  font-size: 0.8rem;
+  margin: 2px 0;
+}
+
+/* Centraliza título e subtítulo no meio do header */
+.header-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.header-title h3 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.header-title span {
+  font-size: 0.75rem;
+}
+
+/* ===== CONTEÚDO ===== */
+.container-modal {
+  padding: 20px 30px;
+}
 
 .form-control {
-  margin-top: 20px;
-}
-label {
-  font-weight: 500;
-  display: block;
-  margin-bottom: 6px;
-  color: #333;
-}
-select, input[type="date"], input[type="file"], textarea {
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-}
-textarea {
-  min-height: 80px;
-  resize: vertical;
+  margin-bottom: 20px;
 }
 
+label {
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 6px;
+}
+
+select, input[type="date"], input[type="file"], textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  transition: all 0.3s;
+}
+#observacao {
+  resize: none; 
+}
+
+select:focus, input:focus, textarea:focus {
+  border-color: #005baa;
+  box-shadow: 0 0 3px rgba(0,91,170,0.4);
+  outline: none;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* ===== HORÁRIOS ===== */
 .times {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin-top: 10px;
 }
 
-.time-slot, .time-slot-bloqueado {
-  text-align: center;
-  padding: 10px;
-  border-radius: 10px;
-  font-size: 14px;
+.time-slot {
+  background: #eaf3ff;
+  color: #333;
+  border: 1px solid #005baa;
+  border-radius: 8px;
+  padding: 10px 20px;
   cursor: pointer;
-  border: 1px solid #4a90e2;
+  font-weight: 600;
+  transition: 0.3s;
+  user-select: none;
+  min-width: 120px;
+  text-align: center;
 }
-.time-slot { background: #eaf3ff; color: #333; }
-.time-slot:hover { background: #4a90e2; color: #fff; }
+
+.time-slot:hover,
+.time-slot.selected {
+  background: #005baa;
+  color: #fff;
+}
+
+.time-slot.selected {
+  box-shadow: 0 0 0 3px rgba(0,91,170,0.3);
+}
+
 .time-slot-bloqueado {
   background: #f1f1f1;
-  color: #aaa;
+  color: #999;
   border: 1px dashed #ccc;
+  border-radius: 8px;
+  padding: 10px 20px;
+  min-width: 120px;
+  text-align: center;
   cursor: not-allowed;
 }
 
+/* ===== BOTÃO ===== */
 .btn-agendar {
   margin-top: 25px;
   width: 100%;
   padding: 14px;
   border: none;
-  background: #4a90e2;
+  background: #005baa;
   color: #fff;
   font-size: 16px;
+  font-weight: 600;
   border-radius: 25px;
   cursor: pointer;
   transition: 0.3s;
 }
-.btn-agendar:hover { background: #357abd; }
+.btn-agendar:hover { background: #00468a; }
 
-.clinic-info {
-  margin-top: 40px;
-  padding: 20px;
-  background: #f8f9fc;
-  border-radius: 10px;
-  border: 1px solid #e1e1e1;
-  font-size: 14px;
-  line-height: 1.5;
+/* ===== FOOTER ===== */
+.modal-footer {
+  background: #f3f4f6;
+  text-align: center;
+  padding: 18px;
+  border-top: 1px solid #ddd;
+  font-size: 0.95rem;
+  color: #333;
 }
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 768px) {
+  .modal-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .header-left {
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .header-title {
+    position: static;
+    transform: none;
+    margin-top: 5px;
+  }
+
+  .container-modal {
+    padding: 25px;
+  }
+}
+
 </style>
 
 <script>
@@ -211,7 +334,7 @@ document.getElementById('diaAgendamento').addEventListener('change', function() 
       const bloqueado = retorno.agendamento?.includes(h);
       container.innerHTML += bloqueado
         ? `<label class="time-slot-bloqueado">${h}</label>`
-        : `<label class="time-slot"><input type="radio" name="horarioAgendamento" value="${h}"><span>${h}</span></label>`;
+        : `<label class="time-slot"><input type="radio" name="horarioAgendamento" value="${h}" required><span>${h}</span></label>`;
     });
   })
   .catch(err => console.error("Erro:", err));

@@ -53,7 +53,6 @@
                 echo "erro ao editar";
             }
         }
-        
 
         public function cancelarExame(){
             $idAgendamento = $_POST['idAgendamento'];
@@ -65,6 +64,18 @@
             }
             else{
                 echo "erro";
+            }
+        }
+
+        public function finalizarAgendamentoExame(){
+            $idExame = $_POST['idExame'];
+
+            $finalizar = $this->agendamentoExameModel->finalizarAgendamentoConsulta($idExame);
+            if($finalizar){
+                echo "Exame finalizado";
+            }
+            else{
+                echo "Erro ao finalizar Exmae";
             }
         }
 
@@ -81,6 +92,9 @@
                 break;
             case 'cancelarExame':
                 $controller->cancelarExame();
+                break;
+            case 'finalizarAgendamentoExame':
+                $controller->finalizarAgendamentoExame();
                 break;
             default:
                 echo "Ação inválida";

@@ -22,7 +22,7 @@
                 <input type="number" name="tempoMinutos" id="tempoEdicao" min="1" required>
 
                 <label>Descrição</label>
-                <textarea name="descricao" id="descricaoEdicao" rows="3" required></textarea>
+                <textarea name="descricao" id="descricao" rows="3" required></textarea>
 
                 <div class="footer">
                     <input type="button" class="btn cancel"  id="cancelModalEdicao" value="Cancelar">
@@ -152,6 +152,16 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+    const categoriasMap = {
+        'Sa': 'Sangue',
+        'Im': 'Imagem',
+        'Ca': 'Cardiológicos',
+        'Ur': 'Urina',
+        'Ho': 'Hormonais',
+        'In': 'Infecciosos',
+        'Re': 'Respiratórios'
+    };
+
     const modalEdicao = document.getElementById("modalEdicao");
     const closeModalEdicao = document.getElementById("closeModalEdicao");
     const cancelModalEdicao = document.getElementById("cancelModalEdicao");
@@ -169,9 +179,12 @@ document.addEventListener("DOMContentLoaded", () => {
             // pega os dados
             document.getElementById("idExame").value = btn.dataset.id;
             document.getElementById("nomeEdicao").value = btn.dataset.nome;
-            document.getElementById("categoriaEdicao").value = btn.dataset.categoria;
+
+            const categoriaCompleta = categoriasMap[btn.dataset.categoria] || btn.dataset.categoria;
+            document.getElementById("categoriaEdicao").value = categoriaCompleta;
+
             document.getElementById("tempoEdicao").value = btn.dataset.tempo;
-            document.getElementById("descricaoEdicao").value = btn.dataset.descricao;
+            document.getElementById("descricao").value = btn.dataset.descricao;
 
             abrirModalEdicao();
         });

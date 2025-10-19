@@ -48,13 +48,20 @@
                 $observacao
             );
 
+            session_start();
             if ($agendar) {
-                echo "Agendou !!!!!!!!!!";
-                // header("Location: ../views/paciente/home.php");
-                exit;
+                 $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => 'Consulta Agendada com sucesso'
+                ];
             } else {
-                echo "Erro ao agendar consulta.";
+                $_SESSION['error'] = [
+                    'type' => 'success',
+                    'message' => 'Erro ao agendar Consulta, Tente novamente'
+                ];
             }
+            header("Location: ../views/paciente/consultas/listar_profissionais.php");
+            exit;
         }
         
        
@@ -85,8 +92,8 @@
                 $diaAgendamento,
                 $observacao
             );
+
             session_start();
-            
             if ($editar) {
                 $_SESSION['flash'] = [
                     'type' => 'success',

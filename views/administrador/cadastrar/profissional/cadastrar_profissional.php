@@ -17,6 +17,7 @@
 </head>
 
 
+
 <body>
 
     <div class="container">
@@ -96,16 +97,74 @@
                                     <option value="clinico_geral">Clínico Geral</option>
                                     <option value="pediatria">Pediatria</option>
                                     <option value="cardiologia">Cardiologia</option>
-                                    <option value="crtopedia">Ortopedia</option>
+                                    <option value="ortopedia">Ortopedia</option>
+                                    <option value="dermatologia">Dermatologia</option>
+                                    <option value="ginecologia">Ginecologia</option>
+                                    <option value="obstetricia">Obstetrícia</option>
+                                    <option value="endocrinologia">Endocrinologia</option>
+                                    <option value="neurologia">Neurologia</option>
+                                    <option value="oftalmologia">Oftalmologia</option>
+                                    <option value="otorrinolaringologia">Otorrinolaringologia</option>
+                                    <option value="psiquiatria">Psiquiatria</option>
+                                    <option value="urologia">Urologia</option>
+                                    <option value="psicologia_clinica">Psicologia Clínica</option>
                                 </optgroup>
-                                <hr />
-                                <optgroup label="EXAMES">
-                                    <option value="exame_radiologia">Radiologia</option>
-                                    <option value="exame_neurofisiologia">Neurofisiologia</option>
-                                    <option value="exame_patologista">Patologista</option>
-                                    <option value="exame_medicina_laboratorial">Medicina Laboratorial</option>
 
+                                <hr />
+                                <optgroup label="Exames de sangue">
+                                    <option value="exame_hemograma">Hemograma</option>
+                                    <option value="exame_colesterol">Colesterol</option>
+                                    <option value="exame_glicemia">Glicemia</option>
+                                    <option value="exame_triglicerideos">Triglicerídeos</option>
+                                    <option value="exame_plaquetas">Plaquetas</option>
+                                    <option value="exame_hemoglobina_glicada">Hemoglobina Glicada</option>
                                 </optgroup>
+
+                                <optgroup label="Exames de imagem">
+                                    <option value="exame_raio_x">Raio-X</option>
+                                    <option value="exame_ressonancia_magnetica">Ressonância Magnética</option>
+                                    <option value="exame_tomografia">Tomografia</option>
+                                    <option value="exame_ultrassonografia">Ultrassonografia</option>
+                                    <option value="exame_mamografia">Mamografia</option>
+                                    <option value="exame_densitometria_ossea">Densitometria Óssea</option>
+                                </optgroup>
+
+                                <optgroup label="Exames cardiológicos">
+                                    <option value="exame_eletrocardiograma">Eletrocardiograma</option>
+                                    <option value="exame_ecocardiograma">Ecocardiograma</option>
+                                    <option value="exame_holter">Holter</option>
+                                    <option value="exame_teste_ergometrico">Teste Ergométrico</option>
+                                    <option value="exame_mapa">MAPA</option>
+                                </optgroup>
+
+                                <optgroup label="Exames de urina">
+                                    <option value="exame_urina_tipo_i">Urina Tipo I</option>
+                                    <option value="exame_urocultura">Urocultura</option>
+                                    <option value="exame_exame_de_urina">Exame de Urina</option>
+                                </optgroup>
+
+                                <optgroup label="Exames hormonais">
+                                    <option value="exame_tsh">TSH</option>
+                                    <option value="exame_t4_livre">T4 Livre</option>
+                                    <option value="exame_testosterona">Testosterona</option>
+                                    <option value="exame_estradiol">Estradiol</option>
+                                    <option value="exame_cortisol">Cortisol</option>
+                                    <option value="exame_progesterona">Progesterona</option>
+                                </optgroup>
+
+                                <optgroup label="Exames infecciosos">
+                                    <option value="exame_hiv">HIV</option>
+                                    <option value="exame_hepatite_b">Hepatite B</option>
+                                    <option value="exame_hepatite_c">Hepatite C</option>
+                                    <option value="exame_sifilis">Sífilis</option>
+                                </optgroup>
+
+                                <optgroup label="Exames respiratórios">
+                                    <option value="exame_espirometria">Espirometria</option>
+                                    <option value="exame_gasometria_arterial">Gasometria Arterial</option>
+                                    <option value="exame_teste_de_funcao_pulmonar">Teste de Função Pulmonar</option>
+                                </optgroup>
+
 
                             </select>
                         <small>Msg de erro</small>
@@ -192,8 +251,8 @@
     <script src="../../../../public/assets/js/validar_profissional.js"></script>
     <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const frutasSelect = document.getElementById('multiple');
-    const choices = new Choices(frutasSelect, {
+    const especialidadesSelect = document.getElementById('multiple');
+    const choices = new Choices(especialidadesSelect, {
       removeItemButton: true, // mostra botão de remover cada item selecionado
       searchEnabled: true     // habilita busca dentro da lista
     });

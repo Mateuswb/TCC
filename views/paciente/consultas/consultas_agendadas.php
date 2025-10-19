@@ -26,24 +26,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <style>
-      .flash-success {
-    background-color: #d4edda;
-    color: #155724;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    border: 1px solid #c3e6cb;
-}
-
-.flash-error {
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    border: 1px solid #f5c6cb;
-}
-
 
         /* ===== RESET ===== */
         * {
@@ -205,9 +187,7 @@
 <body>
     <main class="conteudo-principal">
          <div class="content">
-            <?php
-              include 'flash.php';
-            ?>
+            <?php    include '../../../public/assets/alerta/flash.php' ?>
             <h1 class="titulo">Consultas Agendadas</h1>
 
             <div class="agendamentos-container">

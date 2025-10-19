@@ -229,41 +229,7 @@ header .btn-login:hover {
   color: #fff;
 }
 
-/* ===== ESPECIALISTAS ===== */
-.especialistas {
-  background: #fff;
-  padding: 100px 10%;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 60px;
-}
-.especialistas img {
-  max-width: 420px;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-}
-.especialistas-text {
-  max-width: 520px;
-}
-.especialistas-text h2 {
-  font-size: 30px;
-  margin-bottom: 14px;
-}
-.especialistas-text p {
-  color: #4d6073;
-  margin-bottom: 26px;
-  line-height: 1.6;
-}
-.especialistas-text .btn {
-  background: var(--azul-medio);
-  color: #fff;
-  padding: 12px 22px;
-  border-radius: var(--radius);
-  text-decoration: none;
-  font-weight: 700;
-}
+
 
 /*  EXAMES*/
 .exames {
@@ -347,6 +313,102 @@ footer p {
     width: 300px;
   }
 }
+.especialista-section {
+  display: flex;
+  justify-content: center;
+  background-color: #fff;
+  padding: 40px 20px;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 40px;
+}
+
+.text-content {
+  flex: 1;
+}
+
+.text-content h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 20px;
+}
+
+.text-content p {
+  color: #333;
+  font-size: 1rem;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+.text-content p a {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.especialidades {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 40px;
+  margin-bottom: 25px;
+}
+
+.especialidades .link {
+  text-decoration: none;
+  color: #000;
+  font-weight: 600;
+  border-bottom: 2px solid #003366;
+  width: fit-content;
+}
+
+.btn-visualizar {
+  background-color: #0056b3;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 25px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+.btn-visualizar:hover {
+  background-color: #004091;
+}
+
+.image-content {
+  position: relative;
+  width: 300px;
+}
+
+.image-bg {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  bottom: 20px;
+  left: 20px;
+  background-color: #003f5c;
+  border-radius: 8px;
+  z-index: 1;
+}
+
+.image-content img {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
 
   </style>
 </head>
@@ -408,23 +470,31 @@ footer p {
 
 
   <!-- ESPECIALISTAS -->
-  <section id="especialistas" class="especialistas">
-    <div class="especialistas-text">
-      <h2>Encontre o especialista certo para o seu atendimento</h2>
-      <p>Busque profissionais por área de atuação, localização e avaliações de pacientes para o melhor atendimento possível.</p>
-      <a href="" class="btn">Ver Especialistas</a>
-    </div>
-    <img src="https://cdn-icons-png.flaticon.com/512/3870/3870822.png" alt="Especialista Médico">
-  </section>
+<section class="especialista-section">
+  <div class="container">
+    <div class="text-content">
+      <h2>Encontre o especialista certo<br>para o seu atendimento</h2>
+      <p>
+        Disponibilizamos profissionais de diversas áreas médicas, garantindo praticidade e
+        qualidade no atendimento.
+      </p>
 
-  <!-- EXAMES -->
-  <section id="exames" class="exames">
-    <img src="https://cdn-icons-png.flaticon.com/512/2947/2947062.png" alt="Exame Médico">
-    <div class="exames-text">
-      <h2>Exames</h2>
-      <p>Nossas clínicas oferecem uma ampla gama de exames com resultados digitais, acessíveis de qualquer dispositivo em até 48h.</p>
+      <div class="especialidades">
+        <a href="#" class="link">Cardiologista</a>
+        <a href="#" class="link">Ortopedista</a>
+        <a href="#" class="link">Pediatra</a>
+        <a href="#" class="link">Clínico geral</a>
+      </div>
+
+      <button class="btn-visualizar">Visualizar</button>
     </div>
-  </section>
+
+    <div class="image-content">
+      <div class="image-bg"></div>
+      <img src="medico.png" alt="Médico com jaleco e estetoscópio" />
+    </div>
+  </div>
+</section>
 
   <!-- ACESSO -->
   <section id="acesso" class="acesso">

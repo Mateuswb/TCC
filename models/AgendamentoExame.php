@@ -120,7 +120,18 @@
             return $query->fetchAll(PDO::FETCH_ASSOC);
         }
 
+
         
+        public function finalizarAgendamentoConsulta($idExame) {
+            $sql = "UPDATE agendamentos_exames
+                    SET status = 'realizado' 
+                    WHERE id_agendamento = :idExame";
+            $query = $this->conn->prepare($sql);
+
+            return $query->execute([
+                'idExame' => $idExame
+            ]);
+        }
 
     }
 ?>

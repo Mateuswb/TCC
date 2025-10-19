@@ -66,29 +66,52 @@
         }
 
         public function listarAgendamentosDoProfissional($idProfissional) {
-            $hoje = date('Y-m-d');
-            $sql = "SELECT a.id_agendamento,
-                    a.status,
-                    a.dia_agendamento AS dia,
-                    a.horario_agendamento AS horario,
-                    p.nome AS nome_paciente,
-                    a.tipo_consulta,
-                    a.anexo
-                FROM agendamentos_consultas a
-                JOIN pacientes p 
-                    ON a.id_paciente = p.id_paciente
-                JOIN horarios_profissionais h 
-                    ON a.id_horario_profissional = h.id_horario 
-                WHERE h.id_profissional = :idProfissional
-                AND a.status = 'agendada'
-                ORDER BY a.dia_agendamento ASC, a.horario_agendamento ASC";
+            $sql = "SELECT 
+                        a.id_agendamento,
+                        'consulta' AS tipo,
+                        a.status,
+                        a.dia_agendamento AS dia,
+                        a.horario_agendamento AS horario,
+                        p.nome AS nome_paciente,
+                        a.tipo_consulta,
+                        a.anexo,
+                        NULL AS nome_exame
+                    FROM agendamentos_consultas a
+                    JOIN pacientes p ON a.id_paciente = p.id_paciente
+                    JOIN horarios_profissionais h ON a.id_horario_profissional = h.id_horario
+                    WHERE h.id_profissional = :idProfissional
+                    AND a.status = 'agendada'
+
+                    UNION ALL
+
+                    -- Agendamentos de exames
+                    SELECT 
+                        e.id_agendamento,
+                        'exame' AS tipo,
+                        e.status,
+                        e.dia_agendamento AS dia,
+                        e.horario_agendamento AS horario,
+                        p.nome AS nome_paciente,
+                        NULL AS tipo_consulta,
+                        NULL AS anexo,
+                        te.nome AS nome_exame
+                    FROM agendamentos_exames e
+                    JOIN encaminhamentos enc ON e.id_encaminhamento = enc.id_encaminhamento
+                    JOIN agendamentos_consultas a ON enc.id_agendamento_consulta = a.id_agendamento
+                    JOIN pacientes p ON a.id_paciente = p.id_paciente
+                    JOIN horarios_profissionais h ON a.id_horario_profissional = h.id_horario
+                    JOIN tipos_exames te ON enc.id_exame = te.id_exame
+                    WHERE h.id_profissional = :idProfissional
+                    AND e.status != 'cancelado'";
             $query = $this->conn->prepare($sql);
             $query->execute([
+                ':idProfissional' => $idProfissional,
                 ':idProfissional' => $idProfissional
             ]);
+
             return $query->fetchAll(PDO::FETCH_ASSOC);
         }
-
+        
         public function cancelarAgendamentoConsulta($idConsulta) {
             $sql = "UPDATE agendamentos_consultas 
                     SET status = 'cancelada' 

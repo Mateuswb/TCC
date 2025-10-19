@@ -219,7 +219,7 @@ document.getElementById('diaAgendamento').addEventListener('change', function() 
       if (profissionalSelecionado) {
         container.innerHTML = '';
         for (const h of horarios) {      
-          const bloqueado = retorno.agendamento?.includes(h);
+          const bloqueado = retorno.agendamento.includes(h);
           container.innerHTML += bloqueado
             ? `<label class="time-slot-bloqueado">${h}</label>`
             : `<label class="time-slot"><input type="radio" name="horarioAgendamento" value="${h}"><span>${h}</span></label>`;

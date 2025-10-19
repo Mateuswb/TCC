@@ -4,6 +4,10 @@
     $root = $parts[0]; 
 
     define("BASE_URL", "/$root");
+
+    session_start();
+    $erro = $_SESSION['error'] ?? null;
+    unset($_SESSION['error']);
 ?>
 <div class="modal-bg" id="modal-login">
     <div class="modal-box">
@@ -15,6 +19,7 @@
             <p>Organize atendimentos com mais agilidade e segurança. Aqui, sua saúde é prioridade.</p>
         </div>
 
+         
         <!-- Formulário -->
         <form action="<?= BASE_URL ?>/controllers/UsuarioController.php" method="post" class="form" id="form-login">
             <h1 class="titleLogin">Login</h1>
@@ -38,7 +43,9 @@
 
             <input type="submit" id="btn-criar-conta" value="Login">
             <a href="usuario/cadastro.php" id="tenho-conta">Ainda não tenho uma conta</a>
+            <small>Msg de erro</small>
         </form>
+
 
     </div>
 </div>
@@ -170,6 +177,7 @@ a #btn-logar{
 }
 
 
+
 /* Error e Success */
 .form-control.success input{
     border: 1px solid #24C100;
@@ -271,6 +279,33 @@ a #btn-logar{
 .modal-box .close-btn:hover {
     color: #000;
 }
+#error-message {
+    background-color: #ffeef0;   /* fundo rosa claro */
+    color: #86181d;              /* texto vermelho */
+    border: 1px solid #e63042;   /* borda */
+    padding: 12px 18px;
+    margin-top: 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+
+}
+
+.close-btn2 {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #86181d;
+    cursor: pointer;
+}
+
+.close-btn2:hover {
+    color: #d73a49;
+}
+
 
 </style>
 
@@ -290,3 +325,26 @@ a #btn-logar{
 <script src="<?= BASE_URL ?>/public/assets/js/validar_login.js"></script>
 
 
+<?php if ($erro): ?>
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+    // abre o modal automaticamente
+    const modal = document.getElementById("modal-login");
+    if (modal) {
+        modal.style.display = "flex";
+    }
+
+    // cria dinamicamente a mensagem de erro no topo do form
+    const form = document.getElementById("form-login");
+    if (form) {
+        const msg = document.createElement("div");
+        msg.id = "error-message";
+        msg.innerHTML = `
+            <span><?= htmlspecialchars($erro) ?></span>
+            <button class="close-btn2" onclick="this.parentElement.remove()">×</button>
+        `;
+        form.prepend(msg);
+    }
+});
+</script>
+<?php endif; ?>

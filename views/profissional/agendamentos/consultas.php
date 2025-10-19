@@ -2,9 +2,16 @@
 session_start();
 include '../../../controllers/AgendamentoConsultaController.php';
 include '../../../public/includes/profissional/sidebar.php';
+
+// consulta
 include '../../../public/modals/profissional/consultas/cancelar_consulta.php';
 include '../../../public/modals/profissional/consultas/encaminhar_consulta.php';
 include '../../../public/modals/profissional/consultas/finalizar_consulta.php';
+
+// exame
+include '../../../public/modals/profissional/exames/finalizar_exame.php';
+
+
 
 $profissionalId = $_SESSION['idProfissional'];
 $controller = new AgendamentoConsultaController($conn);
@@ -24,6 +31,44 @@ $cores = ["#4a90e2", "#50e3c2", "#f36f45", "#9b59b6", "#e67e22", "#2ecc71"];
   <!-- <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/locales/pt-br.global.min.js"></script> -->
 
 </head>
+
+<style>
+
+  /* === ESTILOS ESPECÍFICOS DE EVENTOS === */
+
+/* Consultas - azul */
+.fc-event.consulta {
+  background-color: #4a90e2 !important;
+  border: 1px solid #2e6eb5 !important;
+  color: white !important;
+  font-weight: 600;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fc-event.consulta:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* Exames - estilo diferente (verde água) */
+.fc-event.exame {
+  background-color: #50e3c2 !important;
+  border: 1px solid #28b89a !important;
+  color: #083a35 !important;
+  font-weight: 600;
+  border-radius: 50px; /* mais arredondado para diferenciar */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  font-style: italic;
+}
+
+.fc-event.exame:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+</style>
 <body>
 
 <div class="main">
@@ -54,7 +99,18 @@ $cores = ["#4a90e2", "#50e3c2", "#f36f45", "#9b59b6", "#e67e22", "#2ecc71"];
       <button class="btn-fechar" onclick="fecharModal()">Fechar</button>
     </div>
   </div>
+
+    <div id="modalExame" class="modal">
+      <div class="modal-content">
+        <h3 id="exameTitle">Exame</h3>
+        <button class="btn-finalizar" onclick="executarAcaoExame('finalizar')">✅ Finalizar</button>
+        <button class="btn-cancelar" onclick="executarAcaoExame('cancelar')">❌ Cancelar</button>
+        <button class="btn-fechar" onclick="fecharModalExame()">Fechar</button>
+      </div>
+    </div>
 </div>
+
+
 
 <script>
 let calendar;
@@ -64,19 +120,24 @@ document.addEventListener('DOMContentLoaded', function () {
   const calendarEl = document.getElementById('calendar');
 
   const events = <?php echo json_encode(array_map(function($ag, $i) use ($cores) {
-    $title = $ag['nome_paciente'] . ' - ' . ucfirst($ag['tipo_consulta']);
+    $tipo = $ag['tipo']; // 'consulta' ou 'exame'
+    $nomeEvento = $tipo === 'consulta' ? ucfirst($ag['tipo_consulta']) : $ag['nome_exame'];
     $dia = $ag['dia'] ?? date('Y-m-d');
     $cor = $cores[$i % count($cores)];
-   return [
-    'id' => $ag['id_agendamento'],
-    'title' => $title,
-    'start' => $dia.'T'.$ag['horario'],
-    'end' => $dia.'T'.date('H:i:s', strtotime($ag['horario'].' + 30 minutes')),
-    'color' => $cor,
-    'classNames' => [$ag['tipo_consulta']],
-];
 
-  }, $agendamentos, array_keys($agendamentos)), JSON_UNESCAPED_UNICODE); ?>;
+    return [
+      'id' => $ag['id_agendamento'],
+      'title' => $ag['nome_paciente'] . ' - ' . $nomeEvento,
+      'start' => $dia.'T'.$ag['horario'],
+      'end' => $dia.'T'.date('H:i:s', strtotime($ag['horario'].' + 30 minutes')),
+      'color' => $cor,
+      'classNames' => [$tipo],
+      'extendedProps' => [
+          'tipo' => $tipo
+      ]
+  ];
+
+}, $agendamentos, array_keys($agendamentos)), JSON_UNESCAPED_UNICODE); ?>;
 
   calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'timeGridWeek',
@@ -91,10 +152,20 @@ document.addEventListener('DOMContentLoaded', function () {
       right: 'timeGridWeek,timeGridDay'
     },
     eventClick: function(info) {
-      selectedEvent = info.event;
+    selectedEvent = info.event;
+    const tipo = selectedEvent.extendedProps.tipo;
+
+    if (tipo === 'exame') {
+      // Modal de exame
+      document.getElementById("modalExame").style.display = "flex";
+      document.getElementById("idExame").value = selectedEvent.id;
+    } else {
+      // Modal de consulta
       document.getElementById("eventTitle").innerText = selectedEvent.title;
       document.getElementById("eventModal").style.display = "flex";
     }
+}
+
   });
 
   calendar.render();
@@ -103,7 +174,11 @@ document.addEventListener('DOMContentLoaded', function () {
 function fecharModal() {
   document.getElementById("eventModal").style.display = "none";
 }
+function fecharModalExame() {
+  document.getElementById("modalExame").style.display = "none";
+}
 
+console.log('1');
 function executarAcao(acao) {
   if (!selectedEvent) return;
 
@@ -113,20 +188,42 @@ function executarAcao(acao) {
     document.getElementById("encaminharId").value = selectedEvent.id;
     return;
   }
+
   if (acao === 'cancelar') {
     document.getElementById("eventModal").style.display = "none";
     document.getElementById("cancelarModal").style.display = "flex";
     document.getElementById("idConsulta").value = selectedEvent.id;
     return;
   }
+
   if (acao === 'finalizar') {
-    document.getElementById("eventModal").style.display = "none";
-    document.getElementById("finalizarModal").style.display = "flex";
-    document.getElementById("idFinalizarConsulta").value = selectedEvent.id;
-    return;
+    const tipo = selectedEvent.extendedProps.tipo;
+    if (tipo !== 'exame') {
+      document.getElementById("eventModal").style.display = "none";
+      document.getElementById("finalizarModal").style.display = "flex";
+      document.getElementById("idFinalizarConsulta").value = selectedEvent.id;
+    }
+
   }
-  
 }
+
+// Função para executar ações do exame 
+function executarAcaoExame(acao) {
+  if(!selectedEvent) return;
+
+  if(acao === 'finalizar') {
+    document.getElementById("modalExame").style.display = "none";
+    document.getElementById("finalizarExameModal").style.display = "flex";
+    document.getElementById("idFinalizarExame").value = selectedEvent.id;
+  }
+
+  if(acao === 'cancelar') {
+    document.getElementById("modalExame").style.display = "none";
+  }
+}
+
+
+
 
 
 

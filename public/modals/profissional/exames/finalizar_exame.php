@@ -1,26 +1,24 @@
-<!-- Modal Finalizar -->
-<div id="finalizarModal" class="modal-overlay" style="display: none;">
+<!-- Modal de Finalizar Exame -->
+<div id="finalizarExameModal" class="modal-overlay" style="display: none;">
   <div class="modal-box">
-    <form method="POST" action="../../../controllers/ProfissionalController.php?acao=finalizarAgendamentoConsulta">
-      
+    <form method="POST" action="../../../controllers/AgendamentoExameController.php?acao=finalizarAgendamentoExame">
+        
       <div class="modal-header">
-        <h3>Finalizar Consulta</h3>
-        <span class="close-btn" onclick="document.getElementById('finalizarModal').style.display='none'">&times;</span>
+        <h3>Finalizar Exame</h3>
+          <span class="close-btn" onclick="document.getElementById('finalizarExameModal').style.display='none'">&times;</span>
       </div>
-
       <div class="modal-body">
-        <p>Você tem certeza que deseja <b>finalizar esta consulta</b>?  
-        Essa ação irá marcar a consulta como concluída.</p>
-        <input type="hidden" name="idConsulta" id="idFinalizarConsulta">
+        <p>Tem certeza que deseja <b>finalizar este Exame</b>?</p>
+        <input type="int" name="idExame" id="idFinalizarExame">
       </div>
-
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" onclick="document.getElementById('finalizarModal').style.display='none'">Voltar</button>
-        <button type="submit" class="btn btn-success">Finalizar Consulta</button>
+        <button type="button" class="btn btn-secondary" onclick="document.getElementById('finalizarExameModal').style.display='none'">Voltar</button>
+        <button type="submit" class="btn btn-success">Finalizar Exame</button>
       </div>
     </form>
   </div>
 </div>
+
 
 
 <style>

@@ -12,12 +12,13 @@
     $exames = $controller->listarExames();
 
     $categorias = [
-        'im' => 'Imagem',
-        'ca' => 'Cardiologia',
-        'la' => 'Laboratorial',
-        'ne' => 'Neurologia',
-        'ec' => 'Ecocardiograma',
-        'ex' => 'Hemograma'
+        'Sa' => 'Sangue',
+        'Im' => 'Imagem',
+        'Ca' => 'Cardiológicos',
+        'Ur' => 'Urina',
+        'Ho' => 'Hormonais',
+        'In' => 'Infecciosos',
+        'Re' => 'Respiratórios'
     ];
 
 ?>
@@ -71,7 +72,7 @@
                                 data-nome="<?= $exame["nome"] ?>"
                                 data-categoria="<?= $exame["categoria"] ?>"
                                 data-tempo="<?= $exame["tempo_minutos"] ?>"
-                                descricao="<?= $exame["descricao"] ?>"
+                                data-descricao="<?= $exame["descricao"] ?>"
                                 onclick="abrirModal(this)">
                                 </i>
                             <i class="fa fa-trash text-danger"

@@ -151,27 +151,39 @@
         }
 
         #consultas
-        // public function listarConsultas(){
-        //     return $this->agendamentoConsultaModel->listarConsultas();
-        // }
+        public function listarConsultas(){
+             return $this->agendamentoConsultaModel->listarConsultas();
+         }
 
 
-        #exames 
-        public function cadastrarExame(){
+        public function cadastrarExame() {
             $categoria = $_POST['categoria'];
             $nome = $_POST['nome'];
             $descricao = $_POST['descricao'];
             $tempoMinutos = $_POST["tempoMinutos"];
 
-            $cadastro = $this->exameModel->cadastrarExame($categoria, $nome, $descricao, $tempoMinutos);
+            //  verifica se tem pelo menos 1 profissional cadastrado
+            if(!$this->exameModel->existeProfissionalParaCategoria($nome)) {
+                echo "Não é possível cadastrar este exame. Nenhum profissional na clínica realiza esta especialidade.";
+                exit;
+            }
+
+            if ($this->exameModel->exameJaCadastrado($nome)) {
+                echo "Este exame já está cadastrado!";
+                exit;
+            }
+
+            // Se existe profissional, cadastra normalmente
+            $nomeTratado = ucwords(strtolower($nome));
+            $cadastro = $this->exameModel->cadastrarExame($categoria, $nomeTratado, $descricao, $tempoMinutos);
 
             if($cadastro){
-                echo "Cadastrouuuuuu";
+                echo "Exame cadastrado com sucesso!";
             } else {
                 echo "Erro ao cadastrar exame";
             }
-
         }
+
 
         public function listarExames(){
             return $this->exameModel->listarExames();

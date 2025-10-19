@@ -217,7 +217,7 @@
                 
                 //  Exames de imagem
                 "Raio-X"                    => "exame_radiologia",
-                "Tomografia Computadorizada"=> "exame_radiologia",
+                "Tomografia"                => "exame_radiologia",
                 "Ressonância Magnética"     => "exame_radiologia",
                 "Ultrassonografia"          => "exame_radiologia",
                 "Mamografia"                => "exame_mastologia",
