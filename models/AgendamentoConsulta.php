@@ -21,8 +21,7 @@
                     )";
 
             $query = $this->conn->prepare($sql);
-
-            return $query->execute([
+            $resutado = $query->execute([
                 ':idPaciente' => $idPaciente,
                 ':idHorarioProfissional' => $idHorarioProfissional,
                 ':tipoConsulta' => $tipoConsulta,
@@ -32,7 +31,9 @@
                 ':diaAgendamento' => $diaAgendamento,
                 ':observacoes' => $observacoes
             ]);
+            
             // $query->debugDumpParams();
+            return $resutado;
         }
 
         public function editarConsulta(
@@ -53,7 +54,7 @@
 
             $query = $this->conn->prepare($sql);
 
-            $query->execute([
+            $result = $query->execute([
                 ':idAgendamento' => $idAgendamento,
                 ':tipoConsulta' => $tipoConsulta,
                 ':anexo' => $anexo,
@@ -62,7 +63,7 @@
                 ':observacoes' => $observacoes
             ]);
             
-            return $query;
+            return $result;
         }
 
         public function listarAgendamentosDoProfissional($idProfissional) {
@@ -118,9 +119,10 @@
                     WHERE id_agendamento = :idConsulta";
             $query = $this->conn->prepare($sql);
 
-            return $query->execute([
+            $query->execute([
                 'idConsulta' => $idConsulta
             ]);
+            return $query;
         }
 
         public function finalizarAgendamentoConsulta($idConsulta) {

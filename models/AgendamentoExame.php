@@ -119,8 +119,6 @@
 
             return $query->fetchAll(PDO::FETCH_ASSOC);
         }
-
-
         
         public function finalizarAgendamentoConsulta($idExame) {
             $sql = "UPDATE agendamentos_exames
