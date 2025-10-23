@@ -38,13 +38,12 @@
 </head>
 <body>
 <div class="main">
-
     <div class="content">
+    <?php  include '../../../public/assets/alerta/flash.php' ?>
         <div class="exams-box">
             <h3>
                 Exames Cadastrados
                 <button class="btn-new" id="openModal"><i class="fa fa-plus"></i> Novo Exame</button>
-
             </h3>
             <div style="display:flex; gap:10px; margin-bottom:15px;">
                 <input id="searchInput" type="text" placeholder="Pesquisar exame...">
@@ -55,13 +54,13 @@
                     <option value="Cardiologia">Cardiologia</option>
                 </select>
             </div>
-
+    
             <?php foreach ($exames as $exame): ?>
                 <div class="exam-card">
                     <div class="exam-header">
                         <div class="exam-tags">
                             <span class="tag"><?= $categorias[$exame["categoria"]] ?></span>
-                            <span class="time"><i class="fa fa-clock"></i> <?= $exame["tempo_minutos"] ?></span>
+                            <span class="time"><i class="fa fa-clock"></i> <?= $exame["tempo_minutos"] ?> min</span>
                         </div>
                         <div class="actions">
                             <!-- <i class="fa fa-eye" title="Visualizar"></i> -->
@@ -93,3 +92,4 @@
 </div>
 </body>
 </html>
+

@@ -1,5 +1,5 @@
 <?php
-    include '../public/assets/css/usuario/modal_login.php';
+    include '../public/modals/usuario/modal_login.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -9,6 +9,10 @@
   <title>Med Hub — Agende Consultas e Exames</title>
 
   <style>
+
+
+
+
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body {
@@ -508,8 +512,6 @@ footer p {
     <div class="logo">Med <span>Hub</span></div>
     <p>© <span id="year"></span> Med Hub. Todos os direitos reservados.</p>
   </footer>
-
-  
 
 </body>
 </html>

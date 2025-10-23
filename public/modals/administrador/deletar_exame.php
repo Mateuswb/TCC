@@ -161,7 +161,7 @@ function fecharConfirmacao() {
 
 // Confirmar exclusão
 document.getElementById("btnConfirmarExcluir").addEventListener("click", () => {
-    document.getElementById("formExcluirExame").submit();
+    document.getElementById("formExcluirExame").sub it();
 });
 
 // Fechar clicando fora dos modais

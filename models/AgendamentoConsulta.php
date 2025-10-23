@@ -140,16 +140,20 @@
             $stmt = $this->conn->prepare("
                     SELECT 
                         a.*, 
-                        p.nome AS paciente_nome, 
+                        p.nome AS paciente_nome,
+                        pr.nome AS nome_profissional,
                         p.email AS paciente_email,
                         e.id_encaminhamento,
                         e.id_exame,
+                        te.nome AS nome_exame,
                         e.observacoes AS encaminhamento_observacoes
                     FROM agendamentos_consultas a
                     INNER JOIN pacientes p 
                         ON a.id_paciente = p.id_paciente
-                    INNER JOIN encaminhamentos e
-                        ON e.id_agendamento_consulta = a.id_agendamento
+                    INNER JOIN horarios_profissionais hp ON a.id_horario_profissional = hp.id_horario
+                    INNER JOIN profissionais pr ON hp.id_profissional = pr.id_profissional
+                    INNER JOIN encaminhamentos e ON e.id_agendamento_consulta = a.id_agendamento
+                    INNER JOIN tipos_exames te ON e.id_exame = te.id_exame
                     WHERE a.id_agendamento = :idAgendamento");
             $stmt->execute(['idAgendamento' => $idAgendamento]);
             return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -199,7 +203,8 @@
         public function totalConsultasRealizadas($idPaciente){
             $sql = "SELECT COUNT(*) as total_consultas
                     FROM agendamentos_consultas
-                    WHERE id_paciente = :idPaciente";
+                    WHERE id_paciente = :idPaciente
+                    AND status = 'realizada'";
             $query = $this->conn->prepare($sql);
             $query->execute([
                 'idPaciente'=> $idPaciente
@@ -235,5 +240,15 @@
         }
 
 
+        #validações
+        public function temAgendamentoAtivo($idProfissional) {
+            $sql = "SELECT COUNT(*) FROM agendamentos_consultas a
+                    JOIN horarios_profissionais h ON a.id_horario_profissional = h.id_horario
+                    WHERE h.id_profissional = :idProfissional
+                    AND a.status = 'agendada'";
+            $query = $this->conn->prepare($sql);
+            $query->execute([':idProfissional' => $idProfissional]);
+            return $query->fetchColumn() > 0;
+        }
     }
 ?>

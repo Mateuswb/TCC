@@ -33,13 +33,9 @@
         class="<?= ($currentFile == 'listar_pacientes.php') ? 'active' : '' ?>">
         <i class="fas fa-user-injured"></i> <span>Pacientes</span>
     </a>
-    <a href="<?= BASE_URL ?>/administrador/agendamento/consultas.php"
-        class="<?= ($currentFile == 'consultas.php') ? 'active' : '' ?>">
-        <i class="fas fa-calendar-check"></i> <span>Consultas Agendadas</span>
-    </a>
-    <a href="<?= BASE_URL ?>"
-     class="<?= ($currentFile == '') ? 'active' : '' ?>">
-        <i class="fas fa-vials"></i> <span>Exames Agendados</span>
+    <a href="<?= BASE_URL ?>/administrador/agendamento/agendamentos.php"
+        class="<?= ($currentFile == 'agendamentos.php') ? 'active' : '' ?>">
+        <i class="fas fa-calendar-check"></i> <span>Agendamentos</span>
     </a>
     <a href="<?= BASE_URL ?>/administrador/usuario/listar_usuarios.php"
         class="<?= ($currentFile == 'listar_usuarios.php') ? 'active' : '' ?>">

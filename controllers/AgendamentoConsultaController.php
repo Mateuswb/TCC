@@ -76,7 +76,6 @@
         }
 
         
-       
         public function editarConsulta() {
             $idAgendamento         = $_POST['idAgendamentoConsulta'];
             $tipoConsulta          = $_POST['tipoConsulta'];
@@ -127,17 +126,29 @@
 
             $cancelar = $this->agendamentoConsultaModel->cancelarAgendamentoConsulta($idAgendamento);
 
+            session_start();
             if($cancelar){
-                echo "Cancelado";
+                $_SESSION['flash'] = [
+                    'type' => 'success', 
+                    'message' => "Consulta cancelada com sucesso." 
+                ];
             }
             else{
-                echo "erro";
+                $_SESSION['flash'] = [
+                    'type' => 'error', 
+                    'message' => "Erro ao cancelar consulta."
+                ];
             }
+            header("Location: ../views/paciente/consultas/consultas_agendadas.php");
+
         }
 
         public function listarAgendamentosDoProfissional($idProfissional) {
             return $this->agendamentoConsultaModel->listarAgendamentosDoProfissional($idProfissional);
         }
+
+
+
     }
     
     

@@ -5,6 +5,7 @@
     require_once dirname(__DIR__) . "/models/AgendamentoConsulta.php";
     require_once dirname(__DIR__) . "/models/Profissional.php";
     require_once dirname(__DIR__) . "/models/Exame.php";
+    require_once dirname(__DIR__) . "/models/Relatorio.php";
     
     require_once dirname(__DIR__) . "/controllers/UsuarioController.php";
 
@@ -14,6 +15,7 @@
         private $profissionalModel;
         private $agendamentoConsultaModel;
         private $exameModel;
+        private $relatorioModel;
 
         private $usuarioController;
 
@@ -23,6 +25,7 @@
             $this->profissionalModel = new Profissional($conn);
             $this->agendamentoConsultaModel = new AgendamentoConsulta($conn);
             $this->exameModel = new Exame($conn);
+            $this->relatorioModel = new Relatorio($conn);
             $this->usuarioController = new UsuarioController($conn);
         }
 
@@ -151,9 +154,9 @@
         }
 
         #consultas
-        public function listarConsultas(){
-             return $this->agendamentoConsultaModel->listarConsultas();
-         }
+        // public function listarConsultas(){
+        //      return $this->agendamentoConsultaModel->listarConsultas();
+        //  }
 
 
         public function cadastrarExame() {
@@ -162,14 +165,17 @@
             $descricao = $_POST['descricao'];
             $tempoMinutos = $_POST["tempoMinutos"];
 
+            session_start();
             //  verifica se tem pelo menos 1 profissional cadastrado
             if(!$this->exameModel->existeProfissionalParaCategoria($nome)) {
-                echo "Não é possível cadastrar este exame. Nenhum profissional na clínica realiza esta especialidade.";
+                $_SESSION['error'] = "Não é possível cadastrar este exame. Nenhum profissional na clínica tem essa especialidade.";
+                header("Location: ../views/administrador/exame/listar_exames.php");
                 exit;
             }
 
             if ($this->exameModel->exameJaCadastrado($nome)) {
-                echo "Este exame já está cadastrado!";
+                $_SESSION['error'] = "Este exame já está cadastrado!";
+                header("Location: ../views/administrador/exame/listar_exames.php");
                 exit;
             }
 
@@ -178,10 +184,18 @@
             $cadastro = $this->exameModel->cadastrarExame($categoria, $nomeTratado, $descricao, $tempoMinutos);
 
             if($cadastro){
-                echo "Exame cadastrado com sucesso!";
+                $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => 'Exame cadastrado com sucesso.'
+                ];
             } else {
-                echo "Erro ao cadastrar exame";
+                 $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => 'Erro ao cadastrar exame. Tente novamente.'
+                ];
             }
+            header("Location: ../views/administrador/exame/listar_exames.php");
+            exit;
         }
 
 
@@ -218,6 +232,28 @@
 
         }
 
+        public function listarAgendamentos(){
+            return $this->relatorioModel->listarAgendamentos();
+        }
+
+        #validar exclusão de profissioanl
+        public function excluirProfissional(){
+            $idProfissional = $_POST['idProfissional'];
+            $temAgendamento = $this->agendamentoConsultaModel->temAgendamentoAtivo($idProfissional);
+
+            if ($temAgendamento) {
+                echo "Este profissional possui agendamentos ativos e não pode ser excluído.";
+            }
+
+            //$query de deletar vai vim aq
+
+            if ($resultado) {
+                echo "Profissional pode ser excluído com sucesso.";
+                
+            } else {
+                echo "Erro ao excluir profissional.";
+            }
+        }
 
     }
 
@@ -242,6 +278,9 @@
                 break;
             case 'deletarExame':
                 $controller->deletarExame();
+                break;
+            case 'excluirProfissional':
+                $controller->excluirProfissional();
                 break;
             default:
                 echo "Ação inválida";

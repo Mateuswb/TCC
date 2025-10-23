@@ -108,11 +108,19 @@
                 $cidade, $observacoes
             );
 
+            session_start();
             if ($resultado) {
-                echo "Dados atualizados com sucesso.";
+                $_SESSION['flash'] = [
+                    'type' => 'success', 
+                    'message' => "Dados atualizados com sucesso" 
+                ];
             } else {
-                echo "Erro ao atualizar dados.";
+                $_SESSION['flash'] = [
+                    'type' => 'error', 
+                    'message' => "Erro ao editar dados." 
+                ];
             }
+            header("Location: ../views/paciente/perfil.php");
         }
 
         public function exibirDadosPaciente() {

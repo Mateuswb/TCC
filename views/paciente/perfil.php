@@ -166,6 +166,7 @@
 
   <!-- Main -->
   <div class="main">
+    <?php  include '../../public/assets/alerta/flash.php' ?>
 
 
     <div class="profile-header">

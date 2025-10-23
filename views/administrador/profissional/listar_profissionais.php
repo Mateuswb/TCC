@@ -1,14 +1,15 @@
 <?php
+  session_start();
   include "../../../public/includes/administrador/sidebar.php"; 
   include "../../../public/includes/administrador/header.html"; 
   include "../../../public/includes/administrador/footer.php";
 
-  include "../../../public/modals/administrador/edicao/editar_dados_profissional.html";
+  require "../../../public/modals/administrador/edicao/editar_dados_profissional.html";
+  require "../../../public/modals/administrador/deletar_profissional.php";
   
   require_once "../../../controllers/AdministradorController.php";
   $controller = new AdministradorController($conn);
   $profissionais = $controller->listarProfissionais();
-
 ?>
 
 <!DOCTYPE html>
@@ -58,65 +59,43 @@
               <li><strong>Bairro:</strong> <?php echo $profissional['bairro']; ?></li>
               <li><strong>Cidade:</strong> <?php echo $profissional['cidade']; ?></li>
               <li><strong>Obs:</strong> <?php echo $profissional['observacoes']; ?></li>
-            </ul>
+            </ul> 
             <div class="footer">
 
               <button
                 class="btn-edit" 
-                data-id="12"
-                data-nome="João da Silva Santos"
-                data-rg="98.675.678-76"
-                data-email="joaosilvasantos@gmail.com"
-                data-data-nascimento="21/12/1998"
-                data-crm="CRM/SP 123456"
-                data-especialidade="Cardiologia"
-                data-telefone="(48) 99897-8788"
-                data-sexo="Masculino"
-                data-estado-civil="Casado"
-                data-endereco="Rua das Palmeiras, nº 125"
-                data-bairro="Jardim Esperança"
-                data-numero="Nº 125"
-                data-cidade="Florença"
-                data-observacoes="Especialista em cirurgias de coração."
+                data-id="<?php echo $profissional['id_profissional']; ?>"
+                data-nome="<?php echo $profissional['nome']; ?>"
+                data-rg=" <?php echo $profissional['rg']; ?>"
+                data-email="<?php echo $profissional['email']; ?>"
+                data-data-nascimento="<?php echo $profissional['data_nascimento']; ?>"
+                data-crm=" <?php echo $profissional['crm_crp']; ?>"
+                data-especialidade="<?php echo $profissional['especialidade']; ?>"
+                data-telefone=" <?php echo $profissional['telefone']; ?>"
+                data-sexo="<?php echo $profissional['sexo']; ?>"
+                data-estado-civil="<?php echo $profissional['estado_civil']; ?>"
+                data-endereco="<?php echo $profissional['endereco']; ?>"
+                data-bairro="<?php echo $profissional['bairro']; ?>"
+                data-numero="<?php echo $profissional['numero_casa']; ?>"
+                data-cidade="<?php echo $profissional['cidade']; ?>"
+                data-observacoes="<?php echo $profissional['observacoes']; ?>"
                 onclick="abrirModalEditar(this)">
                 Editar
               </button>
 
-              <!-- <a class="btn-delete"
-                href="excluir.php?idProfissional=<?php echo $profissional['id_profissional']; ?>&cpf=<?php echo $profissional['id_profissional']; ?>"
-                onclick="confirmarExclusaoProfissional(this.href); return false;">
+              <button 
+                class="btn-delete" 
+                data-id="<?php echo $profissional['id_profissional']; ?>"
+                onclick="abrirModalExclusao(this)">
                 Excluir
-              </a> -->
+              </button>
+
+
             </div>
           </div>
         <?php } ?>
       </div>
     </div>
   </div>
-
-  <script>
-    function toggleSidebar() {
-      document.getElementById("sidebar").classList.toggle("collapsed");
-    }
-  </script>
-
-  <?php
-    if (isset($_GET['alerta'])) {
-      if ($_GET['alerta'] == 0) {
-          $tipo = 'sucesso';
-          $titulo = 'Atualizado';
-          $mensagem = 'Profissional excluído e conta desativada com sucesso.';
-      } elseif ($_GET['alerta'] == 1) {
-          $tipo = 'erro';
-          $titulo = 'Erro';
-          $mensagem = 'Erro ao excluir profissional ou desativar conta.';
-      }
-      echo "<script>
-        window.addEventListener('DOMContentLoaded', () => {
-          alertaPadraoPos('$tipo', '$titulo', '$mensagem');
-        });
-      </script>";
-    }
-  ?>
 </body>
 </html>

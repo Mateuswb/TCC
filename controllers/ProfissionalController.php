@@ -101,11 +101,11 @@
                         <table width="100%" cellpadding="8" cellspacing="0" style="margin:15px 0; border:1px solid #ddd; border-radius:6px;">
                         <tr style="background:#f4f6f8;">
                             <td><strong>Exame:</strong></td>
-                            <td>Hemograma Completo</td>
+                            <td>'. $dados['nome_exame'] . '</td>
                         </tr>
                         <tr>
                             <td><strong>Profissional:</strong></td>
-                            <td>Dr. João da Silva (Clínico Geral)</td>
+                            <td>Dr.'. $dados['nome_profissional'] .'</td>
                         </tr>
                         <tr style="background:#f4f6f8;">
                             <td><strong>Clínica:</strong></td>
@@ -185,7 +185,7 @@
                             <table width="100%" cellpadding="8" cellspacing="0" style="margin:15px 0; border:1px solid #ddd; border-radius:6px;">
                                 <tr style="background:#f4f6f8;">
                                     <td><strong>Exame:</strong></td>
-                                    <td>Hemograma Completo</td>
+                                    <td>'. $dados['nome_exame'] . ' </td>
                                 </tr>
                                 <tr>
                                     <td><strong>Profissional:</strong></td>
@@ -273,9 +273,6 @@
     
     if (isset($_GET['acao'])) {
         switch ($_GET['acao']) {
-            case 'cadastrarProfissional':
-                $controller->cadastrarProfissional();
-                break;
             case 'editarDadosProfissional':
                 $controller->editarDadosProfissional();
                 break;
@@ -287,9 +284,6 @@
                 break;
             case 'finalizarAgendamentoConsulta':
                 $controller->finalizarAgendamentoConsulta();
-                break;
-            case 'compararAtendimentosSemanais':
-                $controller->compararAtendimentosSemanais($_GET['idProfissional']);
                 break;
             default:
                 echo "Ação inválida";

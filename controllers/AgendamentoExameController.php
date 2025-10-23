@@ -42,11 +42,11 @@
             $observacoes = $_POST['observacoes']; 
 
             $editar = $this->agendamentoExameModel->editarAgendamentoExame(
-                $idEncaminhamento, $status, $horarioAgendamento.
+                $idEncaminhamento, $status, $horarioAgendamento,
                 $diaAgendamento, $observacoes
             );
 
-            if($ediar){
+            if($editar){
                 echo "editado";
             }
             else{

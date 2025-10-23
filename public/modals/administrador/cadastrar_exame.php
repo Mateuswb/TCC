@@ -1,3 +1,10 @@
+<?php
+
+    session_start();
+    $erro = $_SESSION['error'] ?? null;
+    unset($_SESSION['error']);
+?>
+
 <div class="overlay" id="modalExame">
     <div class="modal">
         <div class="modal-header">
@@ -20,7 +27,6 @@
 
                 <label>Descrição</label>
                 <textarea name="descricao" rows="3" placeholder="Descrição do exame" required></textarea>
-
             
                 <div class="footer">
                     <input type="button" class="btn cancel"  id="cancelModal" value="Cancelar">
@@ -32,6 +38,40 @@
 </div>
 
 <style>
+    
+/* Style da msg de erro */
+#error-message{
+    background-color: #ffeef0;
+    color: #86181d;
+    border: 1px solid #e63042;
+    padding: 10px 15px;
+    margin-top: 0px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.form-control img, small{
+    visibility: hidden;
+}
+
+
+.close-btn2 {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #86181d;
+    cursor: pointer;
+    padding: 0;
+}
+.close-btn2:hover {
+    color: #d73a49;
+}
+
 /* anicação do modal */
 .overlay {
     display: none;
@@ -158,6 +198,18 @@
     padding: 10px 20px; 
 }
 
+.close-btn2 {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #86181d;
+    cursor: pointer;
+}
+
+.close-btn2:hover {
+    color: #d73a49;
+}
+
 </style>
 
 <script>
@@ -208,4 +260,23 @@
             }
         });
     });
+
+
+    
+    
 </script>
+<?php if ($erro): ?>
+<script>
+
+    const form = document.getElementById("modalExame");
+    if (form) {
+        const msg = document.createElement("div");
+        msg.id = "error-message";
+        msg.innerHTML = `
+            <span><?= htmlspecialchars($erro) ?></span>
+            <button class="close-btn2" onclick="this.parentElement.remove()">×</button>
+        `;
+        form.prepend(msg);
+    }
+</script>
+<?php endif; ?>

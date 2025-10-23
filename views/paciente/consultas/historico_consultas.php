@@ -214,15 +214,14 @@
           <?php foreach($agendamentos as $consulta){ ?>
           <div class="card-consulta">
                 <div class="topo-card">
-                    <h3>Agendamento #3</h3>
-                    <button class="btn-delete">Deletar</button>
+                    <h3>Agendamento #<?php echo $consulta['id_agendamento']; ?></h3>
+                    <!-- <button class="btn-delete">Deletar</button> -->
                 </div>
                 <p><strong>Data:</strong> <?php echo $consulta['dia_agendamento']?></p>
                 <p><strong>Hora:</strong>  <?php echo $consulta['horario_agendamento']?></p>
                 <p><strong>Status:</strong> <span class="status  <?php echo $consulta['status']?>"> <?php echo $consulta['status']?></span></p>
                 <p><strong>Profissional:</strong> <?php echo $consulta['nome_profissional']?> </p>
                 <p><strong>Obs:</strong> <?php echo $consulta['observacoes']?></p>
-              
           </div>
           <?php } ?>  
     </div>

@@ -187,7 +187,7 @@
 <body>
     <main class="conteudo-principal">
          <div class="content">
-            <?php    include '../../../public/assets/alerta/flash.php' ?>
+            <?php  include '../../../public/assets/alerta/flash.php' ?>
             <h1 class="titulo">Consultas Agendadas</h1>
 
             <div class="agendamentos-container">
