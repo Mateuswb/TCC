@@ -24,29 +24,28 @@ class ResultadoExame{
     }
 
     public function listarExamesPendentes($ProfissionalId) {
-        $sql = "
-        SELECT 
-            ae.id_agendamento AS id_agendamento_exame,
-            p.nome AS paciente,
-            te.nome AS exame,
-            ae.horario_agendamento,
-            ae.dia_agendamento,
-            ae.observacoes AS observacoes_exame,
-            e.id_encaminhamento
-        FROM agendamentos_exames ae
-        INNER JOIN encaminhamentos e ON ae.id_encaminhamento = e.id_encaminhamento
-        INNER JOIN agendamentos_consultas ac ON e.id_agendamento_consulta = ac.id_agendamento
-        INNER JOIN pacientes p ON ac.id_paciente = p.id_paciente
-        INNER JOIN tipos_exames te ON e.id_exame = te.id_exame
-        INNER JOIN horarios_profissionais hp ON ac.id_horario_profissional = hp.id_horario
-        WHERE hp.id_profissional = :idProfissional
-          AND ae.status = 'realizado'
-          AND ae.id_agendamento NOT IN (
-                SELECT id_agendamento 
-                FROM resultados_exames 
-                WHERE status = 'finalizado'
-          )
-        ORDER BY ae.dia_agendamento, ae.horario_agendamento
+        $sql = "SELECT 
+                ae.id_agendamento AS id_agendamento_exame,
+                p.nome AS paciente,
+                te.nome AS exame,
+                ae.horario_agendamento,
+                ae.dia_agendamento,
+                ae.observacoes AS observacoes_exame,
+                e.id_encaminhamento
+            FROM agendamentos_exames ae
+            INNER JOIN encaminhamentos e ON ae.id_encaminhamento = e.id_encaminhamento
+            INNER JOIN agendamentos_consultas ac ON e.id_agendamento_consulta = ac.id_agendamento
+            INNER JOIN pacientes p ON ac.id_paciente = p.id_paciente
+            INNER JOIN tipos_exames te ON e.id_exame = te.id_exame
+            INNER JOIN horarios_profissionais hp ON ac.id_horario_profissional = hp.id_horario
+            WHERE hp.id_profissional = :idProfissional
+            AND ae.status = 'realizado'
+            AND ae.id_agendamento NOT IN (
+                    SELECT id_agendamento 
+                    FROM resultados_exames 
+                    WHERE status = 'finalizado'
+            )
+            ORDER BY ae.dia_agendamento, ae.horario_agendamento
         ";
 
         $stmt = $this->conn->prepare($sql);
@@ -96,7 +95,5 @@ class ResultadoExame{
 
         return $query->fetch(PDO::FETCH_ASSOC);
     }
-
-
    
 }

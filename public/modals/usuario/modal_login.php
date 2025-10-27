@@ -67,6 +67,7 @@
     overflow: hidden;
     margin: 50px auto;
     flex-wrap: wrap; 
+        backdrop-filter: blur(3px);
 }
 .container-left {
     box-shadow: 2px 2px 5px rgb(189, 189, 189);
@@ -242,6 +243,7 @@ a #btn-logar{
     height: 100%;
     background: rgba(0, 0, 0, 0.6); 
     justify-content: center;
+    backdrop-filter: blur(3px);
     align-items: center;
     z-index: 9999;  
 }

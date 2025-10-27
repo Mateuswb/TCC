@@ -32,8 +32,14 @@ foreach($horarios as $h){
 <meta charset="UTF-8">
 <title>Agenda Semanal</title>
 <link rel="stylesheet" href="../../../public/assets/css/profissional/horarios/listar_horarios.css">
+
+
+  <!-- Font Awesome para ícones -->
+  <script src="https://kit.fontawesome.com/a2d9b7f7d2.js" crossorigin="anonymous"></script>
+
 </head>
 <body>
+
 
 <div class="main">
   <h1>Horários Semanais - Dr. João da Silva</h1>

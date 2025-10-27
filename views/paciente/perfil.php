@@ -6,6 +6,8 @@
   include '../../controllers/UsuarioController.php';
   
   require_once "../../controllers/PacienteController.php";
+  require_once "../../public/modals/paciente/deletar_conta.php";
+  require_once "../../public/modals/paciente/inativar_conta.html";
 
   $controllerPaciente = new PacienteController($conn);
   $paciente = $controllerPaciente->exibirDadosPaciente();
@@ -158,6 +160,56 @@
     button[type="submit"]:hover {
         background: #0991a0;
     }
+    .botoes-acoes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.botoes-direita {
+  display: flex;
+  gap: 10px; /* espaço entre os dois botões da direita */
+}
+
+.botoes-acoes input[type="submit"],
+.botoes-acoes button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+/* Estilos individuais */
+.btn-salvar {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.btn-salvar:hover {
+  background-color: #27ae60;
+}
+
+.btn-inativar {
+  background-color: #f1c40f;
+  color: #fff;
+}
+
+.btn-inativar:hover {
+  background-color: #d4ac0d;
+}
+
+.btn-deletar {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.btn-deletar:hover {
+  background-color: #c0392b;
+}
+
 
   </style>
 </head>
@@ -277,7 +329,29 @@
             <div><label>Login (CPF)</label><input type="text" name="cpf" value="<?php echo $usuario['login']; ?>"></div>
             <div><label>Senha</label><input type="password" name="password"></div>
           </div>
-          <div style="margin:20px 0;"><input type="submit" value="Salvar"></div>
+          <div class="botoes-acoes">
+            <input type="submit" value="Salvar" class="btn-salvar">
+            <div class="botoes-direita">
+
+              <button type="button" class="btn-inativar"
+                onclick="abrirModalInativar(this)" 
+                data-id="<?php echo $paciente['id_paciente']; ?>" 
+                data-cpf="<?php echo $usuario['login']; ?>">
+                Inativar
+              </button>
+
+              <button type="button" class="btn-deletar"
+                onclick="abrirModalExclusao(this)" 
+                data-id="<?php echo $paciente['id_paciente']; ?>" 
+                data-cpf="<?php echo $usuario['login']; ?>">
+                Deletar Conta
+              </button>
+
+            </div>
+          </div>
+
+
+          
         </div>
       </form>
     </div>

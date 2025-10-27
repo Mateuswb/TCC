@@ -50,20 +50,35 @@
             $peso           = $_POST['peso'];
             $estadoCivil    = $_POST['estadoCivil'];
             $tipoSanguineo  = $_POST['tipoSanguineo'];
-            $numCasa        = $_POST['numCasa'];
+            $numCasa        = $_POST['numeroCasa'];
             $endereco       = $_POST['endereco'];
             $bairro         = $_POST['bairro'];
             $cidade         = $_POST['cidade'];
             $observacoes    = $_POST['observacoes'];
 
-            $resultado = $this->pacienteModel->editarDadosPaciente(
+            $editar = $this->pacienteModel->editarDadosPaciente(
                 $idPaciente, $nome, $email, $dataNascimento, 
                 $telefone, $sexo, $altura, $peso, $estadoCivil,
                 $tipoSanguineo, $endereco, $numCasa, $bairro,
                 $cidade, $observacoes
             );
 
-            echo $resultado ? "Dados atualizados com sucesso." : "Erro ao atualizar dados.";
+            session_start();
+            if($editar){
+                $_SESSION['flash'] = [
+                    'type' => 'success', 
+                    'message' => "Dados atualizados com sucesso."
+                ];
+            }
+            else{
+                $_SESSION['flash'] = [
+                    'type' => 'error', 
+                    'message' => "Erro ao editar dados do paciente."
+                ];
+            }
+            header("Location: ../views/administrador/paciente/listar_pacientes.php");
+            exit;
+
         }
 
         # Usuarios
@@ -137,9 +152,9 @@
             $sexo           = $_POST['sexo'];
             $estadoCivil    = $_POST['estadoCivil'];
             $crmCrp         = $_POST['crmCrp'];
-            $especialidade  = $_POST['especialidade'];
+            $especialidade  = $_POST['especialidades'] ?? [];
             $endereco       = $_POST['endereco'];
-            $numCasa        = $_POST['numCasa'];
+            $numCasa        = $_POST['numeroCasa'];
             $bairro         = $_POST['bairro'];
             $cidade         = $_POST['cidade'];
             $observacoes    = $_POST['observacoes'];
@@ -153,10 +168,10 @@
             echo $resultado ? "Dados atualizados com sucesso." : "Erro ao atualizar dados.";
         }
 
-        #consultas
-        // public function listarConsultas(){
-        //      return $this->agendamentoConsultaModel->listarConsultas();
-        //  }
+        # agendamentos
+        public function listarAgendamentos(){
+            return $this->agendamentoConsultaModel->listarAgendamentos();
+        }   
 
 
         public function cadastrarExame() {
@@ -232,33 +247,81 @@
 
         }
 
-        public function listarAgendamentos(){
-            return $this->relatorioModel->listarAgendamentos();
-        }
 
-        #validar exclusão de profissioanl
-        public function excluirProfissional(){
+        #validar exclusão do profissional
+        public function excluirProfissional() {
             $idProfissional = $_POST['idProfissional'];
-            $temAgendamento = $this->agendamentoConsultaModel->temAgendamentoAtivo($idProfissional);
+            $cpf            = $_POST['cpf'];
 
-            if ($temAgendamento) {
-                echo "Este profissional possui agendamentos ativos e não pode ser excluído.";
-            }
+            session_start();
+            try {
+                $temAgendamento = $this->profissionalModel->temAgendamentoAtivo($idProfissional);
+                if ($temAgendamento) {
+                    $_SESSION['flash'] = [
+                        'type' => 'error',
+                        'message' => "O profissional possui agendamentos ativos, ele não pode ser excluído."
+                    ];
+                    header("Location: ../views/administrador/profissional/listar_profissionais.php");
+                    exit;
+                }
 
-            //$query de deletar vai vim aq
+                $this->profissionalModel->excluirProfissionalComUsuario($idProfissional, $cpf);
 
-            if ($resultado) {
-                echo "Profissional pode ser excluído com sucesso.";
-                
-            } else {
-                echo "Erro ao excluir profissional.";
+                $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => "Profissional e usuário excluídos com sucesso."
+                ];
+                header("Location: ../views/administrador/profissional/listar_profissionais.php");
+                exit;
+
+            } catch (Exception $e) {
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => $e->getMessage()
+                ];
+                header("Location: ../views/administrador/profissional/listar_profissionais.php");
+                exit;
             }
         }
 
+        #validar exclusão do paciente
+        public function excluirPaciente() {
+            $idPaciente     = $_POST['idPaciente'];
+            $cpf            = $_POST['cpf'];
+
+            session_start();
+            try {
+                $temAgendamento = $this->pacienteModel->temAgendamentoAtivoPaciente($idPaciente);
+                if ($temAgendamento) {
+                    $_SESSION['flash'] = [
+                        'type' => 'error',
+                        'message' => "O paciente possui agendamentos ativos, ele não pode ser excluído."
+                    ];
+                    header("Location: ../views/administrador/paciente/listar_pacientes.php");
+                    exit;
+                }
+
+                $this->pacienteModel->excluirPacienteComUsuario($idPaciente, $cpf);
+
+                $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => "Paciente e usuário excluídos com sucesso."
+                ];
+                header("Location: ../views/administrador/paciente/listar_pacientes.php");
+                exit;
+
+            } catch (Exception $e) {
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => $e->getMessage()
+                ];
+                header("Location: ../views/administrador/paciente/listar_pacientes.php");
+                exit;
+            }
+        }
     }
 
     $controller = new AdministradorController($conn);
-
     if (isset($_GET['acao'])) {
         switch ($_GET['acao']) {
             case 'editarDadosPaciente':
@@ -281,6 +344,9 @@
                 break;
             case 'excluirProfissional':
                 $controller->excluirProfissional();
+                break;
+            case 'excluirPaciente':
+                $controller->excluirPaciente();
                 break;
             default:
                 echo "Ação inválida";

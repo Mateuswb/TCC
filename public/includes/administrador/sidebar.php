@@ -1,9 +1,5 @@
 <?php
-    // Pega a pasta raiz do projeto
-    $parts = explode('/', trim($_SERVER['SCRIPT_NAME'], '/'));
-    $root = $parts[0]; 
-
-    define("BASE_URL", "/$root/views");
+    include 'config.php';
 
     $currentFile = basename($_SERVER['PHP_SELF']); 
 ?>
@@ -11,33 +7,34 @@
 <div class="sidebar" id="sidebar">
     <h2>ClinicAdmin</h2>
 
-    <a href="<?= BASE_URL ?>/administrador/home.php"
+    <a href="<?= BASE_URL ?>/views/administrador/home.php"
         class="<?= ($currentFile == 'home.php') ? 'active' : '' ?>">
         <i class="fas fa-home"></i> <span>Home</span>
     </a>
 
-    <a href="<?= BASE_URL ?>/administrador/cadastrar/cadastrar.php"
+    <a href="<?= BASE_URL ?>/views/administrador/cadastrar/cadastrar.php"
         class="<?= ($currentFile == 'cadastrar.php') ? 'active' : '' ?>">
         <i class="fas fa-user-plus"></i> <span>Cadastrar Usuário</span>
     </a>
 
-    <a href="<?= BASE_URL ?>/administrador/exame/listar_exames.php" 
+    <a href="<?= BASE_URL ?>/views/administrador/exame/listar_exames.php" 
         class="<?= ($currentFile == 'listar_exames.php') ? 'active' : '' ?>">
         <i class="fas fa-user-plus"></i> <span>Exames</span>
     </a>
-    <a href="<?= BASE_URL ?>/administrador/profissional/listar_profissionais.php"
+    <a href="<?= BASE_URL ?>/views/administrador/profissional/listar_profissionais.php"
         class="<?= ($currentFile == 'listar_profissionais.php') ? 'active' : '' ?>">
         <i class="fas fa-user-md"></i> <span>Profissionais</span>
     </a>
-    <a href="<?= BASE_URL ?>/administrador/paciente/listar_pacientes.php"
+    <a href="<?= BASE_URL ?>/views/administrador/paciente/listar_pacientes.php"
         class="<?= ($currentFile == 'listar_pacientes.php') ? 'active' : '' ?>">
         <i class="fas fa-user-injured"></i> <span>Pacientes</span>
     </a>
-    <a href="<?= BASE_URL ?>/administrador/agendamento/agendamentos.php"
+    <a href="<?= BASE_URL ?>/views/administrador/agendamento/agendamentos.php"
         class="<?= ($currentFile == 'agendamentos.php') ? 'active' : '' ?>">
         <i class="fas fa-calendar-check"></i> <span>Agendamentos</span>
     </a>
-    <a href="<?= BASE_URL ?>/administrador/usuario/listar_usuarios.php"
+
+    <a href="<?= BASE_URL ?>/views/administrador/usuario/listar_usuarios.php"
         class="<?= ($currentFile == 'listar_usuarios.php') ? 'active' : '' ?>">
         <i class="fas fa-vials"></i> <span>Usuários</span>
     </a>
@@ -46,14 +43,13 @@
         <i class="fas fa-vials"></i> <span>Relatórios</span>
     </a>
 
-    <a href="<?= BASE_URL ?>/logout/logout.php" class="logout">
+    <a href="<?= BASE_URL ?>/views/logout/logout.php" class="logout">
         <i class="fas fa-sign-out-alt"></i> <span>Sair</span>
     </a>
 </div>
 
 <style>
-    /* Sidebar */
-.sidebar {
+  .sidebar {
     width: 250px;
     background: #09275E;
     color: #fff;
@@ -66,6 +62,10 @@
 }
 
 .sidebar a.logout {
+    position: absolute;
+    bottom: 40px;      
+    left: 20px;        
+    right: 20px;       
     background: #e6000b;
     color: #fff;
     padding: 10px 15px;
@@ -75,12 +75,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 100%;
 }
-.sidebar a.logout:hover {
-    background: #ac0009; /* vermelho */
 
+.sidebar a.logout:hover {
+    background: #ac0009;
 }
+
 .sidebar.collapsed {
 width: 80px;
 }

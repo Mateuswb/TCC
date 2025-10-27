@@ -2,8 +2,8 @@
   <div id="modal-content">
     <h3>Aviso</h3>
     <p id="modalMensagem"></p>
-    <form id="formExclusao" method="POST" action="../../../controllers/AdministradorController.php?acao=excluirProfissional">
-      <input type="hidden" name="idProfissional" id="idProfissional">
+    <form id="formExclusao" method="POST" action="../../../controllers/AdministradorController.php?acao=excluirPaciente">
+      <input type="hidden" name="idPaciente" id="idPaciente">
       <input type="hidden" name="cpf" id="cpf">
       <button type="submit">Confirmar Exclusão</button>
       <button type="button" onclick="fecharModalAviso()">Cancelar</button>
@@ -41,9 +41,9 @@
 function abrirModalExclusao(btn) {
     const dados = btn.dataset;
 
-    document.getElementById('idProfissional').value = dados.id;
+    document.getElementById('idPaciente').value = dados.id;
     document.getElementById('cpf').value = dados.cpf;
-    document.getElementById('modalMensagem').innerText = "Tem certeza que deseja excluir este profissional?";
+    document.getElementById('modalMensagem').innerText = "Tem certeza que deseja excluir este paciente?";
     document.getElementById('modalAviso').style.display = 'flex';
 }
 

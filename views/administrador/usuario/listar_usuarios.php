@@ -1,6 +1,6 @@
 <?php
   include "../../../public/includes/administrador/sidebar.php"; 
-  include "../../../public/includes/administrador/header.html"; 
+  include "../../../public/includes/administrador/header.php"; 
   include "../../../public/includes/administrador/footer.php"; 
   require_once "../../../controllers/AdministradorController.php";
 

@@ -6,8 +6,8 @@
     <title>Document</title>
 
     <!-- Import do CSS -->
-    <link rel="stylesheet" href="../../public/assets/css/style_criar_conta.css">
-    <link rel="stylesheet" href="../../public/assets/css/efect_surgindo.css">
+    <link rel="stylesheet" href="../../public/assets/css/usuario/criar_conta.css">
+    <!-- <link rel="stylesheet" href="../../public/assets/css/efect_surgindo.css"> -->
 
     <!-- inport dos Icones-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
@@ -24,10 +24,11 @@
             <a href="../inicio/index.php"><button id="btn-logar">Login</button></a>
             
         </div>
-        <form action="../../controllers/UsuarioController.php?acao=salvar" method="POST" class="form" id="form" >
+        <form action="../../controllers/UsuarioController.php" method="POST" class="form" id="form" >
             <h1 id="title-cadastra">Cadastre-se</h1>
                 <input type="hidden" name="tipoUsuario" value="paciente">
                 <input type="hidden" name="status" value="ativo">
+                <input type="hidden" name="acao" value="salvarUsuario">
 
                 <div class="form-control" >
                     <label for="cpf">CPF</label>

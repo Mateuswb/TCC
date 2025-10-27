@@ -2,99 +2,68 @@
 session_start();
 include '../../../controllers/AdministradorController.php';
 include '../../../public/includes/administrador/sidebar.php';
+include '../../../public/includes/administrador/header.php';
 include '../../../public/includes/administrador/footer.php';
-include '../../../public/includes/administrador/header.html';
-
 
 $controller = new AdministradorController($conn);
 $agendamentos = $controller->listarAgendamentos();
-
-
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <title>Agenda - Profissional</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <!-- STYLE CSS -->
   <link rel="stylesheet" href="../../../public/assets/css/administrador/agendamentos.css">
 
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet" />
+  <!-- IMPORT ICONS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+
+  <!-- IMPORT CALENDER -->
+  <link href="../../../libs/calender/index.global.js" rel="stylesheet">
+  <script src="../../../libs/calender/index.global.min.js"></script>
 
 </head>
 
-<style>
-.sidebar{
-    position: fixed;
-}
-
-
-
-.fc-event.consulta:hover {
-  transform: scale(1.02);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-}
-
-/* Exames - estilo diferente (verde água) */
-.fc-event.exame {
-  background-color: #50e3c2 !important;
-  border: 1px solid #28b89a !important;
-  color: #083a35 !important;
-  font-weight: 600;
-  border-radius: 50px; /* mais arredondado para diferenciar */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-  font-style: italic;
-}
-
-.fc-event.exame:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-}
-
-
-</style>
 <body>
+  <div class="main">
+    <div class="content">
+      <h1>Agenda - Dr. João da Silva</h1>
 
-<div class="main">
-  <div class="header">
-    <div class="menu-btn" onclick="toggleSidebar()">
-      <i class="fas fa-bars"></i>
-    </div>
-    <h1>Agenda - Dr. João da Silva</h1>
-  </div>
+      <div class="filter-bar">
+        <label for="tipoFiltro">Tipo:</label>
+        <select id="tipoFiltro" onchange="aplicarFiltros()">
+          <option value="todos">Todos</option>
+          <option value="consulta">Consulta</option>
+          <option value="exame">Exame</option>
+        </select>
 
- <div class="filter-bar">
-  <label for="tipoFiltro">Tipo:</label>
-  <select id="tipoFiltro" onchange="aplicarFiltros()">
-    <option value="todos">Todos</option>
-    <option value="consulta">Consulta</option>
-    <option value="exame">Exame</option>
-  </select>
+        <label for="profissionalFiltro">Profissional:</label>
+        <select id="profissionalFiltro" onchange="aplicarFiltros()">
+          <option value="todos">Todos</option>
+          <?php
+            $profissionais = $controller->listarProfissionais();
+            foreach ($profissionais as $prof) {
+                echo "<option value='{$prof['id_profissional']}'>{$prof['nome']}</option>";
+            }
+          ?>
+        </select>
 
-  <label for="profissionalFiltro">Profissional:</label>
-  <select id="profissionalFiltro" onchange="aplicarFiltros()">
-    <option value="todos">Todos</option>
-    <?php
-      $profissionais = $controller->listarProfissionais();
-      foreach ($profissionais as $prof) {
-          echo "<option value='{$prof['id_profissional']}'>{$prof['nome']}</option>";
-      }
-    ?>
-  </select>
+        <label for="statusFiltro">Status:</label>
+        <select id="statusFiltro" onchange="aplicarFiltros()">
+          <option value="todos">Todos</option>
+          <option value="agendada">Agendada</option>
+          <option value="finalizada">Finalizada</option>
+          <option value="cancelada">Cancelada</option>
+        </select>
+      </div>
 
-  <label for="statusFiltro">Status:</label>
-  <select id="statusFiltro" onchange="aplicarFiltros()">
-    <option value="todos">Todos</option>
-    <option value="agendada">Agendada</option>
-    <option value="finalizada">Finalizada</option>
-    <option value="cancelada">Cancelada</option>
-  </select>
-</div>
+      <div class="calendar" id="calendar"></div>
 
-  <div class="calendar" id="calendar"></div>
-
-  <div id="eventModal" class="modal">
+       <div id="eventModal" class="modal">
     <div class="modal-content">
       <h3 id="eventTitle">Consulta</h3>
       <button class="btn-finalizar" onclick="executarAcao('finalizar')">✅ Finalizar</button>
@@ -112,7 +81,8 @@ $agendamentos = $controller->listarAgendamentos();
         <button class="btn-fechar" onclick="fecharModalExame()">Fechar</button>
       </div>
     </div>
-</div>
+    </div>
+  </div>
 
 
 <script>
@@ -232,6 +202,5 @@ function executarAcaoExame(acao) {
   }
 }
 </script>
-
 </body>
 </html>

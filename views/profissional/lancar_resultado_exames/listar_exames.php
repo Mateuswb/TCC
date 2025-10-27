@@ -21,7 +21,7 @@ $exames = $exameController->listarExamesPendentes($idProfissional);
 <body>
 
 <div class="container">
-  <h2><i class="fa-solid fa-flask"></i> Exames Pendentes para Lançamento</h2>
+  <h2 id="title"><i class="fa-solid fa-flask"></i> Exames Pendentes para Lançamento</h2>
 
   <?php if (count($exames) > 0): ?>
   <table class="table-exames">

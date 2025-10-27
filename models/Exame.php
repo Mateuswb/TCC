@@ -89,7 +89,6 @@
                 return $result['total'] > 0;
             }
 
-
             public function pegarExame($idExame) {
                 $stmt = $this->conn->prepare("SELECT * FROM tipos_exames WHERE id_exame = :id");
                 $stmt->execute(['id' => $idExame]);

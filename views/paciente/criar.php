@@ -6,7 +6,7 @@
     <title>Cadastro Paciente - EM ANDAMENTO</title>
 
     <!-- Import do CSS -->
-    <link rel="stylesheet" href="../../public/assets/css/style_paciente.css">
+    <link rel="stylesheet" href="../../public/assets/css/paciente/cadastrar.css">
 </head>
 <body>
     <div class="container">

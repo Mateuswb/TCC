@@ -1,6 +1,8 @@
 <?php 
     session_start();
     include '../../../public/includes/profissional/sidebar.php'; 
+    include '../../../public/includes/profissional/header.php';
+    include '../../../public/includes/profissional/footer.html';
     include '../../../controllers/RelatorioController.php'; 
 
     $idProfissional = $_SESSION['idProfissional'];
@@ -39,22 +41,9 @@ $percentCanceladas = $totalAgendamentos['total_agendamentos'] > 0
 
 <div class="main-content">
 
-  <!-- Sidebar já incluído acima -->
-
-  <!-- Conteúdo principal -->
   <div class="content">
 
-    <!-- Header -->
-    <div class="header">
-      <div>
-        <h2>Histórico de Consultas</h2>
-        <p>Visualize e gerencie todo o histórico de atendimentos realizados</p>
-      </div>
-      <div class="actions">
-        <button class="btn-filtro"><i class="fas fa-filter"></i> Filtros Avançados</button>
-        <button class="btn-export"><i class="fas fa-file-csv"></i> Exportar CSV</button>
-      </div>
-    </div>
+  
 
     <!-- Search -->
     <div class="search-box">

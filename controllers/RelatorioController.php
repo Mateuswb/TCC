@@ -100,11 +100,7 @@
         }
         public function totalConsultasCanceladas($idProfissional) {
             return $this->relatorioModel->totalConsultasCanceladas($idProfissional);
-        }
-
-
-
-        
+        }      
 
 
         # paciente 
@@ -137,9 +133,6 @@
             header('Content-Type: application/json');
             echo json_encode($dados);
         }
-
-
-
 
     }
 

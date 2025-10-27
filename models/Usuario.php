@@ -64,5 +64,25 @@
             $query = $this->conn->query($sql);
             return $query->fetchAll(PDO::FETCH_ASSOC);
         }
+
+        public function inativarUsuario($cpf) {
+            try {
+                $queryUser = $this->conn->prepare("
+                    UPDATE usuarios 
+                    SET status = 'inativo' 
+                    WHERE login = :cpf
+                ");
+                $queryUser->execute([':cpf' => $cpf]);
+
+                if ($queryUser->rowCount() == 0) {
+                    throw new Exception("Erro ao inativar a conta do usuário.");
+                }
+
+                return true; 
+            } catch (Exception $e) {
+                throw $e;
+            }
+        }
+
     }
 ?>

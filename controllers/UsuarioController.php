@@ -12,15 +12,16 @@
             $this->horarioModel = new Horario($conn);
         }
 
-        public function login() {
+       public function login() {
             session_start();
             $cpf = trim($_POST['cpf']);
             $cpf = str_replace(['.', '-'], '', $cpf);
-
             $password = $_POST['password'];
+
             $usuario = $this->usuarioModel->buscarPorCPF($cpf);
 
-            if ($usuario && $password == $usuario['senha']) {
+            if ($usuario && password_verify($password, $usuario['senha'])) {
+                // senha correta → criar sessão
                 $_SESSION['idUsuario'] = $usuario['id_usuario'];
                 $_SESSION['tipoUsuario'] = $usuario['tipo_usuario'];
 
@@ -56,12 +57,17 @@
             }
         }
 
+
         public function salvar() {
+            session_start();
+
             $cpf = trim($_POST['cpf']);
             $cpf = str_replace(['.', '-'], '', $cpf);
             $password = $_POST['password'];
+            $senhaHash = password_hash($password, PASSWORD_DEFAULT);
+
             $passwordConfirmation = $_POST['passwordConfirmation'];
-            $tipoUsuario = $_POST['tipoUsuario'];
+            $tipoUsuario = "paciente";
             $statusUsuario = $_POST['status'];
 
             date_default_timezone_set('America/Sao_Paulo');
@@ -78,25 +84,23 @@
                 exit;
             }
 
-            session_start();
             $_SESSION['cadastroTemp'] = [
                 'cpf' => $cpf,
-                'password' => $password,
+                'password' => $senhaHash,
                 'tipoUsuario' => $tipoUsuario,
                 'status' => $statusUsuario,
                 'dataCriacao' => $dataCriacao
             ];
 
-            $tipoLogado = $_SESSION['tipoUsuario'];
-
-            if ($tipoLogado == 'admin') {
-                if ($tipoUsuario == 'profissional') {
+            if (isset($_SESSION['tipoUsuario']) && $_SESSION['tipoUsuario'] == 'admin') {
+                // admin cadastrando
+                if ($tipoUsuario === 'profissional') {
                     header("Location: ../views/administrador/cadastrar/profissional/cadastrar_profissional.php");
-                    exit;
                 } else {
                     header("Location: ../views/administrador/cadastrar/paciente/cadastrar_paciente.php");
-                    exit;
                 }
+                exit;
+
             } else {
                 header("Location: ../views/paciente/criar.php");
                 exit;

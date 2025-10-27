@@ -19,6 +19,8 @@ body {
     flex-direction: column;
     margin-top: 50px;
     margin-bottom: 100px;
+    overflow-y: auto; /* permite rolagem do conteúdo */
+    overflow-x: hidden; /* permite rolagem do conteúdo */
 }
 
 .sidebar.collapsed ~ .main {

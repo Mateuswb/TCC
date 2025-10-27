@@ -1,6 +1,6 @@
 <?php
     include "../../public/includes/administrador/sidebar.php"; 
-    include "../../public/includes/administrador/header.html"; 
+    include "../../public/includes/administrador/header.php"; 
     include "../../public/includes/administrador/footer.php"; 
     require_once "../../controllers/RelatorioController.php";
 
@@ -24,9 +24,6 @@
 
   <!-- Chart.js -->
   <script src="../../libs/chart.min.js"></script>
-
-  <!-- CSS externo -->
-  <link rel="stylesheet" href="style.css">
 </head>
 <style>
     * {
@@ -56,42 +53,7 @@
     margin-left: 80px;
     }
 
-    /* Header */
-    .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #085274ff;
-    color: #fff;
-    padding: 15px 30px;
-    }
-
-    .header input {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 20px;
-    outline: none;
-    width: 200px;
-    }
-
-    .profile {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    }
-
-    .profile img {
-      width: 35px;
-      height: 35px;
-      border-radius: 2  0%;
-    }
-
-    .menu-btn {
-    cursor: pointer;
-    font-size: 20px;
-    margin-right: 15px;
-    }
-
+    
     /* Conteúdo */
     .content {
     padding: 20px;

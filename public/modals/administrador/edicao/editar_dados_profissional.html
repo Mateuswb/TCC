@@ -1,5 +1,7 @@
 
 <style>
+
+
   /* ===== BASE DO MODAL ===== */
   .modal-bg {
     position: fixed;
@@ -7,6 +9,7 @@
     left: 0;
     width: 100%;
     height: 100%;
+     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
     background: rgba(0, 0, 0, 0.55);
     display: none; /* inicia invisível */
     align-items: center;
@@ -19,6 +22,7 @@
     width: 900px;
     max-width: 95%;
     border-radius: 10px;
+     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
     box-shadow: 0 6px 20px rgba(0,0,0,0.25);
     overflow: hidden;
     position: relative;
@@ -149,8 +153,8 @@
     </div>
 
         <div class="modal-content">
-      <form id="formEditarProfissional" action="atualizar_profissional.php" method="POST">
-        <input type="hidden" name="id_profissional" id="id_profissional">
+      <form id="formEditarProfissional" action="../../../controllers/AdministradorController.php?acao=editarDadosProfissional" method="POST">
+        <input type="hidden" name="idProfissional" id="idProfissional">
         
         <div>
           <label>Nome</label>
@@ -169,17 +173,92 @@
 
         <div>
           <label>Data de Nascimento</label>
-          <input type="text" name="data_nascimento"  required>
+          <input type="text" name="dataNascimento"  required>
         </div>
 
         <div>
           <label>CRM/CRP</label>
-          <input type="text" name="crm" id="crm" required>
+          <input type="text" name="crmCrp" required>
         </div>
 
         <div>
           <label>Especialidade</label>
-          <input type="text" name="especialidade" required>
+          <select id="multiple" name="especialidades[]" multiple>
+              <hr />
+              <optgroup label="ESPECIALIDADES">
+                  <option value="clinico_geral">Clínico Geral</option>
+                  <option value="pediatria">Pediatria</option>
+                  <option value="cardiologia">Cardiologia</option>
+                  <option value="ortopedia">Ortopedia</option>
+                  <option value="dermatologia">Dermatologia</option>
+                  <option value="ginecologia">Ginecologia</option>
+                  <option value="obstetricia">Obstetrícia</option>
+                  <option value="endocrinologia">Endocrinologia</option>
+                  <option value="neurologia">Neurologia</option>
+                  <option value="oftalmologia">Oftalmologia</option>
+                  <option value="otorrinolaringologia">Otorrinolaringologia</option>
+                  <option value="psiquiatria">Psiquiatria</option>
+                  <option value="urologia">Urologia</option>
+                  <option value="psicologia_clinica">Psicologia Clínica</option>
+              </optgroup>
+
+              <hr />
+              <optgroup label="Exames de sangue">
+                  <option value="exame_hemograma">Hemograma</option>
+                  <option value="exame_colesterol">Colesterol</option>
+                  <option value="exame_glicemia">Glicemia</option>
+                  <option value="exame_triglicerideos">Triglicerídeos</option>
+                  <option value="exame_plaquetas">Plaquetas</option>
+                  <option value="exame_hemoglobina_glicada">Hemoglobina Glicada</option>
+              </optgroup>
+
+              <optgroup label="Exames de imagem">
+                  <option value="exame_raio_x">Raio-X</option>
+                  <option value="exame_ressonancia_magnetica">Ressonância Magnética</option>
+                  <option value="exame_tomografia">Tomografia</option>
+                  <option value="exame_ultrassonografia">Ultrassonografia</option>
+                  <option value="exame_mamografia">Mamografia</option>
+                  <option value="exame_densitometria_ossea">Densitometria Óssea</option>
+              </optgroup>
+
+              <optgroup label="Exames cardiológicos">
+                  <option value="exame_eletrocardiograma">Eletrocardiograma</option>
+                  <option value="exame_ecocardiograma">Ecocardiograma</option>
+                  <option value="exame_holter">Holter</option>
+                  <option value="exame_teste_ergometrico">Teste Ergométrico</option>
+                  <option value="exame_mapa">MAPA</option>
+              </optgroup>
+
+              <optgroup label="Exames de urina">
+                  <option value="exame_urina_tipo_i">Urina Tipo I</option>
+                  <option value="exame_urocultura">Urocultura</option>
+                  <option value="exame_exame_de_urina">Exame de Urina</option>
+              </optgroup>
+
+              <optgroup label="Exames hormonais">
+                  <option value="exame_tsh">TSH</option>
+                  <option value="exame_t4_livre">T4 Livre</option>
+                  <option value="exame_testosterona">Testosterona</option>
+                  <option value="exame_estradiol">Estradiol</option>
+                  <option value="exame_cortisol">Cortisol</option>
+                  <option value="exame_progesterona">Progesterona</option>
+              </optgroup>
+
+              <optgroup label="Exames infecciosos">
+                  <option value="exame_hiv">HIV</option>
+                  <option value="exame_hepatite_b">Hepatite B</option>
+                  <option value="exame_hepatite_c">Hepatite C</option>
+                  <option value="exame_sifilis">Sífilis</option>
+              </optgroup>
+
+              <optgroup label="Exames respiratórios">
+                  <option value="exame_espirometria">Espirometria</option>
+                  <option value="exame_gasometria_arterial">Gasometria Arterial</option>
+                  <option value="exame_teste_de_funcao_pulmonar">Teste de Função Pulmonar</option>
+              </optgroup>
+
+
+          </select>
         </div>
 
         <div>
@@ -190,18 +269,18 @@
         <div>
           <label>Sexo</label>
           <select name="sexo">
-            <option>Masculino</option>
-            <option>Feminino</option>
-            <option>Outro</option>
+            <option value="M">Masculino</option>
+            <option value="F">Feminino</option>
+            <option value="O">Outro</option>
           </select>
         </div>
 
         <div>
           <label>Estado Civil</label>
-          <select name="estado_civil">
-            <option>Casado</option>
-            <option>Solteiro</option>
-            <option>Divorciado</option>
+          <select name="estadoCivil">
+            <option value="C">Casado</option>
+            <option value="S">Solteiro</option>
+            <option value="V">Viúvo</option>
           </select>
         </div>
 
@@ -217,7 +296,7 @@
 
         <div>
           <label>Número</label>
-          <input type="text" name="numero">
+          <input type="text" name="numeroCasa">
         </div>
 
         <div>
@@ -240,33 +319,35 @@
 </div>
 
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
 <script>
+
 function abrirModalEditar(botao) {
   const modal = document.getElementById('modalEditarProfissional');
   modal.style.display = 'flex';
 
-  // Obter dados do botão
   const dados = botao.dataset;
 
-  // Preencher os campos do formulário
-  document.querySelector('[name="id_profissional"]').value = dados.id || '';
+  document.querySelector('[name="idProfissional"]').value = dados.id || '';
   document.querySelector('[name="nome"]').value = dados.nome || '';
   document.querySelector('[name="rg"]').value = dados.rg || '';
   document.querySelector('[name="email"]').value = dados.email || '';
-  document.querySelector('[name="data_nascimento"]').value = dados.dataNascimento || '';
-  document.querySelector('[name="crm"]').value = dados.crm || '';
-  document.querySelector('[name="especialidade"]').value = dados.especialidade || '';
+  document.querySelector('[name="dataNascimento"]').value = dados.dataNascimento || '';
+  document.querySelector('[name="crmCrp"]').value = dados.crm || '';
   document.querySelector('[name="telefone"]').value = dados.telefone || '';
   document.querySelector('[name="sexo"]').value = dados.sexo || '';
-  document.querySelector('[name="estado_civil"]').value = dados.estadoCivil || '';
+  document.querySelector('[name="estadoCivil"]').value = dados.estadoCivil || '';
   document.querySelector('[name="endereco"]').value = dados.endereco || '';
   document.querySelector('[name="bairro"]').value = dados.bairro || '';
-  document.querySelector('[name="numero"]').value = dados.numero || '';
+  document.querySelector('[name="numeroCasa"]').value = dados.numero || '';
   document.querySelector('[name="cidade"]').value = dados.cidade || '';
   document.querySelector('[name="observacoes"]').value = dados.observacoes || '';
 }
 
 function fecharModalProfissional() {
-  document.getElementById('modalEditarProfissional').style.display = 'none';
+  const modal = document.getElementById('modalEditarProfissional');
+  modal.style.display = 'none';
 }
 </script>

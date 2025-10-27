@@ -6,6 +6,7 @@
     require_once dirname(__DIR__) . "/models/HorarioProfissional.php";
     require_once dirname(__DIR__) . "/models/AgendamentoConsulta.php"; 
     require_once dirname(__DIR__) . "/models/AgendamentoExame.php"; 
+    require_once dirname(__DIR__) . "/models/Usuario.php"; 
 
     class PacienteController {
         private $usuarioController;
@@ -14,6 +15,7 @@
         private $horarioModel;
         private $agendamentoConsultaModel;
         private $agendamentoExameModel;
+        private $UsuarioModel;
 
         public function __construct($conn) {
             $this->usuarioController = new UsuarioController($conn);
@@ -22,6 +24,7 @@
             $this->horarioModel = new Horario($conn);
             $this->agendamentoConsultaModel = new AgendamentoConsulta($conn);
             $this->agendamentoExameModel = new AgendamentoExame($conn);
+            $this->UsuarioModel = new Usuario($conn);
         }
 
         public function cadastrarPaciente() {
@@ -162,7 +165,6 @@
         }
 
 
-        
         #exames
         public function listarAgendamentosExame($idPaciente) {
             $agendametos = $this->agendamentoExameModel->listarAgendamentosExame($idPaciente);
@@ -174,6 +176,82 @@
             return $agendametos;
         }
         
+
+        # validar exclusão do paciente
+        public function excluirContaPaciente() {
+            $idPaciente = $_POST['idPaciente'];
+            $cpf        = $_POST['cpf'];
+
+            session_start();
+            try {
+                $temAgendamento = $this->pacienteModel->temAgendamentoAtivoPaciente($idPaciente);
+
+                if ($temAgendamento) {
+                    $_SESSION['flash'] = [
+                        'type' => 'error',
+                        'message' => "Você possui agendamentos ativos e não pode excluir sua conta no momento. Cancele seus agendamentos primeiro."
+                    ];
+                    header("Location: ../views/paciente/perfil.php");
+                    exit;
+                }
+
+                $this->pacienteModel->excluirPacienteComUsuario($idPaciente, $cpf);
+
+                $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => "Sua conta foi excluída com sucesso."
+                ];
+                session_destroy();
+                header("Location: ../views/index.php");
+                exit;
+
+            } catch (Exception $e) {
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => $e->getMessage()
+                ];
+                header("Location: ../views/paciente/perfil.php");
+                exit;
+            }
+        }
+
+        public function inativarContaPaciente() {
+            $idPaciente = $_POST['idPaciente'];
+            $cpf        = $_POST['cpf'];
+
+            session_start();
+            try {
+                $temAgendamento = $this->pacienteModel->temAgendamentoAtivoPaciente($idPaciente);
+
+                if ($temAgendamento) {
+                    $_SESSION['flash'] = [
+                        'type' => 'error',
+                        'message' => "Você possui agendamentos ativos e não pode inativar sua conta no momento. Cancele seus agendamentos primeiro."
+                    ];
+                    header("Location: ../views/paciente/perfil.php");
+                    exit;
+                }
+
+                $this->UsuarioModel->inativarUsuario($cpf);
+
+                $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => "Sua conta foi inativada com sucesso."
+                ];
+                session_destroy();
+                header("Location: ../views/index.php");
+                exit;
+
+            } catch (Exception $e) {
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => $e->getMessage()
+                ];
+                header("Location: ../views/paciente/perfil.php");
+                exit;
+            }
+        }
+
     }
 
     
@@ -186,6 +264,12 @@
                 break;
             case 'editarDadosPaciente':
                 $controller->editarDadosPaciente();
+                break;
+            case 'excluirContaPaciente':
+                $controller->excluirContaPaciente();
+                break;
+            case 'inativarContaPaciente':
+                $controller->inativarContaPaciente();
                 break;
             default:
                 echo "Ação inválida";

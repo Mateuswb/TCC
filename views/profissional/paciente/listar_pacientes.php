@@ -1,8 +1,8 @@
 <?php
   session_start();
   include '../../../public/includes/profissional/sidebar.php';
-  // include '../../../public/includes/profissional/header.php';
-  // include '../../../public/includes/profissional/footer.html';
+  include '../../../public/includes/profissional/header.php';
+  include '../../../public/includes/profissional/footer.html';
   require_once "../../../controllers/ProfissionalController.php";
 
   $controller = new ProfissionalController($conn);
@@ -30,7 +30,7 @@
     <p>Visualize e gerencie todos os pacientes que já realizaram uma consulta com você</p>
 
     <!-- Filtros -->
-    <div class="filters">
+    <div id="filters">
       <input type="text" placeholder="Buscar por nome...">
       <select>
         <option>Todos</option>

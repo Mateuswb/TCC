@@ -116,15 +116,15 @@
                         <p>Para realizar o exame, clique no botão abaixo e siga as instruções:</p>
                         
                         <p style="text-align:center; margin:30px 0;">
-                        <a href="http://localhost/tcc/views/paciente/teste.html" 
+                        <a href="http://localhost/tcc/views/paciente/exames/encaminhamento/listar_encaminhamentos.php" 
                             style="background:#123068; color:#ffffff; text-decoration:none; padding:12px 24px; border-radius:6px; font-size:16px; display:inline-block;">
                             Acessar Exame
                         </a>
                         </p>
                         
                         <p style="font-size:13px; color:#777;">Se o botão não funcionar, copie e cole este link no navegador:<br>
-                        <a href="http://localhost/tcc/views/paciente/teste.html" style="color:#123068;">
-                        http://localhost/tcc/views/paciente/teste.html
+                        <a href="http://localhost/tcc/views/paciente/exames/encaminhamento/listar_encaminhamentos.php" style="color:#123068;">
+                        http://localhost/tcc/views/paciente/exames/encaminhamento/listar_encaminhamentos.php
                         </a></p>
                         
                         <p style="margin-top:20px;">Atenciosamente,<br><strong>Equipe Clínica MedHub</strong></p>
@@ -258,14 +258,6 @@
             $idProfissional = $_SESSION['idProfissional'];
             return $this->relatorioModel->listarPacientesPorProfissional($idProfissional);
         }
-
-
-
-        #relatorio
-        // public function totalAgendamentosProfissional(){
-        //     $idProfissional = $_SESSION['idProfissional'];
-        //     return $this->agendamentoConsultaModel->totalAgendamentosProfissional($idProfissional);
-        // }
 
     }
 

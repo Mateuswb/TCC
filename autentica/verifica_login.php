@@ -4,8 +4,10 @@
     }
 
     if (!isset($_SESSION['idUsuario'])) {
-        $root = rtrim(dirname(dirname($_SERVER['SCRIPT_NAME'])), '/\\');
-        header("Location: $root/index.php");
+        $parts = explode('/', trim($_SERVER['SCRIPT_NAME'], '/'));
+        $root = $parts[0]; 
+        define("BASE_URL", "/$root");
+        header("Location: " . BASE_URL . "/views/index.php");
         exit();
     }
 ?>

@@ -1,18 +1,24 @@
-body {
-  font-family: "Poppins", sans-serif;
-  background-color: #f0f3f8;
-  margin: 0;
-  padding: 0;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
 }
+
+body {
+    background: #f5f6fa;
+    display: flex;
+}
+
 .container {
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 60px auto;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   padding: 30px;
 }
-h2 {
+#title {
   text-align: center;
   color: #2d3748;
   font-weight: 600;

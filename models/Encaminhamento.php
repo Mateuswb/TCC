@@ -23,7 +23,6 @@
             return $resultado;
         }
 
-
         public function listarEncaminhamentosPorPaciente($pacienteID) {
             $sql = "
                 SELECT 
@@ -55,7 +54,7 @@
 
         public function trocarStatus($idEncaminhamento){
             $sql =  "UPDATE encaminhamentos SET
-                        status = 'agendado';
+                        status = 'agendado'
                         WHERE id_encaminhamento = :idEncaminhamento";
             $query = $this->conn->prepare($sql);
             $query->execute([

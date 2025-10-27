@@ -12,8 +12,10 @@
                         DATE(dia_agendamento) AS data_agendamento,
                         COUNT(*) AS total
                     FROM agendamentos_consultas
+                    WHERE YEARWEEK(dia_agendamento, 1) = YEARWEEK(CURDATE(), 1)
                     GROUP BY DATE(dia_agendamento)
-                    ORDER BY data_agendamento";
+                    ORDER BY data_agendamento;
+                    ";
             $query = $this->conn->prepare($sql);
             $query->execute();
             return $query->fetchAll(PDO::FETCH_ASSOC);
@@ -25,8 +27,7 @@
                         COUNT(*) AS total_atendimentos
                     FROM agendamentos_consultas
                     GROUP BY dia_semana
-                    ORDER BY total_atendimentos DESC;
-                    ";
+                    ORDER BY FIELD(DAYNAME(dia_agendamento), 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')";
             $query = $this->conn->prepare($sql);
             $query->execute();
             return $query->fetchAll(PDO::FETCH_ASSOC);
@@ -376,7 +377,6 @@
                 'retornos' => (int)$retorno
             ];
         }
-
 
         public function listarAgendamentos(){
             $sql = "SELECT 

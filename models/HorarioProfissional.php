@@ -199,68 +199,54 @@
             ];
 
            $nomeExames = [
-                //  Exames laboratoriais gerais
-                "Hemograma"                 => "exame_hematologia",
-                "Hemograma Completo"        => "exame_hematologia",
-                "Glicemia"                  => "exame_endocrinologia",
-                "Colesterol total e frações"=> "exame_endocrinologia",
-                "Triglicerídeos"            => "exame_endocrinologia",
-                "Urina tipo 1"              => "exame_patologia_clinica",
-                "Parasitológico de fezes"   => "exame_patologia_clinica",
-                "Teste de gravidez"         => "exame_obstetricia",
-                "Tipagem sanguínea"         => "exame_hematologia",
-                "Cultura de sangue"         => "exame_microbiologia",
-                "Cultura de urina"          => "exame_microbiologia",
-                "Sorologia (HIV, Hepatite)" => "exame_infectologia",
-                "PCR"                       => "exame_microbiologia",
-                "Biópsia"                   => "exame_anatomia_patologica",
-                
-                //  Exames de imagem
-                "Raio-X"                    => "exame_radiologia",
-                "Tomografia"                => "exame_radiologia",
-                "Ressonância Magnética"     => "exame_radiologia",
-                "Ultrassonografia"          => "exame_radiologia",
-                "Mamografia"                => "exame_mastologia",
-                "Densitometria óssea"       => "exame_reumatologia",
-                
-                //  Exames cardiológicos
-                "Eletrocardiograma (ECG)"   => "exame_cardiologia",
-                "Ecocardiograma"            => "exame_cardiologia",
-                "Teste de esforço"          => "exame_cardiologia",
-                "Holter 24h"                => "exame_cardiologia",
-                "MAPA (Pressão arterial 24h)" => "exame_cardiologia",
+            // Exames de sangue
+            "Hemograma"                 => "exame_hemograma",
+            "Colesterol"                => "exame_colesterol",
+            "Glicemia"                  => "exame_glicemia",
+            "Triglicerídeos"            => "exame_triglicerideos",
+            "Plaquetas"                 => "exame_plaquetas",
+            "Hemoglobina Glicada"       => "exame_hemoglobina_glicada",
 
-                //  Exames gastrointestinais
-                "Endoscopia digestiva alta" => "exame_gastroenterologia",
-                "Colonoscopia"              => "exame_gastroenterologia",
-                "Ultrassom abdominal"       => "exame_gastroenterologia",
-                
-                //  Exames respiratórios
-                "Espirometria"              => "exame_pneumologia",
-                "Teste de função pulmonar"  => "exame_pneumologia",
-                
-                //  Exames otorrinolaringológicos e audiológicos
-                "Audiometria"               => "exame_fonoaudiologia",
-                "Imitanciometria"           => "exame_fonoaudiologia",
+            // Exames de imagem
+            "Raio-X"                    => "exame_raio_x",
+            "Ressonância Magnética"     => "exame_ressonancia_magnetica",
+            "Tomografia"                => "exame_tomografia",
+            "Ultrassonografia"          => "exame_ultrassonografia",
+            "Mamografia"                => "exame_mamografia",
+            "Densitometria Óssea"       => "exame_densitometria_ossea",
 
-                //  Exames oftalmológicos
-                "Fundoscopia"               => "exame_oftalmologia",
-                "Campimetria visual"        => "exame_oftalmologia",
-                "Tonometria"                => "exame_oftalmologia",
+            //  Exames cardiológicos
+            "Eletrocardiograma"         => "exame_eletrocardiograma",
+            "Ecocardiograma"            => "exame_ecocardiograma",
+            "Holter"                    => "exame_holter",
+            "Teste Ergométrico"         => "exame_teste_ergometrico",
+            "MAPA"                      => "exame_mapa",
 
-                //  Exames ginecológicos
-                "Papanicolau"               => "exame_ginecologia",
-                "Ultrassonografia pélvica"  => "exame_ginecologia",
-                "Ultrassonografia transvaginal" => "exame_ginecologia",
+            //  Exames de urina
+            "Urina Tipo I"              => "exame_urina_tipo_i",
+            "Urocultura"                => "exame_urocultura",
+            "Exame de Urina"            => "exame_exame_de_urina",
 
-                //  Exames neurológicos
-                "Eletroencefalograma (EEG)" => "exame_neurologia",
-                "Eletroneuromiografia"      => "exame_neurologia",
+            //  Exames hormonais
+            "TSH"                       => "exame_tsh",
+            "T4 Livre"                  => "exame_t4_livre",
+            "Testosterona"              => "exame_testosterona",
+            "Estradiol"                 => "exame_estradiol",
+            "Cortisol"                  => "exame_cortisol",
+            "Progesterona"              => "exame_progesterona",
 
-                //  Exames ortopédicos
-                "Ressonância de articulação" => "exame_ortopedia",
-                "Ultrassom musculoesquelético" => "exame_ortopedia"
-            ];
+            //  Exames infecciosos
+            "HIV"                       => "exame_hiv",
+            "Hepatite B"                => "exame_hepatite_b",
+            "Hepatite C"                => "exame_hepatite_c",
+            "Sífilis"                   => "exame_sifilis",
+
+            //  Exames respiratórios
+            "Espirometria"              => "exame_espirometria",
+            "Gasometria Arterial"       => "exame_gasometria_arterial",
+            "Teste de Função Pulmonar"  => "exame_teste_de_funcao_pulmonar"
+        ];
+
 
 
 

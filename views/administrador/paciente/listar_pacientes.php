@@ -1,11 +1,15 @@
 <?php
+session_start();
   include "../../../public/includes/administrador/sidebar.php"; 
-  include "../../../public/includes/administrador/header.html"; 
+  include "../../../public/includes/administrador/header.php"; 
   include "../../../public/includes/administrador/footer.php"; 
+
+  require "../../../public/modals/administrador/deletar_paciente.php";
 
   require_once "../../../controllers/AdministradorController.php";
   $controller = new AdministradorController($conn);
   $pacientes = $controller->listarPacientes();
+
 ?>
 
 <!DOCTYPE html>
@@ -20,20 +24,21 @@
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  <!-- SweetAlert2 -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="../../../public/assets/alertas/alerta_exclusao_paciente.js"></script>
-  <script src="../../../public/assets/alertas/alerta_padrao_pos.js"></script>
+
 </head>
 
 <body>
 
   <!-- Main -->
   <div class="main">
-
-
+  <?php 
+    require "../../../public/modals/administrador/edicao/editar_dados_paciente.html"; 
+  ?>
+  
     <!-- Conteúdo -->
     <div class="content">
+      <?php  require '../../../public/assets/alerta/flash.php' ?>
+
       <h1>Lista de Pacientes</h1>
 
       <div class="grid-container">
@@ -52,17 +57,38 @@
               <li><strong>Peso:</strong> <?php echo $paciente['peso']; ?></li>
               <li><strong>Bairro:</strong> <?php echo $paciente['bairro']; ?></li>
               <li><strong>Cidade:</strong> <?php echo $paciente['cidade']; ?></li>
-              <li><strong>ID:</strong> <?php echo $paciente['id_paciente']; ?></li>
               <li><strong>Observações:</strong> <?= substr($paciente['observacoes'],0,10) ?>...</li>
             </ul>
 
             <div class="footer">
-              <a href="editar_paciente.php?idPaciente=<?php echo $paciente['id_paciente']; ?>" class="btn-edit">Editar</a>
-              <a class="btn-delete"
-                href="deletar.php?idPaciente=<?php echo $paciente['id_paciente']; ?>&cpf=<?php echo $paciente['cpf']; ?>"
-                onclick="confirmarExclusao(this.href); return false;">
+              <button
+                class="btn-edit" 
+                data-id="<?php echo $paciente['id_paciente']; ?>"
+                data-nome="<?php echo $paciente['nome']; ?>"
+                data-email="<?php echo $paciente['email']; ?>"
+                data-data-nascimento="<?php echo $paciente['data_nascimento']; ?>"
+                data-telefone=" <?php echo $paciente['telefone']; ?>"
+                data-sexo="<?php echo $paciente['sexo']; ?>"
+                data-estado-civil="<?php echo $paciente['estado_civil']; ?>"
+                data-tipo-sanguineo="<?php echo $paciente['tipo_sanguineo']; ?>"
+                data-altura="<?php echo $paciente['altura']; ?>"
+                data-peso="<?php echo $paciente['peso']; ?>"
+                data-bairro="<?php echo $paciente['bairro']; ?>"
+                data-cidade="<?php echo $paciente['cidade']; ?>"
+                data-numero-casa="<?php echo $paciente['numero_casa']; ?>"
+                data-endereco="<?php echo $paciente['endereco']; ?>"
+                data-observacoes="<?php echo $paciente['observacoes']; ?>"
+                onclick="abrirModalEditar(this)">
+                Editar
+              </button>
+
+              <button 
+                class="btn-delete" 
+                data-id="<?php echo $paciente['id_paciente']; ?>"
+                data-cpf="<?php echo $paciente['cpf']; ?>"
+                onclick="abrirModalExclusao(this)">
                 Excluir
-              </a>
+              </button>
             </div>
           </div>
         <?php } ?>
@@ -70,19 +96,5 @@
     </div>
   </div>
 
-  <?php
-  if (isset($_GET['alerta'])) {
-    if ($_GET['alerta'] == 0) {
-      $tipo = 'sucesso'; $titulo = 'Atualizado'; $mensagem = 'Paciente excluído com sucesso.';
-    } elseif ($_GET['alerta'] == 1) {
-      $tipo = 'erro'; $titulo = 'Erro'; $mensagem = 'Erro ao excluir paciente ou bloquear conta.';
-    }
-    echo "<script>
-      window.addEventListener('DOMContentLoaded', () => {
-        alertaPadraoPos('$tipo', '$titulo', '$mensagem');
-      });
-    </script>";
-  }
-  ?>
 </body>
 </html>

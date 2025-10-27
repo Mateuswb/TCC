@@ -1,18 +1,29 @@
 <?php
-    // Pega a pasta raiz do projeto
     $parts = explode('/', trim($_SERVER['SCRIPT_NAME'], '/'));
     $root = $parts[0]; 
-
     define("BASE_URL", "/$root/views");
-    $especialidades = isset($_SESSION['especialidades']) ? json_decode($_SESSION['especialidades'], true) : ['cardiologista'];
+
+
+    $especialidades = isset($_SESSION['especialidades']) ? 
+                    json_decode($_SESSION['especialidades'], true) : [];
+    $temExame = false;
+    if (!empty($especialidades)) {
+        foreach ($especialidades as $esp) {
+            if (strpos($esp, 'exame_') === 0) { 
+                $temExame = true;
+                break;
+            }
+        }
+    }
 ?>
 
 
 
  <!-- Fonte -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
-   rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <div class="sidebar" id="sidebar">
   <h2>Meu Painel</h2>
 
@@ -23,13 +34,11 @@
         <i class="fas fa-calendar-check"></i> <span>Meus Agendamentos </span>
     </a>
 
-    <?php if(in_array('exame_laboratorio', $especialidades) || in_array('exame_radiologia', $especialidades)) : ?>
-
-       <a href="<?= BASE_URL ?>/profissional/lancar_resultado_exames/listar_exames.php">
-        <i class="fas fa-calendar-check"></i> <span>Lançar Resultado Exame</span>
-    </a>
-
-<?php endif; ?>
+    <?php if ($temExame): ?>
+        <a href="<?= BASE_URL ?>/profissional/lancar_resultado_exames/listar_exames.php">
+            <i class="fas fa-vial"></i> <span>Lançar Resultado Exame</span>
+        </a>
+    <?php endif; ?>
 
     <a href="<?= BASE_URL ?>/profissional/paciente/listar_pacientes.php">
       <i class="fas fa-user-injured"></i> <span>Pacientes </span>
@@ -55,18 +64,20 @@
 </div>
 
 <style>
-
-  /* Sidebar */
     .sidebar {
-        width: 250px;
+        width: 270px;
         background: #0e204bff;
         color: #fff;
         height: 100vh;
         padding: 10px;
-        
+        position: relative; 
     }
 
     .sidebar a.logout {
+        position: absolute;  
+        bottom: 20px;        
+        left: 20px;
+        right: 20px;
         background: #ef4444;
         color: #fff;
         padding: 10px 15px;
@@ -76,12 +87,12 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-top: 50%;
     }
-    .sidebar a.logout:hover {
-        background: #fc3636ff; /* vermelho */
 
+    .sidebar a.logout:hover {
+        background: #fc3636ff;
     }
+
     .sidebar.collapsed {
     width: 80px;
     }

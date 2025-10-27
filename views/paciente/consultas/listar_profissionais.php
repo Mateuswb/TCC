@@ -1,7 +1,6 @@
 <?php
-    session_start();
+    require_once '../../../autentica/verifica_login.php';
     require_once "../../../controllers/PacienteController.php";
-    
 
     include '../../../public/includes/paciente/sidebar.php';
     include '../../../public/includes/paciente/header.php';
@@ -35,6 +34,9 @@
     <!-- fonte -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
+    <!-- Font Awesome para ícones -->
+    <script src="https://kit.fontawesome.com/a2d9b7f7d2.js" crossorigin="anonymous"></script>
+
 </head>
 
 
@@ -46,8 +48,9 @@
         <!-- barra da pesquisa -->
         <div class="barra-pesquisa">
             <input type="text" id="searchInput" placeholder="Pesquise por especialidade ou profissional...">
-            <button>🔍</button>
+            <button id="btnSearch"><i class="fas fa-magnifying-glass"></i></button>
         </div>
+
 
 
         <div class="filtros-especialidade">
@@ -105,6 +108,7 @@
         botao.addEventListener('click', () => {
             const especialidade = botao.getAttribute('data-especialidade');
             const profissionais_filtrados = [];
+            filtrarPorEspecialidade(especialidade);
 
             dados.forEach(d => {
                 const especialidades_medico = JSON.parse(d.especialidade || '[]');
@@ -139,21 +143,64 @@
 
 
     // barra de pesquisa
-    const searchInput = document.getElementById('searchInput');
+// ===== Barra de Pesquisa =====
+const especialidadesMap = {
+  clinico_geral: "Clínico Geral",
+  pediatria: "Pediatria",
+  cardiologia: "Cardiologia",
+  ortopedia: "Ortopedia",
+  dermatologia: "Dermatologia",
+  ginecologia: "Ginecologia",
+  obstetricia: "Obstetrícia",
+  endocrinologia: "Endocrinologia",
+  neurologia: "Neurologia",
+  oftalmologia: "Oftalmologia",
+  otorrinolaringologia: "Otorrinolaringologia",
+  psiquiatria: "Psiquiatria",
+  urologia: "Urologia",
+  psicologia_clinica: "Psicologia Clínica"
+};
 
-    searchInput.addEventListener('input', () => {
-        const query = searchInput.value.toLowerCase().trim();
+const searchInput = document.getElementById('searchInput');
+const btnSearch = document.getElementById('btnSearch');
 
-        const profissionais_filtrados = dados.filter(p => {
-            const especialidades_medico = JSON.parse(p.especialidade || '[]');
-            const nome = p.nome.toLowerCase();
-            const especialidade_str = especialidades_medico.join(' ').toLowerCase();
+function pesquisar() {
+  const query = searchInput.value.toLowerCase().trim();
+  if (!query) {
+    mostrarProfissionais(dados); // mostra todos se o campo estiver vazio
+    return;
+  }
 
-            return nome.includes(query) || especialidade_str.includes(query);
-        });
+  const profissionais_filtrados = dados.filter(p => {
+    const especialidades_medico = JSON.parse(p.especialidade || '[]');
 
-        mostrarProfissionais(profissionais_filtrados);
-    });
+    // converte os códigos das especialidades em nomes legíveis
+    const especialidades_labels = especialidades_medico.map(v =>
+      (especialidadesMap[v] || v).toLowerCase()
+    );
+
+    const nome = p.nome.toLowerCase();
+    const especialidade_str = especialidades_labels.join(' ');
+
+    // verifica se o nome ou a especialidade contém o termo buscado
+    return nome.includes(query) || especialidade_str.includes(query);
+  });
+
+  mostrarProfissionais(profissionais_filtrados);
+}
+
+btnSearch.addEventListener('click', pesquisar);
+
+//  Pesquisa ao pressionar Enter
+searchInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault(); 
+    pesquisar();
+  }
+});
+
+
+
 
     // mostra os cards
     function mostrarProfissionais(lista) {
@@ -182,6 +229,28 @@
             `;
         });
     }
+
+    function filtrarPorEspecialidade(especialidade) {
+    const profissionais_filtrados = [];
+
+    dados.forEach(d => {
+        const especialidades_medico = JSON.parse(d.especialidade || '[]')
+                                      .map(e => e.toLowerCase()); // garante lowercase
+        if (especialidades_medico.includes(especialidade.toLowerCase())) {
+            profissionais_filtrados.push(d);
+        }
+    });
+
+    mostrarProfissionais(profissionais_filtrados);
+}
+// Filtrar automaticamente Cardiologistas ao abrir a página
+filtrarPorEspecialidade('cardiologia');
+
+// Marcar o botão como ativo (opcional)
+botoes.forEach(botao => botao.classList.remove('ativo'));
+document.querySelector('.btn-especialidade[data-especialidade="cardiologia"]').classList.add('ativo');
+
+
 
 </script>
 

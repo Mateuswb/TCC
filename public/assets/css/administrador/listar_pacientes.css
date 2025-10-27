@@ -1,4 +1,10 @@
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif; }
+/* ===== Reset e base ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
 
 body {
     background: #f5f6fa;
@@ -6,38 +12,48 @@ body {
     display: flex;
 }
 
-
-
-/* Main */
+/* ===== Main ===== */
 .main {
-    margin-left: 250px;
+    margin-left: 250px; /* espaço para a sidebar */
     flex: 1;
     display: flex;
     flex-direction: column;
-    margin-bottom: 70px;
+    margin-bottom: 70px; /* espaço para footer ou elementos fixos */
+    overflow-y: auto; /* permite rolagem do conteúdo */
 }
 
+/* ===== Conteúdo ===== */
+.content {
+    padding: 20px;
+}
 
-/* Conteúdo */
-.content { padding: 20px; }
+h1 {
+    margin-bottom: 20px;
+    color: #2980b9;
+    font-size: 28px;
+}
 
-h1 { margin-bottom: 20px; color: #2980b9; }
-
-/* Grid Cards Pacientes */
+/* ===== Grid de Cards ===== */
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 20px;
 }
 
+/* ===== Cards ===== */
 .card {
     background: #fff;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     padding: 20px;
-    transition: transform 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
-.card:hover { transform: translateY(-5px); }
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
 .card h2 {
     margin-bottom: 14px;
     font-size: 20px;
@@ -46,21 +62,65 @@ h1 { margin-bottom: 20px; color: #2980b9; }
     padding-bottom: 6px;
 }
 
-.info-list { list-style: none; margin-bottom: 15px; }
-.info-list li { margin-bottom: 6px; font-size: 14px; color: #333; }
-.info-list li strong { color: #2980b9; margin-right: 5px; }
+/* ===== Lista de Informações ===== */
+.info-list {
+    list-style: none;
+    margin-bottom: 15px;
+}
 
-.footer { text-align: right; }
-.btn-edit, .btn-delete {
+.info-list li {
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #333;
+}
+
+.info-list li strong {
+    color: #2980b9;
+    margin-right: 5px;
+}
+
+/* ===== Footer do Card ===== */
+.footer {
+    text-align: right;
+}
+
+/* ===== Botões ===== */
+.btn-edit,
+.btn-delete {
     padding: 8px 14px;
     border-radius: 6px;
     font-weight: 600;
     text-decoration: none;
     color: #fff;
     margin-left: 8px;
-    transition: background 0.2s;
+    transition: background 0.2s, transform 0.2s;
 }
-.btn-edit { background: #2980b9; }
-.btn-edit:hover { background: #1f6391; }
-.btn-delete { background: #c0392b; }
-.btn-delete:hover { background: #a8281d; }
+
+.btn-edit {
+    background: #2980b9;
+}
+
+.btn-edit:hover {
+    background: #1f6391;
+    transform: translateY(-2px);
+}
+
+.btn-delete {
+    background: #c0392b;
+}
+
+.btn-delete:hover {
+    background: #a8281d;
+    transform: translateY(-2px);
+}
+
+/* ===== Responsividade ===== */
+@media (max-width: 768px) {
+    .main {
+        margin-left: 0;
+    }
+
+    .grid-container {
+        grid-template-columns: 1fr;
+    }
+}

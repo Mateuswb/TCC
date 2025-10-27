@@ -1,7 +1,7 @@
 <?php
-  session_start();
-
+  require_once '../../../autentica/verifica_login.php';
   $idPaciente = $_SESSION['idPaciente'];
+  
   include '../../../public/includes/paciente/sidebar.php'; 
   include '../../../public/includes/paciente/header.php'; 
   include '../../../public/includes/paciente/footer.php'; 

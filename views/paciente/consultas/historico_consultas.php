@@ -1,5 +1,5 @@
 <?php
-  session_start();
+  require_once '../../../autentica/verifica_login.php';
   $idPaciente = $_SESSION['idPaciente'];
 
   require_once "../../../controllers/PacienteController.php";

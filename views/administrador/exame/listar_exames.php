@@ -5,7 +5,7 @@
     require_once "../../../controllers/AdministradorController.php";
     
     include "../../../public/includes/administrador/sidebar.php"; 
-    include "../../../public/includes/administrador/header.html"; 
+    include "../../../public/includes/administrador/header.php"; 
     include "../../../public/includes/administrador/footer.php"; 
 
     $controller = new AdministradorController($conn);

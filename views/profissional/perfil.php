@@ -1,8 +1,9 @@
 <?php
+    session_start();
+    
     include '../../public/includes/profissional/sidebar.php';
     include '../../controllers/UsuarioController.php';
     
-    session_start();
     $id_profissional = $_SESSION['idProfissional'];
 
     require_once "../../controllers/ProfissionalController.php";

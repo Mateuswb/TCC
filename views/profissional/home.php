@@ -27,8 +27,10 @@
   <!-- STYLE  CSS-->
   <link rel="stylesheet" href="../../public/assets/css/profissional/home.css">
 
-  <!-- Font Awesome para ícones -->
-  <script src="https://kit.fontawesome.com/a2d9b7f7d2.js" crossorigin="anonymous"></script>
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -39,7 +41,6 @@
 
     <!-- main -->
     <main class="main">
-      <h2><?php echo $_SESSION['especialidades']; ?></h2>
       <!-- top cards -->
       <div class="top-grid">
         <div class="card">
@@ -109,7 +110,6 @@
         </aside>
       </div>
 
-      
     </main>
   </div>
 

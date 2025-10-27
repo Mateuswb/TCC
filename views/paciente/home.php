@@ -1,8 +1,11 @@
   
 <?php
-   include '../../public/includes/paciente/sidebar.php';
-   include '../../public/includes/paciente/header.php';
-   include '../../public/includes/paciente/footer.php';
+  require '../../autentica/verifica_login.php';
+
+  include '../../public/includes/paciente/sidebar.php';
+  include '../../public/includes/paciente/header.php';
+  include '../../public/includes/paciente/footer.php';
+
 ?>
 
 <!doctype html>

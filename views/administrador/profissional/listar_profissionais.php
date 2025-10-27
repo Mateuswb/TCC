@@ -1,10 +1,8 @@
 <?php
   session_start();
-  include "../../../public/includes/administrador/sidebar.php"; 
-  include "../../../public/includes/administrador/header.html"; 
-  include "../../../public/includes/administrador/footer.php";
-
-  require "../../../public/modals/administrador/edicao/editar_dados_profissional.html";
+  require "../../../public/includes/administrador/sidebar.php"; 
+  require "../../../public/includes/administrador/header.php"; 
+  require "../../../public/includes/administrador/footer.php";
   require "../../../public/modals/administrador/deletar_profissional.php";
   
   require_once "../../../controllers/AdministradorController.php";
@@ -24,22 +22,20 @@
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  <!-- SweetAlert -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="../../../public/assets/alertas/alerta_exclusao_profissional.js"></script>
-  <script src="../../../public/assets/alertas/alerta_padrao_pos.js"></script>
-
 </head>
 <body>
-  <!-- Sidebar já incluída -->
-  
-  <!-- Main -->
   <div class="main">
-    <!-- Header -->
+    <?php
+        require "../../../public/modals/administrador/edicao/editar_dados_profissional.html";
+        
+    ?>
     
 
     <!-- Conteúdo -->
     <div class="content">
+      <?php
+      include '../../../public/assets/alerta/flash.php';
+      ?>
       <h1>Lista de Profissionais</h1>
       <div class="grid-container">
         <?php foreach($profissionais as $profissional) { ?>
@@ -57,7 +53,8 @@
               <li><strong>Especialidade:</strong> <?php echo $profissional['especialidade']; ?></li>
               <li><strong>Nº Casa:</strong> <?php echo $profissional['numero_casa']; ?></li>
               <li><strong>Bairro:</strong> <?php echo $profissional['bairro']; ?></li>
-              <li><strong>Cidade:</strong> <?php echo $profissional['cidade']; ?></li>
+              <li><strong>Cidade:</strong> <?php echo $profissional['cidade']; ?></li>  
+              <li><strong>Endereço:</strong> <?php echo $profissional['endereco']; ?></li>
               <li><strong>Obs:</strong> <?php echo $profissional['observacoes']; ?></li>
             </ul> 
             <div class="footer">
@@ -70,7 +67,7 @@
                 data-email="<?php echo $profissional['email']; ?>"
                 data-data-nascimento="<?php echo $profissional['data_nascimento']; ?>"
                 data-crm=" <?php echo $profissional['crm_crp']; ?>"
-                data-especialidade="<?php echo $profissional['especialidade']; ?>"
+                 data-especialidades="<?= json_encode($profissional['especialidade'])?>"
                 data-telefone=" <?php echo $profissional['telefone']; ?>"
                 data-sexo="<?php echo $profissional['sexo']; ?>"
                 data-estado-civil="<?php echo $profissional['estado_civil']; ?>"
@@ -86,11 +83,10 @@
               <button 
                 class="btn-delete" 
                 data-id="<?php echo $profissional['id_profissional']; ?>"
+                data-cpf="<?php echo $profissional['cpf']; ?>"
                 onclick="abrirModalExclusao(this)">
                 Excluir
               </button>
-
-
             </div>
           </div>
         <?php } ?>
