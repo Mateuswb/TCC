@@ -21,13 +21,16 @@
 <head>
   <meta charset="UTF-8">
   <title>Perfil do Profissional</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+   rel="stylesheet">
   <style>
     * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Poppins", sans-serif;
     }
 
     body {
@@ -214,9 +217,7 @@
   </style>
 </head>
 <body>
- 
 
-  <!-- Main -->
   <div class="main">
     <?php  include '../../public/assets/alerta/flash.php' ?>
 
@@ -238,7 +239,6 @@
         <button data-tab="conta">Conta</button>
       </div>
 
-      <!-- Formulário de Dados -->
       <form method="POST" action="../../controllers/PacienteController.php?acao=editarDadosPaciente">
         <input type="hidden" name="idPaciente" value="<?php echo $paciente['id_paciente']; ?>">
 
@@ -267,7 +267,7 @@
           <div style="margin:20px 0;"><input type="submit" value="Salvar"></div>
         </div>
 
-        <!-- Dados Profissionais -->
+        <!-- Dados Médicos -->
         <div id="dados-medicos" class="tab-content">
           <div class="info-grid">
             <div>

@@ -21,14 +21,8 @@ session_start();
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>MedHub — Encaminhamentos</title>
 
-  <!-- STYLE  CSS-->
+  <!-- IMPORT DO CSS-->
   <link rel="stylesheet" href="../../../../public/assets/css/paciente/exames/lista_encaminhamentos.css">
-
-
-  <!-- Fonte e ícones -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
-   rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 </head>
   
@@ -86,20 +80,16 @@ session_start();
   const modalAgendamento = document.getElementById('modalAgendamento');
   const fecharModalAgendamento = document.getElementById('fecharModalAgendamento');
 
-  // Função para abrir o modal (chame quando clicar em um profissional)
   function abrirModalAgendamento(nomeExame, idEncaminhamento) {
      document.getElementById('exame').value = nomeExame;
      document.getElementById('id_encaminhamento').value = idEncaminhamento;
     modalAgendamento.style.display = 'flex';
   }
 
-
-  // Fecha o modal ao clicar no "X"
   fecharModalAgendamento.addEventListener('click', () => {
     modalAgendamento.style.display = 'none';
   });
 
-  // Fecha ao clicar fora do conteúdo
   window.addEventListener('click', (e) => {
     if (e.target === modalAgendamento) {
       modalAgendamento.style.display = 'none';

@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Lista de Usuários</title>
 
-    <!-- Import do CSS -->
+    <!-- IMPORT DO CSS -->
     <link rel="stylesheet" href="../../../public/assets/css/style_listar_usuario.css">
 
     <!-- Import dos Icones-->

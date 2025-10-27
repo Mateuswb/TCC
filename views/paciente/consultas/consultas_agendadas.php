@@ -22,12 +22,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>MedHub — Página Inicial</title>
 
-    <!-- Fonte -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
     <style>
-
-        /* ===== RESET ===== */
         * {
             margin: 0;
             padding: 0;
@@ -167,15 +162,15 @@
   background-color: #b02a37;
 }
 .msg-msg {
-    position: fixed;          /* fixa na tela */
-    top: 50%;                 /* central vertical */
-    left: 50%;                /* central horizontal */
-    transform: translate(-50%, -50%); /* ajuste perfeito */
+    position: fixed;          
+    top: 50%;                
+    left: 50%;                
+    transform: translate(-50%, -50%); 
     padding: 15px 25px;
     border-radius: 8px;
     font-weight: 600;
     font-size: 1rem;
-    z-index: 9999;            /* garante que fique acima de tudo */
+    z-index: 9999;       
     text-align: center;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }

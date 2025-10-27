@@ -5,11 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <!-- Import do CSS -->
+    <!-- IMPORT DO CSS -->
     <link rel="stylesheet" href="../../public/assets/css/usuario/criar_conta.css">
-    <!-- <link rel="stylesheet" href="../../public/assets/css/efect_surgindo.css"> -->
 
-    <!-- inport dos Icones-->
+    <!-- IMPORT ICONS-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
 
 </head>

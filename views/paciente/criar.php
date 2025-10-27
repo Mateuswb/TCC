@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro Paciente - EM ANDAMENTO</title>
 
-    <!-- Import do CSS -->
+    <!-- IMPORT DO CSS -->
     <link rel="stylesheet" href="../../public/assets/css/paciente/cadastrar.css">
 </head>
 <body>

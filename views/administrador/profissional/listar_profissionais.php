@@ -17,21 +17,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Lista de Profissionais</title>
 
+  <!-- IMPORT DO CSS -->
   <link rel="stylesheet" href="../../../public/assets/css/administrador/listar_profissionais.css">
-
-  <!-- FontAwesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 </head>
 <body>
   <div class="main">
     <?php
         require "../../../public/modals/administrador/edicao/editar_dados_profissional.html";
-        
     ?>
-    
 
-    <!-- Conteúdo -->
     <div class="content">
       <?php
       include '../../../public/assets/alerta/flash.php';

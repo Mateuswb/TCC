@@ -24,11 +24,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>MedHub — Histórico de Consultas</title>
 
-<!-- Fonte -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
 <style>
-    /* ===== RESET ===== */
     * {
         margin: 0;
         padding: 0;

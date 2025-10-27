@@ -75,13 +75,15 @@ body {
     color: #085274;
     padding: .6rem 1.2rem;
     border-radius: 20px;
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 15px;
     cursor: pointer;
-
+    transition: 0.3s;
 }
 
 .filtros-especialidade button:hover {
-    background: #c5dae8;
+    background: #003252;
+    color: white;
 }
 
 .filtros-especialidade .ativo {
@@ -89,7 +91,7 @@ body {
     color: #fff;
 }
 
-/* ===== INFO ===== */
+/* INFO */
 .info-profissionais {
     display: flex;
     justify-content: center;
@@ -103,7 +105,6 @@ body {
     color: #2ecc71;
     font-weight: 500;
 }
-
 /* ===== CARDS ===== */
 #cards-profissionais {
     display: grid;
@@ -112,6 +113,42 @@ body {
     width: 100%;
     max-width: 1200px;
 }
+.btn-container {
+    display: flex;
+    justify-content: space-between; /* separa os botões nos extremos */
+    align-items: center;
+    gap: 0.8rem;
+    width: 100%;
+    padding: 0 1rem; /* dá um pequeno recuo das bordas */
+}
+.btn-container {
+    display: flex;
+    justify-content: space-between; /* um pra esquerda, outro pra direita */
+    align-items: center;
+    gap: 0.8rem; /* espaçamento entre os botões */
+    margin-top: 1rem;
+}
+
+.btn-agendar,
+.btn-info {
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.btn-agendar {
+    background: #085274;
+    border: none;
+    color: white;
+}
+
+.btn-agendar:hover {
+    background: #0b6a91;
+}
+
+.btn-info:hover {
+    background: #222;
+}
+
 
 .card {
     background: #fff;
@@ -126,9 +163,10 @@ body {
     box-shadow: 0 6px 18px rgba(0,0,0,0.12);
 }
 
+/* imagem um pouco maior */
 .card img {
     width: 100%;
-    height: 180px;
+    height: 220px; /* aumentada */
     object-fit: cover;
 }
 
@@ -154,36 +192,52 @@ body {
     color: #555;
     line-height: 1.4;
     margin-bottom: 1rem;
-    width: 100%;             
-    word-wrap: break-word;    
-    white-space: normal;      
+    width: 100%;
+    word-wrap: break-word;
+    white-space: normal;
 }
 
+/* ===== BOTÕES ===== */
+.btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.8rem; /* espaçamento entre os botões */
+}
+
+.btn-agendar,
+.btn-info {
+    padding: .6rem 1.2rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background .2s;
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+}
 
 .btn-agendar {
     background: #085274;
     border: none;
     color: white;
-    padding: .6rem 1.2rem;
-    border-radius: 25px;
-    cursor: pointer;
-    font-weight: 500;
-}
-
-.btn-info {
-    background: #000000ff;
-    border: 1px solid black;
-    color: white;
-    padding: .6rem 1.2rem;
-    font-size: 18px;
-    border-radius: 25px;
-    cursor: pointer;
-    font-weight: 500;
 }
 
 .btn-agendar:hover {
     background: #0b6a91;
 }
+
+.btn-info {
+    background: #000;
+    border: 1px solid black;
+    color: white;
+    font-size: 16px;
+}
+
+.btn-info:hover {
+    background: #222;
+}
+
 
 @media (max-width: 768px) {
     .conteudo-principal {

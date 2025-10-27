@@ -5,18 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro Paciente- EM AMDAMENTO</title>
 
-    <!-- Import do CSS -->
+    <!-- IMPORT DO CSS -->
     <link rel="stylesheet" href="../../../../public/assets/css/administrador/cadastrar/cadastrar_profissional.css">
     
-    <!-- CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
-
-    <!-- JS -->
+    
+    <!-- IMPORT BIBLIOTECA PARA MOSTRAR ESPECIALIDADES -->
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+    
 </head>
-
-
 
 <body>
 
@@ -253,8 +250,8 @@
   document.addEventListener('DOMContentLoaded', function() {
     const especialidadesSelect = document.getElementById('multiple');
     const choices = new Choices(especialidadesSelect, {
-      removeItemButton: true, // mostra botão de remover cada item selecionado
-      searchEnabled: true     // habilita busca dentro da lista
+      removeItemButton: true,
+      searchEnabled: true  
     });
   });
 </script>

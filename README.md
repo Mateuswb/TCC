@@ -1,4 +1,4 @@
-# Sistema de Agendamento - TCC
+# Sistema de Agendamento    
 
 ## Descrição
 Sistema de agendamento e gerenciamento de  consultas e exames para clinicas privadas.

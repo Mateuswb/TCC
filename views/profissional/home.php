@@ -24,24 +24,17 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Dashboard - HealthEase (Clone)</title>
 
-  <!-- STYLE  CSS-->
+  <!-- IMPORT DO CSS -->
   <link rel="stylesheet" href="../../public/assets/css/profissional/home.css">
 
-
-  <!-- Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- IMPORT DO CHART.JS -->
+  <script src="../../libs/chart.min.js"></script>
 
 </head>
 <body>
   <div class="app">
 
-    <!-- main -->
     <main class="main">
-      <!-- top cards -->
       <div class="top-grid">
         <div class="card">
           <div class="left"><small>Agendamentos Hoje</small><strong> <?php echo $agendamentosHoje ?> </strong></div>
@@ -84,7 +77,7 @@
         </div>
       </div>
 
-      <!-- content row: chart + right panel -->
+      <!-- right panel -->
       <div class="content-row">
         <section class="chart-card">
           <h3>Gráfico de consultas</h3>
@@ -174,53 +167,50 @@ fetch("../../controllers/RelatorioController.php?acao=compararAtendimentosSemana
       }
     });
 
-    // Atualiza o card de agendamentos de hoje
-    const totalHoje = dados.essaSemana[dados.essaSemana.length - 1] || 0;
-    document.getElementById("agendamentosHoje").innerText = totalHoje;
   })
   .catch(err => console.error("Erro ao carregar dados:", err));
 
-// grafico de bola
-fetch("../../controllers/RelatorioController.php?acao=contarConsultasERetornos&idProfissional=<?= $idProfissional ?>")
-  .then(res => res.json())
-  .then(data => {
-    const labels = ['Primeiras Consultas', 'Retornos'];
-    const valores = [data.consultas, data.retornos];
 
-    new Chart(document.getElementById('donut1').getContext('2d'), {
-      type: 'doughnut',
-      data: {
-        labels: labels,
-        datasets: [{
-          data: valores,
-          backgroundColor: ['#2e86de', '#10ac84'],
-          borderWidth: 0,
-          cutout: '70%',
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'bottom',
-            labels: { usePointStyle: true, color: '#333' }
-          },
-          tooltip: {
-            callbacks: {
-              label: function(context) {
-                const total = context.dataset.data.reduce((a,b)=>a+b,0);
-                const value = context.raw;
-                const percent = ((value/total)*100).toFixed(1);
-                return `${context.label}: ${value} (${percent}%)`;
+  // grafico da bola
+  fetch("../../controllers/RelatorioController.php?acao=contarConsultasERetornos&idProfissional=<?= $idProfissional ?>")
+    .then(res => res.json())
+    .then(data => {
+      const labels = ['Primeiras Consultas', 'Retornos'];
+      const valores = [data.consultas, data.retornos];
+
+      new Chart(document.getElementById('donut1').getContext('2d'), {
+        type: 'doughnut',
+        data: {
+          labels: labels,
+          datasets: [{
+            data: valores,
+            backgroundColor: ['#2e86de', '#10ac84'],
+            borderWidth: 0,
+            cutout: '70%',
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: { usePointStyle: true, color: '#333' }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const total = context.dataset.data.reduce((a,b)=>a+b,0);
+                  const value = context.raw;
+                  const percent = ((value/total)*100).toFixed(1);
+                  return `${context.label}: ${value} (${percent}%)`;
+                }
               }
             }
           }
         }
-      }
-    });
-  })
-  .catch(err => console.error("Erro ao carregar dados do gráfico:", err));
-
+      });
+    })
+    .catch(err => console.error("Erro ao carregar dados do gráfico:", err));
 </script>
 </body>
 </html>

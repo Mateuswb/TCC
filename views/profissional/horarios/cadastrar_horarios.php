@@ -365,7 +365,6 @@
     setTimeout(()=>toast.classList.remove('show'),3000);
   }
 
-  // evento de envio
   document.getElementById('btnSave').addEventListener('click', ()=>{
     form.submit();
   });

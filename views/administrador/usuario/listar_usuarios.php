@@ -15,16 +15,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Lista de Usuários</title>
 
+  <!-- IMPORT DO CSS -->
   <link rel="stylesheet" href="../../../public/assets/css/administrador/listar_usuarios.css">
   <link rel="stylesheet" href="../../../public/assets/css/style_padrao.css">
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 </head>
 <body>
   <div class="main">
 
-    <!-- Conteúdo -->
     <div class="content">
       <h1>Lista de Usuários</h1>
       <div class="table-wrapper">

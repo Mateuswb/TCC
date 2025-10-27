@@ -16,14 +16,11 @@ $agendamentos = $controller->listarAgendamentos();
   <title>Agenda - Profissional</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
-  <!-- STYLE CSS -->
+  <!-- IMPORT DO CSS -->
   <link rel="stylesheet" href="../../../public/assets/css/administrador/agendamentos.css">
 
-  <!-- IMPORT ICONS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-  <!-- IMPORT CALENDER -->
-  <link href="../../../libs/calender/index.global.js" rel="stylesheet">
+  <!-- IMPORT DO CALENDER  MUDAR AAAAAQQQQQQ-->
+  <link href="../../../libs/calender/index.global.js" rel="stylesheet">  
   <script src="../../../libs/calender/index.global.min.js"></script>
 
 </head>
@@ -138,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Verifica se o evento já passou
     const eventoPassado = new Date(selectedEvent.start) < new Date();
-    if (eventoPassado) return; // Bloqueia modal e ações para eventos passados
+    if (eventoPassado) return; // Bloqueia modal para eventos passados
 
     const tipo = selectedEvent.extendedProps.tipo;
     if (tipo === 'exame') {

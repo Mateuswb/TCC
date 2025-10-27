@@ -8,15 +8,14 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Med Hub — Agende Consultas e Exames</title>
 
-  <!-- Font -->
+  <!-- IMPORT FONTS -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- icons -->
+  <!-- IMPORT ICONS -->
   <script src="https://kit.fontawesome.com/4b60c7eafd.js" crossorigin="anonymous"></script>
 
   <style>
-    /* ========== RESET & VARIABLES ========== */
     *{margin:0;padding:0;box-sizing:border-box;}
     html, body{height:100%;font-family:"Inter",sans-serif;line-height:1.5;background:#FAFDFF;color:#002E53;overflow-x:hidden;}
     :root{
@@ -327,7 +326,6 @@
 <body>
   <?php include '../public/assets/alerta/flash.php' ?>
 
-  <!-- HEADER -->
   <header id="site-header">
     <div class="brand">Med <span>Hub</span></div>
     <nav>
@@ -341,7 +339,6 @@
     <a class="btn-login" href="#" onclick="abrirModal()">Entrar</a>
   </header>
 
-  <!-- MAIN -->
   <main>
     <!-- HERO -->
     <section id="home" class="hero reveal">
@@ -351,7 +348,7 @@
         <a class="btn-primary" href="#agendar">Agende já</a>
       </div>
       <div class="hero-right">
-        <img src="../teste.png" alt="Agendamento Médico">
+        <img src="../public/assets/imgs/teste.png" alt="Agendamento Médico">
       </div>
     </section>
 
@@ -359,7 +356,7 @@
     <section id="agendar" class="reveal">
       <div class="agendar-card">
         <div class="agendar-left">
-          <img src="../download.png" alt="Calendário Médico">
+          <img src="../public/assets/imgs/download.png" alt="Calendário Médico">
         </div>
         <div class="agendar-right">
           <h2>Agende suas <span>Consultas e Exames</span> de forma <span>Rápida</span></h2>
@@ -395,7 +392,6 @@
   </div>
 </section>
 
-    <!-- ACESSO -->
     <section id="acesso" class="reveal">
       <div class="acesso">
         <h2>Acesse onde quiser</h2>
@@ -405,7 +401,6 @@
     </section>
   </main>
 
-  <!-- FOOTER -->
   <footer>
     <div class="logo">Med <span>Hub</span></div>
     <p>© <span id="year"></span> Med Hub. Todos os direitos reservados.</p>

@@ -1,4 +1,3 @@
-<!-- ===== MODAL AGENDAMENTO ===== -->
 <div id="modalAgendamento" class="modal">
   <div class="modal-content">
     <span class="fechar-modal" id="fecharModalAgendamento">&times;</span>
@@ -58,7 +57,6 @@
 </div>
 
 <style>
-/* ===== MODAL ===== */
 .modal {
   display: none;
   position: fixed;
@@ -182,7 +180,7 @@ textarea {
 
 <script>
 
-// Carregar horários disponíveis
+// Carrega os horários disponíveis
 document.getElementById('diaAgendamento').addEventListener('change', function() {
   const data = this.value;
   const exame = document.getElementById('exame').value;
@@ -192,7 +190,7 @@ document.getElementById('diaAgendamento').addEventListener('change', function() 
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: `data=${encodeURIComponent(data)}&exame=${encodeURIComponent(exame)}`
   })
-  // .then(r => console.log(r.text()))
+  .then(r => console.log(r.text()))
   .then(r => r.json())
   .then(retorno => {
     const container = document.getElementById('times');

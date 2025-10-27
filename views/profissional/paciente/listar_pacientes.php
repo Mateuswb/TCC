@@ -17,19 +17,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Painel - Pacientes</title>
 
-  <!-- STYLE  CSS-->
+  <!-- IMPORT DO CSS-->
   <link rel="stylesheet" href="../../../public/assets/css/profissional/listar_pacientes.css">
 
 </head>
 <body>
 
-
-  <!-- Conteúdo -->
   <div class="content">
     <h1>Seus pacientes estão aqui</h1>
     <p>Visualize e gerencie todos os pacientes que já realizaram uma consulta com você</p>
 
-    <!-- Filtros -->
     <div id="filters">
       <input type="text" placeholder="Buscar por nome...">
       <select>
@@ -38,7 +35,6 @@
       <button>Filtros</button>
     </div>
 
-    <!-- Tabela -->
     <table>
       <thead>
         <tr>

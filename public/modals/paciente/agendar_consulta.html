@@ -1,13 +1,11 @@
-<!-- ===== MODAL AGENDAMENTO ===== -->
 <div id="modalAgendamento" class="modal">
   <div class="modal-content">
-    <!-- ===== CABEÇALHO AZUL ===== -->
+
     <div class="modal-header">
       <div class="header-left">
         <img src="https://cdn-icons-png.flaticon.com/512/3870/3870822.png" alt="Foto do Profissional">
         <div class="header-info">
           <h2 id="nomeProfissional">Nome do Profissional</h2>
-          <p id="especialidadeProfissional">Especialidade</p>
           <p>Atendimento Particular</p>
         </div>
       </div>
@@ -19,7 +17,7 @@
 
     <span class="fechar-modal" id="fecharModalAgendamento">&times;</span>
 
-    <!-- ===== CONTEÚDO ===== -->
+
     <div class="container-modal">
       <h3>Confirme seus dados para o Agendamento</h3>
 
@@ -58,11 +56,10 @@
           <textarea id="observacao" name="observacao" placeholder="Escreva alguma observação..."></textarea>
         </div>
 
-        <button type="submit" class="btn-agendar">Agendar</button>
+        <button type="submit" class="btn-agendarConsulta">Agendar</button>
       </form>
     </div>
 
-    <!-- ===== FOOTER ===== -->
     <div class="modal-footer">
       <p><strong>Clínica MedHub</strong><br>
       Av. Santa, 9999 - Centro, Santa Catarina - SC</p>
@@ -143,6 +140,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: 10px;
 }
 
 .header-info h2 {
@@ -165,12 +163,12 @@
 }
 
 .header-title h3 {
-  font-size: 1rem;
+  font-size: 20px;
   margin: 0;
 }
 
 .header-title span {
-  font-size: 0.75rem;
+  font-size: 15px;
 }
 
 /* ===== CONTEÚDO ===== */
@@ -256,20 +254,36 @@ textarea {
 }
 
 /* ===== BOTÃO ===== */
-.btn-agendar {
+.btn-agendarConsulta {
   margin-top: 25px;
   width: 100%;
-  padding: 14px;
+  padding: 10px;
   border: none;
   background: #005baa;
   color: #fff;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 600;
   border-radius: 25px;
   cursor: pointer;
   transition: 0.3s;
+  text-align: center;
 }
-.btn-agendar:hover { background: #00468a; }
+.btn-agendarConsulta:hover { background: #00468a; }
+
+
+/* Esconde o input nativo */
+.time-slot input[type="radio"] {
+  display: none;
+}
+
+/* Quando o radio dentro do label está marcado */
+.time-slot:has(input[type="radio"]:checked) {
+  background: #005baa;
+  color: #fff;
+  border-color: #00468a;
+  box-shadow: 0 0 0 3px rgba(0,91,170,0.3);
+}
+
 
 /* ===== FOOTER ===== */
 .modal-footer {
@@ -308,35 +322,36 @@ textarea {
 </style>
 
 <script>
-// Mostrar ou esconder campo de anexo conforme o tipo de consulta
-document.getElementById('tipoConsulta').addEventListener('change', function() {
-  document.getElementById('box-anexo').style.display = this.value === 'r' ? 'block' : 'none';
-});
+  // Campo do anexo
+  document.getElementById('tipoConsulta').addEventListener('change', function() {
+    document.getElementById('box-anexo').style.display = this.value === 'r' ? 'block' : 'none';
+  });
 
-// Carregar horários disponíveis
-document.getElementById('diaAgendamento').addEventListener('change', function() {
-  const data = this.value;
-  const idProfissional = document.getElementById('idProfissional').value;
 
-  fetch('../../../controllers/PacienteController.php', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: `data=${encodeURIComponent(data)}&idProfissional=${encodeURIComponent(idProfissional)}`
-  })
-  .then(r => r.json())
-  .then(retorno => {
-    const container = document.getElementById('times');
-    container.innerHTML = '';
+  // Carrega os horarios
+  document.getElementById('diaAgendamento').addEventListener('change', function() {
+    const data = this.value;
+    const idProfissional = document.getElementById('idProfissional').value;
 
-    if (!retorno?.disponiveis) return;
+    fetch('../../../controllers/PacienteController.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `data=${encodeURIComponent(data)}&idProfissional=${encodeURIComponent(idProfissional)}`
+    })
+    .then(r => r.json())
+    .then(retorno => {
+      const container = document.getElementById('times');
+      container.innerHTML = '';
 
-    retorno.disponiveis.forEach(h => {
-      const bloqueado = retorno.agendamento?.includes(h);
-      container.innerHTML += bloqueado
-        ? `<label class="time-slot-bloqueado">${h}</label>`
-        : `<label class="time-slot"><input type="radio" name="horarioAgendamento" value="${h}" required><span>${h}</span></label>`;
-    });
-  })
-  .catch(err => console.error("Erro:", err));
-});
+      if (!retorno?.disponiveis) return;
+
+      retorno.disponiveis.forEach(h => {
+        const bloqueado = retorno.agendamento?.includes(h);
+        container.innerHTML += bloqueado
+          ? `<label class="time-slot-bloqueado">${h}</label>`
+          : `<label class="time-slot"><input type="radio" name="horarioAgendamento" value="${h}" required><span>${h}</span></label>`;
+      });
+    })
+    .catch(err => console.error("Erro:", err));
+  });
 </script>

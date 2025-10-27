@@ -15,8 +15,12 @@ $exames = $exameController->listarExamesPendentes($idProfissional);
 <head>
 <meta charset="UTF-8">
 <title>Exames Pendentes</title>
-<link rel="stylesheet" href="../../../public/assets/css/profissional/listar_resultados_exame.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- IMPORT DO CSS -->
+  <link rel="stylesheet" href="../../../public/assets/css/profissional/listar_resultados_exame.css">
+
+  <!-- IMPORT ICONS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
@@ -58,7 +62,7 @@ $exames = $exameController->listarExamesPendentes($idProfissional);
   <?php endif; ?>
 </div>
 
-<!-- ===== MODAL UPLOAD ===== -->
+<!-- modal do upload do resultado do exame-->
 <div class="modal" id="modalUpload">
   <div class="modal-content">
     <span class="modal-close" id="fecharModal">&times;</span>
@@ -72,21 +76,22 @@ $exames = $exameController->listarExamesPendentes($idProfissional);
 </div>
 
 <script>
-// ====== Lógica do Modal ======
-document.querySelectorAll('.btn-lancar').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const id = btn.getAttribute('data-id');
-    document.getElementById('idAgendamento').value = id;
-    document.getElementById('modalUpload').style.display = 'flex';
+  document.querySelectorAll('.btn-lancar').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-id');
+      document.getElementById('idAgendamento').value = id;
+      document.getElementById('modalUpload').style.display = 'flex';
+    });
   });
-});
-document.getElementById('fecharModal').addEventListener('click', () => {
-  document.getElementById('modalUpload').style.display = 'none';
-});
-window.addEventListener('click', e => {
-  const modal = document.getElementById('modalUpload');
-  if (e.target === modal) modal.style.display = 'none';
-});
+  
+  document.getElementById('fecharModal').addEventListener('click', () => {
+    document.getElementById('modalUpload').style.display = 'none';
+  });
+
+  window.addEventListener('click', e => {
+    const modal = document.getElementById('modalUpload');
+    if (e.target === modal) modal.style.display = 'none';
+  });
 </script>
 
 </body>

@@ -5,7 +5,7 @@
   include '../../../public/includes/profissional/header.php';
   include '../../../public/includes/profissional/footer.html';
 
-  // Modais de consulta
+  // Modals de consulta
   include '../../../public/modals/profissional/consultas/cancelar_consulta.php';
   include '../../../public/modals/profissional/consultas/encaminhar_consulta.php';
   include '../../../public/modals/profissional/consultas/finalizar_consulta.php';
@@ -25,14 +25,8 @@
   <meta charset="UTF-8">
   <title>Agenda - Profissional</title>
 
-  <!-- FullCalendar -->
+  <!-- IMPORT DO CALENDER -->
   <script src="../../../libs/calender/index.global.min.js"></script>
-  
-  <!-- Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
@@ -298,116 +292,116 @@ h1 {
 </div>
 
 <script>
-let calendar;
-let selectedEvent = null;
+  let calendar;
+  let selectedEvent = null;
 
-document.addEventListener('DOMContentLoaded', function () {
-  const calendarEl = document.getElementById('calendar');
+  document.addEventListener('DOMContentLoaded', function () {
+    const calendarEl = document.getElementById('calendar');
 
-  const events = <?php echo json_encode(array_map(function($ag, $i) use ($cores) {
-    $tipo = $ag['tipo'];
-    $nomeEvento = $tipo === 'consulta' ? ucfirst($ag['tipo_consulta']) : $ag['nome_exame'];
-    $dia = $ag['dia'] ?? date('Y-m-d');
-    $cor = $cores[$i % count($cores)];
-    return [
-      'id' => $ag['id_agendamento'],
-      'title' => $ag['nome_paciente'] . ' - ' . $nomeEvento,
-      'start' => $dia.'T'.$ag['horario'],
-      'end' => $dia.'T'.date('H:i:s', strtotime($ag['horario'].' + 30 minutes')),
-      'color' => $cor,
-      'classNames' => [$tipo],
-      'extendedProps' => [ 'tipo' => $tipo ]
-    ];
-  }, $agendamentos, array_keys($agendamentos)), JSON_UNESCAPED_UNICODE); ?>;
+    const events = <?php echo json_encode(array_map(function($ag, $i) use ($cores) {
+      $tipo = $ag['tipo'];
+      $nomeEvento = $tipo === 'consulta' ? ucfirst($ag['tipo_consulta']) : $ag['nome_exame'];
+      $dia = $ag['dia'] ?? date('Y-m-d');
+      $cor = $cores[$i % count($cores)];
+      return [
+        'id' => $ag['id_agendamento'],
+        'title' => $ag['nome_paciente'] . ' - ' . $nomeEvento,
+        'start' => $dia.'T'.$ag['horario'],
+        'end' => $dia.'T'.date('H:i:s', strtotime($ag['horario'].' + 30 minutes')),
+        'color' => $cor,
+        'classNames' => [$tipo],
+        'extendedProps' => [ 'tipo' => $tipo ]
+      ];
+    }, $agendamentos, array_keys($agendamentos)), JSON_UNESCAPED_UNICODE); ?>;
 
-  calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: 'timeGridWeek',
-    locale: 'pt-br',
-    slotMinTime: "07:00:00",
-    slotMaxTime: "20:00:00",
-    allDaySlot: false,
-    events: events,
-    headerToolbar: {
-      left: 'prev,next',
-      center: 'title',
-      right: 'timeGridWeek,timeGridDay'
-    },
-    eventClick: function(info) {
-      selectedEvent = info.event;
+    calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'timeGridWeek',
+      locale: 'pt-br',
+      slotMinTime: "07:00:00",
+      slotMaxTime: "20:00:00",
+      allDaySlot: false,
+      events: events,
+      headerToolbar: {
+        left: 'prev,next',
+        center: 'title',
+        right: 'timeGridWeek,timeGridDay'
+      },
+      eventClick: function(info) {
+        selectedEvent = info.event;
+        const tipo = selectedEvent.extendedProps.tipo;
+
+        if (tipo === 'exame') {
+          document.getElementById("modalExame").style.display = "flex";
+          document.getElementById("idExame").value = selectedEvent.id;
+        } else {
+          document.getElementById("eventTitle").innerText = selectedEvent.title;
+          document.getElementById("eventModal").style.display = "flex";
+        }
+      }
+    });
+
+    calendar.render();
+  });
+
+  function fecharModal() {
+    document.getElementById("eventModal").style.display = "none";
+  }
+
+  function fecharModalExame() {
+    document.getElementById("modalExame").style.display = "none";
+  }
+
+  function executarAcao(acao) {
+    if (!selectedEvent) return;
+
+    if (acao === 'encaminhar') {
+      document.getElementById("eventModal").style.display = "none";
+      document.getElementById("encaminharModal").style.display = "flex";
+      document.getElementById("encaminharId").value = selectedEvent.id;
+      return;
+    }
+
+    if (acao === 'cancelar') {
+      document.getElementById("eventModal").style.display = "none";
+      document.getElementById("cancelarModal").style.display = "flex";
+      document.getElementById("idConsulta").value = selectedEvent.id;
+      return;
+    }
+
+    if (acao === 'finalizar') {
       const tipo = selectedEvent.extendedProps.tipo;
-
-      if (tipo === 'exame') {
-        document.getElementById("modalExame").style.display = "flex";
-        document.getElementById("idExame").value = selectedEvent.id;
-      } else {
-        document.getElementById("eventTitle").innerText = selectedEvent.title;
-        document.getElementById("eventModal").style.display = "flex";
+      if (tipo !== 'exame') {
+        document.getElementById("eventModal").style.display = "none";
+        document.getElementById("finalizarModal").style.display = "flex";
+        document.getElementById("idFinalizarConsulta").value = selectedEvent.id;
       }
     }
-  });
-
-  calendar.render();
-});
-
-function fecharModal() {
-  document.getElementById("eventModal").style.display = "none";
-}
-
-function fecharModalExame() {
-  document.getElementById("modalExame").style.display = "none";
-}
-
-function executarAcao(acao) {
-  if (!selectedEvent) return;
-
-  if (acao === 'encaminhar') {
-    document.getElementById("eventModal").style.display = "none";
-    document.getElementById("encaminharModal").style.display = "flex";
-    document.getElementById("encaminharId").value = selectedEvent.id;
-    return;
   }
 
-  if (acao === 'cancelar') {
-    document.getElementById("eventModal").style.display = "none";
-    document.getElementById("cancelarModal").style.display = "flex";
-    document.getElementById("idConsulta").value = selectedEvent.id;
-    return;
-  }
+  function executarAcaoExame(acao) {
+    if(!selectedEvent) return;
 
-  if (acao === 'finalizar') {
-    const tipo = selectedEvent.extendedProps.tipo;
-    if (tipo !== 'exame') {
-      document.getElementById("eventModal").style.display = "none";
-      document.getElementById("finalizarModal").style.display = "flex";
-      document.getElementById("idFinalizarConsulta").value = selectedEvent.id;
+    if(acao === 'finalizar') {
+      document.getElementById("modalExame").style.display = "none";
+      document.getElementById("finalizarExameModal").style.display = "flex";
+      document.getElementById("idFinalizarExame").value = selectedEvent.id;
+    }
+
+    if(acao === 'cancelar') {
+      document.getElementById("modalExame").style.display = "none";
     }
   }
-}
 
-function executarAcaoExame(acao) {
-  if(!selectedEvent) return;
-
-  if(acao === 'finalizar') {
-    document.getElementById("modalExame").style.display = "none";
-    document.getElementById("finalizarExameModal").style.display = "flex";
-    document.getElementById("idFinalizarExame").value = selectedEvent.id;
+  function filtrarEventos() {
+    const filtro = document.getElementById('tipoFiltro').value;
+    calendar.getEvents().forEach(event => {
+      if (filtro === 'todos' || event.extendedProps.tipo === filtro) {
+        event.setProp('display', 'auto');
+      } else {
+        event.setProp('display', 'none');
+      }
+    });
   }
-
-  if(acao === 'cancelar') {
-    document.getElementById("modalExame").style.display = "none";
-  }
-}
-
-function filtrarEventos() {
-  const filtro = document.getElementById('tipoFiltro').value;
-  calendar.getEvents().forEach(event => {
-    if (filtro === 'todos' || event.extendedProps.tipo === filtro) {
-      event.setProp('display', 'auto');
-    } else {
-      event.setProp('display', 'none');
-    }
-  });
-}
 </script>
 </body>
 </html>

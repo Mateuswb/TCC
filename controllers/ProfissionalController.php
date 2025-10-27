@@ -259,6 +259,10 @@
             return $this->relatorioModel->listarPacientesPorProfissional($idProfissional);
         }
 
+        public function principaisEspecialidades(){
+            return $this->profissionalModel->principaisEspecialidades();
+        }
+
     }
 
     $controller = new ProfissionalController($conn);

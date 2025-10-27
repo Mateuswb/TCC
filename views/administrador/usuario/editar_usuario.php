@@ -12,15 +12,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Editar perfil</title>
 
-  <!-- Import do CSS -->
+  <!-- IMPORT DO CSS -->
   <link rel="stylesheet" href="../../../public/assets/css/style_editar_conta.css">
-
-  <!-- Import dos Ícones -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-  <!-- Import do alerta -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="../../assets/alertas/alerta_padrao_pos.js"></script>
 </head>
 
 <body>
@@ -71,24 +64,5 @@
           <input type="submit" value="Salvar" class="btn-salvar">
       </form>
 
-  <?php
-    if (isset($_GET['alerta'])) {
-      if ($_GET['alerta'] == 0) {
-          $tipo = 'sucesso';
-          $titulo = 'Atualizado';
-          $mensagem = 'Dados atualizados com sucesso.';
-      } 
-      elseif($_GET['alerta'] == 1) {
-          $tipo = 'erro';
-          $titulo = 'Erro';
-          $mensagem = 'Erro ao editar dados. Tente novamente.';
-      }
-      echo "<script>
-          window.addEventListener('DOMContentLoaded', () => {
-              alertaPadraoPos('$tipo', '$titulo', '$mensagem');
-          });
-      </script>";
-    }
-  ?>
 </body>
 </html>

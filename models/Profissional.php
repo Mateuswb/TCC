@@ -110,6 +110,28 @@ class Profissional {
         ];
     }
 
+    public function principaisEspecialidades(){
+        $sql = "SELECT DISTINCT 
+            TRIM(BOTH '\"' FROM JSON_UNQUOTE(JSON_EXTRACT(p.especialidade, '$[0]'))) AS especialidade_principal
+            FROM profissionais p
+            INNER JOIN horarios_profissionais h ON h.id_profissional = p.id_profissional
+            WHERE JSON_UNQUOTE(JSON_EXTRACT(p.especialidade, '$[0]')) NOT LIKE 'exame_%'
+
+            UNION
+
+            SELECT DISTINCT TRIM(BOTH '\"' FROM JSON_UNQUOTE(JSON_EXTRACT(p.especialidade, '$[1]'))) AS especialidade_principal
+            FROM profissionais p
+            INNER JOIN horarios_profissionais h ON h.id_profissional = p.id_profissional
+            WHERE JSON_UNQUOTE(JSON_EXTRACT(p.especialidade, '$[1]')) NOT LIKE 'exame_%'
+
+            LIMIT 4
+        ";
+
+        $query = $this->conn->prepare($sql);
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 
     #validações profissional
     public function temAgendamentoAtivo($idProfissional) {

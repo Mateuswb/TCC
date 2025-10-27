@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro Paciente- EM AMDAMENTO</title>
 
-    <!-- Import do CSS -->
+    <!-- IMPORT DO CSS -->
      <link rel="stylesheet" href="../../../../public/assets/css/administrador/cadastrar/cadastrar_paciente.css">
 </head>
 

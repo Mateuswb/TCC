@@ -67,7 +67,7 @@
             $senhaHash = password_hash($password, PASSWORD_DEFAULT);
 
             $passwordConfirmation = $_POST['passwordConfirmation'];
-            $tipoUsuario = "paciente";
+            $tipoUsuario = $_POST['tipoUsuario'];
             $statusUsuario = $_POST['status'];
 
             date_default_timezone_set('America/Sao_Paulo');

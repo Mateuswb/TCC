@@ -4,6 +4,9 @@
     $currentFile = basename($_SERVER['PHP_SELF']); 
 ?>
 
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <div class="sidebar" id="sidebar">
     <h2>ClinicAdmin</h2>
 

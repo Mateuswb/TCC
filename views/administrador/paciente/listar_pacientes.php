@@ -1,5 +1,5 @@
 <?php
-session_start();
+  session_start();
   include "../../../public/includes/administrador/sidebar.php"; 
   include "../../../public/includes/administrador/header.php"; 
   include "../../../public/includes/administrador/footer.php"; 
@@ -19,23 +19,18 @@ session_start();
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Lista de Pacientes</title>
 
+  <!-- IMPORT DO CSS -->
   <link rel="stylesheet" href="../../../public/assets/css/administrador/listar_pacientes.css">
-
-  <!-- FontAwesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 
 </head>
 
 <body>
-
-  <!-- Main -->
   <div class="main">
+
   <?php 
     require "../../../public/modals/administrador/edicao/editar_dados_paciente.html"; 
   ?>
   
-    <!-- Conteúdo -->
     <div class="content">
       <?php  require '../../../public/assets/alerta/flash.php' ?>
 

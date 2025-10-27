@@ -1,41 +1,37 @@
-
-
 <?php
-session_start();
-$idProfissional = $_SESSION['idProfissional'];
+  session_start();
+  $idProfissional = $_SESSION['idProfissional'];
 
-include '../../../controllers/HorarioController.php';
-include '../../../public/includes/profissional/sidebar.php'; 
-include '../../../public/includes/profissional/header.php';
-include '../../../public/includes/profissional/footer.html';
+  include '../../../controllers/HorarioController.php';
+  include '../../../public/includes/profissional/sidebar.php'; 
+  include '../../../public/includes/profissional/header.php';
+  include '../../../public/includes/profissional/footer.html';
 
-$controller = new HorarioController($conn);
-$horarios = $controller->listarHorarios($idProfissional);
+  $controller = new HorarioController($conn);
+  $horarios = $controller->listarHorarios($idProfissional);
 
-// Mapear dias para índice 0-6
-$mapDias = ['segunda'=>0,'terca'=>1,'quarta'=>2,'quinta'=>3,'sexta'=>4,'sabado'=>5,'domingo'=>6];
+  // Mapear dias para índice 0-6
+  $mapDias = ['segunda'=>0,'terca'=>1,'quarta'=>2,'quinta'=>3,'sexta'=>4,'sabado'=>5,'domingo'=>6];
 
-$horariosJS = [];
-foreach($horarios as $h){
-    $horariosJS[$mapDias[$h['dia_semana']]] = [
-        'idhorario' => $h['id_horario'],     
-        'hora_inicio' => $h['hora_inicio'],
-        'hora_fim' => $h['hora_fim'],
-        'intervalo_inicio' => $h['inicio_intervalo'],
-        'intervalo_fim' => $h['fim_intervalo']
-    ];
-}
+  $horariosJS = [];
+  foreach($horarios as $h){
+      $horariosJS[$mapDias[$h['dia_semana']]] = [
+          'idhorario' => $h['id_horario'],     
+          'hora_inicio' => $h['hora_inicio'],
+          'hora_fim' => $h['hora_fim'],
+          'intervalo_inicio' => $h['inicio_intervalo'],
+          'intervalo_fim' => $h['fim_intervalo']
+      ];
+  }
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <title>Agenda Semanal</title>
-<link rel="stylesheet" href="../../../public/assets/css/profissional/horarios/listar_horarios.css">
 
-
-  <!-- Font Awesome para ícones -->
-  <script src="https://kit.fontawesome.com/a2d9b7f7d2.js" crossorigin="anonymous"></script>
+  <!-- IMPORT DO CSS -->
+  <link rel="stylesheet" href="../../../public/assets/css/profissional/horarios/listar_horarios.css">
 
 </head>
 <body>
@@ -102,32 +98,32 @@ foreach($horarios as $h){
 </div>
 
 <script>
-let diaAtual = null;
-let slots = <?php echo json_encode($horariosJS); ?>;
+  let diaAtual = null;
+  let slots = <?php echo json_encode($horariosJS); ?>;
 
-function abrirModal(dia){
-    diaAtual = dia;
-    document.getElementById('diaSemana').value = dia;
+  function abrirModal(dia){
+      diaAtual = dia;
+      document.getElementById('diaSemana').value = dia;
 
-    if(slots[dia]){
-        document.getElementById('idHorario').value = slots[dia].idhorario;
-        document.getElementById('hora_inicio_modal').value = slots[dia].hora_inicio;
-        document.getElementById('hora_fim_modal').value = slots[dia].hora_fim;
-        document.getElementById('intervalo_inicio_modal').value = slots[dia].intervalo_inicio ?? '';
-        document.getElementById('intervalo_fim_modal').value = slots[dia].intervalo_fim ?? '';
-    } else {
-        document.getElementById('idHorario').value = '';
-        document.getElementById('hora_inicio_modal').value = '';
-        document.getElementById('hora_fim_modal').value = '';
-        document.getElementById('intervalo_inicio_modal').value = '';
-        document.getElementById('intervalo_fim_modal').value = '';
-    }
-    document.getElementById('modal').style.display='flex';
-}
+      if(slots[dia]){
+          document.getElementById('idHorario').value = slots[dia].idhorario;
+          document.getElementById('hora_inicio_modal').value = slots[dia].hora_inicio;
+          document.getElementById('hora_fim_modal').value = slots[dia].hora_fim;
+          document.getElementById('intervalo_inicio_modal').value = slots[dia].intervalo_inicio ?? '';
+          document.getElementById('intervalo_fim_modal').value = slots[dia].intervalo_fim ?? '';
+      } else {
+          document.getElementById('idHorario').value = '';
+          document.getElementById('hora_inicio_modal').value = '';
+          document.getElementById('hora_fim_modal').value = '';
+          document.getElementById('intervalo_inicio_modal').value = '';
+          document.getElementById('intervalo_fim_modal').value = '';
+      }
+      document.getElementById('modal').style.display='flex';
+  }
 
-function fecharModal(){
-    document.getElementById('modal').style.display='none';
-}
+  function fecharModal(){
+      document.getElementById('modal').style.display='none';
+  }
 </script>
 </body>
 </html>

@@ -19,10 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Painel Administrativo</title>
 
-  <!-- FontAwesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-  <!-- Chart.js -->
+  <!-- IMPORT CHART.JS -->
   <script src="../../libs/chart.min.js"></script>
 </head>
 <style>
@@ -180,13 +177,9 @@
 </style>
 
 <body>
-  <!-- Sidebar -->
-
-
-  <!-- Main -->
   <div class="main">
-    <!-- Conteúdo -->
     <div class="content">
+
       <!-- Cards -->
       <div class="cards">
         <div class="card blue">
@@ -209,7 +202,6 @@
 
       <!-- Gráficos -->
       <div class="grid-graphs">
-        <!-- Agendamentos -->
         <div class="report-box">
           <div class="report-header">
             <h3>Agendamentos Semana</h3>
@@ -221,7 +213,6 @@
           <canvas id="chart1"></canvas>
         </div>
 
-        <!-- Consultas -->
         <div class="report-box">
           <div class="report-header">
             <h3>Principais Dias de agendamento</h3>
@@ -230,7 +221,6 @@
         </div>
       </div>
 
-      <!-- Usuários -->
       <div class="users-box">
         <h3>Usuários Mais Recentes</h3>
         <table>
@@ -293,25 +283,23 @@
           y: {
             beginAtZero: true,
             ticks: {
-              stepSize: 1, // aumenta de 1 em 1
+              stepSize: 1,
               callback: function(value) {
-                return value; // mostra 1, 2, 3, 4...
+                return value;
               }
             },
-            min: 0 // começa do 0
+            min: 0 
           }
         }
       }
       });
     }
 
-    // Busca dados do PHP e atualiza gráfico + card
     fetch("../../controllers/RelatorioController.php?acao=agendamentosJson")
       .then(res => res.json())
       .then(dados => {
         renderChart1(dados.labels, dados.valores);
 
-        // Atualiza card de Agendamentos de Hoje
         const totalHoje = dados.valores[dados.valores.length - 1] || 0;
         document.getElementById("agendamentosHoje").innerText = totalHoje;
       })
@@ -321,13 +309,10 @@
     fetch('../../controllers/RelatorioController.php?acao=atendimentosSemanaJson')
       .then(response => response.json())
       .then(data => {
-        // data vem no formato: [{dia_semana: "Monday", total_atendimentos: 10}, ...]
-        
-        // Mapear os dias da semana para abreviações
+
         const diasOrdem = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
         const diasAbreviados = ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
 
-        // Criar arrays na ordem correta
         const labels = [];
         const valores = [];
         diasOrdem.forEach((dia, index) => {
@@ -353,10 +338,10 @@
           plugins: { legend: { display: false } },
           scales: {
             y: {
-              beginAtZero: true,   // começa do 0
+              beginAtZero: true, 
               ticks: {
-                stepSize: 1,       // contar de 1 em 1
-                precision: 0       // garante números inteiros
+                stepSize: 1,       
+                precision: 0       
               }
             }
           }

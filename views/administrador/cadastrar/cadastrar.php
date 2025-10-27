@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <!-- Import do CSS -->
+    <!-- IMPORT DO CSS -->
     <link rel="stylesheet" href="../../../public/assets/css/administrador/cadastrar/cadastro_usuario.css">
 
-     <!-- Import dos Icones-->
+     <!-- IMPORT ICONS-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 </head>

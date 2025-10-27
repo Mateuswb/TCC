@@ -8,9 +8,10 @@
   <meta charset="UTF-8">
   <title>Encerrar Sessão</title>
 
-  <!-- Import dos Icones -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
-    <script src="../../public/assets/js/recarrega_pagina.js"></script>
+  <!-- IMPORT ICONS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="../../public/assets/js/recarrega_pagina.js"></script>
 
   <style>
     body {

@@ -30,27 +30,20 @@ $percentCanceladas = $totalAgendamentos['total_agendamentos'] > 0
 <meta charset="UTF-8">
 <title>Histórico de Consultas</title>
 
-  <!-- STYLE  CSS-->
+  <!-- IMPORT DO CSS-->
   <link rel="stylesheet" href="../../../public/assets/css/profissional/historico_consultas.css">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 
 </head>
 <body>
 
 <div class="main-content">
-
   <div class="content">
 
-  
-
-    <!-- Search -->
     <div class="search-box">
       <input type="text" placeholder="Pesquisar por paciente...">
     </div>
 
-    <!-- Summary Cards -->
+    <!-- Cards -->
     <div class="cards">
       <div class="card">
         <div class="title"><i class="fa fa-calendar"></i> Total de Consultas</div>
@@ -74,9 +67,7 @@ $percentCanceladas = $totalAgendamentos['total_agendamentos'] > 0
       </div>
     </div>
 
-    <!-- Table -->
     <table>
-      
       <thead>
         <tr>
           <th>Data</th>
@@ -113,9 +104,8 @@ $percentCanceladas = $totalAgendamentos['total_agendamentos'] > 0
       </tbody>
     </table>
 
-  </div> <!-- fim content -->
-
-</div> <!-- fim wrapper -->
+  </div>
+</div>
 
 </body>
 </html>
