@@ -216,7 +216,7 @@
             "Densitometria Óssea"       => "exame_densitometria_ossea",
 
             //  Exames cardiológicos
-            "Eletrocardiograma"         => "exame_eletrocardiograma",
+            "eletrocardiograma"         => "exame_eletrocardiograma",
             "Ecocardiograma"            => "exame_ecocardiograma",
             "Holter"                    => "exame_holter",
             "Teste Ergométrico"         => "exame_teste_ergometrico",

@@ -6,7 +6,7 @@
     require '../../../public/includes/paciente/sidebar.php';
     require '../../../public/includes/paciente/header.php';
     require '../../../public/includes/paciente/footer.php';
-    require '../../../public/modals/paciente/agendar_consulta.html';
+    require '../../../public/modals/paciente/agendar_consulta.php';
     
     $idPaciente   = $_SESSION['idPaciente'];
     $nomePaciente = $_SESSION['nomePaciente'];

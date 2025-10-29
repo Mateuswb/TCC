@@ -24,8 +24,8 @@
       <form action="../../../controllers/AgendamentoConsultaController.php?acao=agendarConsulta"
             method="post" id="formAgendar" enctype="multipart/form-data">
 
-        <input type="int" name="idPaciente" value="<?php echo $_SESSION['idPaciente']; ?>">
-        <input type="int" name="idProfissional" id="idProfissional">
+        <input type="hidden" name="idPaciente" value="<?php echo $_SESSION['idPaciente']; ?>">
+        <input type="hidden" name="idProfissional" id="idProfissional">
 
         <div class="form-control">
           <label for="tipoConsulta">Tipo de Consulta</label>
@@ -68,7 +68,6 @@
 </div>
 
 <style>
-  /* ===== MODAL BASE ===== */
 .modal {
   display: none;
   position: fixed;
@@ -111,7 +110,7 @@
 }
 .fechar-modal:hover { color: #ddd; }
 
-/* ===== CABEÇALHO ===== */
+
 .modal-header {
   display: flex;
   justify-content: flex-start;
@@ -122,7 +121,7 @@
   padding: 5px 10px;
 }
 
-/* Agrupa a imagem e infos do profissional na mesma linha */
+
 .header-left {
   display: flex;
   align-items: center;
@@ -153,7 +152,6 @@
   margin: 2px 0;
 }
 
-/* Centraliza título e subtítulo no meio do header */
 .header-title {
   position: absolute;
   top: 50%;
@@ -171,7 +169,7 @@
   font-size: 15px;
 }
 
-/* ===== CONTEÚDO ===== */
+
 .container-modal {
   padding: 20px 30px;
 }
@@ -253,7 +251,7 @@ textarea {
   cursor: not-allowed;
 }
 
-/* ===== BOTÃO ===== */
+
 .btn-agendarConsulta {
   margin-top: 25px;
   width: 100%;
@@ -271,12 +269,12 @@ textarea {
 .btn-agendarConsulta:hover { background: #00468a; }
 
 
-/* Esconde o input nativo */
+
 .time-slot input[type="radio"] {
   display: none;
 }
 
-/* Quando o radio dentro do label está marcado */
+
 .time-slot:has(input[type="radio"]:checked) {
   background: #005baa;
   color: #fff;
@@ -285,7 +283,6 @@ textarea {
 }
 
 
-/* ===== FOOTER ===== */
 .modal-footer {
   background: #f3f4f6;
   text-align: center;
@@ -295,7 +292,6 @@ textarea {
   color: #333;
 }
 
-/* ===== RESPONSIVO ===== */
 @media (max-width: 768px) {
   .modal-header {
     flex-direction: column;
@@ -332,7 +328,6 @@ textarea {
   document.getElementById('diaAgendamento').addEventListener('change', function() {
     const data = this.value;
     const idProfissional = document.getElementById('idProfissional').value;
-    const idPaciente = document.getElementById('idPaciente').value;
 
     fetch('../../../controllers/PacienteController.php', {
       method: 'POST',
