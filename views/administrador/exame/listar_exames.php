@@ -1,4 +1,6 @@
 <?php
+    include '../../../autentica/verifica_login.php';
+
     include "../../../public/modals/administrador/cadastrar_exame.php";
     include "../../../public/modals/administrador/editar_exame.php";
     include "../../../public/modals/administrador/deletar_exame.php";
@@ -35,8 +37,9 @@
 </head>
 <body>
 <div class="main">
-    <div class="content">
     <?php  include '../../../public/assets/alerta/flash.php' ?>
+    
+    <div class="content">
         <div class="exams-box">
             <h3>
                 Exames Cadastrados
@@ -51,7 +54,7 @@
                     <option value="Cardiologia">Cardiologia</option>
                 </select>
             </div>
-    
+
             <?php foreach ($exames as $exame): ?>
                 <div class="exam-card">
                     <div class="exam-header">

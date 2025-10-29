@@ -1,8 +1,6 @@
 <?php
-    // Pega a pasta raiz do projeto
     $parts = explode('/', trim($_SERVER['SCRIPT_NAME'], '/'));
     $root = $parts[0]; 
-
     define("BASE_URL", "/$root");
 
     session_start();
@@ -13,13 +11,13 @@
     <div class="modal-box">
         <button class="close-btn" onclick="fecharModal()">&times;</button>
 
-        <!-- Lado esquerdo do modal -->
+        <!-- Lado esquerdo -->
         <div class="container-left">
-            <h2>Bem Vindo</h2>
+            <h2>Bem-vindo</h2>
             <p>Organize atendimentos com mais agilidade e segurança. Aqui, sua saúde é prioridade.</p>
         </div>
 
-         
+        <!-- Lado direito -->
         <form action="<?= BASE_URL ?>/controllers/UsuarioController.php" method="post" class="form" id="form-login">
             <h1 class="titleLogin">Login</h1>
             <input type="hidden" name="acao" value="login">
@@ -40,162 +38,180 @@
                 <small>Msg de erro</small>
             </div>
 
-            <input type="submit" id="btn-criar-conta" value="Login">
+            <input type="submit" id="btn-criar-conta" value="Entrar">
             <a href="usuario/cadastro.php" id="tenho-conta">Ainda não tenho uma conta</a>
             <small>Msg de erro</small>
         </form>
-
-
     </div>
 </div>
 
-
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-*{
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
 }
-.container {
-    display: flex;
-    width: 90%; 
-    background-color: rgba(250, 250, 250, 0.95);
-    border-radius: 10px;
-    box-shadow: 2px 2px 10px rgba(0,0,0,0.15);
-    height: auto;
-    overflow: hidden;
-    margin: 50px auto;
-    flex-wrap: wrap; 
-        backdrop-filter: blur(3px);
+
+/* ===== MODAL BASE ===== */
+.modal-bg {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(8px);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
 }
+
+/* ===== CAIXA PRINCIPAL ===== */
+.modal-box {
+    display: flex;
+    max-width: 1200px;
+    min-height: 550px;
+    background: rgba(255,255,255,0.85);
+    border-radius: 18px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Fundo azulado borrado dentro do modal */
+.modal-box::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 80% 20%, rgba(0,80,180,0.35), transparent 60%),
+                radial-gradient(circle at 20% 80%, rgba(0,60,150,0.35), transparent 60%);
+    filter: blur(80px);
+    z-index: 0;
+}
+
+/* Conteúdo acima do blur */
+.modal-box > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* ===== BOTÃO FECHAR ===== */
+.close-btn {
+    position: absolute;
+    top: 18px;
+    right: 25px;
+    font-size: 30px;
+    color: #333;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    z-index: 10;
+}
+.close-btn:hover {
+    color: #000;
+    transform: scale(1.15);
+}
+
+/* ===== LADO ESQUERDO ===== */
 .container-left {
-    box-shadow: 2px 2px 5px rgb(189, 189, 189);
-    padding: 80px;
-    padding-bottom: 150px;
     width: 40%;
-    background: linear-gradient(135deg, 
-        #00497e 49%, 
-        #004577, 
-        #0161a1 51%
-    );
-        display: flex;
-    align-items: center;      
-    justify-content: center;  
-    flex-direction: column;   
-    color: white;
-  }
-    .container-left p {
-    text-align: justify;
-    font-size: 20px;
-    }
-    .container-left h2 {
-    font-size: 35px;
-    margin: 10px;
-    }
+    background: linear-gradient(135deg, #0b3b88 40%, #0e58a3 100%);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 70px 50px;
+    text-align: center;
+}
+.container-left h2 {
+    font-size: 44px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+.container-left p {
+    font-size: 19px;
+    font-weight: 400;
+    opacity: 0.9;
+    line-height: 1.6;
+}
 
+/* ===== LADO DIREITO (FORMULÁRIO) ===== */
+.form {
+    width: 60%;
+    padding: 60px 65px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(15px);
+    border-left: 1px solid rgba(255,255,255,0.4);
+    border-top: 1px solid rgba(255,255,255,0.3);
+    border-radius: 12px;
+    text-align: center;
+}
 
-.titleLogin{
+/* ===== TÍTULO ===== */
+.titleLogin {
+    font-size: 40px;
+    font-weight: 700;
+    color: #0b2e6f;
     margin-bottom: 40px;
 }
 
-#btn-logar{
-    width: 130px;
-    height: 40px;
-    border-radius: 30px;
-    background-color: #1f67d3;
-    border: 1px solid rgb(255, 255, 255);
-    cursor: pointer;
-}
-a #btn-logar{
-    font-size: 20px;
-    color: #fafafa;
-}
-
-.form {
-    padding: 0 40px 30px;
-    width: 60%; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;     
-    justify-content: center;  
-    height: 100%;            
-}
-
+/* ===== CAMPOS ===== */
 .form-control {
-    padding-bottom: 10px;
     position: relative;
+    margin-bottom: 25px;
+    width: 100%;
+    text-align: left;
 }
-
 .form-control label {
-    color: #000000;
-}
-
-.form-control input {
-    border-radius: 5px;
-    outline: 0;
     display: block;
-    font-size: 14px;
-    width: 380px;
-    padding: 10px;
-    height: 45px;
-    border: 1px solid black;
+    margin-bottom: 6px;
+    color: #0a0a0a;
+    font-size: 17px;
+    font-weight: 500;
 }
-.form-control input:focus{
-    border: 1px solid #1f67d3;
+.form-control input {
+    width: 100%;
+    height: 54px;
+    padding: 30px 10px 30px 10px;
+    border-radius: 10px;
+    border: 1.5px solid #ccc;
+    font-size: 18px;
+    background: rgba(255,255,255,0.9);
+    transition: 0.2s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    outline: none;
+}
+.form-control input:focus {
+    border-color: #1f67d3;
+    box-shadow: 2 1 8px rgba(31,103,211,0.25);
 }
 
-.form-control img{
-    width: 20px;
-    height: 20px;
+/* Ícones de validação */
+.form-control img {
+    width: 22px;
+    height: 22px;
     position: absolute;
-    left: 350px;
-    top: 37px; 
-   
+    right: 20px;
+    top: 50px;
+    visibility: hidden;
 }
+.form-control img_success { visibility: hidden; }
+.form-control img_error { visibility: hidden; }
+
+.form-control.success input { border-color: #24C100; }
+.form-control.error input { border-color: #FF0000; }
+.form-control.success .img_success { visibility: visible; }
+.form-control.error .img_error { visibility: visible; }
 
 .form-control img, small{
     visibility: hidden;
 }
-
-#btn-criar-conta{
-    background-color: #09275E;
-    color: #fff;
-    font-size: 18px;
-    width: 380px;
-    border-radius: 10px;
-    padding: 7px;
-    transition: .1s;
-    cursor: pointer;
-}
-
-#btn-criar-conta:hover{
-    background-color: #043f83;
-}
-
-#tenho-conta{
-    padding-top: 10px;
-}
-
-
-
-/* Error e Success */
-.form-control.success input{
-    border: 1px solid #24C100;
-
-}
-
-.form-control.error input{
-    border: 1px solid #FF0000;
-
-}
-.form-control.success .img_success {
-    visibility: visible;
-}
-
-.form-control.error .img_error {
-    visibility: visible;
-}
-
 .form-control.error small{
     visibility: visible;
     color: #FF0000;
@@ -211,90 +227,60 @@ a #btn-logar{
     margin-top: 0px;
     border-radius: 6px;
     margin-bottom: 10px;
-    font-size: 14px;
+    font-size: 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 10px;
 }
 
-
-.close-btn2 {
-    background: none;
-    border: none;
-    font-size: 18px;
-    color: #86181d;
-    cursor: pointer;
-    padding: 0;
-}
-.close-btn2:hover {
-    color: #d73a49;
-}
-
-
-/* Style do  Modal de Login  */
-.modal-bg {
-    display: none; 
-    position: fixed;
-    top: 0;
-    left: 0;
+/* ===== BOTÕES ===== */
+#btn-criar-conta {
     width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6); 
-    justify-content: center;
-    backdrop-filter: blur(3px);
-    align-items: center;
-    z-index: 9999;  
-}
-
-.modal-box {
-    background-color: white;
-    
-    width: 60%;
-    display: flex;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-    position: relative;
-    animation: fadeIn 0.3s ease-in-out;
-
-}
-
-.modal-box.fade-out {
-    animation: fadeOut 0.3s ease-in-out forwards;
-}
-
-/* Botão de fechar no canto */
-.modal-box .close-btn {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 24px;
-    color: #444;
-    background: none;
+    height: 56px;
+    background: linear-gradient(180deg, #0b3b88, #092b63);
+    color: #fff;
     border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    margin-top: 10px;
+    transition: 0.25s;
     cursor: pointer;
-    z-index: 10000;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+#btn-criar-conta:hover {
+    background: linear-gradient(180deg, #104ca0, #0b3b88);
+    transform: translateY(-2px);
 }
 
-.modal-box .close-btn:hover {
-    color: #000;
+/* ===== LINK ABAIXO ===== */
+#tenho-conta {
+    margin-top: 15px;
+    font-size: 16px;
+    color: #0d47a1;
+    text-decoration: none;
 }
+#tenho-conta:hover {
+    text-decoration: underline;
+}
+
+/* ===== ERROS GERAIS ===== */
 #error-message {
-    background-color: #ffeef0;   /* fundo rosa claro */
-    color: #86181d;              /* texto vermelho */
-    border: 1px solid #e63042;   /* borda */
+    background-color: #ffeef0;
+    color: #86181d;
+    border: 1px solid #e63042;
     padding: 12px 18px;
-    margin-top: 20px;
-    border-radius: 6px;
-    font-size: 14px;
+    border-radius: 8px;
+    font-size: 15px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 10px;
-
+    animation: fadeIn 0.3s ease-in-out;
 }
-
 .close-btn2 {
     background: none;
     border: none;
@@ -302,40 +288,51 @@ a #btn-logar{
     color: #86181d;
     cursor: pointer;
 }
-
 .close-btn2:hover {
     color: #d73a49;
 }
 
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 950px) {
+    .modal-box {
+        flex-direction: column;
+        width: 90%;
+        min-height: auto;
+    }
+    .container-left, .form {
+        width: 100%;
+        padding: 40px 30px;
+    }
+    .container-left h2 {
+        font-size: 32px;
+    }
+}
+
+/* ===== ANIMAÇÃO ===== */
+@keyframes fadeIn {
+    from {opacity: 0; transform: scale(0.95);}
+    to {opacity: 1; transform: scale(1);}
+}
 
 </style>
 
-
 <script>
-    const modal = document.getElementById("modal-login");
+const modal = document.getElementById("modal-login");
+function abrirModal() { modal.style.display = "flex"; }
+function fecharModal() { modal.style.display = "none"; }
 
-    function abrirModal() { modal.style.display = "flex"; }
-    function fecharModal() { modal.style.display = "none"; }
-
-
-    window.onclick = function(event) {
-        if (event.target === modal) fecharModal();
-    }
+window.onclick = function(e) {
+    if (e.target === modal) fecharModal();
+};
 </script>
 
 <script src="<?= BASE_URL ?>/public/assets/js/validar_login.js"></script>
 
-
 <?php if ($erro): ?>
 <script>
 window.addEventListener("DOMContentLoaded", () => {
-    // abre o modal automaticamente
     const modal = document.getElementById("modal-login");
-    if (modal) {
-        modal.style.display = "flex";
-    }
-
-    // cria dinamicamente a mensagem de erro no topo do form
+    modal.style.display = "flex";
     const form = document.getElementById("form-login");
     if (form) {
         const msg = document.createElement("div");

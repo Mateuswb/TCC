@@ -17,7 +17,8 @@
         }
 
         public function pegarExame(){
-            return $this->exameModel->pegarExame();
+            $idExame = $_POST['idExame']; 
+            return $this->exameModel->pegarExame($idExame);
         }
 
         public function exibirHorarios($dataSelecionada, $exame) {

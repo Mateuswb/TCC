@@ -199,10 +199,7 @@
             $cadastro = $this->exameModel->cadastrarExame($categoria, $nomeTratado, $descricao, $tempoMinutos);
 
             if($cadastro){
-                $_SESSION['flash'] = [
-                    'type' => 'success',
-                    'message' => 'Exame cadastrado com sucesso.'
-                ];
+                echo 'teste';
             } else {
                  $_SESSION['flash'] = [
                     'type' => 'error',
@@ -239,12 +236,19 @@
             $idExame = $_POST['idExame'];
             $deletar = $this->exameModel->deletarExame($idExame);
 
+            session_start();
             if($deletar){
-                echo "deletado";
+                 $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => 'Exame deletado com sucesso'
+                ];
             } else {
-                echo "Erro ao deletar exame";
+                 $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => 'Erro ao deletar exame. Tente novamente'
+                ];
             }
-
+            header("Location: ../views/administrador/exame/listar_exames.php");
         }
 
 

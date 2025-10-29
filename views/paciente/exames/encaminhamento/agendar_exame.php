@@ -18,7 +18,7 @@
             method="post" id="formAgendar" enctype="multipart/form-data">
 
         <input type="hidden" name="idEncaminhamento" id="id_encaminhamento">
-        <input type="hidden" name="nomeExame" id="exame">
+        <input type="text" name="nomeExame" id="exame">
 
 
         <div class="form-control">
@@ -197,6 +197,7 @@ document.getElementById('diaAgendamento').addEventListener('change', function() 
     
   
     if (!retorno?.disponiveis) return;
+    console.log("1");
 
     console.log(retorno);
     const select = document.getElementById("profissionais");
@@ -207,6 +208,7 @@ document.getElementById('diaAgendamento').addEventListener('change', function() 
       option.value = profissional;
       option.textContent = profissional;
       select.appendChild(option);
+      console.log("2");
     }
 
     select.addEventListener("change", function() {

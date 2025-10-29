@@ -1,5 +1,4 @@
 <?php
-    session_start();
     $erro = $_SESSION['error'] ?? null;
     unset($_SESSION['error']);
 ?>
@@ -37,22 +36,33 @@
 </div>
 
 <style>
-    
-/* Style da msg de erro */
-#error-message{
+#error-message {
     background-color: #ffeef0;
     color: #86181d;
     border: 1px solid #e63042;
-    padding: 10px 15px;
-    margin-top: 0px;
-    border-radius: 6px;
-    margin-bottom: 10px;
-    font-size: 14px;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 17px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
+    margin-top: -25px;
+    margin-bottom: 25px;
+    animation: slideDown 0.3s ease-in-out;
 }
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
 
 .form-control img, small{
     visibility: hidden;
@@ -264,18 +274,27 @@
     
     
 </script>
-<?php if ($erro): ?>
-<script>
 
-    const form = document.getElementById("modalExame");
-    if (form) {
+<?php if ($erro): ?>
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const modal = document.getElementById("modalExame");
         const msg = document.createElement("div");
+
+        if (modal) {
+            modal.style.display = "flex"; 
+        }
         msg.id = "error-message";
         msg.innerHTML = `
-            <span><?= htmlspecialchars($erro) ?></span>
-            <button class="close-btn2" onclick="this.parentElement.remove()">×</button>
+            <div class="error-box">
+                <span><?= htmlspecialchars($erro) ?></span>
+            </div>
         `;
-        form.prepend(msg);
-    }
-</script>
+
+        const modalBody = modal.querySelector(".modal-body");
+        if (modalBody) {
+            modalBody.prepend(msg);
+        }
+    });
+    </script>
 <?php endif; ?>

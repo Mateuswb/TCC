@@ -208,7 +208,7 @@
             "Hemoglobina Glicada"       => "exame_hemoglobina_glicada",
 
             // Exames de imagem
-            "Raio-X"                    => "exame_raio_x",
+            "raio-x"                    => "exame_raio_x",
             "Ressonância Magnética"     => "exame_ressonancia_magnetica",
             "Tomografia"                => "exame_tomografia",
             "Ultrassonografia"          => "exame_ultrassonografia",
