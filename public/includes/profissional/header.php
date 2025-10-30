@@ -42,7 +42,7 @@
 </div>
 
 <style>
-/* HEADER EXISTENTE */
+
 header {
   background-color: #fff;
   height: 60px;
@@ -90,7 +90,8 @@ header {
   border-radius: 50%;
   font-weight: 600;
 }
-/* MENU SUSPENSO */
+
+
 .profile-menu {
   position: absolute;
   top: 75px;
@@ -165,7 +166,7 @@ header {
 </style>
 
 <script>
-// Mostrar/ocultar menu ao clicar no perfil
+
 const profileBtn = document.getElementById('profile-btn');
 const profileMenu = document.getElementById('profile-menu');
 
@@ -173,7 +174,6 @@ profileBtn.addEventListener('click', () => {
   profileMenu.style.display = profileMenu.style.display === 'block' ? 'none' : 'block';
 });
 
-// Fechar menu clicando fora
 document.addEventListener('click', function(event) {
   if (!profileBtn.contains(event.target) && !profileMenu.contains(event.target)) {
     profileMenu.style.display = 'none';

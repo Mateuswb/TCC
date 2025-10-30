@@ -129,7 +129,7 @@ h1 {
   border-left: 5px solid #fff;
 }
 
-/* === ESTILOS ESPECÍFICOS === */
+
 .fc-event.consulta {
   background-color: #4a90e2 !important;
   border: 1px solid #2e6eb5 !important;
@@ -227,13 +227,13 @@ h1 {
   transform: translateY(-2px);
 }
 
-/* ====== BOTÕES ====== */
+
 .btn-finalizar { background: #27ae60; color: #fff; }
 .btn-cancelar  { background: #e74c3c; color: #fff; }
 .btn-encaminhar { background: #f39c12; color: #fff; }
 .btn-fechar    { background: #bdc3c7; color: #fff; }
 
-/* ====== RESPONSIVIDADE ====== */
+
 @media (max-width: 992px) {
   .filter-bar {
     flex-direction: column;

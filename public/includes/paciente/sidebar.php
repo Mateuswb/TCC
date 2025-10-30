@@ -3,7 +3,6 @@
   $currentFile = basename($_SERVER['PHP_SELF']); 
 ?>
 
- <!-- Fonte -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
    rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -61,67 +60,67 @@
   min-height: 100vh;
 }
 
-     /* MENU LATERAL */
-    .sidebar {
-      width: 250px;
-      background-color: #ffffff;
-      border-right: 1px solid #e0e0e0;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 20px 0;
-    }
-    li a i {
-        margin-right: 10px;
-        font-size: 25px;
-        color: #002a4dff;
-    }
 
-    .sidebar .logo {
-      text-align: center;
-      margin-bottom: 20px;
-    }
+.sidebar {
+  width: 250px;
+  background-color: #ffffff;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 0;
+}
+li a i {
+    margin-right: 10px;
+    font-size: 25px;
+    color: #002a4dff;
+}
 
-    .sidebar .logo img {
-      width: 150px;
-    }
+.sidebar .logo {
+  text-align: center;
+  margin-bottom: 20px;
+}
 
-    .sidebar nav {
-      flex: 1;
-      padding-left: 20px;
-    }
+.sidebar .logo img {
+  width: 150px;
+}
 
-    .sidebar nav h4 {
-      color: #003366;
-      font-size: 14px;
-      margin: 20px 0 8px;
-      font-weight: 600;
-    }
+.sidebar nav {
+  flex: 1;
+  padding-left: 20px;
+}
 
-    .sidebar nav ul {
-      list-style: none;
+.sidebar nav h4 {
+  color: #003366;
+  font-size: 14px;
+  margin: 20px 0 8px;
+  font-weight: 600;
+}
 
-    }
+.sidebar nav ul {
+  list-style: none;
 
-    .sidebar nav ul li {
-      margin: 15px 0;
-    }
+}
 
-    .sidebar nav ul li a {
-      text-decoration: none;
-      color: #333;
-      font-size: 15px;
-      display: flex;
-      align-items: center;
-      padding: 8px 10px;
-      border-radius: 8px;
-      transition: 0.3s;
-    }
+.sidebar nav ul li {
+  margin: 15px 0;
+}
 
-    .sidebar nav ul li a:hover,
-    .sidebar nav ul li a.active {
-      background-color: #e6f0ff;
-      color: #003366;
-    }
+.sidebar nav ul li a {
+  text-decoration: none;
+  color: #333;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.sidebar nav ul li a:hover,
+.sidebar nav ul li a.active {
+  background-color: #e6f0ff;
+  color: #003366;
+}
 
 </style>

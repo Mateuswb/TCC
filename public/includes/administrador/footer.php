@@ -4,7 +4,6 @@
   </footer>
 
   <style>
-    /* RODAPÉ */
     footer {
         text-align: center;
         padding: 10px;
@@ -15,7 +14,7 @@
         bottom: 0;
         left: 250px;
         right: 0;
-        z-index: 99; /* garante que fique sempre sobreposto */
+        z-index: 99; 
     }
 
     .btn-fale {

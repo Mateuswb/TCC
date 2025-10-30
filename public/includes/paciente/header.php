@@ -1,5 +1,3 @@
-
-
 <header>
   <div class="menu-btn" id="menu-btn">
     <i class="fas fa-bars"></i>
@@ -164,7 +162,6 @@ header {
 </style>
 
 <script>
-// Mostrar/ocultar menu ao clicar no perfil
 const profileBtn = document.getElementById('profile-btn');
 const profileMenu = document.getElementById('profile-menu');
 
@@ -172,7 +169,7 @@ profileBtn.addEventListener('click', () => {
   profileMenu.style.display = profileMenu.style.display === 'block' ? 'none' : 'block';
 });
 
-// Fechar menu clicando fora
+
 document.addEventListener('click', function(event) {
   if (!profileBtn.contains(event.target) && !profileMenu.contains(event.target)) {
     profileMenu.style.display = 'none';

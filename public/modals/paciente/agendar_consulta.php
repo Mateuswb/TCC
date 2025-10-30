@@ -45,7 +45,10 @@
           <input type="date" id="diaAgendamento" name="diaAgendamento" required>
         </div>
 
+
+
         <div class="form-control">
+          <div id="mensagemErro" style="display:none; color:#842029; background-color:#f8d7da; padding:10px; border-radius:5px; margin-bottom:10px;"></div>
           <label for="horarioAgendamento">Escolha o Horário</label>
           <div id="times" class="times"></div>
         </div>
@@ -318,36 +321,39 @@ textarea {
 </style>
 
 <script>
-  // Campo do anexo
-  document.getElementById('tipoConsulta').addEventListener('change', function() {
-    document.getElementById('box-anexo').style.display = this.value === 'r' ? 'block' : 'none';
-  });
-
-
-  // Carrega os horarios
   document.getElementById('diaAgendamento').addEventListener('change', function() {
-    const data = this.value;
-    const idProfissional = document.getElementById('idProfissional').value;
+  const data = this.value;
+  const idProfissional = document.getElementById('idProfissional').value;
+  const container = document.getElementById('times');
+  const mensagemErro = document.getElementById('mensagemErro');
 
-    fetch('../../../controllers/PacienteController.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `data=${encodeURIComponent(data)}&idProfissional=${encodeURIComponent(idProfissional)}`
-    })
-    .then(r => r.json())
-    .then(retorno => {
-      const container = document.getElementById('times');
-      container.innerHTML = '';
+  container.innerHTML = '';
+  mensagemErro.style.display = 'none';
+  mensagemErro.innerText = '';
 
-      if (!retorno?.disponiveis) return;
+  fetch('../../../controllers/PacienteController.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: `data=${encodeURIComponent(data)}&idProfissional=${encodeURIComponent(idProfissional)}`
+  })
+  .then(r => r.json())
+  .then(retorno => {
+    if (retorno.erro) {
+      mensagemErro.style.display = 'block';
+      mensagemErro.innerText = retorno.erro;
+      return;
+    }
+  
+    if (!retorno?.disponiveis) return;
 
-      retorno.disponiveis.forEach(h => {
-        const bloqueado = retorno.agendamento?.includes(h);
-        container.innerHTML += bloqueado
-          ? `<label class="time-slot-bloqueado">${h}</label>`
-          : `<label class="time-slot"><input type="radio" name="horarioAgendamento" value="${h}" required><span>${h}</span></label>`;
-      });
-    })
-    .catch(err => console.error("Erro:", err));
-  });
+    retorno.disponiveis.forEach(h => {
+      const bloqueado = retorno.agendamento?.includes(h);
+      container.innerHTML += bloqueado
+        ? `<label class="time-slot-bloqueado">${h}</label>`
+        : `<label class="time-slot"><input type="radio" name="horarioAgendamento" value="${h}" required><span>${h}</span></label>`;
+    });
+  })
+  .catch(err => console.error("Erro:", err));
+});
+
 </script>

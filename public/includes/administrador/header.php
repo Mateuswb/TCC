@@ -17,7 +17,6 @@
 
   <style>
 
-    /* TOPO */
     header {
       background-color: #fff;
       height: 60px;

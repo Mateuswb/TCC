@@ -72,6 +72,21 @@
 
         # horarios disponiveis para agendamento da consulta
         public function listarHorariosDisponiveis($dataSelecionada, $profissionalId) {
+            date_default_timezone_set('America/Sao_Paulo'); // Define horário de Brasília
+
+            $dataSelecionada = date("Y-m-d", strtotime($dataSelecionada));
+            $dataAtual       = date("Y-m-d");
+            $horaAtual       = date("H:i");
+
+            if ($dataSelecionada < $dataAtual) {
+                return [
+                    "erro" => "Não é possível realizar agendamentos em dias já passados."
+                ];
+            }
+
+            $mesmoDia = $dataSelecionada == $dataAtual;
+
+
             $nomeDias = [
                 "Sunday"    => "domingo",
                 "Monday"    => "segunda",
@@ -102,6 +117,10 @@
                 "agendamento" => []
             ];
 
+            if (empty($horariosBd1)) {
+                return ["erro" => "Profissional não atende neste dia."];
+            }
+
             $intervaloMinutos = 30;
             $idHorario = 0;
 
@@ -122,7 +141,10 @@
 
                     // Pula o intervalo
                     if ($proximaHora <= $inicioIntervalo || $hora >= $fimIntervalo) {
-                        $horarios['disponiveis'][] = date("H:i", $hora) . " - " . date("H:i", $proximaHora);
+                        if (!$mesmoDia || $hora > strtotime($horaAtual)) {
+                            $horarios['disponiveis'][] = date("H:i", $hora) . " - " . date("H:i", $proximaHora);
+                        }
+
                     }
                 }
             }
@@ -148,8 +170,16 @@
                 $horarios['agendamento'][] = date("H:i", $horaInicio) . " - " . date("H:i", $proximaHora);
             }
 
+            // Verifica se ainda há horários disponíveis
+            if (empty($horarios['disponiveis'])) {
+                return [
+                    "erro" => "Não há horários disponíveis para este profissional neste dia."
+                ];
+            }
+
             return $horarios;
         }
+
         public function recuperaIdHorario($dataSelecionada, $profissionalId) {
             $nomeDias = [
                 "Sunday"    => "domingo",
@@ -246,8 +276,6 @@
             "Gasometria Arterial"       => "exame_gasometria_arterial",
             "Teste de Função Pulmonar"  => "exame_teste_de_funcao_pulmonar"
         ];
-
-
 
 
             $diaSemana = $nomeDias[date("l", strtotime($dataSelecionada))];
