@@ -21,7 +21,6 @@
             $usuario = $this->usuarioModel->buscarPorCPF($cpf);
 
             if ($usuario && password_verify($password, $usuario['senha'])) {
-                // senha correta → criar sessão
                 $_SESSION['idUsuario'] = $usuario['id_usuario'];
                 $_SESSION['tipoUsuario'] = $usuario['tipo_usuario'];
 
@@ -34,7 +33,7 @@
                 } else if ($usuario['tipo_usuario'] == 'profissional') {
                     $_SESSION['idProfissional']   = $usuario['id_profissional'];
                     $_SESSION['nomeProfissional'] = $usuario['profissional_nome'];
-                    $_SESSION['especialidades'] = $usuario['especialidade'];
+                    $_SESSION['especialidades']   = $usuario['especialidade'];
 
                     if (!$this->horarioModel->verificaHorario($_SESSION['idProfissional'])) {
                         $_SESSION['msg'] = "Antes de continuar, cadastre seus horários";

@@ -1,5 +1,5 @@
 <?php
-  session_start();
+  include '../../../autentica/verifica_login.php';
   require "../../../public/includes/administrador/sidebar.php"; 
   require "../../../public/includes/administrador/header.php"; 
   require "../../../public/includes/administrador/footer.php";

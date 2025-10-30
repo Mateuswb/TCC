@@ -26,7 +26,7 @@
           <input type="date" id="diaAgendamento" name="diaAgendamento" required>
         </div>
 
-        <div class="profissioanis">
+        <div class="form-control">
           <select name="profissional" id="profissionais">
             <label>Profissional</label>
             <option value=""></option>
@@ -190,7 +190,6 @@ document.getElementById('diaAgendamento').addEventListener('change', function() 
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: `data=${encodeURIComponent(data)}&exame=${encodeURIComponent(exame)}`
   })
-  .then(r => console.log(r.text()))
   .then(r => r.json())
   .then(retorno => {
     const container = document.getElementById('times');

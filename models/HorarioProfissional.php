@@ -200,32 +200,32 @@
 
            $nomeExames = [
             // Exames de sangue
-            "Hemograma"                 => "exame_hemograma",
-            "Colesterol"                => "exame_colesterol",
-            "Glicemia"                  => "exame_glicemia",
-            "Triglicerídeos"            => "exame_triglicerideos",
-            "Plaquetas"                 => "exame_plaquetas",
-            "Hemoglobina Glicada"       => "exame_hemoglobina_glicada",
+            "hemograma"                 => "exame_hemograma",
+            "colesterol"                => "exame_colesterol",
+            "glicemia"                  => "exame_glicemia",
+            "triglicerídeos"            => "exame_triglicerideos",
+            "plaquetas"                 => "exame_plaquetas",
+            "gemoglobina glicada"       => "exame_hemoglobina_glicada",
 
             // Exames de imagem
             "raio-x"                    => "exame_raio_x",
-            "Ressonância Magnética"     => "exame_ressonancia_magnetica",
-            "Tomografia"                => "exame_tomografia",
-            "Ultrassonografia"          => "exame_ultrassonografia",
-            "Mamografia"                => "exame_mamografia",
-            "Densitometria Óssea"       => "exame_densitometria_ossea",
+            "ressonância magnética"     => "exame_ressonancia_magnetica",
+            "tomografia"                => "exame_tomografia",
+            "ultrassonografia"          => "exame_ultrassonografia",
+            "mamografia"                => "exame_mamografia",
+            "densitometria óssea"       => "exame_densitometria_ossea",
 
             //  Exames cardiológicos
             "eletrocardiograma"         => "exame_eletrocardiograma",
-            "Ecocardiograma"            => "exame_ecocardiograma",
-            "Holter"                    => "exame_holter",
-            "Teste Ergométrico"         => "exame_teste_ergometrico",
-            "MAPA"                      => "exame_mapa",
+            "ecocardiograma"            => "exame_ecocardiograma",
+            "holter"                    => "exame_holter",
+            "teste Ergométrico"         => "exame_teste_ergometrico",
+            "mapa"                      => "exame_mapa",
 
             //  Exames de urina
-            "Urina Tipo I"              => "exame_urina_tipo_i",
-            "Urocultura"                => "exame_urocultura",
-            "Exame de Urina"            => "exame_exame_de_urina",
+            "urina tipo I"              => "exame_urina_tipo_i",
+            "urocultura"                => "exame_urocultura",
+            "exame de urina"            => "exame_exame_de_urina",
 
             //  Exames hormonais
             "TSH"                       => "exame_tsh",

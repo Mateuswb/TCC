@@ -1,12 +1,18 @@
 <?php 
-session_start();
-include '../../../controllers/AdministradorController.php';
-include '../../../public/includes/administrador/sidebar.php';
-include '../../../public/includes/administrador/header.php';
-include '../../../public/includes/administrador/footer.php';
+  require '../../../autentica/verifica_login.php';
+  include '../../../controllers/AdministradorController.php';
+  include '../../../public/includes/administrador/sidebar.php';
+  include '../../../public/includes/administrador/header.php';
+  include '../../../public/includes/administrador/footer.php';
 
-$controller = new AdministradorController($conn);
-$agendamentos = $controller->listarAgendamentos();
+  // Modals de consulta
+  include '../../../public/modals/profissional/consultas/cancelar_consulta.php';
+  include '../../../public/modals/profissional/consultas/encaminhar_consulta.php';
+  include '../../../public/modals/profissional/consultas/finalizar_consulta.php';
+
+
+  $controller = new AdministradorController($conn);
+  $agendamentos = $controller->listarAgendamentos();
 ?>
 
 <!DOCTYPE html>

@@ -1,6 +1,7 @@
 <?php
-    session_start();
+    include '../../autentica/verifica_login.php';
     $idProfissional = $_SESSION['idProfissional'];
+
     include '../../public/includes/profissional/sidebar.php';
     include '../../public/includes/profissional/header.php';
     include '../../public/includes/profissional/footer.html';

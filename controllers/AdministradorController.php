@@ -224,11 +224,20 @@
 
             $editar = $this->exameModel->editarExame($idExame,  $nome, $categoria, $descricao, $tempoMinutos);
 
+            session_start();
             if($editar){
-                echo "editado";
+                $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => 'Exame editado com sucesso.'
+                ];
             } else {
-                echo "Erro ao editar exame";
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => 'Erro ao editar exame. Tente novamente'
+                ];
             }
+            header("Location: ../views/administrador/exame/listar_exames.php");
+            exit;
 
         }
 
@@ -238,12 +247,12 @@
 
             session_start();
             if($deletar){
-                 $_SESSION['flash'] = [
+                $_SESSION['flash'] = [
                     'type' => 'success',
                     'message' => 'Exame deletado com sucesso'
                 ];
             } else {
-                 $_SESSION['flash'] = [
+                $_SESSION['flash'] = [
                     'type' => 'error',
                     'message' => 'Erro ao deletar exame. Tente novamente'
                 ];

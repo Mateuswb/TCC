@@ -1,17 +1,16 @@
 <?php
-session_start();
-   include '../../../../public/includes/paciente/sidebar.php';
-   include '../../../../public/includes/paciente/header.php';
-   include '../../../../public/includes/paciente/footer.php';
-   include 'agendar_exame.php';
+  require '../../../../autentica/verifica_login.php';
+  $idPaciente = $_SESSION['idPaciente'];
 
-   
-   $idPaciente = $_SESSION['idPaciente'];
+  include '../../../../public/includes/paciente/sidebar.php';
+  include '../../../../public/includes/paciente/header.php';
+  include '../../../../public/includes/paciente/footer.php';
+  include 'agendar_exame.php';
+  
+  require_once "../../../../controllers/EncaminhamentoController.php";
 
-   require_once "../../../../controllers/EncaminhamentoController.php";
-
-   $controller = new EncaminhamentoController($conn);
-   $encaminhamentos = $controller->listarEncaminhamentosPorPaciente($idPaciente);
+  $controller = new EncaminhamentoController($conn);
+  $encaminhamentos = $controller->listarEncaminhamentosPorPaciente($idPaciente);
 ?>
 
 <!doctype html>

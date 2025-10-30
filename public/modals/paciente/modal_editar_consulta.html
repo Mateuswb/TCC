@@ -2,22 +2,28 @@
   <div id="modal-content">
     <span class="fechar-modal" id="fecharModalEditarConsulta">&times;</span>
 
-    <div class="container-modal">
-
-      <div class="profile">
+    
+    <div class="modal-header-consulta">
+      <div class="header-left">
         <img src="https://cdn-icons-png.flaticon.com/512/3870/3870822.png" alt="Foto do Profissional">
-        <div class="profile-info">
+        <div class="header-info">
           <h2 id="nomeProfissionalEditar">Nome do Profissional</h2>
-          <p id="especialidadeProfissionalEditar">Especialidade</p>
+          <h2 id="especialidadeProfissionalEditar">Nome do Profissional</h2>
           <p>Atendimento Particular</p>
         </div>
       </div>
-
-      <h3>Editar dados da consulta</h3>
+      <div class="header-title">
+        <h3>Agendar Consulta</h3>
+        <span>Informe os detalhes necessários para realizar o agendamento</span>
+      </div>
+    </div>
+    
+    <div class="container-modal">
+    <h3>Editar dados da consulta</h3>
 
       <form action="../../../controllers/AgendamentoConsultaController.php?acao=editarConsulta" method="post"  enctype="multipart/form-data">
-        <input type="int" name="idAgendamentoConsulta" id="idAgendentoConsulta">
-        <input type="int" name="idProfissional" id="idProfissional">
+        <input type="hidden" name="idAgendamentoConsulta" id="idAgendentoConsulta">
+        <input type="hidden" name="idProfissional" id="idProfissional">
 
         <label>Tipo de Consulta</label>
         <select name="tipoConsulta">
@@ -36,7 +42,7 @@
         <label>Observações</label>
         <textarea name="observacao" placeholder="Adicione alguma observação..."></textarea>
 
-        <input type="submit"  class="btn_editar" value="salvar">
+        <input type="submit"  class="btn-agendarConsulta" value="salvar">
       </form>
 
       <div class="clinic-info">
@@ -50,53 +56,66 @@
 
 <style>
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background: rgba(0, 0, 0, 0.45);
-    backdrop-filter: blur(3px);
-    justify-content: center;
-    align-items: center;
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(3px);
+  z-index: 9999999999;
+  overflow-y: auto;
+  padding: 40px 20px;
+
 }
 
-
 .times {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin-top: 10px;
 }
 
-.time-slot, .time-slot-bloqueado {
-  text-align: center;
-  padding: 10px;
-  border-radius: 10px;
-  font-size: 14px;
+.time-slot {
+  background: #eaf3ff;
+  color: #333;
+  border: 1px solid #005baa;
+  border-radius: 8px;
+  padding: 10px 20px;
   cursor: pointer;
-  border: 1px solid #4a90e2;
+  font-weight: 600;
+  transition: 0.3s;
+  user-select: none;
+  min-width: 120px;
+  text-align: center;
 }
-.time-slot { background: #eaf3ff; color: #333; }
-.time-slot:hover { background: #4a90e2; color: #fff; }
+
+.time-slot:hover,
+.time-slot.selected {
+  background: #005baa;
+  color: #fff;
+}
+
+.time-slot.selected {
+  box-shadow: 0 0 0 3px rgba(0,91,170,0.3);
+}
+
 .time-slot-bloqueado {
   background: #f1f1f1;
-  color: #aaa;
+  color: #999;
   border: 1px dashed #ccc;
+  border-radius: 8px;
+  padding: 10px 20px;
+  min-width: 120px;
+  text-align: center;
   cursor: not-allowed;
 }
 
 #modal-content {
   background-color: #fff;
   margin: 0 auto;
-  max-width: 900px;
-  width: 95%;
-  border-radius: 14px;
+  max-width: 1100px;
+  border-radius: 20px;
+  width: 100%;
   box-shadow: 0 3px 10px rgba(0,0,0,0.12);
-  padding: 25px 30px;
   position: relative;
   animation: fadeIn 0.25s ease-in-out;
 }
@@ -116,21 +135,64 @@
 
 .fechar-modal:hover { color: #000; }
 
-.profile {
+.modal-header-consulta {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  background: #005baa;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 20px 20px 0px 0px;
+}
+
+
+.header-left {
   display: flex;
   align-items: center;
-  gap: 15px;
-  margin-bottom: 20px;
+  gap: 12px;
 }
 
-.profile img {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
+.header-left img {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  object-fit: cover;
 }
 
-.profile-info h2 { color: #083d6a; margin: 0; font-size: 1.4rem; }
-.profile-info p { color: #555; margin: 2px 0; }
+.header-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+}
+
+.header-info h2 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.header-info p {
+  font-size: 0.8rem;
+  margin: 2px 0;
+}
+
+.header-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.header-title h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.header-title span {
+  font-size: 15px;
+}
 
 form {
   display: flex;
@@ -143,12 +205,43 @@ label {
   color: #333;
 }
 
-select, input[type="date"], input[type="time"], textarea {
-  padding: 10px;
-  border-radius: 20px;
-  border: 1px solid #e5e5e5;
-  font-size: 0.9rem;
-  transition: 0.2s;
+
+.container-modal {
+  padding: 20px 30px;
+}
+
+.form-control {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 6px;
+}
+
+select, input[type="date"], input[type="file"], textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  transition: all 0.3s;
+}
+#observacao {
+  resize: none; 
+}
+
+select:focus, input:focus, textarea:focus {
+  border-color: #005baa;
+  box-shadow: 0 0 3px rgba(0,91,170,0.4);
+  outline: none;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
 }
 
 select:focus, input:focus, textarea:focus {
@@ -193,6 +286,23 @@ textarea {
   font-size: 0.9rem;
   color: #333;
 }
+
+
+.btn-agendarConsulta {
+  margin-top: 25px;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background: #005baa;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: 0.3s;
+  text-align: center;
+}
+.btn-agendarConsulta:hover { background: #00468a; }
 </style>
 
 <script>

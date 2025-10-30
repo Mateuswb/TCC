@@ -1,5 +1,5 @@
 <?php 
-  session_start();
+  include '../../../autentica/verifica_login.php';
   include '../../../controllers/AgendamentoConsultaController.php';
   include '../../../public/includes/profissional/sidebar.php';
   include '../../../public/includes/profissional/header.php';
