@@ -14,7 +14,7 @@ const cidade = document.getElementById('cidade');
 const tipoSanguineo = document.getElementById('tipoSanguineo');
 const altura = document.getElementById('altura');
 const peso = document.getElementById('peso');
-
+console.log("ola");
 
 const steps = document.querySelectorAll('.step');
 let etapaAtual = 0;
@@ -63,8 +63,26 @@ function validaCamposEtapa1() {
         errorValidation(dataNascimento, 'Preencha a data de nascimento.');
         valido = false;
     } else {
-        successValidation(dataNascimento);
+        const dataValor = new Date(dataNascimento.value);
+        const hoje = new Date();
+
+        if (isNaN(dataValor.getTime())) {
+            errorValidation(dataNascimento, 'Data de nascimento inválida.');
+            valido = false;
+        } 
+        else if (dataValor > hoje) {
+            errorValidation(dataNascimento, 'A data de nascimento não pode ser no futuro.');
+            valido = false;
+        } 
+        else if (dataValor.getFullYear() < 1900) {
+            errorValidation(dataNascimento, 'Ano de nascimento inválido.');
+            valido = false;
+        } 
+        else {
+            successValidation(dataNascimento);
+        }
     }
+
 
     if (telefone.value.trim() === '') {
         errorValidation(telefone, 'Preencha o telefone.');
@@ -76,6 +94,27 @@ function validaCamposEtapa1() {
         successValidation(telefone);
     }
 
+    if (sexo.value.trim() === '') {
+        errorValidation(sexo, 'Preencha o sexo.');
+        valido = false;
+    } else {
+        successValidation(sexo);
+    } 
+    
+    if (estadoCivil.value.trim() === '') {
+        errorValidation(estadoCivil, 'Preencha seu estado civil');
+        valido = false;
+    } else {
+        successValidation(estadoCivil);
+    }
+   
+    if (endereco.value.trim() === '') {
+        errorValidation(endereco, 'Preencha seu endereco');
+        valido = false;
+    } else {
+        successValidation(endereco);
+    }
+   
     if (email.value.trim() === '') {
         errorValidation(email, 'Preencha o email.');
         valido = false;
@@ -97,7 +136,7 @@ function validaCamposEtapa2() {
     }
 
     if (endereco.value.trim() === '') {
-        errorValidation(endereco, 'Preencha o endereco');
+        errorValidation(endereco, 'Preencha o endereço');
         valido = false;
     } else {
         successValidation(endereco);

@@ -66,7 +66,7 @@ rel="stylesheet">
 <style>
     .sidebar {
         width: 270px;
-        background: #0e204bff;
+        background: #0c1731ff;
         color: #fff;
         height: 100vh;
         padding: 10px;

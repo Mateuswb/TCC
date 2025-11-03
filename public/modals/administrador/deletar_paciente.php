@@ -5,7 +5,7 @@
     <form id="formExclusao" method="POST" action="../../../controllers/AdministradorController.php?acao=excluirPaciente">
       <input type="hidden" name="idPaciente" id="idPaciente">
       <input type="hidden" name="cpf" id="cpf">
-      <button type="submit">Confirmar Exclusão</button>
+      <input type="submit" value="Confirmar Exclusão" id="bnt-cancelar">
       <button type="button" onclick="fecharModalAviso()">Cancelar</button>
     </form>
   </div>
@@ -32,8 +32,17 @@
     margin: 5px;
     padding: 8px 12px;
     border-radius: 6px;
-    border: none;
+    border: 1px solid black;
     cursor: pointer;
+}
+#bnt-cancelar{
+  margin: 5px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  background-color: #BF2312;
 }
 </style>
 

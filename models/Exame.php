@@ -27,6 +27,24 @@
                 return $query->fetchAll(PDO::FETCH_ASSOC);
             }
 
+            public function listarExamesDisponiveisParaEncaminhamento() {
+                $sql = "SELECT DISTINCT te.*
+                        FROM tipos_exames te
+                        JOIN profissionais p 
+                        ON REPLACE(
+                                    REPLACE(LOWER(p.especialidade), 'exame_', ''), 
+                                '_', '') 
+                            LIKE CONCAT('%', REPLACE(REPLACE(LOWER(te.nome), '-', ''), ' ', ''), '%')
+                        JOIN horarios_profissionais hp 
+                        ON hp.id_profissional = p.id_profissional;
+                ";
+
+                $query = $this->conn->prepare($sql);
+                $query->execute();
+                return $query->fetchAll(PDO::FETCH_ASSOC);
+            }
+
+
             public function editarExame($exameId, $nome, $categoria, $descricao, $tempoMinutos) {
                 $sql = "UPDATE tipos_exames SET 
                 nome = :nome,

@@ -34,8 +34,7 @@
         }
 
         public function usuariosMaisRecentes() {
-            $sql = "
-                SELECT 
+            $sql = "SELECT 
                     u.id_usuario,
                     u.tipo_usuario,
                     u.status,
@@ -46,9 +45,9 @@
                 FROM usuarios u
                 LEFT JOIN pacientes p ON p.cpf = u.login AND u.tipo_usuario = 'paciente'
                 LEFT JOIN profissionais pr ON pr.cpf = u.login AND u.tipo_usuario = 'profissional'
+                WHERE u.tipo_usuario = 'profissional' OR u.tipo_usuario = 'paciente'
                 ORDER BY u.data_criacao DESC
-                LIMIT 10;
-            ";
+                LIMIT 10";
             $query = $this->conn->query($sql);
 
             return $query->fetchAll(PDO::FETCH_ASSOC);
@@ -276,7 +275,7 @@
         # profissional 
         public function compararAtendimentosSemanais($idProfissional) {
             // Essa Semana
-            $sqlSemanaAtual = " SELECT 
+            $sqlSemanaAtual = "SELECT 
                                 DAYNAME(ac.dia_agendamento) AS dia_semana,
                                 COUNT(ac.id_agendamento) AS total_agendamentos
                             FROM 
@@ -343,13 +342,14 @@
 
         public function contarConsultasERetornos($idProfissional) {
             // total de primeiras consultas
-            $sqlConsulta = "
-                SELECT COUNT(*) AS total_consultas
-                FROM agendamentos_consultas ac
-                INNER JOIN horarios_profissionais hp 
-                    ON ac.id_horario_profissional = hp.id_horario
-                WHERE hp.id_profissional = :idProfissional
-                AND ac.tipo_consulta = 'c'
+            $sqlConsulta = "SELECT COUNT(*) AS total_consultas
+                    FROM agendamentos_consultas ac
+                    INNER JOIN horarios_profissionais hp 
+                        ON ac.id_horario_profissional = hp.id_horario
+                    WHERE hp.id_profissional = :idProfissional
+                    AND ac.tipo_consulta = 'c'
+                    AND YEARWEEK(ac.dia_agendamento, 1) = YEARWEEK(CURDATE(), 1)
+
             ";
 
             $stmt1 = $this->conn->prepare($sqlConsulta);
@@ -358,13 +358,13 @@
             $consulta = $stmt1->fetch(PDO::FETCH_ASSOC)['total_consultas'] ?? 0;
 
             // total de retornos
-            $sqlRetorno = "
-                SELECT COUNT(*) AS total_retorno
-                FROM agendamentos_consultas ac
-                INNER JOIN horarios_profissionais hp 
-                    ON ac.id_horario_profissional = hp.id_horario
-                WHERE hp.id_profissional = :idProfissional
-                AND ac.tipo_consulta = 'r'
+            $sqlRetorno = "SELECT COUNT(*) AS total_retorno
+                        FROM agendamentos_consultas ac
+                        INNER JOIN horarios_profissionais hp 
+                            ON ac.id_horario_profissional = hp.id_horario
+                        WHERE hp.id_profissional = :idProfissional
+                        AND ac.tipo_consulta = 'r'
+                        AND YEARWEEK(ac.dia_agendamento, 1) = YEARWEEK(CURDATE(), 1);
             ";
 
             $stmt2 = $this->conn->prepare($sqlRetorno);

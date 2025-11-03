@@ -61,11 +61,20 @@
                 $endereco, $numeroCasa, $bairro, $cidade, $observacoes
             );
 
+            session_start();
             if ($resultado) {
-                echo "Dados atualizados com sucesso.";
+                $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => 'Dados atualizados com sucesso.'
+                ];
             } else {
-                echo "Erro ao atualizar dados.";
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => 'Erro ao editar dados da conta'
+                ];
             }
+            header("Location: ../views/profissional/perfil.php");
+            exit;
         }
 
 
@@ -76,6 +85,8 @@
             $idAgendamentoConsulta = $_POST['idAgendamentoConsulta'];
 
             $encaminhar = $this->encaminhamentoModel->cadastrarEncaminhamento($idExame, $observacoes, $idAgendamentoConsulta);
+
+            $trocarStatus = $this->agendamentoConsultaModel->finalizarAgendamentoConsulta($idAgendamentoConsulta);
 
             $dados = $this->agendamentoConsultaModel->getAgendamento($idAgendamentoConsulta);
             
@@ -105,7 +116,7 @@
                         </tr>
                         <tr>
                             <td><strong>Profissional:</strong></td>
-                            <td>Dr.'. $dados['nome_profissional'] .'</td>
+                            <td>'. $dados['nome_profissional'] .'</td>
                         </tr>
                         <tr style="background:#f4f6f8;">
                             <td><strong>Clínica:</strong></td>
@@ -139,22 +150,33 @@
                 </body>
                 </html>
             ';
-
+            
+            session_start();
             if($encaminhar){
                 try {
                     $this->emailController->enviarEmail($dados['paciente_email'], 
                     $dados['paciente_nome'], 
                     'Encaminhamento de exame', 
                     $mensagem);
-                    echo "Exame encaminhado e email enviado";
+                    $_SESSION['flash'] = [
+                        'type' => 'success',
+                        'message' => 'Exame encaminhado e email enviado'
+                    ];
                 } catch (Exception $e) {
-                    echo "Erro ao enviar email: {$e->getMessage()}";
+                    $_SESSION['flash'] = [
+                        'type' => 'error',
+                        'message' => 'Erro ao eviar email.'
+                    ];
                 }
             }
             else{
-                echo "Erro ao encaminhar exame";
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => 'Erro ao encaminhar exame. Tente novamente'
+                ];
             }
-           
+            header("Location: ../views/profissional/agendamentos/consultas.php");
+            exit;
         }
 
         public function cancelarAgendamentoConsulta(){
@@ -183,13 +205,10 @@
                             <p>Informamos que o exame que havia sido agendado foi <strong>cancelado</strong>.</p>
                             
                             <table width="100%" cellpadding="8" cellspacing="0" style="margin:15px 0; border:1px solid #ddd; border-radius:6px;">
-                                <tr style="background:#f4f6f8;">
-                                    <td><strong>Exame:</strong></td>
-                                    <td>'. $dados['nome_exame'] . ' </td>
-                                </tr>
+            
                                 <tr>
                                     <td><strong>Profissional:</strong></td>
-                                    <td>Dr. João da Silva (Clínico Geral)</td>
+                                    <td>'. $dados['nome_profissional'] . '</td>
                                 </tr>
                                 <tr style="background:#f4f6f8;">
                                     <td><strong>Clínica:</strong></td>
@@ -224,34 +243,52 @@
                 </html>
                 ';
 
-            
-                if($cancelar){
+
+            session_start();
+            if($cancelar){
                 try {
-                    $this->emailController->enviarEmail($dados['paciente_email'],
-                    $dados['paciente_nome'],
-                     'Consulta Cancelada.', 
-                     $mensagem);
-                    echo "Exame cancelado e email enviado";
+                    $this->emailController->enviarEmail($dados['paciente_email'], $dados['paciente_nome'], 'Consulta Cancelada.', $mensagem);
+                    $_SESSION['flash'] = [
+                        'type' => 'success',
+                        'message' => 'Exame cancelado e email enviado'
+                    ];
                 } catch (Exception $e) {
-                    echo "Erro ao enviar email: {$e->getMessage()}";
+                    $_SESSION['flash'] = [
+                        'type' => 'error',
+                        'message' => 'Erro ao enviar email para: ' . $dados['paciente_nome']. '453'
+                    ];
                 }
             }
             else{
-                echo "Erro ao cancelar consulta";
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => 'Erro ao cancelar consulta'
+                ];
             }
+            header("Location: ../views/profissional/agendamentos/consultas.php");
+            exit;
         }
 
         public function finalizarAgendamentoConsulta(){
             $idConsulta = $_POST['idConsulta'];
 
-            $cancelar = $this->agendamentoConsultaModel->finalizarAgendamentoConsulta($idConsulta);
+            $finalizar = $this->agendamentoConsultaModel->finalizarAgendamentoConsulta($idConsulta);
             
-            if($cancelar){
-                echo "Consuta finalizada";
+            session_start();
+            if($finalizar){
+                $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => 'Consulta finalizada com sucesso'
+                ];
             }
             else{
-                echo "Erro ao cancelar finalizada";
+               $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => 'Erro ao cancelar consulta'
+                ];
             }
+            header("Location: ../views/profissional/agendamentos/consultas.php");
+            exit;
         }
 
         public function listarPacientesPorProfissional(){

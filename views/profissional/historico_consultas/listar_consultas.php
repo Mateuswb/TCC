@@ -48,7 +48,7 @@ $percentCanceladas = $totalAgendamentos['total_agendamentos'] > 0
       <div class="card">
         <div class="title"><i class="fa fa-calendar"></i> Total de Consultas</div>
         <div class="value"><?php echo $totalAgendamentos['total_agendamentos'] ?></div>
-        <div class="percent">No período selecionado</div>
+        <div class="percent">Em toto o período</div>
       </div>
       <div class="card green">
         <div class="title"><i class="fa fa-clock"></i> Consultas Concluídas</div>
@@ -60,11 +60,7 @@ $percentCanceladas = $totalAgendamentos['total_agendamentos'] > 0
         <div class="value"><?php echo $totalCanceladas['total_canceladas'] ?></div>
         <div class="percent"><?php echo $percentCanceladas; ?></div>
       </div>
-      <div class="card purple">
-        <div class="title"><i class="fa fa-chart-line"></i> Total de atendimentos</div>
-        <div class="value">R$ 2.570,00</div>
-        <div class="percent">Consultas concluídas</div>
-      </div>
+
     </div>
 
     <table>
@@ -97,7 +93,7 @@ $percentCanceladas = $totalAgendamentos['total_agendamentos'] > 0
           </td>
 
           <td><span class="status <?php echo $consulta['status']; ?>"><?php echo $consulta['status']; ?></span></td>
-          <td class="actions"><i class="fas fa-eye"></i><i class="fas fa-edit"></i></td>
+          <td class="actions"><i class="fas fa-eye"></i></td>
         </tr>
         <tr>
       <?php } ?>

@@ -71,26 +71,24 @@
 
 <script>
   const modalAgendamento = document.getElementById('modalAgendamento');
-  const fecharModalAgendamento = document.getElementById('fecharModalAgendamento');
+const fecharModalAgendamento = document.getElementById('fecharModalAgendamento');
 
+function abrirModalAgendamento(idProfissional, nome) {
+  document.getElementById('idProfissional').value = idProfissional;
+  document.getElementById('nomeProfissional').textContent = nome;
+  modalAgendamento.style.display = 'flex'; // abre o modal
+}
 
-  function abrirModalAgendamento(idProfissional, nome) {
-    document.getElementById('idProfissional').value = idProfissional;
-    document.getElementById('nomeProfissional').textContent = nome;
-    modalAgendamento.style.display = 'flex';
-  }
+fecharModalAgendamento.addEventListener('click', () => {
+  modalAgendamento.style.display = 'none';
+});
 
-
-
-  fecharModalAgendamento.addEventListener('click', () => {
+window.addEventListener('click', (e) => {
+  if (e.target === modalAgendamento) {
     modalAgendamento.style.display = 'none';
-  });
+  }
+});
 
-  window.addEventListener('click', (e) => {
-    if (e.target === modalAgendamento) {
-      modalAgendamento.style.display = 'none';
-    }
-  });
 
   // mostra ou oculta campo de anexo
   document.getElementById('tipoConsulta').addEventListener('change', function() {
@@ -170,26 +168,25 @@
     function pesquisar() {
     const query = searchInput.value.toLowerCase().trim();
     if (!query) {
-        mostrarProfissionais(dados);
-        return;
+        return; // simplesmente não faz nada
     }
 
     const profissionais_filtrados = dados.filter(p => {
         const especialidades_medico = JSON.parse(p.especialidade || '[]');
 
         const especialidades_labels = especialidades_medico.map(v =>
-        (especialidadesMap[v] || v).toLowerCase()
+            (especialidadesMap[v] || v).toLowerCase()
         );
 
         const nome = p.nome.toLowerCase();
         const especialidade_str = especialidades_labels.join(' ');
 
-        // verifica se o nome ou a especialidade 
         return nome.includes(query) || especialidade_str.includes(query);
     });
 
     mostrarProfissionais(profissionais_filtrados);
-    }
+}
+
 
     btnSearch.addEventListener('click', pesquisar);
 

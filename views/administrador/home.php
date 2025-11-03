@@ -179,6 +179,9 @@
 
 <body>
   <div class="main">
+    <?php
+      include '../../public/assets/alerta/flash.php';
+    ?>
     <div class="content">
 
       <!-- Cards -->
@@ -208,7 +211,6 @@
             <h3>Agendamentos Semana</h3>
             <div class="tabs">
               <button class="active" onclick="switchTab(1)">Semana</button>
-              <button onclick="switchTab(2)">Mês</button>
             </div>
           </div>
           <canvas id="chart1"></canvas>
@@ -253,7 +255,6 @@
 
 
   <script>
-
     function toggleSidebar() {
       document.getElementById("sidebar").classList.toggle("collapsed");
     }

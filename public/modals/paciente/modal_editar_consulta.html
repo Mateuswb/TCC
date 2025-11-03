@@ -35,6 +35,7 @@
         <input type="date" name="diaAgendamento" id="diaAgendamento">
 
         <div class="form-control">
+          <div id="mensagemErro" style="display:none; color:#842029; background-color:#f8d7da; padding:10px; border-radius:5px; margin-bottom:10px;"></div>
           <label for="horarioAgendamento">Horarios ainda disponíveis</label>
           <div id="times" class="times"></div>
         </div>
@@ -306,40 +307,40 @@ textarea {
 </style>
 
 <script>
+function buscarHorarios() {
+  const dataInput = document.querySelector('input[name="diaAgendamento"]');
+  const data = dataInput.value;
+  const idProfissional = document.getElementById('idProfissional').value;
+  const container = document.getElementById('times');
+  const mensagemErro = document.getElementById('mensagemErro');
 
-  function buscarHorarios(){
-    let data = this.value;
-    const idProfissional = document.getElementById('idProfissional').value;
+  container.innerHTML = '';
+  mensagemErro.style.display = 'none';
+  mensagemErro.innerText = '';
 
-    if(data == null){
-      data = document.querySelector('input[name="diaAgendamento"]').value;
+  fetch('../../../controllers/PacienteController.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: `data=${encodeURIComponent(data)}&idProfissional=${encodeURIComponent(idProfissional)}`
+  })
+  .then(r => r.json())
+  .then(retorno => {
+    if (retorno.erro) {
+      mensagemErro.style.display = 'block';
+      mensagemErro.innerText = retorno.erro;
+      return;
     }
-    console.log(data);
 
-    fetch('../../../controllers/PacienteController.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `data=${encodeURIComponent(data)}&idProfissional=${encodeURIComponent(idProfissional)}`
-    })
-    .then(r => r.json())
-    .then(retorno => {
-      const container = document.getElementById('times');
-      container.innerHTML = '';
 
-      if (!retorno?.disponiveis) return;
-
-      console.log(retorno.agendamento);
-
-      retorno.disponiveis.forEach(h => {
-        const bloqueado = retorno.agendamento?.includes(h);
-        container.innerHTML += bloqueado
-          ? `<label class="time-slot-bloqueado">${h}</label>`
-          : `<label class="time-slot"><input type="radio" name="horarioAgendamento" value="${h}"><span>${h}</span></label>`;
-      });
-    })
-    .catch(err => console.error("Erro:", err));
-  }
-
+    // Exibe os horários formatados
+    retorno.forEach(h => {
+      container.innerHTML += `<label class="time-slot"><input type="radio" name="horarioAgendamento" value="${h}" required><span>${h}</span></label>`;
+    });
+  })
+  .catch(err => {
+    console.error("Erro:", err);
+  });
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("modalEditarConsulta");
@@ -352,27 +353,26 @@ document.addEventListener("DOMContentLoaded", () => {
   closeModal.addEventListener("click", fecharModal);
   window.addEventListener("click", e => { if (e.target === modal) fecharModal(); });
 
- openButtons.forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelector('input[name="idAgendamentoConsulta"]').value = btn.dataset.idConsulta;
-    document.querySelector('select[name="tipoConsulta"]').value = btn.dataset.tipo;
-    document.querySelector('input[name="diaAgendamento"]').value = btn.dataset.dia;
-    document.querySelector('textarea[name="observacao"]').value = btn.dataset.observacao;
-    document.querySelector('input[name="idProfissional"]').value = btn.dataset.idProfissional;
+  openButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelector('input[name="idAgendamentoConsulta"]').value = btn.dataset.idConsulta;
+      document.querySelector('select[name="tipoConsulta"]').value = btn.dataset.tipo;
+      document.querySelector('input[name="diaAgendamento"]').value = btn.dataset.dia;
+      document.querySelector('textarea[name="observacao"]').value = btn.dataset.observacao;
+      document.querySelector('input[name="idProfissional"]').value = btn.dataset.idProfissional;
 
-    document.getElementById("nomeProfissionalEditar").innerText = btn.dataset.profissional || "Profissional";
-    document.getElementById("especialidadeProfissionalEditar").innerText = btn.dataset.especialidade || "Especialidade";
+      document.getElementById("nomeProfissionalEditar").innerText = btn.dataset.profissional || "Profissional";
+      document.getElementById("especialidadeProfissionalEditar").innerText = btn.dataset.especialidade || "Especialidade";
 
-    abrirModal();
-    buscarHorarios();
+      abrirModal();
+
+      // Aguarda o modal carregar e busca horários
+      setTimeout(buscarHorarios, 200);
+    });
   });
 });
 
-});
+// Atualiza horários ao mudar a data
+document.getElementById('diaAgendamento').addEventListener('change', buscarHorarios);
 
-
-// Carregar horários disponíveis
-document.getElementById('diaAgendamento').addEventListener('change', function() {
-  buscarHorarios();
-});
 </script>

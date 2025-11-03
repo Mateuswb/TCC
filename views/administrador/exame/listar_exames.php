@@ -36,8 +36,8 @@
 
 </head>
 <body>
+<?php include '../../../public/assets/alerta/flash.php' ?>
 <div class="main">
-    <?php  include '../../../public/assets/alerta/flash.php' ?>
     
     <div class="content">
         <div class="exams-box">
@@ -73,7 +73,7 @@
                                 data-tempo="<?= $exame["tempo_minutos"] ?>"
                                 data-descricao="<?= $exame["descricao"] ?>"
                                 onclick="abrirModal(this)">
-                                </i>
+                            </i>
                             <i class="fa fa-trash text-danger"
                                 data-id="<?= $exame['id_exame'] ?>"
                                 data-nome="<?= $exame['nome'] ?>"

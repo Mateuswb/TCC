@@ -4,7 +4,6 @@
     $currentFile = basename($_SERVER['PHP_SELF']); 
 ?>
 
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <div class="sidebar" id="sidebar">
@@ -54,7 +53,7 @@
 <style>
   .sidebar {
     width: 250px;
-    background: #09275E;
+    background: #062359ff;
     color: #fff;
     height: 100vh;
     position: fixed;

@@ -11,7 +11,6 @@
         public function __construct($conn){
             $this->agendamentoExameModel = new AgendamentoExame($conn);
             $this->encaminhamentoModel = new Encaminhamento($conn);
-     
         }
 
         public function agendarExame(){
@@ -25,13 +24,22 @@
                 $diaAgendamento, $observacao
             );
 
+            session_start();
             if($agendar){
-                echo "Exame agendado";
+                $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => 'Exame agendado com sucesso'
+                    ];
                 $encaminhamento = $this->encaminhamentoModel->trocarStatus($idEncaminhamento);
             }
             else{
-                echo "Errooo no agendamento";
+                $_SESSION['flash'] = [
+                'type' => 'error',
+                'message' => 'Erro ao realizar agendamento. Tente novamente.'
+                ];
             }
+            header("Location: ../views/paciente/exames/encaminhamento/listar_encaminhamentos.php");
+            exit;
         }
 
         public function editarExame(){
@@ -59,12 +67,21 @@
 
             $cancelar = $this->agendamentoExameModel->cancelarAgendamentoExame($idAgendamento);
 
+            session_start();
             if($cancelar){
-                echo "Cancelado";
+                $_SESSION['flash'] = [
+                'type' => 'success',
+                'message' => 'Exame cancelado com sucesso'
+                ];
             }
             else{
-                echo "erro";
+                $_SESSION['flash'] = [
+                'type' => 'error',
+                'message' => 'Erro cancelar exame. Tente novamente.'
+                ];
             }
+            header("Location: ../views/paciente/exames/exames_agendados/listar_agendamentos.php");
+            exit;
         }
 
         public function finalizarAgendamentoExame(){

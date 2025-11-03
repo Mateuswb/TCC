@@ -2,6 +2,8 @@
     include '../../autentica/verifica_login.php';
     
     include '../../public/includes/profissional/sidebar.php';
+    include '../../public/includes/profissional/header.php';
+    include '../../public/includes/profissional/footer.html';
     include '../../controllers/UsuarioController.php';
     
     $id_profissional = $_SESSION['idProfissional'];
@@ -26,12 +28,9 @@
 </head>
 <body>
 
+  
   <div class="main">
-    <div class="topbar">
-      <i class="fa fa-bell"></i>
-      <i class="fa fa-cog"></i>
-      <i class="fa fa-user-circle"></i>
-    </div>
+    <?php include '../../public/assets/alerta/flash.php'; ?>
 
     <div class="profile-header">
       <div class="info">

@@ -1,8 +1,10 @@
 <?php
   require '../../../../autentica/verifica_login.php';
+  
   include '../../../../public/includes/paciente/sidebar.php';
   include '../../../../public/includes/paciente/header.php';
   include '../../../../public/includes/paciente/footer.php';
+
   include '../../../../public/modals/paciente/exames/modal_editar_exame.html';
   include '../../../../public/modals/paciente/exames/modal_cancelamento_exame.html';
 
@@ -27,6 +29,8 @@
 </head>
 
 <body>
+  <?php include '../../../../public/assets/alerta/flash.php'; ?>
+
   <main>
     <h1>Exames Agendados</h1>
 

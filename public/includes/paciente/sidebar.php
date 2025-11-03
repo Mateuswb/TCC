@@ -9,7 +9,7 @@
   
 <div class="sidebar" id="sidebar"> 
 <div class="logo">
-    <img src="<?= BASE_URL ?>/public/includes/paciente/img.png" alt="">
+    <img src="<?= BASE_URL ?>/public/assets/imgs/logo_medhub.png" alt="">
 </div>
 <nav>
     <ul>

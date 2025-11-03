@@ -6,6 +6,17 @@ class Paciente {
         $this->conn = $conn;
     }
 
+
+    public function validarEmailCadastrado($email){
+        $sql = "SELECT COUNT(*) AS total FROM pacientes WHERE email = :email";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $resultado['total'] > 0;
+    }
+
     public function criarPaciente(
         $nome, $cpf, $email, $dataNascimento, $telefone,
         $sexo, $altura, $peso, $estadoCivil,

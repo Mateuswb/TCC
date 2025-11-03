@@ -15,7 +15,7 @@
         private $horarioModel;
         private $agendamentoConsultaModel;
         private $agendamentoExameModel;
-        private $UsuarioModel;
+        private $usuarioModel;
 
         public function __construct($conn) {
             $this->usuarioController = new UsuarioController($conn);
@@ -24,7 +24,7 @@
             $this->horarioModel = new Horario($conn);
             $this->agendamentoConsultaModel = new AgendamentoConsulta($conn);
             $this->agendamentoExameModel = new AgendamentoExame($conn);
-            $this->UsuarioModel = new Usuario($conn);
+            $this->usuarioModel = new Usuario($conn);
         }
 
         public function cadastrarPaciente() {
@@ -52,7 +52,16 @@
             $cidade         = $_POST['cidade'];
             $observacoes    = $_POST['observacoes'];
 
-            $usuarioLogadoTipo = $_SESSION['tipoUsuario'];
+            $existeEmail = $this->pacienteModel->validarEmailCadastrado($email);
+
+            if ($existeEmail) {
+                $_SESSION['existeEmail'] = "E-mail já cadastrado";
+                header("Location: ../views/paciente/criar.php");
+                exit;
+            }
+
+
+            $usuarioLogadoTipo = $_SESSION['tipoUsuario'] ?? null;
 
             // Cria o usuário
             $cpf = $this->usuarioController->cadastrar();
@@ -67,12 +76,20 @@
 
                 unset($_SESSION['cadastroTemp']); // limpa temporário
 
-                if ($usuarioLogadoTipo == 'admin') {
+                if ($usuarioLogadoTipo && $usuarioLogadoTipo == 'admin') {
+
                     if ($criouPaciente) {
+                        $_SESSION['flash'] = [
+                            'type' => 'success',
+                            'message' => "Paciente cadastrado com sucesso"
+                        ];
                         header("Location: ../views/administrador/home.php");
                         exit;
                     } else {
-                        $_SESSION['error'] = "Erro ao criar paciente";
+                        $_SESSION['flash'] = [
+                            'type' => 'error',
+                            'message' => "Erro ao cadastrar paciente. Tenten novamente"
+                        ];
                         header("Location: ../views/administrador/home.php");
                         exit;
                     }
@@ -86,6 +103,7 @@
                 exit;
             }
         }
+
 
         public function editarDadosPaciente() {
             $idPaciente      = $_POST['idPaciente'];
@@ -140,7 +158,7 @@
         public function exibirHorarios($dataSelecionada, $profissionalId) {
             $horariosDisponiveis = $this->horarioModel->listarHorariosDisponiveis($dataSelecionada, $profissionalId);
             header('Content-Type: application/json');
-            echo json_encode($horariosDisponiveis);
+            echo $horariosDisponiveis;
         }
 
         #consultas

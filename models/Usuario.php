@@ -84,5 +84,44 @@
             }
         }
 
+        public function excluirUsuario($idUsuario, $login) {
+            try {
+                $query = $this->conn->prepare("SELECT tipo_usuario FROM usuarios WHERE id_usuario = :id");
+                $query->execute([':id' => $idUsuario]);
+                $usuario = $query->fetch(PDO::FETCH_ASSOC);
+
+                if (!$usuario) {
+                    throw new Exception("Usuário não encontrado.");
+                }
+
+                $this->conn->beginTransaction();
+
+                switch($usuario['tipo_usuario']) {
+                    case 'paciente':
+                        $stmt = $this->conn->prepare("DELETE FROM pacientes WHERE cpf = :cpf");
+                        $stmt->execute([':cpf' => $login]);
+                        break;
+
+                    case 'profissional':
+                        $stmt = $this->conn->prepare("DELETE FROM profissionais WHERE cpf = :cpf");
+                        $stmt->execute([':cpf' => $login]);
+                        break;
+
+                    case 'admin':
+                        break;
+                }
+
+                $stmtUser = $this->conn->prepare("DELETE FROM usuarios WHERE id_usuario = :id");
+                $stmtUser->execute([':id' => $idUsuario]);
+
+                $this->conn->commit();
+                return true;
+
+            } catch (Exception $e) {
+                $this->conn->rollBack();
+                throw $e;
+            }
+        }
+
     }
 ?>

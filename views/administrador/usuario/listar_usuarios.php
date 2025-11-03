@@ -5,6 +5,10 @@
   include "../../../public/includes/administrador/footer.php"; 
   require_once "../../../controllers/AdministradorController.php";
 
+  require "../../../public/modals/administrador/usuario/editar_usuario.html";
+  require "../../../public/modals/administrador/usuario/deletar_usuario.html";
+  require "../../../public/modals/administrador/usuario/bloquear_usuario.html";
+
   $controller = new AdministradorController($conn);
   $usuarios = $controller->listarUsuarios();
 ?>
@@ -22,9 +26,12 @@
 
 
 </head>
+
 <body>
   <div class="main">
-
+      <?php
+        include '../../../public/assets/alerta/flash.php';
+      ?>
     <div class="content">
       <h1>Lista de Usuários</h1>
       <div class="table-wrapper">
@@ -48,21 +55,28 @@
                 <td><span class="status <?= $usuario['status']; ?>"><?= $usuario['status']; ?></span></td>
                 <td><?= $usuario['data_criacao']; ?></td>
                 <td>
-                  <a href="editar_usuario.php?id_usuario=<?= $usuario['id_usuario']; ?>" class="btn edit">
-                    <i class="fas fa-edit"></i>
-                  </a>
+                  <button class="btn edit" 
+                      data-id="<?= $usuario['id_usuario']; ?>" 
+                      data-login="<?= $usuario['login']; ?>" 
+                      data-tipo="<?= $usuario['tipo_usuario']; ?>"
+                      onclick="abrirModalEditarUsuario(this)">
+                      <i class="fas fa-edit"></i>
+                  </button>
                 </td>
+
                 <td>
                   <a href="bloquear_user.php?id_usuario=<?= $usuario['id_usuario'];?>" class="btn bloq"
-                     onclick="confirmarBloqueio(this.href); return false;">
+                    onclick="confirmarBloqueio(this.href); return false;">
                     <i class="fas fa-user-slash"></i>
                   </a>
                 </td>
                 <td>
-                  <a href="excluir.php?id_usuario=<?= $usuario['id_usuario']; ?>" class="btn delete"
-                     onclick="confirmarDeletarUsuario(this.href); return false;">
-                    <i class="fas fa-trash"></i>
-                  </a>
+                  <button class="btn delete" 
+                      data-id="<?= $usuario['id_usuario']; ?>" 
+                      data-cpf="<?= $usuario['login']; ?>" 
+                      onclick="abrirModalDeletarUsuario(this)">
+                      <i class="fas fa-trash"></i>
+                  </button>
                 </td>
               </tr>
             <?php endforeach; ?>
@@ -71,29 +85,13 @@
       </div>
     </div>
   </div>
+</div>
 
   <script>
     function toggleSidebar() {
       document.getElementById("sidebar").classList.toggle("collapsed");
     }
   </script>
-
-  <?php
-     if (isset($_GET['alerta'])) {
-        $alertas = [
-          0 => ['sucesso', 'Atualizado', 'Usuário bloqueado com sucesso.'],
-          1 => ['erro', 'Erro', 'Erro ao bloquear usuário. Tente novamente.'],
-          2 => ['sucesso', 'Deletado', 'Usuário deletado com sucesso.'],
-          3 => ['erro', 'Erro', 'Erro ao deletar usuário. Tente novamente.']
-        ];
-        [$tipo, $titulo, $mensagem] = $alertas[$_GET['alerta']] ?? ['info', 'Aviso', 'Ação inválida.'];
-
-        echo "<script>
-          window.addEventListener('DOMContentLoaded', () => {
-              alertaPadraoPos('$tipo', '$titulo', '$mensagem');
-          });
-        </script>";
-     }
-  ?>
 </body>
 </html>
+

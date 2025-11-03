@@ -120,8 +120,6 @@
         #profissional
         public function compararAtendimentosSemanais($idProfissional) {
             $dados = $this->relatorioModel->compararAtendimentosSemanais($idProfissional);
-
-            // Define o cabeçalho para JSON e retorna direto
             header('Content-Type: application/json');
             echo json_encode($dados);
             exit; 

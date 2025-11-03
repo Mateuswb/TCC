@@ -52,7 +52,7 @@
 
         public function cancelarAgendamentoExame($idExame) {
             $sql = "UPDATE agendamentos_exames
-                    SET status = 'cancelada' 
+                    SET status = 'cancelado' 
                     WHERE id_agendamento = :idExame";
             $query = $this->conn->prepare($sql);
 

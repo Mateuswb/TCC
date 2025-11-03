@@ -121,7 +121,6 @@
       <p class="data">Exame realizado em: <strong><?php echo $agendamento['dia_agendamento']; ?> </strong> às <strong><?php echo $agendamento['horario_agendamento']; ?> </strong></p>
       <div class="acoes">
         <button class="btn-ver">Ver detalhes</button>
-        <button class="btn-baixar">Baixar Resultado</button>
       </div>
     </div>
   <?php } ?>

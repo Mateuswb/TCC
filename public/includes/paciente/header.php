@@ -10,8 +10,13 @@
 
   <div class="profile" id="profile-btn">
     <div class="user-info">
-      <span id="nome-paciente">Nome Pacienttte</span>
-      <div class="avatar">MB</div>
+      <span id="nome-paciente"><?php echo $_SESSION['nomePaciente']; ?></span>
+      <div class="avatar">
+        <?php
+          $partes = explode(' ', $_SESSION['nomePaciente']);
+          echo strtoupper($partes[0][0] . ($partes[1][0] ?? ''));
+        ?>
+      </div>
     </div>
   </div>
 </header>
@@ -19,18 +24,23 @@
 <!-- MENU SUSPENSO -->
 <div class="profile-menu" id="profile-menu">
   <div id="profile-header">
-    <div class="avatar-large">H</div>
-    <span class="profile-name">Nome Pacienttte</span>
+    <div class="avatar-large">
+      <?php
+          $partes = explode(' ', $_SESSION['nomePaciente']);
+          echo strtoupper($partes[0][0] . ($partes[1][0] ?? ''));
+        ?>
+    </div>
+    <span class="profile-name"><?php echo $_SESSION['nomePaciente']; ?></span>
     <span class="close-menu" id="close-menu">&times;</span>
   </div>
   <ul>
   <li onclick="location.href='<?= BASE_URL ?>/views/paciente/perfil.php'">
     <i class="fas fa-user"></i> Perfil
   </li>
-  <li onclick="location.href='#'">
+  <li onclick="location.href='<?= BASE_URL ?>/views/paciente/consultas/historico_consultas.php'">
     <i class="fas fa-notes-medical"></i> Histórico de Consulta
   </li>
-  <li onclick="location.href='#'">
+  <li onclick="location.href='<?= BASE_URL ?>/views/paciente/exames/historico/historico_exames.php'">
     <i class="fas fa-file-medical-alt"></i> Histórico de Exames
   </li>
   <li onclick="location.href='<?= BASE_URL ?>/views/logout/logout.php'">
@@ -79,8 +89,8 @@ header {
 .user-info .avatar {
   background-color: #003366;
   color: #fff;
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -164,6 +174,7 @@ header {
 <script>
 const profileBtn = document.getElementById('profile-btn');
 const profileMenu = document.getElementById('profile-menu');
+const closeMenu = document.getElementById('close-menu');
 
 profileBtn.addEventListener('click', () => {
   profileMenu.style.display = profileMenu.style.display === 'block' ? 'none' : 'block';
@@ -175,4 +186,9 @@ document.addEventListener('click', function(event) {
     profileMenu.style.display = 'none';
   }
 });
+
+closeMenu.addEventListener('click', () => {
+  profileMenu.style.display = 'none';
+});
+
 </script>

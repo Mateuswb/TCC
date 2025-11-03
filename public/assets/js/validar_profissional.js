@@ -1,30 +1,30 @@
 const form = document.getElementById('form');
 
-const username = document.getElementById('nome');
+const nome = document.getElementById('nome');
 const rg = document.getElementById('rg');
+const email = document.getElementById('email');
 const crm = document.getElementById('crmCrp');
-
 const dataNascimento = document.getElementById('dataNascimento');
 const telefone = document.getElementById('telefone');
 const sexo = document.getElementById('sexo');
 const estadoCivil = document.getElementById('estadoCivil');
+const especialidades = document.getElementById('multiple');
 
 const endereco = document.getElementById('endereco');
 const numCasa = document.getElementById('numCasa');
 const bairro = document.getElementById('bairro');
 const cidade = document.getElementById('cidade');
+const observacoes = document.getElementById('observacoes');
 
 
 const steps = document.querySelectorAll('.step');
 let etapaAtual = 0;
 
-// Função para exibir etapa atual
 function exibirEtapa() {
     steps.forEach((step, i) => step.classList.toggle('active', i === etapaAtual));
 }
-exibirEtapa();
 
-// Próximo botão
+// Prox
 document.getElementById('btnProx1').addEventListener('click', () => {
     if (validaCamposEtapa1()) {
         etapaAtual++;
@@ -32,32 +32,32 @@ document.getElementById('btnProx1').addEventListener('click', () => {
     }
 });
 
-// Anterior botão
+// Ant
 document.getElementById('btnAnt2').addEventListener('click', () => {
     etapaAtual--;
     exibirEtapa();
 });
 
-// Validação de envio do formulário
 form.addEventListener('submit', function(e) {
-    if (!validaCamposEtapa1() || !validaCamposEtapa2()) {
-        e.preventDefault(); // bloqueia envio se algum campo estiver inválido
-        alert('Preencha todos os campos corretamente.');
+    e.preventDefault();
+    if (validaCamposEtapa2()) {
+        form.submit();
     }
 });
 
-// Funções de validação
+// ========== VALIDAÇÕES ==========
+
 function validaCamposEtapa1() {
     let valido = true;
 
-    if (username.value.trim() === '') {
-        errorValidation(username, 'Preencha o nome.');
+    if (nome.value.trim() === '') {
+        errorValidation(nome, 'Preencha o nome completo.');
         valido = false;
-    } else if (!validateFullName(username.value)) {
-        errorValidation(username, 'Nome inválido. Digite seu nome completo.');
+    } else if (!validateFullName(nome.value)) {
+        errorValidation(nome, 'Digite seu nome completo (ex: João da Silva).');
         valido = false;
     } else {
-        successValidation(username);
+        successValidation(nome);
     }
 
     if (rg.value.trim() === '') {
@@ -67,16 +67,28 @@ function validaCamposEtapa1() {
         successValidation(rg);
     }
 
+    if (email.value.trim() === '') {
+        errorValidation(email, 'Preencha o email.');
+        valido = false;
+    } else if (!validateEmail(email.value.trim())) {
+        errorValidation(email, 'Digite um email válido.');
+        valido = false;
+    } else {
+        successValidation(email);
+    }
+
     if (crm.value.trim() === '') {
-        errorValidation(crm, 'Preencha o CRM.');
+        errorValidation(crm, 'Preencha o CRM/CRP.');
         valido = false;
     } else {
         successValidation(crm);
     }
 
-
     if (dataNascimento.value.trim() === '') {
-        errorValidation(dataNascimento, 'Preencha a data de nascimento.');
+        errorValidation(dataNascimento, 'Informe sua data de nascimento.');
+        valido = false;
+    } else if (!validaIdade(dataNascimento.value.trim())) {
+        errorValidation(dataNascimento, 'Profissional deve ter pelo menos 18 anos.');
         valido = false;
     } else {
         successValidation(dataNascimento);
@@ -86,10 +98,32 @@ function validaCamposEtapa1() {
         errorValidation(telefone, 'Preencha o telefone.');
         valido = false;
     } else if (!validaTelefone(telefone.value.trim())) {
-        errorValidation(telefone, 'Telefone inválido. Formato (99) 99999-9999');
+        errorValidation(telefone, 'Formato inválido. Use (99) 99999-9999');
         valido = false;
     } else {
         successValidation(telefone);
+    }
+
+    if (sexo.value.trim() === '') {
+        errorValidation(sexo, 'Preencha o sexo.');
+        valido = false;
+    } else {
+        successValidation(sexo);
+    } 
+
+    if (estadoCivil.value.trim() === '') {
+        errorValidation(estadoCivil, 'Selecione o estado civil.');
+        valido = false;
+    } else {
+        successValidation(estadoCivil);
+    }
+
+    const escolhas = especialidades.selectedOptions;
+    if (escolhas.length === 0) {
+        errorValidation(especialidades, 'Selecione ao menos uma especialidade.');
+        valido = false;
+    } else {
+        successValidation(especialidades);
     }
 
     return valido;
@@ -106,7 +140,7 @@ function validaCamposEtapa2() {
     }
 
     if (numCasa.value.trim() === '') {
-        errorValidation(numCasa, 'Preencha o número da casa.');
+        errorValidation(numCasa, 'Informe o número da casa.');
         valido = false;
     } else {
         successValidation(numCasa);
@@ -126,32 +160,56 @@ function validaCamposEtapa2() {
         successValidation(cidade);
     }
 
+    // Observações é opcional
+    if (observacoes.value.trim() !== '') {
+        successValidation(observacoes);
+    }
+
     return valido;
 }
 
-// Valida telefone
-function validaTelefone(telefone) {
-    const numeros = telefone.replace(/\D/g, '');
-    return numeros.length === 11;
+
+function validateEmail(email) {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(email);
 }
 
-// Exibir erro
+
+function validateFullName(nomeValue) {
+  const re = /^[A-Za-zÀ-ÿ]+(?:\s+[A-Za-zÀ-ÿ]+)+$/;
+  return re.test(nomeValue.trim());
+}
+
+
+function validaTelefone(telefone) {
+  const numeros = telefone.replace(/\D/g, '');
+  return numeros.length === 11;
+}
+
+function validaIdade(data) {
+  const hoje = new Date();
+  const nasc = new Date(data);
+  let idade = hoje.getFullYear() - nasc.getFullYear();
+  const m = hoje.getMonth() - nasc.getMonth();
+  if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) idade--;
+  return idade >= 18;
+}
+
+
 function errorValidation(input, message) {
-    const formControl = input.parentElement;
+    const formControl = input.closest('.form-control');
     const small = formControl.querySelector('small');
     small.innerText = message;
-    formControl.className = 'form-control error';
+    small.style.visibility = 'visible';
+    formControl.classList.add('error');
+    formControl.classList.remove('success');
 }
 
-// Exibir sucesso
 function successValidation(input) {
-    const formControl = input.parentElement;
-    formControl.className = 'form-control success';
-}
-
-// Valida nome completo
-function validateFullName(usernameValue) {
-    const trimmedName = usernameValue.trim();
-    const nameRegex = /^[A-Za-zÀ-ÿ]+(?:\s+[A-Za-zÀ-ÿ]+)+$/;
-    return nameRegex.test(trimmedName);
+    const formControl = input.closest('.form-control');
+    const small = formControl.querySelector('small');
+    small.innerText = '';
+    small.style.visibility = 'hidden';
+    formControl.classList.add('success');
+    formControl.classList.remove('error');
 }

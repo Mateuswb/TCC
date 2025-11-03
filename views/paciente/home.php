@@ -30,13 +30,13 @@
         <div class="carousel-card">
           <div class="carousel" id="mainCarousel">
             <div class="slides">
-              <div class="slide" style="background-image:url('../../public/assets/imgs/fundo_1.png');">
+              <div class="slide" style="background-image:url('../../public/assets/imgs/ambiente_agradavel.avif');">
                 <div class="overlay"><h3>Ambiente agradável</h3></div>
               </div>
-              <div class="slide" style="background-image:url('../../public/assets/imgs/fundo_1.png');">
+              <div class="slide" style="background-image:url('../../public/assets/imgs/exames.jpg');">
                 <div class="overlay"><h3>Exames</h3></div>
               </div>
-              <div class="slide" style="background-image:url('../../public/assets/imgs/fundo_1.png');">
+              <div class="slide" style="background-image:url('../../public/assets/imgs/profissionais_qualidade.jpg');">
                 <div class="overlay"><h3>Profissionais de qualidade</h3></div>
               </div>
             </div>
@@ -50,13 +50,13 @@
         <div class="carousel-card">
           <div class="carousel" id="secondCarousel">
             <div class="slides">
-              <div class="slide" style="background-image:url('../../public/assets/imgs/fundo_1.png');">
+              <div class="slide" style="background-image:url('../../public/assets/imgs/recursos.jpg');">
                 <div class="overlay"><h3>Novos recursos</h3></div>
               </div>
-              <div class="slide" style="background-image:url('../../public/assets/imgs/fundo_1.png');">
+              <div class="slide" style="background-image:url('../../public/assets/imgs/salas_modernas.jpg');">
                 <div class="overlay"><h3>Salas modernas</h3></div>
               </div>
-              <div class="slide" style="background-image:url('../../public/assets/imgs/fundo_1.png');">
+              <div class="slide" style="background-image:url('../../public/assets/imgs/equipamentos_avancados.jpg');">
                 <div class="overlay"><h3>Equipamentos avançados</h3></div>
               </div>
             </div>

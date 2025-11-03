@@ -6,9 +6,9 @@
   include '../../../public/includes/administrador/footer.php';
 
   // Modals de consulta
-  include '../../../public/modals/profissional/consultas/cancelar_consulta.php';
-  include '../../../public/modals/profissional/consultas/encaminhar_consulta.php';
-  include '../../../public/modals/profissional/consultas/finalizar_consulta.php';
+  include '../../../public/modals/administrador/consultas/cancelar_consulta.php';
+  include '../../../public/modals/administrador/consultas/encaminhar_consulta.php';
+  include '../../../public/modals/administrador/consultas/finalizar_consulta.php';
 
 
   $controller = new AdministradorController($conn);
@@ -33,6 +33,7 @@
 
 <body>
   <div class="main">
+    <?php include '../../../public/assets/alerta/flash.php'; ?>
     <div class="content">
       <h1>Agenda - Dr. João da Silva</h1>
 
@@ -115,8 +116,8 @@ document.addEventListener('DOMContentLoaded', function () {
   calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'timeGridWeek',
     locale: 'pt-br',
-    slotMinTime: "07:00:00",
-    slotMaxTime: "20:00:00",
+    slotMinTime: "00:00:00",
+    slotMaxTime: "23:31:00",
     allDaySlot: false,
     events: events,
     headerToolbar: {
@@ -127,9 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     eventDidMount: function(info) {
     if (new Date(info.event.start) < new Date()) {
-        info.el.style.opacity = 0.9;
-        info.el.style.background = '#a3a3a3ff';  
-        info.el.style.borderColor = '#616161ff'; 
+        info.el.style.opacity = 0.6;
         info.el.style.color = '#000000ff';       
         info.event.setProp('editable', false); 
     }
@@ -141,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Verifica se o evento já passou
     const eventoPassado = new Date(selectedEvent.start) < new Date();
-    if (eventoPassado) return; // Bloqueia modal para eventos passados
+    if (eventoPassado) return; 
 
     const tipo = selectedEvent.extendedProps.tipo;
     if (tipo === 'exame') {

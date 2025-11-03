@@ -44,6 +44,10 @@
             return $this->horarioModel->listarHorarios($idProfissional);
         }
 
+        public function buscarLimitesDeHorario($idProfissional){
+            return $this->horarioModel->buscarLimitesDeHorario($idProfissional);
+        }
+
          public function editarHorarioProfissional() {
             $idProfissional   = $_POST['idProfissional'];
             $idHorario        = $_POST['idHorario'];

@@ -1,5 +1,3 @@
-
-
 <header>
   <div class="menu-btn" id="menu-btn">
     <i class="fas fa-bars"></i>
@@ -12,8 +10,13 @@
 
   <div class="profile" id="profile-btn">
     <div class="user-info">
-      <span id="nome-paciente">Nome Pacienttte</span>
-      <div class="avatar">MB</div>
+      <span id="nome-paciente"><?php echo $_SESSION['nomeProfissional']; ?></span>
+      <div class="avatar">
+        <?php
+          $partes = explode(' ', $_SESSION['nomeProfissional']);
+          echo strtoupper($partes[0][0] . ($partes[1][0] ?? ''));
+        ?>
+      </div>
     </div>
   </div>
 </header>
@@ -21,15 +24,20 @@
 <!-- MENU SUSPENSO -->
 <div class="profile-menu" id="profile-menu">
   <div id="profile-header">
-    <div class="avatar-large">H</div>
-    <span class="profile-name">Nome Pacienttte</span>
+    <div class="avatar-large">
+      <?php
+        $partes = explode(' ', $_SESSION['nomeProfissional']);
+        echo strtoupper($partes[0][0] . ($partes[1][0] ?? ''));
+      ?>
+    </div>
+    <span class="profile-name"><?php echo $_SESSION['nomeProfissional']; ?></span>
     <span class="close-menu" id="close-menu">&times;</span>
   </div>
   <ul>
-  <li onclick="location.href='<?= BASE_URL ?>/paciente/perfil.php'">
+  <li onclick="location.href='<?= BASE_URL ?>/profissional/perfil.php'">
     <i class="fas fa-user"></i> Perfil
   </li>
-  <li onclick="location.href='#'">
+  <li onclick="location.href='<?= BASE_URL ?>/profissional/historico_consultas/listar_consultas.php'">
     <i class="fas fa-notes-medical"></i> Histórico de Consulta
   </li>
   <li onclick="location.href='#'">
@@ -82,11 +90,12 @@ header {
 .user-info .avatar {
   background-color: #003366;
   color: #fff;
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 20px;
   border-radius: 50%;
   font-weight: 600;
 }
@@ -111,7 +120,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #003366;
+  background: #14203B;
   color: #fff;
   padding: 15px;
   position: relative;

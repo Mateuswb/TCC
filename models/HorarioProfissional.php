@@ -44,6 +44,28 @@
             return $query->fetchAll(PDO::FETCH_ASSOC); 
         }
 
+
+        public function buscarLimitesDeHorario($idProfissional) {
+            $sql = "SELECT 
+                    MIN(hora_inicio) AS horario_inicio, 
+                    MAX(hora_fim) AS horario_fim
+                FROM horarios_profissionais
+                WHERE id_profissional = :idProfissional;
+            ";
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([
+                ':idProfissional' => $idProfissional
+            ]);
+            $horario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // Retorna já com as chaves corretas
+            return [
+                'horario_inicio' => $horario['horario_inicio'],
+                'horario_fim' => $horario['horario_fim']
+            ];
+        }
+
         public function editarHorario(
             $horaInicio, $horaFim, $inicioIntervalo, 
             $fimIntervalo, $profissionalId, $horarioId
@@ -79,9 +101,9 @@
             $horaAtual       = date("H:i");
 
             if ($dataSelecionada < $dataAtual) {
-                return [
+                return json_encode([
                     "erro" => "Não é possível realizar agendamentos em dias já passados."
-                ];
+                ]);
             }
 
             $mesmoDia = $dataSelecionada == $dataAtual;
@@ -99,11 +121,10 @@
 
             $diaSemana = $nomeDias[date("l", strtotime($dataSelecionada))];
 
-            $sql = "
-                SELECT id_horario, hora_inicio, hora_fim, inicio_intervalo, fim_intervalo
-                FROM horarios_profissionais
-                WHERE id_profissional = :profissionalId AND dia_semana = :diaSemana
-                ORDER BY hora_inicio
+            $sql = "SELECT id_horario, hora_inicio, hora_fim, inicio_intervalo, fim_intervalo
+                    FROM horarios_profissionais
+                    WHERE id_profissional = :profissionalId AND dia_semana = :diaSemana
+                    ORDER BY hora_inicio
             ";
             $query = $this->conn->prepare($sql);
             $query->execute([
@@ -112,13 +133,10 @@
             ]);
             $horariosBd1 = $query->fetchAll(PDO::FETCH_ASSOC);
 
-            $horarios = [
-                "disponiveis" => [],
-                "agendamento" => []
-            ];
+            $horarios = [];
 
             if (empty($horariosBd1)) {
-                return ["erro" => "Profissional não atende neste dia."];
+                return json_encode(["erro" => "Profissional não atende neste dia."]);
             }
 
             $intervaloMinutos = 30;
@@ -139,45 +157,87 @@
                 for ($hora = $horaInicio; $hora < $horaFim; $hora += $intervaloMinutos * 60) {
                     $proximaHora = $hora + $intervaloMinutos * 60;
 
+                    if($proximaHora > $horaFim){
+                        continue;
+                    }
                     // Pula o intervalo
                     if ($proximaHora <= $inicioIntervalo || $hora >= $fimIntervalo) {
                         if (!$mesmoDia || $hora > strtotime($horaAtual)) {
-                            $horarios['disponiveis'][] = date("H:i", $hora) . " - " . date("H:i", $proximaHora);
+                            $horarios[] = [
+                            'entrada' => $hora, 
+                            'saida' => $proximaHora
+                        ];
                         }
 
                     }
                 }
             }
 
-            $sql2 = "
-                SELECT horario_agendamento
-                FROM agendamentos_consultas
-                WHERE id_horario_profissional = :idHorario and dia_agendamento = :dataSelecionada
-                ORDER BY horario_agendamento
+            $sql2 = "SELECT horario_agendamento,
+                            p.nome,
+                            30 as duracao
+                        FROM agendamentos_consultas ac
+                        JOIN horarios_profissionais hp ON ac.id_horario_profissional = hp.id_horario
+                        JOIN profissionais p ON hp.id_profissional = p.id_profissional
+                        WHERE id_horario_profissional = :idHorario and dia_agendamento = :dataSelecionada
+
+                        UNION
+
+                        SELECT ae.horario_agendamento,
+                            p.nome,
+                            te.tempo_minutos as duracao
+                        FROM agendamentos_exames ae
+                        JOIN encaminhamentos e ON ae.id_encaminhamento = e.id_encaminhamento
+                        JOIN tipos_exames te ON e.id_exame = te.id_exame
+                        JOIN agendamentos_consultas ac ON e.id_agendamento_consulta = ac.id_agendamento
+                        JOIN horarios_profissionais hp ON ac.id_horario_profissional = hp.id_horario
+                        JOIN profissionais p ON hp.id_profissional = p.id_profissional
+                        WHERE (SELECT sub.id_horario
+                                FROM horarios_profissionais sub
+                                WHERE sub.id_profissional = p.id_profissional
+                                AND dia_semana = (CASE 
+                                    WHEN DAYOFWEEK(ae.dia_agendamento) = 1 THEN 'domingo'
+                                    WHEN DAYOFWEEK(ae.dia_agendamento) = 2 THEN 'segunda'
+                                    WHEN DAYOFWEEK(ae.dia_agendamento) = 3 THEN 'terca'
+                                    WHEN DAYOFWEEK(ae.dia_agendamento) = 4 THEN 'quarta'
+                                    WHEN DAYOFWEEK(ae.dia_agendamento) = 5 THEN 'quinta'
+                                    WHEN DAYOFWEEK(ae.dia_agendamento) = 6 THEN 'sexta'
+                                    WHEN DAYOFWEEK(ae.dia_agendamento) = 7 THEN 'sabado'
+                                    ELSE null
+                                END)) = :idHorario and ae.dia_agendamento = :dataSelecionada
+                        ORDER BY 1;
+
             ";
             $query2 = $this->conn->prepare($sql2);
             $query2->execute([
                 'idHorario' => $idHorario,
                 'dataSelecionada' => $dataSelecionada
                 ]);
-            $horariosBd2 = $query2->fetchAll(PDO::FETCH_ASSOC);
+            $agendas = $query2->fetchAll(PDO::FETCH_ASSOC);
 
-            foreach ($horariosBd2 as $h) {
-                $entrada = $h['horario_agendamento'];
-
-                $horaInicio = strtotime($entrada);
-                $proximaHora = $horaInicio + $intervaloMinutos * 60;
-                $horarios['agendamento'][] = date("H:i", $horaInicio) . " - " . date("H:i", $proximaHora);
+            $horariosLivres = [];
+            foreach ($horarios as $h) {
+                $inicioDisponivel = $h['entrada'];
+                $fimDisponivel = $h['saida'];
+                $ocupado = false;
+                
+                foreach ($agendas as $agenda) {
+                    $inicioAgenda = strtotime($agenda['horario_agendamento']);
+                    $fimAgenda = strtotime($agenda['horario_agendamento']) + ($agenda['duracao'] * 60);
+                    
+                    // Verifica se há sobreposição de horários
+                    if ($inicioAgenda < $fimDisponivel && $fimAgenda > $inicioDisponivel) {
+                        $ocupado = true;
+                        break;
+                    }
+                }
+                
+                if (!$ocupado) {
+                    $horariosLivres[] = date("H:i", $inicioDisponivel) . " - " . date("H:i", $fimDisponivel);
+                }
             }
-
-            // Verifica se ainda há horários disponíveis
-            if (empty($horarios['disponiveis'])) {
-                return [
-                    "erro" => "Não há horários disponíveis para este profissional neste dia."
-                ];
-            }
-
-            return $horarios;
+            
+            return json_encode($horariosLivres);
         }
 
         public function recuperaIdHorario($dataSelecionada, $profissionalId) {
@@ -216,8 +276,21 @@
         }
 
 
+
         # horarios disponiveis para agendamento do exame
         public function listarHorariosDisponiveisExame($dataSelecionada, $exame) {
+            date_default_timezone_set('America/Sao_Paulo'); // Define horário de Brasília
+
+            $dataSelecionada = date("Y-m-d", strtotime($dataSelecionada));
+            $dataAtual       = date("Y-m-d");
+            $horaAtual       = date("H:i");
+
+            if ($dataSelecionada < $dataAtual) {
+                return json_encode([
+                    "erro" => "Não é possível realizar agendamentos em dias já passados."
+                ]);
+            }
+            
             $nomeDias = [
                 "Sunday"    => "domingo",
                 "Monday"    => "segunda",
@@ -238,15 +311,15 @@
             "gemoglobina glicada"       => "exame_hemoglobina_glicada",
 
             // Exames de imagem
-            "raio-x"                    => "exame_raio_x",
-            "ressonância magnética"     => "exame_ressonancia_magnetica",
-            "tomografia"                => "exame_tomografia",
-            "ultrassonografia"          => "exame_ultrassonografia",
-            "mamografia"                => "exame_mamografia",
-            "densitometria óssea"       => "exame_densitometria_ossea",
+            "Raio-x"                    => "exame_raio_x",
+            "Ressonância magnética"     => "exame_ressonancia_magnetica",
+            "Tomografia"                => "exame_tomografia",
+            "Ultrassonografia"          => "exame_ultrassonografia",
+            "Mamografia"                => "exame_mamografia",
+            "Densitometria óssea"       => "exame_densitometria_ossea",
 
             //  Exames cardiológicos
-            "eletrocardiograma"         => "exame_eletrocardiograma",
+            "Eletrocardiograma"         => "exame_eletrocardiograma",
             "ecocardiograma"            => "exame_ecocardiograma",
             "holter"                    => "exame_holter",
             "teste Ergométrico"         => "exame_teste_ergometrico",
@@ -295,20 +368,23 @@
 
             $horariosBd1 = $query->fetchall(PDO::FETCH_ASSOC);
 
-            $horarios = [
-                "disponiveis" => [],
-                "agendamento" => []
-            ];
-
+            $horarios = [];
+            $sql =  "SELECT tempo_minutos from tipos_exames WHERE nome = :nomeExame";
+            $query = $this->conn->prepare($sql);
+            $query->execute([
+                'nomeExame' => $exame
+            ]);
+            $tempoMinutos = $query->fetchColumn();
+        
             $intervaloMinutos = 30;
-            $idHorario = 0;
+
+            $sobraTempoExame = ceil($tempoMinutos / $intervaloMinutos);
 
             foreach ($horariosBd1 as $h) {
                 $entrada           = $h['hora_inicio'];
                 $saida             = $h['hora_fim'];
                 $inicioIntervaloBd = $h['inicio_intervalo'];
                 $fimIntervaloBd    = $h['fim_intervalo'];
-                $idHorario         = $h['id_horario'];
                 $nomeProfissional  = $h['nome'];
 
                 $horaInicio      = strtotime($entrada);
@@ -316,40 +392,85 @@
                 $inicioIntervalo = strtotime($inicioIntervaloBd);
                 $fimIntervalo    = strtotime($fimIntervaloBd);
 
-                for ($hora = $horaInicio; $hora < $horaFim; $hora += $intervaloMinutos * 60) {
-                    $proximaHora = $hora + $intervaloMinutos * 60;
+                for ($hora = $horaInicio; $hora < $horaFim; $hora += ($intervaloMinutos * 60 * $sobraTempoExame)) {
+                    $proximaHora = $hora + ($intervaloMinutos * 60 * $sobraTempoExame);
 
                     // Pula o intervalo
+                    if($proximaHora > $horaFim){
+                        continue;
+                    }
                     if ($proximaHora <= $inicioIntervalo || $hora >= $fimIntervalo) {
-                        $horarios['disponiveis'][$nomeProfissional][] = date("H:i", $hora) . " - " . date("H:i", $proximaHora);
+                        $horarios[$nomeProfissional][] = [
+                            'entrada' => $hora, 
+                            'saida' => $proximaHora
+                        ];
                     }
                 }
             }
 
-            $sql2 = "SELECT horario_agendamento, p.nome
-                FROM agendamentos_consultas ac
-                JOIN horarios_profissionais hp ON ac.id_horario_profissional = hp.id_horario
-                JOIN profissionais p ON hp.id_profissional = p.id_profissional
-                WHERE id_horario_profissional = :idHorario and dia_agendamento = :dataSelecionada
-                ORDER BY horario_agendamento
+            $sql2 = "SELECT horario_agendamento,
+                            p.nome,
+                            30 as duracao
+                        FROM agendamentos_consultas ac
+                        JOIN horarios_profissionais hp ON ac.id_horario_profissional = hp.id_horario
+                        JOIN profissionais p ON hp.id_profissional = p.id_profissional
+                        WHERE p.id_profissional in (SELECT id_profissional
+                                                    FROM profissionais 
+                                                    WHERE JSON_CONTAINS(especialidade, JSON_QUOTE(:nomeExame)))
+                            and dia_agendamento = :dataSelecionada
+
+                        UNION
+
+                        SELECT ae.horario_agendamento,
+                            p.nome,
+                            te.tempo_minutos as duracao
+                        FROM agendamentos_exames ae
+                        JOIN encaminhamentos e ON ae.id_encaminhamento = e.id_encaminhamento
+                        JOIN tipos_exames te ON e.id_exame = te.id_exame
+                        JOIN agendamentos_consultas ac ON e.id_agendamento_consulta = ac.id_agendamento
+                        JOIN horarios_profissionais hp ON ac.id_horario_profissional = hp.id_horario
+                        JOIN profissionais p ON hp.id_profissional = p.id_profissional
+                        WHERE p.id_profissional in (SELECT id_profissional
+                                                    FROM profissionais 
+                                                    WHERE JSON_CONTAINS(especialidade, JSON_QUOTE(:nomeExame)))
+                            and ae.dia_agendamento = :dataSelecionada
+                        ORDER BY 1;
+
             ";
             $query2 = $this->conn->prepare($sql2);
             $query2->execute([
-                'idHorario' => $idHorario,
+                'nomeExame' => $nomeExames[$exame],
                 'dataSelecionada' => $dataSelecionada
-                ]);
-            $horariosBd2 = $query2->fetchAll(PDO::FETCH_ASSOC);
+            ]);
+            $agendas = $query2->fetchAll(PDO::FETCH_ASSOC);
 
-            foreach ($horariosBd2 as $h) {
-                $entrada = $h['horario_agendamento'];
-                $nomeProfissional = $h['nome'];
-
-                $horaInicio = strtotime($entrada);
-                $proximaHora = $horaInicio + $intervaloMinutos * 60;
-                $horarios['agendamento'][$nomeProfissional][] = date("H:i", $horaInicio) . " - " . date("H:i", $proximaHora);
+            $horariosLivres = [];
+            foreach ($horarios as $nomeProfissional => $disponiveis) {
+                $horariosLivres[$nomeProfissional] = [];
+                
+                foreach ($disponiveis as $disponivel) {
+                    $inicioDisponivel = $disponivel['entrada'];
+                    $fimDisponivel = $disponivel['saida'];
+                    $ocupado = false;
+                    
+                    foreach ($agendas as $agenda) {
+                        $inicioAgenda = strtotime($agenda['horario_agendamento']);
+                        $fimAgenda = strtotime($agenda['horario_agendamento']) + ($agenda['duracao'] * 60);
+                        
+                        // Verifica se há sobreposição de horários
+                        if ($inicioAgenda < $fimDisponivel && $fimAgenda > $inicioDisponivel) {
+                            $ocupado = true;
+                            break;
+                        }
+                    }
+                    
+                    if (!$ocupado) {
+                        $horariosLivres[$nomeProfissional][] = date("H:i", $inicioDisponivel) . " - " . date("H:i", $fimDisponivel);;
+                    }
+                }
             }
             
-            return json_encode($horarios);
+            return json_encode($horariosLivres);
         }
     }
 ?>

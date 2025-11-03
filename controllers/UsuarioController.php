@@ -17,7 +17,7 @@
             $cpf = trim($_POST['cpf']);
             $cpf = str_replace(['.', '-'], '', $cpf);
             $password = $_POST['password'];
-
+            
             $usuario = $this->usuarioModel->buscarPorCPF($cpf);
 
             if ($usuario && password_verify($password, $usuario['senha'])) {
@@ -78,8 +78,8 @@
             }
 
             if ($this->usuarioModel->buscarPorCPF($cpf)) {
-                $_SESSION['error'] = "CPF já cadastrado!";
-                header("Location: ../views/index.php");
+                $_SESSION['error'] = "CPF já cadastrado. Tente novamente.";
+                header("Location: ../views/usuario/cadastro.php");
                 exit;
             }
 
@@ -93,9 +93,27 @@
 
             if (isset($_SESSION['tipoUsuario']) && $_SESSION['tipoUsuario'] == 'admin') {
                 // admin cadastrando
-                if ($tipoUsuario === 'profissional') {
+                if ($tipoUsuario == 'profissional') {
                     header("Location: ../views/administrador/cadastrar/profissional/cadastrar_profissional.php");
-                } else {
+                } else if($tipoUsuario == 'admin') {
+                    $cadastro = $this->usuarioModel->criarUsuario($cpf, $senhaHash, $tipoUsuario, $statusUsuario, $dataCriacao);
+
+                    if($cadastro){
+                        $_SESSION['flash'] = [
+                            'type' => 'success',
+                            'message' => "Administrador cadastrado com sucesso"
+                        ];
+                    }
+                    else{
+                        $_SESSION['flash'] = [
+                            'type' => 'error',
+                            'message' => "Erro ao cadastrar administrador. Tente novamente"
+                        ];
+                    }
+                    header("Location: ../views/administrador/home.php");
+                    exit;
+                }
+                else {
                     header("Location: ../views/administrador/cadastrar/paciente/cadastrar_paciente.php");
                 }
                 exit;
@@ -105,9 +123,11 @@
                 exit;
             }
         }
-
+        
         public function cadastrar() {
-            session_start();
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
             $dadosUsuario = $_SESSION['cadastroTemp'];
 
             $cpf = $dadosUsuario['cpf'];

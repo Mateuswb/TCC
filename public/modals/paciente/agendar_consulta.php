@@ -1,12 +1,13 @@
 <div id="modalAgendamento" class="modal">
   <div class="modal-content">
 
+    <span class="fechar-modal" id="fecharModalAgendamento">&times;</span>
+
     <div class="modal-header">
       <div class="header-left">
-        <img src="https://cdn-icons-png.flaticon.com/512/3870/3870822.png" alt="Foto do Profissional">
+        <img src="../../../public/assets/icones/doctor.png" alt="Foto do Profissional">
         <div class="header-info">
           <h2 id="nomeProfissional">Nome do Profissional</h2>
-          <p>Atendimento Particular</p>
         </div>
       </div>
       <div class="header-title">
@@ -15,12 +16,7 @@
       </div>
     </div>
 
-    <span class="fechar-modal" id="fecharModalAgendamento">&times;</span>
-
-
     <div class="container-modal">
-      <h3>Confirme seus dados para o Agendamento</h3>
-
       <form action="../../../controllers/AgendamentoConsultaController.php?acao=agendarConsulta"
             method="post" id="formAgendar" enctype="multipart/form-data">
 
@@ -37,7 +33,11 @@
 
         <div class="form-control" id="box-anexo" style="display:none;">
           <label for="anexo">Anexar Arquivo (apenas para retorno)</label>
-          <input type="file" name="anexo" id="anexo" accept=".pdf,.jpg,.png,.jpeg">
+          <div class="upload-box">
+            <input type="file" name="anexo" id="anexo" accept=".pdf">
+            <label for="anexo" class="btn-upload">Escolher Arquivo</label>
+            <span id="file-name">Nenhum arquivo selecionado</span>
+          </div>
         </div>
 
         <div class="form-control">
@@ -45,21 +45,20 @@
           <input type="date" id="diaAgendamento" name="diaAgendamento" required>
         </div>
 
-
+        <div id="mensagemErro" class="mensagem-erro" style="display:none;"></div>
 
         <div class="form-control">
-          <div id="mensagemErro" style="display:none; color:#842029; background-color:#f8d7da; padding:10px; border-radius:5px; margin-bottom:10px;"></div>
-          <label for="horarioAgendamento">Escolha o Horário</label>
+          <label for="horarioAgendamento">Horários</label>
+          <div id="mensagemHorario">Selecione um dia para ver os horários disponíveis.</div>
           <div id="times" class="times"></div>
         </div>
-        
 
         <div class="form-control">
           <label for="observacao">Observações</label>
           <textarea id="observacao" name="observacao" placeholder="Escreva alguma observação..."></textarea>
         </div>
 
-        <input type="submit" class="btn-agendarConsulta" value="Agenar">
+        <input type="submit" class="btn-agendarConsulta" value="Agendar">
       </form>
     </div>
 
@@ -71,13 +70,25 @@
 </div>
 
 <style>
+
+.mensagem-erro {
+  color: #842029;
+  background-color: #f8d7da;
+  border: 1px solid #f5c2c7;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-weight: 500;
+}
+
 .modal {
   display: none;
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.45);
-    backdrop-filter: blur(3px);
-  z-index: 9999999999;
+  backdrop-filter: blur(3px);
+  z-index: 9999;
   overflow-y: auto;
   padding: 40px 20px;
 }
@@ -91,15 +102,16 @@
   box-shadow: 0 4px 20px rgba(0,0,0,0.25);
   overflow: hidden;
   position: relative;
-  animation: slideIn 0.3s ease;
   display: flex;
   flex-direction: column;
+  animation: slideIn 0.3s ease;
 }
 
 @keyframes slideIn {
   from { transform: translateY(-30px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
+
 
 .fechar-modal {
   position: absolute;
@@ -121,9 +133,8 @@
   position: relative;
   background: #005baa;
   color: #fff;
-  padding: 5px 10px;
+  padding: 10px 10px;
 }
-
 
 .header-left {
   display: flex;
@@ -132,10 +143,9 @@
 }
 
 .header-left img {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 8px;
-  object-fit: cover;
 }
 
 .header-info {
@@ -147,7 +157,7 @@
 
 .header-info h2 {
   font-size: 1rem;
-  margin: 0;
+  margin-left: -15px;
 }
 
 .header-info p {
@@ -163,31 +173,13 @@
   text-align: center;
 }
 
-.header-title h3 {
-  font-size: 20px;
-  margin: 0;
-}
-
-.header-title span {
-  font-size: 15px;
-}
+.header-title h3 { font-size: 20px; margin: 0; }
+.header-title span { font-size: 15px; }
 
 
-.container-modal {
-  padding: 20px 30px;
-}
-
-.form-control {
-  margin-bottom: 20px;
-}
-
-label {
-  font-weight: 600;
-  color: #333;
-  display: block;
-  margin-bottom: 6px;
-}
-
+.container-modal { padding: 20px 30px; }
+.form-control { margin-bottom: 20px; }
+label { font-weight: 600; color: #333; display: block; margin-bottom: 6px; }
 select, input[type="date"], input[type="file"], textarea {
   width: 100%;
   padding: 12px;
@@ -196,27 +188,26 @@ select, input[type="date"], input[type="file"], textarea {
   font-size: 15px;
   transition: all 0.3s;
 }
-#observacao {
-  resize: none; 
-}
-
+textarea { resize: vertical; min-height: 80px; }
+#observacao { resize: none; }
 select:focus, input:focus, textarea:focus {
   border-color: #005baa;
   box-shadow: 0 0 3px rgba(0,91,170,0.4);
   outline: none;
 }
 
-textarea {
-  resize: vertical;
-  min-height: 80px;
+#anexo {
+  display: none;
 }
 
-/* ===== HORÁRIOS ===== */
+
 .times {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
   margin-top: 10px;
+  justify-content: center;
+  align-items: start;
 }
 
 .time-slot {
@@ -224,13 +215,15 @@ textarea {
   color: #333;
   border: 1px solid #005baa;
   border-radius: 8px;
-  padding: 10px 20px;
+  padding: 12px;
   cursor: pointer;
   font-weight: 600;
   transition: 0.3s;
-  user-select: none;
-  min-width: 120px;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 45px;
 }
 
 .time-slot:hover,
@@ -239,21 +232,51 @@ textarea {
   color: #fff;
 }
 
-.time-slot.selected {
+.time-slot:has(input[type="radio"]:checked) {
+  background: #005baa;
+  color: #fff;
+  border-color: #00468a;
   box-shadow: 0 0 0 3px rgba(0,91,170,0.3);
 }
 
-.time-slot-bloqueado {
-  background: #f1f1f1;
-  color: #999;
-  border: 1px dashed #ccc;
-  border-radius: 8px;
-  padding: 10px 20px;
-  min-width: 120px;
-  text-align: center;
-  cursor: not-allowed;
+
+.upload-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 8px 10px; 
+  border: 1px solid #ccc; 
+  border-radius: 12px; 
+  background-color: #ffffffff; 
+  transition: all 0.3s;
 }
 
+.upload-box:hover {
+  border-color: #005baa; /* muda a cor da borda ao passar o mouse */
+  box-shadow: 0 1px 8px rgba(0,91,170,0.2); /* sombra suave */
+}
+
+.btn-upload {
+  background: #005baa;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 600;
+  border: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15); /* sombra leve */
+}
+
+.btn-upload:hover {
+  background: #00468a; /* cor mais escura ao passar o mouse */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* sombra mais pronunciada */
+  transform: translateY(-2px); /* efeito sutil de "levitar" */
+}
+
+
+.btn-upload:hover { background: #00468a; }
 
 .btn-agendarConsulta {
   margin-top: 25px;
@@ -272,20 +295,6 @@ textarea {
 .btn-agendarConsulta:hover { background: #00468a; }
 
 
-
-.time-slot input[type="radio"] {
-  display: none;
-}
-
-
-.time-slot:has(input[type="radio"]:checked) {
-  background: #005baa;
-  color: #fff;
-  border-color: #00468a;
-  box-shadow: 0 0 0 3px rgba(0,91,170,0.3);
-}
-
-
 .modal-footer {
   background: #f3f4f6;
   text-align: center;
@@ -295,65 +304,96 @@ textarea {
   color: #333;
 }
 
+
 @media (max-width: 768px) {
-  .modal-header {
-    flex-direction: column;
-    text-align: center;
-    gap: 10px;
-  }
-
-  .header-left {
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .header-title {
-    position: static;
-    transform: none;
-    margin-top: 5px;
-  }
-
-  .container-modal {
-    padding: 25px;
-  }
+  .modal-header { flex-direction: column; text-align: center; gap: 10px; }
+  .header-left { justify-content: center; gap: 10px; }
+  .header-title { position: static; transform: none; margin-top: 5px; }
+  .container-modal { padding: 25px; }
 }
+
+
+.time-slot input[type="radio"] {
+  display: none;
+}
+
 
 </style>
 
 <script>
-  document.getElementById('diaAgendamento').addEventListener('change', function() {
-  const data = this.value;
-  const idProfissional = document.getElementById('idProfissional').value;
+  const tipoConsulta = document.getElementById('tipoConsulta');
+  const boxAnexo = document.getElementById('box-anexo');
+  const inputAnexo = document.getElementById('anexo');
+  const formAgendar = document.getElementById('formAgendar');
+  const diaAgendamento = document.getElementById('diaAgendamento');
   const container = document.getElementById('times');
   const mensagemErro = document.getElementById('mensagemErro');
+  const mensagemHorario = document.getElementById('mensagemHorario');
+  const fileNameSpan = document.getElementById('file-name');
 
-  container.innerHTML = '';
-  mensagemErro.style.display = 'none';
-  mensagemErro.innerText = '';
+  const showError = (msg) => {
+    mensagemErro.style.display = 'block';
+    mensagemErro.innerText = msg;
+  };
 
-  fetch('../../../controllers/PacienteController.php', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: `data=${encodeURIComponent(data)}&idProfissional=${encodeURIComponent(idProfissional)}`
-  })
-  .then(r => r.json())
-  .then(retorno => {
-    if (retorno.erro) {
-      mensagemErro.style.display = 'block';
-      mensagemErro.innerText = retorno.erro;
-      return;
+  tipoConsulta.addEventListener('change', () => {
+    boxAnexo.style.display = tipoConsulta.value === 'r' ? 'block' : 'none';
+    if (tipoConsulta.value !== 'r') {
+      inputAnexo.value = '';
+      fileNameSpan.textContent = 'Nenhum arquivo selecionado';
     }
-  
-    if (!retorno?.disponiveis) return;
+  });
 
-    retorno.disponiveis.forEach(h => {
-      const bloqueado = retorno.agendamento?.includes(h);
-      container.innerHTML += bloqueado
-        ? `<label class="time-slot-bloqueado">${h}</label>`
-        : `<label class="time-slot"><input type="radio" name="horarioAgendamento" value="${h}" required><span>${h}</span></label>`;
-    });
-  })
-  .catch(err => console.error("Erro:", err));
-});
+  inputAnexo.addEventListener('change', () => {
+    fileNameSpan.textContent = inputAnexo.files[0]?.name || 'Nenhum arquivo selecionado';
+  });
+
+  //  Buscar horários disponíveis
+  diaAgendamento.addEventListener('change', () => {
+    const data = diaAgendamento.value;
+    const idProfissional = document.getElementById('idProfissional').value;
+
+    container.innerHTML = '';
+    mensagemErro.style.display = mensagemHorario.style.display = 'none';
+
+    if (!data) 
+      return mensagemHorario.style.display = 'block', 
+      mensagemHorario.innerText = 'Selecione um dia para ver os horários disponíveis.';
+
+    fetch('../../../controllers/PacienteController.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `data=${encodeURIComponent(data)}&idProfissional=${encodeURIComponent(idProfissional)}`
+    })
+    .then(r => r.json())
+    .then(retorno => {
+      if (retorno.erro) return showError(retorno.erro);
+
+      mensagemHorario.style.display = 'block';
+      mensagemHorario.innerText = 'Escolha um horário:';
+      container.innerHTML = retorno.map(h => `
+        <label class="time-slot">
+          <input type="radio" name="horarioAgendamento" value="${h}">
+          <span>${h}</span>
+        </label>
+      `).join('');
+    })
+    .catch(() => showError('Erro ao carregar horários. Tente novamente.'));
+  });
+
+
+  formAgendar.addEventListener('submit', (e) => {
+    const tipo = tipoConsulta.value;
+    const horarioSelecionado = document.querySelector('input[name="horarioAgendamento"]:checked');
+    const arquivo = inputAnexo.files.length > 0;
+
+    mensagemErro.style.display = 'none';
+    if (!horarioSelecionado) 
+      return e.preventDefault(), 
+      showError('Por favor, selecione um horário antes de agendar.');
+    if (tipo === 'r' && !arquivo) 
+      return e.preventDefault(), 
+      showError('Por favor, envie o arquivo de retorno antes de agendar.');
+  });
 
 </script>

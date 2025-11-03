@@ -1,0 +1,124 @@
+<!-- Modal de Deletar Usuário -->
+<div id="modalDeletarUsuario" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeModalDelete">&times;</span>
+    <h2>Excluir Usuário</h2>
+    <p id="mensagemDelete">Tem certeza que deseja deletar este usuário? Esta ação não pode ser desfeita.</p>
+
+    <div class="form-buttons">
+      <form id="formDeletarUsuario" method="post" action="../../../controllers/AdministradorController.php?acao=deletarUsuario">
+        <input type="int" name="idUsuario" id="delete_id_usuario">
+        <input type="int" name="cpf" id="delete_cpf_usuario">
+        <button type="submit" class="btn save">Confirmar</button>
+      </form>
+      <button type="button" class="btn cancel" id="cancelModalDelete">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Reaproveitando estilo do modal de editar */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  font-family: "Poppins", sans-serif;
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 100px auto;
+  padding: 30px 40px;
+  border-radius: 12px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+.modal-content h2 {
+  color: #d90429;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.modal-content p {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.modal-content .form-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.modal-content .btn.save {
+  background-color: #d90429;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.modal-content .btn.save:hover {
+  background-color: #b80022;
+}
+
+.modal-content .btn.cancel {
+  background-color: #ccc;
+  color: #222;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.modal-content .close {
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+</style>
+
+
+<script>
+const modalDelete = document.getElementById("modalDeletarUsuario");
+const closeModalDelete = document.getElementById("closeModalDelete");
+const cancelModalDelete = document.getElementById("cancelModalDelete");
+const mensagemDelete = document.getElementById("mensagemDelete");
+const deleteIdInput = document.getElementById("delete_id_usuario");
+const delete_cpf_usuario = document.getElementById("delete_cpf_usuario");
+
+function abrirModalDeletarUsuario(botao) {
+  const id = botao.dataset.id;
+  const cpf = botao.dataset.cpf; // trocar de .cpf para .login
+
+  // Preencher hidden e mensagem
+  deleteIdInput.value = id;
+  delete_cpf_usuario.value = cpf;
+  mensagemDelete.textContent = `Tem certeza que deseja deletar este usuário? Esta ação não pode ser desfeita.`;
+
+  modalDelete.style.display = "block";
+}
+
+// Fechar modal
+closeModalDelete.onclick = () => modalDelete.style.display = "none";
+cancelModalDelete.onclick = () => modalDelete.style.display = "none";
+
+// Fechar clicando fora do modal
+window.onclick = function(event) {
+  if (event.target == modalDelete) {
+    modalDelete.style.display = "none";
+  }
+}
+</script>
+

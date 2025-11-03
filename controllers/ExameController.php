@@ -16,10 +16,10 @@
             return $this->exameModel->listarExames();
         }
 
-        public function pegarExame(){
-            $idExame = $_POST['idExame']; 
-            return $this->exameModel->pegarExame($idExame);
+        public function listarExamesDisponiveisParaEncaminhamento(){
+            return $this->exameModel->listarExamesDisponiveisParaEncaminhamento();
         }
+
 
         public function exibirHorarios($dataSelecionada, $exame) {
             $horariosDisponiveis = $this->horarioModel->listarHorariosDisponiveisExame($dataSelecionada, $exame);

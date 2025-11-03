@@ -104,13 +104,19 @@ tr:hover {
     background: #e1f0ff;
 }
 
-.status.active {
-    color: green;
+.status.ativo {
+    background-color: green;
+    padding: 5px 12px 5px 12px;
+    border-radius: 5px;
+    color: #e1f0ff;
     font-weight: bold;
 }
 
 .status.inativo {
-    color: red;
+    background-color: red;
+    padding: 5px 12px 5px 12px;
+    border-radius: 5px;
+    color: #e1f0ff;
     font-weight: bold;
 }
 

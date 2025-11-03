@@ -5,12 +5,10 @@
     require_once dirname(__DIR__) . "/models/HorarioProfissional.php";
 
     class AgendamentoConsultaController {
-        private $pacienteModel;
         private $agendamentoConsultaModel;
         private $horarioModel;
 
         public function __construct($conn){
-            $this->pacienteModel = new Paciente($conn);
             $this->agendamentoConsultaModel = new AgendamentoConsulta($conn);
             $this->horarioModel = new Horario($conn);
         }

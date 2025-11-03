@@ -6,38 +6,9 @@
 }
 
 body {
-    background: #f5f6fa;
+    background: #dcdcdc;
     min-height: 100vh;
     display: flex;
-}
-
-
-/* Sidebar */
-.menu {
-    flex: 1;
-    padding: 10px 0;
-}
-
-.menu a {
-    display: flex;
-    align-items: center;
-    padding: 12px 20px;
-    color: #333;
-    text-decoration: none;
-    font-size: 15px;
-    transition: background 0.2s;
-}
-
-.menu a i {
-    margin-right: 10px;
-    color: #007B8F;
-}
-
-.menu a:hover,
-.menu a.active {
-    background: #e6f7f9;
-    color: #007B8F;
-    border-left: 4px solid #007B8F;
 }
 
 /* Main content */
@@ -45,6 +16,7 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
+    margin-top: 50px;
 }
 
 .topbar {
@@ -64,7 +36,7 @@ body {
 
 /* Profile header */
 .profile-header {
-    background: #007B8F;
+   background: linear-gradient(rgb(3, 71, 199), rgb(15, 47, 123));
     color: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -85,7 +57,7 @@ body {
 }
 
 .profile-header button {
-    background: #0ca4b9;
+    background: #004BF3;
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
@@ -117,8 +89,8 @@ body {
 }
 
 .tab-buttons button.active {
-    border-bottom: 3px solid #007B8F;
-    color: #007B8F;
+    border-bottom: 3px solid #013AA6;
+    color: #000000;
 }
 
 .tab-content {
@@ -135,7 +107,7 @@ body {
 }
 
 .section h4 {
-    color: #007B8F;
+    color: #000000;
     margin-bottom: 10px;
 }
 
@@ -170,7 +142,7 @@ textarea {
 }
 
 input[type="submit"] {
-    background: #0ca4b9;
+    background: #003892;
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -180,5 +152,5 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-    background: #0991a0;
+    background: #002054;
 }

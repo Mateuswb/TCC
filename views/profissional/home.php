@@ -88,10 +88,9 @@
         <aside class="right-panel">
           <div style="display:flex;justify-content:space-between;align-items:center">
             <div>
-              <div style="font-size:14px;color:#4b5563;font-weight:600">Comparação</div>
+              <div style="font-size:14px;color:#4b5563;font-weight:600">Comparação de consultas e retornos</div>
               <div class="small-muted" style="margin-top:2px">Essa semana</div>
               <div style="margin-top:6px">
-                <span style="display:inline-block;background:#0d6efd;color:#fff;padding:4px 8px;border-radius:6px;font-size:13px">relaorio vai aq depois</span>
               </div>
             </div>
           </div>

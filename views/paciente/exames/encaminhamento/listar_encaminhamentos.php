@@ -26,6 +26,7 @@
 </head>
   
 <body>
+  <?php include '../../../../public/assets/alerta/flash.php'; ?>
   <main>
     <h1>Seus <span>Encaminhamentos</span> estão <span>aqui</span></h1>
 
