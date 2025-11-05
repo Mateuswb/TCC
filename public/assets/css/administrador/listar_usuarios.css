@@ -23,7 +23,7 @@ body {
     margin-left: 80px;
 }
 
-/* Header */
+
 .header {
     display: flex;
     justify-content: space-between;
@@ -59,7 +59,7 @@ body {
     margin-right: 15px;
 }
 
-/* Conteúdo */
+
 .content {
     padding: 30px;
 }

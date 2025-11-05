@@ -21,7 +21,7 @@
   </div>
 </header>
 
-<!-- MENU SUSPENSO -->
+
 <div class="profile-menu" id="profile-menu">
   <div id="profile-header">
     <div class="avatar-large">

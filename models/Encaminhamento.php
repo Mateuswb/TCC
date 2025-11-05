@@ -61,5 +61,71 @@
                 'idEncaminhamento' => $idEncaminhamento
             ]);
         }
+
+        public function cancelarEncaminhamento($idEncaminhamento) {
+            $sql = "UPDATE encaminhamentos 
+                    SET status = 'cancelado'
+                    WHERE id_encaminhamento = :idEncaminhamento";
+
+            $query = $this->conn->prepare($sql);
+            $query->execute([
+                'idEncaminhamento' => $idEncaminhamento
+            ]);
+            return $query;
+        }
+
+
+        public function reencaminharExame($idEncaminhamento, $idExame, $observacoes){
+            $sql = " UPDATE encaminhamentos
+                    SET id_exame = :idExame,
+                        observacoes = :observacoes,
+                        status = 'pendente'
+                    WHERE id_encaminhamento = :idEncaminhamento";
+
+            $query = $this->conn->prepare($sql);
+            $query->execute([
+                'idEncaminhamento' => $idEncaminhamento,
+                'idExame'          =>  $idExame,
+                'observacoes'      => $observacoes
+            ]);
+
+            return $query;
+        }
+
+        public function listarEncaminhamentosProfissioal($profissionalId){
+            $sql = "SELECT 
+                    e.id_encaminhamento,
+                    e.id_exame,
+                    ex.nome AS nome_exame,
+                    e.observacoes,
+                    e.status AS status_encaminhamento,
+                    ac.dia_agendamento,
+                    ac.horario_agendamento,
+                    p.nome AS nome_paciente,
+                    pr.nome AS profissional_encaminhou,
+                    ac.id_agendamento,
+                    ae.id_agendamento AS id_agendamento_exame
+                FROM encaminhamentos e
+                INNER JOIN agendamentos_consultas ac 
+                    ON e.id_agendamento_consulta = ac.id_agendamento
+                INNER JOIN pacientes p 
+                    ON ac.id_paciente = p.id_paciente
+                INNER JOIN horarios_profissionais hp 
+                    ON ac.id_horario_profissional = hp.id_horario
+                INNER JOIN profissionais pr 
+                    ON hp.id_profissional = pr.id_profissional
+                INNER JOIN tipos_exames ex 
+                    ON e.id_exame = ex.id_exame
+                LEFT JOIN agendamentos_exames ae 
+                    ON ae.id_encaminhamento = e.id_encaminhamento
+                WHERE pr.id_profissional = :idProfissional
+                ORDER BY e.id_encaminhamento DESC";
+            $query = $this->conn->prepare($sql);
+            $query->execute([
+                'idProfissional' => $profissionalId
+            ]);
+
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        }
     }
 ?>

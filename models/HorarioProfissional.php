@@ -168,7 +168,6 @@
                             'saida' => $proximaHora
                         ];
                         }
-
                     }
                 }
             }
@@ -236,6 +235,9 @@
                     $horariosLivres[] = date("H:i", $inicioDisponivel) . " - " . date("H:i", $fimDisponivel);
                 }
             }
+            if (empty($horariosLivres)) {
+                return json_encode(["erro" => "Nenhum horário disponivel neste momento. Agende outro dia"]);
+            }
             
             return json_encode($horariosLivres);
         }
@@ -276,7 +278,6 @@
         }
 
 
-
         # horarios disponiveis para agendamento do exame
         public function listarHorariosDisponiveisExame($dataSelecionada, $exame) {
             date_default_timezone_set('America/Sao_Paulo'); // Define horário de Brasília
@@ -290,7 +291,9 @@
                     "erro" => "Não é possível realizar agendamentos em dias já passados."
                 ]);
             }
-            
+
+            $mesmoDia = $dataSelecionada == $dataAtual;
+
             $nomeDias = [
                 "Sunday"    => "domingo",
                 "Monday"    => "segunda",
@@ -303,16 +306,16 @@
 
            $nomeExames = [
             // Exames de sangue
-            "hemograma"                 => "exame_hemograma",
-            "colesterol"                => "exame_colesterol",
-            "glicemia"                  => "exame_glicemia",
-            "triglicerídeos"            => "exame_triglicerideos",
-            "plaquetas"                 => "exame_plaquetas",
-            "gemoglobina glicada"       => "exame_hemoglobina_glicada",
+            "Hemograma"                 => "exame_hemograma",
+            "Colesterol"                => "exame_colesterol",
+            "Glicemia"                  => "exame_glicemia",
+            "Triglicerídeos"            => "exame_triglicerideos",
+            "Plaquetas"                 => "exame_plaquetas",
+            "Gemoglobina Glicada"       => "exame_hemoglobina_glicada",
 
             // Exames de imagem
             "Raio-x"                    => "exame_raio_x",
-            "Ressonância magnética"     => "exame_ressonancia_magnetica",
+            "Ressonância Magnética"     => "exame_ressonancia_magnetica",
             "Tomografia"                => "exame_tomografia",
             "Ultrassonografia"          => "exame_ultrassonografia",
             "Mamografia"                => "exame_mamografia",
@@ -320,18 +323,17 @@
 
             //  Exames cardiológicos
             "Eletrocardiograma"         => "exame_eletrocardiograma",
-            "ecocardiograma"            => "exame_ecocardiograma",
-            "holter"                    => "exame_holter",
-            "teste Ergométrico"         => "exame_teste_ergometrico",
-            "mapa"                      => "exame_mapa",
+            "Ecocardiograma"            => "exame_ecocardiograma",
+            "Holter"                    => "exame_holter",
+            "Teste Ergométrico"         => "exame_teste_ergometrico",
 
             //  Exames de urina
-            "urina tipo I"              => "exame_urina_tipo_i",
-            "urocultura"                => "exame_urocultura",
-            "exame de urina"            => "exame_exame_de_urina",
+            "Urina tipo I"              => "exame_urina_tipo_i",
+            "Urocultura"                => "exame_urocultura",
+            "Exame De Urina"            => "exame_exame_de_urina",
 
             //  Exames hormonais
-            "TSH"                       => "exame_tsh",
+            "Tsh"                       => "exame_tsh",
             "T4 Livre"                  => "exame_t4_livre",
             "Testosterona"              => "exame_testosterona",
             "Estradiol"                 => "exame_estradiol",
@@ -339,7 +341,7 @@
             "Progesterona"              => "exame_progesterona",
 
             //  Exames infecciosos
-            "HIV"                       => "exame_hiv",
+            "Hiv"                       => "exame_hiv",
             "Hepatite B"                => "exame_hepatite_b",
             "Hepatite C"                => "exame_hepatite_c",
             "Sífilis"                   => "exame_sifilis",
@@ -395,15 +397,17 @@
                 for ($hora = $horaInicio; $hora < $horaFim; $hora += ($intervaloMinutos * 60 * $sobraTempoExame)) {
                     $proximaHora = $hora + ($intervaloMinutos * 60 * $sobraTempoExame);
 
-                    // Pula o intervalo
                     if($proximaHora > $horaFim){
                         continue;
                     }
+                    // Pula o intervalo
                     if ($proximaHora <= $inicioIntervalo || $hora >= $fimIntervalo) {
-                        $horarios[$nomeProfissional][] = [
+                        if (!$mesmoDia || $hora > strtotime($horaAtual)) {
+                           $horarios[$nomeProfissional][] = [
                             'entrada' => $hora, 
                             'saida' => $proximaHora
                         ];
+                        }
                     }
                 }
             }
@@ -469,8 +473,14 @@
                     }
                 }
             }
+
+            if (empty($horariosLivres[$nomeProfissional])) {
+                return json_encode(["erro" => "Nenhum horário disponivel neste momento. Agende outro dia"]);
+            }
+            
             
             return json_encode($horariosLivres);
         }
+
     }
 ?>

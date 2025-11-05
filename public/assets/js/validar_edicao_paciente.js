@@ -1,5 +1,3 @@
-const form = document.getElementById('form2');
-
 const username = document.getElementById('username');
 const dataNascimento = document.getElementById('data_nascimento');
 const telefone = document.getElementById('telefone');
@@ -14,10 +12,14 @@ const altura = document.getElementById('altura');
 const peso = document.getElementById('peso');
 
 
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    validaCampos();
+const form = document.getElementById('form');
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  if (validaCampos()) {
+    form.submit();
+  }
 });
+
 
 
 function validaCampos() {

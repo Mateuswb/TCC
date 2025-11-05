@@ -11,7 +11,7 @@ body {
     display: flex;
 }
 
-/* Main content */
+
 .main {
     flex: 1;
     display: flex;
@@ -34,7 +34,7 @@ body {
     cursor: pointer;
 }
 
-/* Profile header */
+
 .profile-header {
    background: linear-gradient(rgb(3, 71, 199), rgb(15, 47, 123));
     color: #fff;
@@ -65,7 +65,7 @@ body {
     cursor: pointer;
 }
 
-/* Tabs */
+
 .tabs {
     margin: 0 20px;
     background: #fff;
@@ -101,7 +101,6 @@ body {
     display: block;
 }
 
-/* Form sections */
 .section {
     margin-bottom: 20px;
 }

@@ -117,7 +117,7 @@
             $estadoCivil     = $_POST['estadoCivil'];
             $tipoSanguineo   = $_POST['tipoSanguineo'];
             $endereco        = $_POST['endereco'];
-            $numeroCasa      = $_POST['numeroCasa'];
+            $numeroCasa      = $_POST['numCasa'];
             $bairro          = $_POST['bairro'];
             $cidade          = $_POST['cidade'];
             $observacoes     = $_POST['observacoes'];

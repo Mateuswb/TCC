@@ -9,11 +9,11 @@ if (isset($_SESSION['flash'])) {
 
 <style>
 .flash-success, .flash-error {
-    position: fixed; /* Fica sobre os outros elementos */
+    position: fixed; 
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 9999; /* Sempre acima de tudo */
+    z-index: 9999;
     padding: 15px 25px;
     border-radius: 5px;
     border: 1px solid;

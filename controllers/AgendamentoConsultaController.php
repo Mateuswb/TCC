@@ -32,10 +32,10 @@
                 // Só salva anexo se for retorno
                 if ($tipoConsulta === "r" && !empty($_FILES['anexo']) && $_FILES['anexo']['error'] === UPLOAD_ERR_OK) {
                     $ext = strtolower(pathinfo($_FILES['anexo']['name'], PATHINFO_EXTENSION));
-                    $permitidas = ['pdf', 'jpg', 'jpeg', 'png'];
+                    $permitidas = ['pdf'];
 
                     if (!in_array($ext, $permitidas)) {
-                        throw new Exception("Tipo de arquivo inválido. Use PDF ou imagem.");
+                        throw new Exception("Tipo de arquivo inválido. Use PDF.");
                     }
 
                     $anexo = file_get_contents($_FILES['anexo']['tmp_name']);
@@ -85,9 +85,9 @@
             // Só salva anexo se for retorno
            if ($tipoConsulta === "r" && !empty($_FILES['anexo']) && $_FILES['anexo']['error'] === UPLOAD_ERR_OK) {
                 $ext = strtolower(pathinfo($_FILES['anexo']['name'], PATHINFO_EXTENSION));
-                $permitidas = ['pdf', 'jpg', 'jpeg', 'png'];
+                $permitidas = ['pdf'];
                 if (!in_array($ext, $permitidas)) {
-                    throw new Exception("Tipo de arquivo inválido. Use PDF ou imagem.");
+                    throw new Exception("Tipo de arquivo inválido. Use PDF.");
                 }
 
                 $anexo = file_get_contents($_FILES['anexo']['tmp_name']);
@@ -144,8 +144,6 @@
         public function listarAgendamentosDoProfissional($idProfissional) {
             return $this->agendamentoConsultaModel->listarAgendamentosDoProfissional($idProfissional);
         }
-
-
 
     }
     

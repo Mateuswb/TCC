@@ -11,7 +11,6 @@ body {
     display: flex;
 }
 
-/* Wrapper geral */
 .main-content  {
   width: 100%;
   margin-top: 20px;
@@ -58,7 +57,7 @@ body {
 .btn-filtro { background:#2b6cdf; color:#fff; }
 .btn-export { background:#28a745; color:#fff; }
 
-/* Search */
+
 .search-box { margin:20px 0; }
 .search-box input {
   width:100%;
@@ -69,7 +68,7 @@ body {
 }
 
 
-/* Summary cards */
+
 .cards {
   display:grid;
   grid-template-columns:repeat(auto-fit, minmax(200px,1fr));
@@ -86,9 +85,9 @@ body {
 .card.purple { background:#f4ebff; }
 .card .title { font-size:12px; color:#666; margin-bottom:5px; }
 .card .value { font-size:20px; font-weight:700; color:#111; }
-.card .percent { font-size:12px; color:#555; margin-top:2px; }
+.card .percent { font-size:17px; color:#2e2e2e; font-weight: 600;margin-top:2px; }
 
-/* Table */
+
 table {
   width:100%;
   border-collapse:collapse;

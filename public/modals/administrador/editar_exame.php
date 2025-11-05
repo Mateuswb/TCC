@@ -9,7 +9,7 @@
             <form action="../../../controllers/AdministradorController.php?acao=editarExame" 
                   method="POST" id="formEdicao">
 
-                <!-- id do exame escondido -->
+
                 <input type="hidden" name="idExame" id="idExame">
 
                 <label>Nome do Exame</label>
@@ -34,7 +34,7 @@
 </div>
 
 <style>
-/* anicação do modal */
+
 .overlay {
     display: none;
     position: fixed;
@@ -55,7 +55,7 @@
     flex-direction: column;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
     animation: fadeIn 0.3s ease-in-out;
-    overflow: hidden; /* Impede conteúdo de sair da borda */
+    overflow: hidden;
 }
 
 @keyframes fadeIn {
@@ -71,7 +71,6 @@
 
 
 
-/* ===== CORPO ===== */
 .modal-body {
     padding: 25px 25px 10px 25px;
     flex: 1;
@@ -173,7 +172,6 @@ document.addEventListener("DOMContentLoaded", () => {
     cancelModalEdicao.addEventListener("click", fecharModalEdicao);
     window.addEventListener("click", e => { if(e.target === modalEdicao) fecharModalEdicao(); });
 
-    //  captura clique no ícone de editar
     document.querySelectorAll(".fa-edit").forEach(btn => {
         btn.addEventListener("click", () => {
             // pega os dados

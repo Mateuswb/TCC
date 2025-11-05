@@ -392,7 +392,6 @@ require '../../../../autentica/verifica_login.php';
                   <option value="exame_ecocardiograma">Ecocardiograma</option>
                   <option value="exame_holter">Holter</option>
                   <option value="exame_teste_ergometrico">Teste Ergométrico</option>
-                  <option value="exame_mapa">MAPA</option>
               </optgroup>
 
               <optgroup label="Exames de urina">

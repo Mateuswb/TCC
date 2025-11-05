@@ -172,7 +172,7 @@ body {
     gap: 10px;
     align-items: center;
     justify-content: center;
-    margin-left: auto; /* empurra os botões para a direita */
+    margin-left: auto; 
 }
 
 .actions i {

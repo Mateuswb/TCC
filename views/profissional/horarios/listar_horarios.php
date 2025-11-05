@@ -10,7 +10,7 @@
   $controller = new HorarioController($conn);
   $horarios = $controller->listarHorarios($idProfissional);
 
-  // Mapear dias para índice 0-6
+  // Mapear dias
   $mapDias = ['segunda'=>0,'terca'=>1,'quarta'=>2,'quinta'=>3,'sexta'=>4,'sabado'=>5,'domingo'=>6];
 
   $horariosJS = [];
@@ -74,7 +74,7 @@
   </table>
 </div>
 
-<!-- Modal -->
+
 <div id="modal">
   <form class="modal-content" id="formHorario" method="POST" action="../../../controllers/HorarioController.php?acao=editarHorario">
     <div class="modal-header">

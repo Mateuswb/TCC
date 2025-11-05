@@ -87,13 +87,22 @@
         public function finalizarAgendamentoExame(){
             $idExame = $_POST['idExame'];
 
+            session_start();
             $finalizar = $this->agendamentoExameModel->finalizarAgendamentoConsulta($idExame);
             if($finalizar){
-                echo "Exame finalizado";
+                $_SESSION['flash'] = [
+                'type' => 'success',
+                'message' => 'Exame finalizado com sucesso'
+                ];
             }
             else{
-                echo "Erro ao finalizar Exmae";
+                $_SESSION['flash'] = [
+                'type' => 'error',
+                'message' => 'Erro ao finalizar exame. Tente novamente.'
+                ];
             }
+            header("Location: ../views/profissional/agendamentos/consultas.php");
+            exit;
         }
 
     }

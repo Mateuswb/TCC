@@ -101,7 +101,7 @@
     flex-direction: column;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
     animation: fadeIn 0.3s ease-in-out;
-    overflow: hidden; /* Impede conteúdo de sair da borda */
+    overflow: hidden; 
 }
 
 @keyframes fadeIn {
@@ -115,7 +115,7 @@
     }
 }
 
-/* header */
+
 .modal-header {
     padding: 16px 20px;
     display: flex;
@@ -131,7 +131,7 @@
     cursor: pointer;
 }
 
-/* ===== CORPO ===== */
+
 .modal-body {
     padding: 25px 25px 10px 25px;
     flex: 1;
@@ -237,7 +237,7 @@
         cancelModalBtn.addEventListener("click", fecharModal);
         window.addEventListener("click", e => { if(e.target === modal) fecharModal(); });
 
-        // API para gerar a categoria e tempo
+        // API para perar a categoria e tempo
         const exameInput = document.querySelector("input[name='nome']");
         const categoriaSugeridaInput = document.getElementById("categoriaSugerida");
         const tempoExameInput = document.getElementById("tempoExame");

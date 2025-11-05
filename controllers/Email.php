@@ -14,15 +14,15 @@
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'warmlingmateusberti@gmail.com';
-            $mail->Password = 'jvca mudq vohu govo';
+            $mail->Username = 'clinicamedhub2025@gmail.com';
+            $mail->Password = 'euae xkol nfza cvfa';
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
             
             $mail->CharSet = 'UTF-8';
             $mail->Encoding = 'base64';
 
-            $mail->setFrom('warmlingmateusberti@gmail.com', 'Clínica MedHub');
+            $mail->setFrom('clinicamedhub2025@gmail.com', 'Clínica MedHub');
             $mail->addAddress($emailPaciente, $nomePaciente);
 
             $mail->isHTML(true);

@@ -1,4 +1,3 @@
-<!-- Modal de Finalizar Exame -->
 <div id="finalizarExameModal" class="modal-overlay" style="display: none;">
   <div class="modal-box">
     <form method="POST" action="../../../controllers/AgendamentoExameController.php?acao=finalizarAgendamentoExame">
@@ -31,7 +30,7 @@
 .btn-success:hover {
   background: #1e8449;
 }
-/* Overlay */
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -46,7 +45,6 @@
   transition: opacity 0.3s ease;
 }
 
-/* Modal box */
 .modal-box {
   background: #fff;
   border-radius: 12px;
@@ -58,7 +56,6 @@
   font-family: 'Segoe UI', sans-serif;
 }
 
-/* Header */
 .modal-header {
   padding: 20px;
   background: #f8f8f8;
@@ -85,7 +82,7 @@
   color: #e74c3c;
 }
 
-/* Body */
+
 .modal-body {
   padding: 20px;
   font-size: 16px;
@@ -96,7 +93,7 @@
   color: #e74c3c;
 }
 
-/* Footer */
+
 .modal-footer {
   display: flex;
   justify-content: flex-end;
@@ -133,7 +130,7 @@
   background: #c0392b;
 }
 
-/* Slide down animation */
+
 @keyframes slideDown {
   from { transform: translateY(-20px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }

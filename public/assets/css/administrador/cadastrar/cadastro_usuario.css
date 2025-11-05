@@ -37,9 +37,9 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;  /* Os itens aparecem um em baixo do outro */
+    flex-direction: column;  
     color: white;
-    position: relative; /* Necessário para o posicionamento absoluto funcionar */
+    position: relative; 
 }
     .container-left p {
     margin-left: 50px;
@@ -77,12 +77,12 @@ a #btn-logar{
 
 .form {
     padding: 0 40px 30px;
-    width: 60%; /* ou a largura que você estiver usando */
+    width: 60%; 
     display: flex;
     flex-direction: column;
-    align-items: center;      /* centraliza horizontalmente */
-    justify-content: center;  /* centraliza verticalmente */
-    height: 100%;             /* precisa disso pra o conteúdo ficar no meio vertical */
+    align-items: center;     
+    justify-content: center;  
+    height: 100%;            
 }
 
 .form-control {
@@ -115,7 +115,7 @@ a #btn-logar{
     height: 20px;
     position: absolute;
     left: 350px;
-    top: 37px; /* pode ajustar dependendo da altura do seu input */  
+    top: 37px; 
 }
 
 .form-control img, small{
@@ -149,7 +149,7 @@ a #btn-logar{
 
 
 
-/* Renponsive */
+
 @media (max-width: 950px) {
 
     body {
@@ -274,7 +274,6 @@ a #btn-logar{
 }
 
 
-/* efect */
 body{
   opacity: 0;
   transform: translateY(-20px);

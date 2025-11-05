@@ -5,7 +5,7 @@
 
     <div class="modal-header">
       <div class="header-left">
-        <img src="../../../public/assets/icones/doctor.png" alt="Foto do Profissional">
+        <img src="../../../public/assets/icones/medico.png" alt="Foto do Profissional">
         <div class="header-info">
           <h2 id="nomeProfissional">Nome do Profissional</h2>
         </div>
@@ -253,8 +253,8 @@ select:focus, input:focus, textarea:focus {
 }
 
 .upload-box:hover {
-  border-color: #005baa; /* muda a cor da borda ao passar o mouse */
-  box-shadow: 0 1px 8px rgba(0,91,170,0.2); /* sombra suave */
+  border-color: #005baa;
+  box-shadow: 0 1px 8px rgba(0,91,170,0.2);
 }
 
 .btn-upload {
@@ -266,13 +266,13 @@ select:focus, input:focus, textarea:focus {
   transition: all 0.3s;
   font-weight: 600;
   border: none;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15); /* sombra leve */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15); 
 }
 
 .btn-upload:hover {
-  background: #00468a; /* cor mais escura ao passar o mouse */
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* sombra mais pronunciada */
-  transform: translateY(-2px); /* efeito sutil de "levitar" */
+  background: #00468a; 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2); 
+  transform: translateY(-2px); 
 }
 
 

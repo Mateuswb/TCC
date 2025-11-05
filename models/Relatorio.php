@@ -100,7 +100,8 @@
             $sql = "SELECT COUNT(*) AS total_agendamentos
                 FROM agendamentos_consultas ac
                 JOIN horarios_profissionais hp ON ac.id_horario_profissional = hp.id_horario
-                WHERE hp.id_profissional = :idProfissional";
+                WHERE hp.id_profissional = :idProfissional
+                AND ac.status != 'agendada'";
 
             $query = $this->conn->prepare($sql);
             $query->execute([

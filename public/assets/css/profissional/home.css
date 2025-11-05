@@ -26,7 +26,7 @@ body {
   position: fixed;
 }
 
-/* App container */
+
 .app {
     display: flex;
     min-height: 100vh;
@@ -35,7 +35,7 @@ body {
     margin-left: 270px;    
     overflow-x: hidden;
 }
-/* Main content rolável */
+
 .main {
     
     flex: 1;
@@ -50,8 +50,6 @@ body {
 }
 
 
-
-/* Logo e usuário */
 .logo {
     width: 36px;
     height: 36px;
@@ -72,7 +70,6 @@ body {
 }
 .avatar { width: 36px; height: 36px; border-radius: 50%; background: #ddd; display: block; }
 
-/* Menu */
 .menu {
     width: 100%;
     margin-top: 6px;
@@ -93,9 +90,8 @@ body {
 .menu a.active { background: linear-gradient(90deg, #0e7049, #0b6b44); color: #fff; }
 .menu a i { min-width: 18px; text-align: center; }
 
-/* Botão de logout fixo embaixo da sidebar */
 .logout {
-    margin-top: auto; /* empurra para baixo */
+    margin-top: auto; 
     color: #e14a4a;
     font-weight: 600;
     font-size: 14px;
@@ -104,7 +100,6 @@ body {
     gap: 8px;
 }
 
-/* Top grid cards */
 .top-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -138,7 +133,7 @@ body {
 .icon.yellow { background: linear-gradient(180deg,#f1c40f,#f6d365); }
 .icon.red { background: linear-gradient(180deg,#ff6b6b,#ff8a8a); }
 
-/* Content row */
+
 .content-row {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -146,7 +141,7 @@ body {
     align-items: start;
 }
 
-/* Chart card */
+
 .chart-card {
     background: var(--card);
     border-radius: 10px;
@@ -155,7 +150,7 @@ body {
 }
 .chart-card h3 { margin: 0 0 10px 0; color: #4b5563; text-align: center; }
 
-/* Right panel */
+
 .right-panel {
     background: var(--card);
     border-radius: 10px;
@@ -187,7 +182,6 @@ body {
 .earn-value { font-size: 20px; font-weight: 700; }
 .small-muted { color: var(--muted); font-size: 13px; }
 
-/* Donut row */
 .donut-row {
     display: flex;
     gap: 12px;
@@ -203,7 +197,7 @@ body {
     padding: 8px;
 }
 
-/* Responsivo */
+
 @media (max-width:1100px) {
     .top-grid { grid-template-columns: repeat(2,1fr); }
     .content-row { grid-template-columns:1fr; }

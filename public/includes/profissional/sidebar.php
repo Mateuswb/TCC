@@ -3,7 +3,6 @@
     $root = $parts[0]; 
     define("BASE_URL", "/$root/views");
 
-
     $especialidades = isset($_SESSION['especialidades']) ? 
                     json_decode($_SESSION['especialidades'], true) : [];
     $temExame = false;
@@ -15,8 +14,9 @@
             }
         }
     }
-?>
 
+    $currentFile = basename($_SERVER['PHP_SELF']); 
+?>
 
 
  <!-- Fonte -->
@@ -27,24 +27,33 @@ rel="stylesheet">
 <div class="sidebar" id="sidebar">
   <h2>Meu Painel</h2>
 
-    <a href="<?= BASE_URL ?>/profissional/home.php">
+    <a href="<?= BASE_URL ?>/profissional/home.php"
+        class="<?= ($currentFile == 'home.php') ? 'active' : '' ?>">
         <i class="fas fa-home"></i> <span>Home</span>
     </a>
-    <a href="<?= BASE_URL ?>/profissional/agendamentos/consultas.php">
+    <a href="<?= BASE_URL ?>/profissional/agendamentos/consultas.php"
+        class="<?= ($currentFile == 'consultas.php') ? 'active' : '' ?>">
         <i class="fas fa-calendar-check"></i> <span>Meus Agendamentos </span>
     </a>
 
     <?php if ($temExame): ?>
-        <a href="<?= BASE_URL ?>/profissional/lancar_resultado_exames/listar_exames.php">
+        <a href="<?= BASE_URL ?>/profissional/lancar_resultado_exames/listar_exames.php"
+            class="<?= ($currentFile == 'listar_exames.php') ? 'active' : '' ?>">
             <i class="fas fa-vial"></i> <span>Lançar Resultado Exame</span>
         </a>
     <?php endif; ?>
 
-    <a href="<?= BASE_URL ?>/profissional/paciente/listar_pacientes.php">
-      <i class="fas fa-user-injured"></i> <span>Pacientes </span>
+    <a href="<?= BASE_URL ?>/profissional/paciente/listar_pacientes.php"
+        class="<?= ($currentFile == 'listar_pacientes.php') ? 'active' : '' ?>">
+        <i class="fas fa-user-injured"></i> <span>Pacientes </span>
     </a>
-       <a href="<?= BASE_URL ?>/profissional/historico_consultas/listar_consultas.php">
+       <a href="<?= BASE_URL ?>/profissional/historico_consultas/listar_consultas.php"
+        class="<?= ($currentFile == 'listar_consultas.php') ? 'active' : '' ?>">
         <i class="fas fa-history"></i> <span>Histórico de Consultas</span>
+    </a>
+    </a>
+       <a href="<?= BASE_URL ?>/profissional/historico_encaminhamentos/listar_encaminhamentos.php">
+        <i class="fas fa-history"></i> <span>Encaminhamentos</span>
     </a>
         <a href="<?= BASE_URL ?>/profissional/agendamentos/consultas.php">
         <i class="fas fa-file-alt"></i> <span>Relatórios</span>
@@ -128,6 +137,11 @@ rel="stylesheet">
     .sidebar a:hover {
     background: rgba(255, 255, 255, 0.1);
     color: #fff;
+    }
+
+    .sidebar a.active {
+    background-color: #144FD2;
+    color: #ffffffff;
     }
 
 </style>

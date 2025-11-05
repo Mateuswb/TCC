@@ -14,7 +14,6 @@ const cidade = document.getElementById('cidade');
 const tipoSanguineo = document.getElementById('tipoSanguineo');
 const altura = document.getElementById('altura');
 const peso = document.getElementById('peso');
-console.log("ola");
 
 const steps = document.querySelectorAll('.step');
 let etapaAtual = 0;

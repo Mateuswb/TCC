@@ -32,9 +32,7 @@ h1 {
   font-weight: 700;
 }
 
-/* ===============================
-   ======= BARRA DE FILTROS ======
-================================== */
+
 .filter-bar {
   display: flex;
   align-items: center;
@@ -67,9 +65,7 @@ h1 {
   border-color: #2980b9;
 }
 
-/* ===============================
-   ======= CALENDÁRIO ============
-================================== */
+
 .calendar {
   flex: 1;
   padding: 15px;
@@ -80,7 +76,7 @@ h1 {
   max-height: calc(100vh - 180px);
 }
 
-/* FullCalendar customização */
+
 .fc .fc-day-today {
   background: rgba(243, 111, 69, 0.1) !important;
   border: 2px solid #f36f45 !important;
@@ -128,9 +124,7 @@ h1 {
   height: 100px !important;
 }
 
-/* ===============================
-   ======= MODAIS ================
-================================== */
+
 .modal {
   display: none;
   position: fixed;
@@ -180,17 +174,13 @@ h1 {
   transform: translateY(-2px);
 }
 
-/* ===============================
-   ======= BOTÕES DE AÇÃO ========
-================================== */
+
 .btn-finalizar { background: #27ae60; color: #fff; }
 .btn-cancelar  { background: #e74c3c; color: #fff; }
 .btn-encaminhar { background: #f39c12; color: #fff; }
 .btn-fechar    { background: #bdc3c7; color: #fff; }
 
-/* ===============================
-   ======= RESPONSIVIDADE ========
-================================== */
+
 @media (max-width: 992px) {
   .main {
     margin-left: 0;

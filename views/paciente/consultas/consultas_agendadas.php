@@ -59,7 +59,6 @@
   background: #e0e0e0;
 }
 
-/* ===== TÍTULO ===== */
 .titulo {
   text-align: center;
   font-size: 1.8rem;
@@ -67,14 +66,14 @@
   margin-bottom: 30px;
 }
 
-/* ===== CONTAINER DE AGENDAMENTOS ===== */
+
 .agendamentos-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: 20px;
 }
 
-/* ===== CARD DE AGENDAMENTO ===== */
+
 .card-agendamento {
   background-color: #fff;
   border-radius: 14px;
@@ -101,7 +100,7 @@
   margin-bottom: 8px;
 }
 
-/* ===== STATUS ===== */
+
 .status {
   padding: 4px 10px;
   border-radius: 10px;
@@ -114,7 +113,7 @@
   background-color: #61b864ff;
 }
 
-/* ===== BOTÕES ===== */
+
 .botoes {
   display: flex;
   justify-content: space-between;

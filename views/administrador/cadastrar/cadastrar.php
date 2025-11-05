@@ -290,7 +290,6 @@
 </head>
 <body>
   <div class="container">
-    <!-- Lado esquerdo -->
     <div class="container-left">
       <a href="../home.php" class="btn-back">
         <i class="fas fa-arrow-left"></i> Voltar
@@ -300,7 +299,6 @@
 
     </div>
 
-    <!-- Lado direito -->
     <form action="../../../controllers/UsuarioController.php" method="POST" class="form" id="form">
       <h1>Criar Conta</h1>
 

@@ -49,16 +49,18 @@
             </div>
 
             <div class="btns">
-            <button 
-              class="btn editar"
-              data-id-exame="<?= $agendamento['id_agendamento'] ?>"
-              data-dia="<?= $agendamento['dia_agendamento'] ?>"
-              data-hora="<?= $agendamento['horario_agendamento'] ?>"
-              data-profissional="<?= htmlspecialchars($agendamento['nome_profissional']) ?>"
-
-              onclick="abrirModal(this)"> 
-              <i class="fa-solid fa-pencil"></i> Editar
-            </button>
+              <button 
+                class="btneditar"
+                onclick="abrirModalAgendamento(
+                  '<?= htmlspecialchars($agendamento['id_agendamento']) ?>',
+                  '<?= htmlspecialchars($agendamento['dia_agendamento']) ?>',
+                  '<?= htmlspecialchars($agendamento['horario_agendamento']) ?>',
+                  '<?= htmlspecialchars($agendamento['descricao_exame']) ?>',
+                  '<?= $agendamento['nome_exame']; ?>',
+                  '<?= htmlspecialchars($agendamento['nome_profissional']) ?>'
+                )">
+                <i class="fa-solid fa-pencil"></i> Editar
+              </button>
 
             <button 
               class="btn cancelar" 
@@ -76,4 +78,6 @@
     </section>
   </main>
 </body>
+
+
 </html>

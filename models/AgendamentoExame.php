@@ -131,5 +131,54 @@
             ]);
         }
 
+        public function getAgendamentoExame($idAgendamentoExame)
+        {
+            $stmt = $this->conn->prepare("SELECT 
+                        ae.*, 
+                        p.nome AS paciente_nome,
+                        p.email AS paciente_email,
+                        pr.nome AS nome_profissional,
+                        te.nome AS nome_exame,
+                        ac.id_agendamento AS id_agendamento_consulta,
+                        e.id_encaminhamento,
+                        e.observacoes AS encaminhamento_observacoes
+                    FROM agendamentos_exames ae
+                    INNER JOIN encaminhamentos e 
+                        ON ae.id_encaminhamento = e.id_encaminhamento
+                    INNER JOIN agendamentos_consultas ac 
+                        ON e.id_agendamento_consulta = ac.id_agendamento
+                    INNER JOIN pacientes p 
+                        ON ac.id_paciente = p.id_paciente
+                    INNER JOIN horarios_profissionais hp 
+                        ON ac.id_horario_profissional = hp.id_horario
+                    INNER JOIN profissionais pr 
+                        ON hp.id_profissional = pr.id_profissional
+                    INNER JOIN tipos_exames te 
+                        ON e.id_exame = te.id_exame
+                    WHERE ae.id_agendamento = :idAgendamentoExame;
+                        ");
+            $stmt->execute(['idAgendamentoExame' => $idAgendamentoExame]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+
+
+        public function finalizarExamesPassados() {
+             date_default_timezone_set('America/Sao_Paulo');
+            $agora = new DateTime();
+
+            $limite = $agora->format('Y-m-d H:i:s'); // hora exata de agora
+
+            $sql = "UPDATE agendamentos_exames
+                    SET status = 'realizado'
+                    WHERE status = 'agendado'
+                    AND CONCAT(dia_agendamento, ' ', horario_agendamento) <= :limite";
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([':limite' => $limite]);
+
+            return $stmt->rowCount();
+        }
+
+
     }
 ?>

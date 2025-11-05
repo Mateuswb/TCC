@@ -32,7 +32,6 @@
       z-index: 10;
     }
 
-    /* Header */
     .header {
     display: flex;
     justify-content: space-between;

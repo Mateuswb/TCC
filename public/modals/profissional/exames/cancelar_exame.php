@@ -1,20 +1,21 @@
-<div id="cancelarModal" class="modal-overlay" style="display: none;">
+<div id="cancelarExameModal" class="modal-overlay" style="display: none;">
   <div class="modal-box">
-    <form method="POST" action="../../../controllers/ProfissionalController.php?acao=cancelarAgendamentoConsulta">
-      
+    <form method="POST" action="../../../controllers/ProfissionalController.php?acao=cancelarExame">
+
       <div class="modal-header">
-        <h3>Cancelar Consulta</h3>
-        <span class="close-btn" onclick="document.getElementById('cancelarModal').style.display='none'">&times;</span>
+        <h3>Cancelar Exame</h3>
+        <span class="close-btn" onclick="document.getElementById('cancelarExameModal').style.display='none'">&times;</span>
       </div>
 
       <div class="modal-body">
-        <p>Você tem certeza que deseja <b>cancelar esta consulta</b>?  
+        <p>Você tem certeza que deseja <b>cancelar este exame</b>?  
         Essa ação <span style="color: #e74c3c;">não pode ser desfeita</span>.</p>
-        <input type="int" name="idConsulta" id="idConsulta">
+        
+        <input type="int" name="idAgendamentoExame" id="idAgendamentoExame">
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" onclick="document.getElementById('cancelarModal').style.display='none'">Voltar</button>
+        <button type="button" class="btn btn-secondary" onclick="document.getElementById('cancelarExameModal').style.display='none'">Voltar</button>
         <button type="submit" class="btn btn-danger">Confirmar Cancelamento</button>
       </div>
     </form>
@@ -22,6 +23,7 @@
 </div>
 
 <style>
+
 
 .modal-overlay {
   position: fixed;
@@ -48,6 +50,7 @@
   overflow: hidden;
   font-family: 'Segoe UI', sans-serif;
 }
+
 
 .modal-header {
   padding: 20px;

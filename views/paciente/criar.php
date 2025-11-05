@@ -3,7 +3,7 @@
 
   if (isset($_SESSION['existeEmail'])) {
       echo "<p class='error'>" . $_SESSION['existeEmail'] . "</p>";
-      unset($_SESSION['existeEmail']); // limpa após exibir
+      unset($_SESSION['existeEmail']);
   }
 ?>
 
@@ -36,7 +36,7 @@ body {
               linear-gradient(90deg, #cfe7ff 0%, #eaf4ff 50%, #f8fbff 100%);
 }
 
-/* container principal */
+
 .container {
   width: 1100px;
   background: #fff;
@@ -46,7 +46,7 @@ body {
   overflow: hidden;
 }
 
-/* lateral azul */
+
 .lateral {
   width: 120px;
   background-color: #01538aff;
@@ -59,7 +59,7 @@ body {
   position: relative;
 }
 
-/* 🔹 Remove a setinha da lateral */
+
 .lateral::after {
   display: none;
 }
@@ -79,7 +79,6 @@ body {
   transition: all 0.3s ease;
 }
 
-/* Etapa ativa */
 .etapa.ativa {
   background: #fff;
   color: #004aad;
@@ -127,7 +126,7 @@ label {
   font-weight: 600;
 }
 
-/* inputs normais */
+
 input[type="text"],
 input[type="tel"],
 input[type="number"],
@@ -138,7 +137,7 @@ select{
     padding: 12px 6px;
     font-size: 17px;
     outline: none;
-    background: transparent; /* aqui */
+    background: transparent;
     color: #222;
     transition: border-color .18s, box-shadow .18s, font-size .15s;
     font-family: "Poppins", sans-serif;
@@ -175,7 +174,6 @@ textarea {
 }
 
 
-/* 🔹 Mensagens de erro visíveis e input mantém o tamanho bonito */
 .img_success, .img_error{ 
   width: 18px; 
   height: 18px; 
@@ -195,12 +193,12 @@ small {
 .form-control.error select,
 .form-control.error textarea {
   border-bottom-color: #e63946;
-  font-size: 18px; /* mantém fonte grande mesmo com erro */
+  font-size: 18px;
 }
 
 .form-control.error small {
   visibility: visible;
-  font-size: 16px; /* aumenta tamanho da mensagem de erro */
+  font-size: 16px; 
   font-weight: 500;
 }
 
@@ -259,7 +257,7 @@ input[type="submit"] {
   margin-top: 20px;
 }
 
-/* Responsivo */
+
 @media (max-width: 820px) {
   .container {
     flex-direction: column;
@@ -310,7 +308,6 @@ input[type="submit"] {
       <!-- Etapa 1 -->
       <div class="step active" id="step1">
         <div class="form-grid">
-          <!-- Nome --> 
           <div class="form-control"> 
             <label for="nome">Nome Completo</label> 
             <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo"> 

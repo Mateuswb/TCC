@@ -119,7 +119,7 @@ body {
     transform: translateY(-2px);
   }
 
-  /* ===== MODAL ===== */
+  /* modal */
   .modal {
     display: none;
     position: fixed;

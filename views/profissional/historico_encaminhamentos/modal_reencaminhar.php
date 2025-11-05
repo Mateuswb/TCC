@@ -1,38 +1,37 @@
 <?php
-    include '../../../controllers/ExameController.php';
-    
-    $controllerExame = new ExameController($conn);
-    $exames = $controllerExame->listarExamesDisponiveisParaEncaminhamento(); 
-
+include '../../../controllers/ExameController.php';
+$controllerExame = new ExameController($conn);
+$exames = $controllerExame->listarExamesDisponiveisParaEncaminhamento();
 ?>
 
 <div id="encaminharModal" class="modal">
   <div class="modal-content">
     <h3>Encaminhar Consulta</h3>
-    <form action="../../../controllers/ProfissionalController.php?acao=encaminharPaciente" method="POST">
-      <input type="int" name="idAgendamentoConsulta" id="encaminharId">
+    <form action="../../../controllers/ProfissionalController.php?acao=reencaminharPaciente" method="POST">
+      
+      <input type="hidden" name="idEncaminhamento" id="encaminharId">
+      <input type="hidden" name="idAgendamentoConsulta" id="consultaId">
 
       <label for="id_exame">Tipo de exame:</label>
       <select id="id_exame" name="idExame" required>
           <option value="" disabled selected>Selecione o exame</option>
-          <?php
-          foreach($exames as $ex) {
-              echo "<option value='{$ex['id_exame']}'> {$ex['nome']} </option>";
-          }
-          ?>
+          <?php foreach($exames as $ex): ?>
+              <option value="<?= $ex['id_exame'] ?>"><?= htmlspecialchars($ex['nome']) ?></option>
+          <?php endforeach; ?>
       </select>
 
       <label for="observacoes">Observações:</label>
       <textarea id="observacoes" name="observacoes" placeholder="Observações" rows="4"></textarea>
 
-      <button type="submit" class="btn-encaminhar">📤 Encaminhar</button>
-      <button type="button" class="btn-fechar" onclick="document.getElementById('encaminharModal').style.display='none'">Fechar</button>
+      <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+        <button type="submit" class="btn-encaminhar">📤 Encaminhar</button>
+        <button type="button" class="btn-fechar" onclick="fecharEncaminharModal()">Fechar</button>
+      </div>
     </form>
   </div>
 </div>
 
 <style>
-    
 
 #encaminharModal {
   display: none;

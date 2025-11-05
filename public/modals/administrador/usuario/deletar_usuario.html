@@ -1,4 +1,3 @@
-<!-- Modal de Deletar Usuário -->
 <div id="modalDeletarUsuario" class="modal">
   <div class="modal-content">
     <span class="close" id="closeModalDelete">&times;</span>
@@ -17,7 +16,7 @@
 </div>
 
 <style>
-/* Reaproveitando estilo do modal de editar */
+
 .modal {
   display: none;
   position: fixed;
@@ -100,7 +99,7 @@ const delete_cpf_usuario = document.getElementById("delete_cpf_usuario");
 
 function abrirModalDeletarUsuario(botao) {
   const id = botao.dataset.id;
-  const cpf = botao.dataset.cpf; // trocar de .cpf para .login
+  const cpf = botao.dataset.cpf; 
 
   // Preencher hidden e mensagem
   deleteIdInput.value = id;
@@ -110,11 +109,11 @@ function abrirModalDeletarUsuario(botao) {
   modalDelete.style.display = "block";
 }
 
-// Fechar modal
+
 closeModalDelete.onclick = () => modalDelete.style.display = "none";
 cancelModalDelete.onclick = () => modalDelete.style.display = "none";
 
-// Fechar clicando fora do modal
+
 window.onclick = function(event) {
   if (event.target == modalDelete) {
     modalDelete.style.display = "none";

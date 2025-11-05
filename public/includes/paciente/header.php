@@ -21,7 +21,6 @@
   </div>
 </header>
 
-<!-- MENU SUSPENSO -->
 <div class="profile-menu" id="profile-menu">
   <div id="profile-header">
     <div class="avatar-large">
@@ -97,7 +96,8 @@ header {
   border-radius: 50%;
   font-weight: 600;
 }
-/* MENU SUSPENSO */
+
+
 .profile-menu {
   position: absolute;
   top: 75px;

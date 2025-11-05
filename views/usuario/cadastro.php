@@ -32,7 +32,6 @@ session_start();
       padding: 20px;
     }
 
-    /* CONTAINER PRINCIPAL */
     .container {
       display: flex;
       width: 90%;
@@ -244,7 +243,6 @@ session_start();
       text-decoration: underline;
     }
 
-    /* RESPONSIVO */
     @media (max-width: 1100px) {
       .container {
         flex-direction: column;

@@ -11,7 +11,6 @@ body {
     display: flex;
 }
 
-/* Main */
 .main {
     margin-left: 250px;
     flex: 1;
@@ -19,8 +18,8 @@ body {
     flex-direction: column;
     margin-top: 50px;
     margin-bottom: 100px;
-    overflow-y: auto; /* permite rolagem do conteúdo */
-    overflow-x: hidden; /* permite rolagem do conteúdo */
+    overflow-y: auto; 
+    overflow-x: hidden; 
 }
 
 .sidebar.collapsed ~ .main {
@@ -28,7 +27,7 @@ body {
 }
 
 
-/* Conteúdo */
+
 .content {
     padding: 30px;
 }

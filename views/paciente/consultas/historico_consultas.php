@@ -25,35 +25,34 @@
 <title>MedHub — Histórico de Consultas</title>
 
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Poppins", sans-serif;
-    }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
 
-    body {
-        background: #f5f6fa;
-        min-height: 100vh;
-        display: flex;
-    }
+body {
+    background: #f5f6fa;
+    min-height: 100vh;
+    display: flex;
+}
 
-    .conteudo-principal {
-        flex: 1;
-        padding: 2rem 3rem;
-        overflow-y: auto;
-        display: flex;
-        flex-direction: column;
-        margin: 70px 0 70px 0;
-    }
+.conteudo-principal {
+    flex: 1;
+    padding: 2rem 3rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    margin: 70px 0 70px 0;
+}
 
-    /* ===== TÍTULO ===== */
-    .content h1 {
-        color: #023e8a;
-        font-weight: 700;
-        margin-bottom: 35px;
-        text-align: center;
-    }
+.content h1 {
+    color: #023e8a;
+    font-weight: 700;
+    margin-bottom: 35px;
+    text-align: center;
+}
 
     
 .indicadores {
@@ -104,72 +103,71 @@
 }
 
 
-    /* ===== CONSULTAS ===== */
-    .consultas {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-        gap: 25px;
-    }
+.consultas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 25px;
+}
 
-    .card-consulta {
-        background: #fff;
-        border-radius: 14px;
-        padding: 25px 20px;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
-        transition: 0.3s ease;
-        border: 1px solid #e5e5e5;
-    }
+.card-consulta {
+    background: #fff;
+    border-radius: 14px;
+    padding: 25px 20px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+    transition: 0.3s ease;
+    border: 1px solid #e5e5e5;
+}
 
-    .card-consulta:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
-    }
+.card-consulta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
 
-    .topo-card {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 15px;
-    }
+.topo-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
 
-    .topo-card h3 {
-        font-size: 1.1rem;
-        color: #023e8a;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
+.topo-card h3 {
+    font-size: 1.1rem;
+    color: #023e8a;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 
-    .btn-delete {
-        background: #dc3545;
-        color: #fff;
-        border: none;
-        border-radius: 8px;
-        padding: 8px 14px;
-        cursor: pointer;
-        font-weight: 600;
-        transition: 0.3s;
-    }
+.btn-delete {
+    background: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
 
-    .btn-delete:hover {
-        background: #b91c1c;
-    }
+.btn-delete:hover {
+    background: #b91c1c;
+}
 
-    .card-consulta p {
-        font-size: 15px;
-        margin-bottom: 6px;
-    }
+.card-consulta p {
+    font-size: 15px;
+    margin-bottom: 6px;
+}
 
-    .status {
-        padding: 4px 12px;
-        border-radius: 10px;
-        color: #fff;
-        font-weight: 600;
-        font-size: 0.9rem;
-    }
+.status {
+    padding: 4px 12px;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
 
-    .status.realizada { background: #28a745; }
-    .status.cancelada { background: #dc3545; }
+.status.realizada { background: #28a745; }
+.status.cancelada { background: #dc3545; }
 
 </style>
 </head>
@@ -179,7 +177,6 @@
     <div class="content">
         <h1>Histórico de Consultas</h1>
 
-        <!-- Indicadores -->
         <div class="indicadores">
           <div class="card-indicador azul">
             <i class="fa-solid fa-file-medical"></i>
@@ -215,6 +212,11 @@
                 </div>
                 <p><strong>Data:</strong> <?php echo $consulta['dia_agendamento']?></p>
                 <p><strong>Hora:</strong>  <?php echo $consulta['horario_agendamento']?></p>
+                <p><strong>Tipo:</strong> 
+                  <?php 
+                      echo $consulta['tipo_consulta'] == 'c' ? 'Consulta' : 'Retorno';
+                  ?>
+                </p>
                 <p><strong>Status:</strong> <span class="status  <?php echo $consulta['status']?>"> <?php echo $consulta['status']?></span></p>
                 <p><strong>Profissional:</strong> <?php echo $consulta['nome_profissional']?> </p>
                 <p><strong>Obs:</strong> <?php echo $consulta['observacoes']?></p>

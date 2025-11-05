@@ -1,9 +1,9 @@
-    <!-- ===== MODAL CANCELAMENTO ===== -->
+
     <div id="modalCancelar" class="modalCancelarExame">
-    <div class="modal-content">
+    <div id="modal-content">
         <span class="fechar-modal" id="fecharModalCancelar">&times;</span>
 
-        <div class="modal-header">
+        <div id="modal-header">
         <h2>Cancelar Exame</h2>
         </div>
 
@@ -20,7 +20,7 @@
     </div>
 
     <style>
-        /* ===== MODAL BASE ===== */
+
     .modalCancelarExame {
     display: none;
     position: fixed;
@@ -36,7 +36,7 @@
     align-items: center;
     }
 
-    .modal-content {
+    #modal-content {
     background: #fff;
     border-radius: 16px;
     max-width: 500px;
@@ -61,7 +61,7 @@
     cursor: pointer;
     }
 
-    .modal-header h2 {
+    #modal-header h2 {
     font-size: 20px;
     margin-bottom: 10px;
     color: #333;
@@ -73,7 +73,6 @@
     line-height: 1.5;
     }
 
-    /* ===== BOTÕES ===== */
     .botoes-modal {
     display: flex;
     justify-content: flex-end;
@@ -117,7 +116,7 @@
         document.getElementById('modalCancelar').style.display = 'flex';
         }
 
-    // Fechar modal
+
     document.getElementById('fecharModalCancelar').onclick = function () {
     document.getElementById('modalCancelar').style.display = 'none';
     };
@@ -126,7 +125,7 @@
     document.getElementById('modalCancelar').style.display = 'none';
     };
 
-    // Fechar clicando fora
+
     window.onclick = function (event) {
     const modal = document.getElementById('modalCancelar');
     if (event.target === modal) {

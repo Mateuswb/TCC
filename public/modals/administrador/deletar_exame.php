@@ -1,15 +1,13 @@
-<!-- Modal customizado de exclusão -->
+
 <div class="modal-overlay" id="modalExcluir">
   <div class="modal-box">
     <form id="formExcluirExame" method="POST" action="../../../controllers/AdministradorController.php?acao=deletarExame">
-      <!-- Cabeçalho -->
 
       <div class="modal-header">
         <h3>Excluir Exame</h3>
         <span class="close-btn" onclick="fecharModalExcluir()">&times;</span>
       </div>
 
-      <!-- Corpo -->
       <div class="modal-body">
 
         <p>Tem certeza que deseja excluir o exame:</p>
@@ -17,8 +15,6 @@
         <p class="small-text">Esta ação não pode ser desfeita!</p>
         <input type="hidden" name="idExame" id="idExameExcluir">
       </div>
-
-      <!-- Rodapé -->
       <div class="modal-footer">
         <button type="button" class="btn btn-cancel" onclick="fecharModalExcluir()">Cancelar</button>
         <button type="button" class="btn btn-delete" onclick="abrirConfirmacao()">Excluir</button>
@@ -27,7 +23,7 @@
   </div>
 </div>
 
-<!-- Modal de confirmação personalizado -->
+
 <div class="modal-overlay" id="modalConfirmacao">
   <div class="modal-box">
     <div class="modal-header">
@@ -51,7 +47,7 @@
   top: 0; left: 0;
   width: 100%; height: 100%;
   background: rgba(0,0,0,0.5);
-  display: none; /* inicia escondido */
+  display: none;
   justify-content: center;
   align-items: center;
   z-index: 1000;
@@ -142,29 +138,27 @@
     document.getElementById("modalExcluir").style.display = "flex";
 }
 
-// Fechar modal principal
+
 function fecharModalExcluir() {
     document.getElementById("modalExcluir").style.display = "none";
 }
 
-// Abrir modal de confirmação
+
 function abrirConfirmacao() {
     const nome = document.getElementById("nomeExameExcluir").innerText;
     document.getElementById("mensagemConfirmacao").innerText = `Deseja realmente excluir o exame "${nome}"? Esta ação não pode ser desfeita.`;
     document.getElementById("modalConfirmacao").style.display = "flex";
 }
 
-// Fechar modal de confirmação
 function fecharConfirmacao() {
     document.getElementById("modalConfirmacao").style.display = "none";
 }
 
-// Confirmar exclusão
+
 document.getElementById("btnConfirmarExcluir").addEventListener("click", () => {
-    // document.getElementById("formExcluirExame").sub it();
+    
 });
 
-// Fechar clicando fora dos modais
 window.addEventListener("click", e => {
     if(e.target === document.getElementById("modalExcluir")) fecharModalExcluir();
     if(e.target === document.getElementById("modalConfirmacao")) fecharConfirmacao();

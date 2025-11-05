@@ -34,14 +34,12 @@
       <?php if (!empty($encaminhamentos)): ?>
         <?php foreach ($encaminhamentos as $p): ?>
           <article class="card" role="article" aria-label="Encaminhamento de <?php echo $p['profissional_encaminhou']; ?>">
-            <span class="badge">Pendente</span>
+ 
+          <span class="badge">Pendente</span>
+
             <div class="top">
               <div class="icon-box" aria-hidden="true">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 2v8" stroke="#0b3b5a" stroke-width="1.4" stroke-linecap="round"/>
-                  <rect x="6" y="10" width="12" height="10" rx="2" fill="#eaf6ff" stroke="#0b3b5a" stroke-width="0.9"/>
-                  <path d="M9 6h6" stroke="#0b3b5a" stroke-width="1.2" stroke-linecap="round"/>
-                </svg>
+                <i class="fa-solid fa-stethoscope" style="font-size:28px; color:#0b3b5a;"></i>
               </div>
 
               <div style="flex:1">
@@ -56,15 +54,15 @@
             </div>
 
             <div class="meta">
-               <button class="btn-agendar" 
-                  onclick="abrirModalAgendamento(
-                  '<?= $p['exame']; ?>',
-                  '<?= $p['id_encaminhamento']; ?>')">
-                  Agendar consulta
-                </button>
-
+              <button class="btn-agendar" 
+                onclick="abrirModalAgendamento(
+                '<?= $p['exame']; ?>',
+                '<?= $p['id_encaminhamento']; ?>')">
+                Agendar Exame
+              </button>
             </div>
           </article>
+
         <?php endforeach; ?>
       <?php else: ?>
         <p style="text-align:center;color:var(--muted);font-size:15px;">Nenhum encaminhamento disponível no momento.</p>

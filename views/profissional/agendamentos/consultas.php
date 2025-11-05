@@ -14,12 +14,11 @@
 
   // Modal de exame
   include '../../../public/modals/profissional/exames/finalizar_exame.php';
+  include '../../../public/modals/profissional/exames/cancelar_exame.php';
 
   $idProfissional = $_SESSION['idProfissional'];
   $controller = new AgendamentoConsultaController($conn);
   $agendamentos = $controller->listarAgendamentosDoProfissional($idProfissional);
-
-
   
   $controllerHorario = new HorarioController($conn);
   $horario = $controllerHorario->buscarLimitesDeHorario($idProfissional);
@@ -40,6 +39,18 @@
 </head>
 
 <style>
+.btn-pdf {
+    background: #2980b9;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 11px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+
 * {
     margin: 0;
     padding: 0;
@@ -76,7 +87,6 @@ h1 {
   font-weight: 700;
 }
 
-/* ====== BARRA DE FILTROS ====== */
 .filter-bar {
   display: flex;
   align-items: center;
@@ -109,7 +119,7 @@ h1 {
   border-color: #2980b9;
 }
 
-/* ====== CALENDÁRIO ====== */
+/* Calendario */
 .calendar {
   flex: 1;
   padding: 15px;
@@ -139,37 +149,12 @@ h1 {
 }
 
 
-.fc-event.consulta {
-  background-color: #4a90e2 !important;
-  border: 1px solid #2e6eb5 !important;
-  color: white !important;
-  font-weight: 600;
-  border-radius: 6px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.fc-event.consulta:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-}
-
-.fc-event.exame {
-  background-color: #50e3c2 !important;
-  border: 1px solid #28b89a !important;
-  color: #083a35 !important;
-  font-weight: 600;
-  border-radius: 50px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-  font-style: italic;
-}
-
 .fc-event.exame:hover {
   transform: scale(1.05);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 
-/* ====== MODAIS ====== */
+/* modals */
 .modal {
   display: none;
   position: fixed;
@@ -215,19 +200,19 @@ h1 {
 }
 .fc-event {
   border-radius: 12px !important;
-  font-size: 15px !important;
+  font-size: 17px !important;
   font-weight: 700 !important;
   padding: 8px 10px !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   margin: 0 auto !important;
-  width: 90% !important;
+  width: 95% !important;
   color: #fff !important;
   line-height: 1.4;
   border-left: 5px solid #fff;
 }
 
 .fc-timegrid-slot {
-  height: 100px !important;
+  height: 120px !important;
 }
 
 
@@ -302,141 +287,244 @@ h1 {
 </div>
 
 <script>
-  let calendar;
-  let selectedEvent = null;
+let calendar;
+let selectedEvent = null;
 
-  document.addEventListener('DOMContentLoaded', function () {
-      const calendarEl = document.getElementById('calendar');
+document.addEventListener('DOMContentLoaded', function () {
+    const calendarEl = document.getElementById('calendar');
 
-      const events = <?php echo json_encode(array_map(function($ag) {
-          $tipo = $ag['tipo'];
-          $nomeEvento = $tipo === 'consulta' ? ucfirst($ag['tipo_consulta']) : $ag['nome_exame'];
-          $dia = $ag['dia'] ?? date('Y-m-d');
+    // Converte os agendamentos pro FullCalendar
+    const events = <?php echo json_encode(array_map(function($ag) {
+        $tipo = $ag['tipo'];
+        $nomeEvento = '';
 
-          $cor = $tipo === 'consulta' ? '#4a90e2' : '#50e3c2';
+        if ($tipo == 'c') {
+            $nomeEvento = 'Consulta';
+        } else if ($tipo == 'r') {
+            $nomeEvento = 'Reconsulta';
+        } else {
+            $nomeEvento = $ag['nome_exame'];
+        }
 
-          return [
-              'id' => $ag['id_agendamento'],
-              'title' => $ag['nome_paciente'] . ' - ' . $nomeEvento,
-              'start' => $dia.'T'.$ag['horario'],
-              'end' => $dia.'T'.date('H:i:s', strtotime($ag['horario'].' + 30 minutes')),
-              'color' => $cor,
-              'classNames' => [$tipo],
-              'extendedProps' => ['tipo' => $tipo]
-          ];
-      }, $agendamentos), JSON_UNESCAPED_UNICODE); ?>;
+        $duracao = $ag['duracao'] ?? 30; 
+        $dia = $ag['dia'] ?? date('Y-m-d');
 
-      calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'timeGridWeek',
-          locale: 'pt-br',
-          slotMinTime: "<?= $inicio ?>",
-          slotMaxTime: "<?= $slotMaxTime ?>",
-          allDaySlot: false,
-          events: events,
-          headerToolbar: {
-              left: 'prev,next',
-              center: 'title',
-              right: 'timeGridWeek,timeGridDay'
-          },
+        return [
+            'id' => $ag['id_agendamento'],
+            'title' => $ag['nome_paciente'] . ' - ' . $nomeEvento,
+            'start' => $dia . 'T' . $ag['horario'],
+            'end' => $dia . 'T' . date('H:i:s', strtotime($ag['horario'] . ' + ' . $duracao . ' minutes')),
+            'classNames' => [$tipo],
+            'extendedProps' => [
+                'tipo' => $tipo,
+                'status' => $ag['status'],
+                'pdf' => !empty($ag['anexo']) ? 'data:application/pdf;base64,' . base64_encode($ag['anexo']) : null
+            ]
+        ];
+    }, $agendamentos), JSON_UNESCAPED_UNICODE); ?>;
 
-          eventDidMount: function(info) {
-    const agora = new Date();
-    const inicioEvento = new Date(info.event.start);
+    // Inicialização
+    calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'timeGridWeek',
+        locale: 'pt-br',
+        slotMinTime: "<?= $inicio ?>",
+        slotMaxTime: "<?= $slotMaxTime ?>",
+        allDaySlot: false,
+        events: events,
+        headerToolbar: {
+            left: 'prev,next',
+            center: 'title',
+            right: 'timeGridWeek,timeGridDay'
+        },
+         buttonText: {
+          week:     'Semana',
+          day:      'Dia',
 
-    // Bloqueia apenas eventos de datas passadas
-    if (inicioEvento < agora) {
-        info.el.style.opacity = 0.6;
-        info.el.style.background = '#a3a3a3ff';
-        info.el.style.borderColor = '#616161ff';
-        info.el.style.color = '#000000ff';
-        info.event.setProp('editable', false); // impede edição
+        },
+
+        eventDidMount: function(info) {
+            const tipo = info.event.extendedProps.tipo;
+            const status = info.event.extendedProps.status;
+
+            const agora = new Date();
+            const dataAtual = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate());
+            const fimEvento = new Date(info.event.end);
+            const dataEvento = new Date(fimEvento.getFullYear(), fimEvento.getMonth(), fimEvento.getDate());
+
+            let bg = '', border = '', color = '#fff';
+
+
+            if (tipo === 'c') {
+                switch (status) {
+                    case 'agendada':  bg = '#2E86C1'; border = '#1B4F72'; break;
+                    case 'realizada': bg = '#2874A6'; border = '#1A5276'; break; 
+                    case 'cancelada': bg = '#E74C3C'; border = '#C0392B'; break; 
+                }
+
+            } else if (tipo === 'r') {
+                switch (status) {
+                    case 'agendada':  bg = '#3498DB'; border = '#21618C'; break; 
+                    case 'realizada': bg = '#1F618D'; border = '#154360'; break; 
+                    case 'cancelada': bg = '#E74C3C'; border = '#C0392B'; break; 
+                }
+
+            } else if (tipo === 'exame') { 
+                switch (status) {
+                    case 'agendado':  bg = '#5DADE2'; border = '#2E86C1'; break; 
+                    case 'realizado': bg = '#2E86C1'; border = '#1B4F72'; break;
+                    case 'cancelado': bg = '#E74C3C'; border = '#C0392B'; break; 
+                }
+            }
+
+            info.el.style.backgroundColor = bg;
+            info.el.style.borderColor = border;
+            info.el.style.color = color;
+
+            // Bloqueia eventos de dias passados
+            if (dataEvento < dataAtual) {
+                info.el.style.opacity = 0.5;
+                info.event.setProp('editable', false);
+                info.el.style.pointerEvents = 'none';
+            }
+
+            // Bloqueia os agendamentos cancelados
+            if (status === 'cancelada' || status === 'cancelado') {
+                info.el.style.opacity = 0.6;
+                info.event.setProp('editable', false);
+                info.el.style.pointerEvents = 'none';
+            }
+
+            // Adiciona botão de PDF na reconsulta
+            if (info.event.extendedProps?.tipo === 'r' && info.event.extendedProps?.pdf) {
+              const btn = document.createElement('button');
+              btn.className = 'btn-pdf';
+              btn.innerText = '📄 PDF';
+              btn.style.marginLeft = '5px';
+              btn.style.fontSize = '12px';
+              btn.style.cursor = 'pointer';
+
+              btn.onclick = (event) => {
+                  event.stopPropagation(); 
+                  const link = document.createElement('a');
+                  link.href = info.event.extendedProps.pdf;
+                  link.download = `${info.event.title.replace(/\s+/g, '_')}.pdf`;
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+              };
+
+              info.el.style.display = 'flex';
+              info.el.style.alignItems = 'center';
+              info.el.appendChild(btn);
+            }
+
+
+        },
+
+        
+        eventClick: function(info) {
+            const agora = new Date();
+            const dataAtual = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate());
+            const fimEvento = new Date(info.event.end);
+            const dataEvento = new Date(fimEvento.getFullYear(), fimEvento.getMonth(), fimEvento.getDate());
+
+            // Bloqueia abertura de eventos de dias passados
+            if (dataEvento < dataAtual) return;
+
+            selectedEvent = info.event;
+            const tipo = selectedEvent.extendedProps.tipo;
+
+            if (tipo === 'exame') {
+                document.getElementById("modalExame").style.display = "flex";
+                document.getElementById("idExame").value = selectedEvent.id;
+            } else {
+                document.getElementById("eventTitle").innerText = selectedEvent.title;
+                document.getElementById("eventModal").style.display = "flex";
+            }
+        }
+    });
+
+    calendar.render();
+    setInterval(() => {
+        console.log('Chamando finalizarEventosPassados em:', new Date().toLocaleTimeString());
+        fetch('../../../controllers/ProfissionalController.php?acao=finalizarEventosPassados')
+            .then(res => res.json())
+            .then(data => {
+                console.log(`Consultas: ${data.consultas_finalizadas}, Exames: ${data.exames_finalizados}`);
+                if (data.consultas_finalizadas > 0 || data.exames_finalizados > 0) {
+                    calendar.refetchEvents();
+                }
+            })
+            .catch(err => console.error(err));
+    }, 60000);
+});
+
+function fecharModal() {
+    document.getElementById("eventModal").style.display = "none";
+}
+
+function fecharModalExame() {
+    document.getElementById("modalExame").style.display = "none";
+}
+
+
+function executarAcao(acao) {
+    if (!selectedEvent) return;
+
+    if (acao === 'encaminhar') {
+        document.getElementById("eventModal").style.display = "none";
+        document.getElementById("encaminharModal").style.display = "flex";
+        document.getElementById("encaminharId").value = selectedEvent.id;
+        return;
     }
-},
 
-eventClick: function(info) {
-    const agora = new Date();
-    const inicioEvento = new Date(info.event.start);
+    if (acao === 'cancelar') {
+        document.getElementById("eventModal").style.display = "none";
+        document.getElementById("cancelarModal").style.display = "flex";
+        document.getElementById("idConsulta").value = selectedEvent.id;
+        return;
+    }
 
-    // Bloqueia modal apenas se o horário já passou
-    if (inicioEvento < agora) return;
+    if (acao === 'finalizar') {
+        const tipo = selectedEvent.extendedProps.tipo;
+        if (tipo !== 'exame') {
+            document.getElementById("eventModal").style.display = "none";
+            document.getElementById("finalizarModal").style.display = "flex";
+            document.getElementById("idFinalizarConsulta").value = selectedEvent.id;
+        }
+    }
+}
+console.log(selectedEvent.extendedProps);
 
-    selectedEvent = info.event; // <- MUITO IMPORTANTE
-    const tipo = selectedEvent.extendedProps.tipo;
+function executarAcaoExame(acao) {
+    if (!selectedEvent) return;
 
-    if (tipo === 'exame') {
-        document.getElementById("modalExame").style.display = "flex";
-        document.getElementById("idExame").value = selectedEvent.id;
-    } else {
-        document.getElementById("eventTitle").innerText = selectedEvent.title;
-        document.getElementById("eventModal").style.display = "flex";
+    if (acao === 'finalizar') {
+      document.getElementById("modalExame").style.display = "none";
+      document.getElementById("finalizarExameModal").style.display = "flex";
+      document.getElementById("idFinalizarExame").value = selectedEvent.id;
+    }
+
+    if (acao === 'cancelar') {
+      document.getElementById("modalExame").style.display = "none";
+      document.getElementById("cancelarExameModal").style.display = "flex";
+      document.getElementById("idAgendamentoExame").value = selectedEvent.id;
+
     }
 }
 
-      });
-
-      calendar.render();
-  });
-
-  function fecharModal() {
-      document.getElementById("eventModal").style.display = "none";
-  }
-
-  function fecharModalExame() {
-      document.getElementById("modalExame").style.display = "none";
-  }
-
-  function executarAcao(acao) {
-      if (!selectedEvent) return;
-
-      if (acao === 'encaminhar') {
-          document.getElementById("eventModal").style.display = "none";
-          document.getElementById("encaminharModal").style.display = "flex";
-          document.getElementById("encaminharId").value = selectedEvent.id;
-          return;
-      }
-
-      if (acao === 'cancelar') {
-          document.getElementById("eventModal").style.display = "none";
-          document.getElementById("cancelarModal").style.display = "flex";
-          document.getElementById("idConsulta").value = selectedEvent.id;
-          return;
-      }
-
-      if (acao === 'finalizar') {
-          const tipo = selectedEvent.extendedProps.tipo;
-          if (tipo !== 'exame') {
-              document.getElementById("eventModal").style.display = "none";
-              document.getElementById("finalizarModal").style.display = "flex";
-              document.getElementById("idFinalizarConsulta").value = selectedEvent.id;
-          }
-      }
-  }
-
-  function executarAcaoExame(acao) {
-      if(!selectedEvent) return;
-
-      if(acao === 'finalizar') {
-          document.getElementById("modalExame").style.display = "none";
-          document.getElementById("finalizarExameModal").style.display = "flex";
-          document.getElementById("idFinalizarExame").value = selectedEvent.id;
-      }
-
-      if(acao === 'cancelar') {
-          document.getElementById("modalExame").style.display = "none";
-      }
-  }
-
-  function filtrarEventos() {
-      const filtro = document.getElementById('tipoFiltro').value;
-      calendar.getEvents().forEach(event => {
-          if (filtro === 'todos' || event.extendedProps.tipo === filtro) {
-              event.setProp('display', 'auto');
-          } else {
-              event.setProp('display', 'none');
-          }
-      });
-  }
+function filtrarEventos() {
+    const filtro = document.getElementById('tipoFiltro').value;
+    calendar.getEvents().forEach(event => {
+        if (filtro === 'todos' || event.extendedProps.tipo === filtro) {
+            event.setProp('display', 'auto');
+        } else {
+            event.setProp('display', 'none');
+        }
+    });
+}
 </script>
+
 
 </body>
 </html>

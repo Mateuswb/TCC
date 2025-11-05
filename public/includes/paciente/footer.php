@@ -67,7 +67,7 @@ footer {
   background-color: #003a8c;
 }
 
-/* Responsivo */
+
 @media (max-width: 768px) {
   footer {
     left: 0; 

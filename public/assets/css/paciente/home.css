@@ -12,7 +12,7 @@ body {
 }
 
 
-/* CONTEÚDO PRINCIPAL */
+
 main {
     flex: 1;
     margin-top: 60px;
@@ -32,17 +32,15 @@ main h1 span {
     color: #007bff;
 }
 
-/* ====================== LAYOUT DOS CARDS ====================== */
-/* ====================== LAYOUT DOS CARDS ====================== */
+
 .content-grid {
     display: grid;
-    grid-template-columns: 1fr 400px; /* esquerda e direita */
+    grid-template-columns: 1fr 400px;
     gap: 10px;
     align-items: stretch;
     margin-top: 30px;
 }
 
-/* ====================== CARROSSEL DIREITO ====================== */
 .right-tall {
     display: flex;
     flex-direction: column;

@@ -1,4 +1,3 @@
-/* ===== Reset e base ===== */
 * {
     margin: 0;
     padding: 0;
@@ -12,17 +11,17 @@ body {
     display: flex;
 }
 
-/* ===== Main ===== */
+
 .main {
-    margin-left: 250px; /* espaço para a sidebar */
+    margin-left: 250px; 
     flex: 1;
     display: flex;
     flex-direction: column;
-    margin-bottom: 70px; /* espaço para footer ou elementos fixos */
-    overflow-y: auto; /* permite rolagem do conteúdo */
+    margin-bottom: 70px; 
+    overflow-y: auto; 
 }
 
-/* ===== Conteúdo ===== */
+
 .content {
     padding: 20px;
 }
@@ -33,14 +32,14 @@ h1 {
     font-size: 28px;
 }
 
-/* ===== Grid de Cards ===== */
+
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 20px;
 }
 
-/* ===== Cards ===== */
+
 .card {
     background: #fff;
     border-radius: 12px;
@@ -62,7 +61,7 @@ h1 {
     padding-bottom: 6px;
 }
 
-/* ===== Lista de Informações ===== */
+
 .info-list {
     list-style: none;
     margin-bottom: 15px;
@@ -79,12 +78,12 @@ h1 {
     margin-right: 5px;
 }
 
-/* ===== Footer do Card ===== */
+
 .footer {
     text-align: right;
 }
 
-/* ===== Botões ===== */
+
 .btn-edit,
 .btn-delete {
     padding: 8px 14px;
@@ -114,7 +113,7 @@ h1 {
     transform: translateY(-2px);
 }
 
-/* ===== Responsividade ===== */
+
 @media (max-width: 768px) {
     .main {
         margin-left: 0;

@@ -28,8 +28,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      flex: 2; /* ocupa todo espaço disponível */
-      overflow-x: auto; /* permite rolar só o conteúdo */
+      flex: 2; 
+      overflow-x: auto; 
       margin-bottom: 50px;
     }
 
@@ -45,7 +45,7 @@
       color: #007bff;
     }
 
-    /* Grid de cards */
+
     :root {
   --blue: #003366;
   --accent: #0b7fc1;
@@ -59,13 +59,14 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 40px;
-  max-width: 1500px;
+  max-width: 1600px;
 }
 
 .card {
+  width: 340px;
   background: var(--card-bg);
   border-radius: 18px;
-  padding: 24px;
+  padding: 25px 24px 25px 25px;
   box-shadow: var(--shadow);
   position: relative;
   min-height: 160px;
@@ -74,6 +75,11 @@
   justify-content: space-between;
   border: 1px solid rgba(11,59,90,0.08);
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.card-title {
+  font-size: 18px; 
+  font-weight: 700;
+  color: #0b3b5a;  
 }
 
 .card:hover {
@@ -85,6 +91,7 @@
 .top {
   display: flex;
   align-items: flex-start;
+  margin-top: 30px;
   gap: 16px;
 }
 
@@ -109,16 +116,20 @@
 
 .badge {
   position: absolute;
-  right: 16px;
-  top: 16px;
-  background: #fff7d6;
-  color: #8a6a00;
-  padding: 6px 14px;
+  top: 10px;          
+  left: 50%;        
+  transform: translateX(-50%);
+  background: #fff5cb;
+  color: #795c00;
+  padding: 6px 20px;
   border-radius: 999px;
   font-weight: 700;
-  font-size: 13px;
+  font-size: 15px;
+  margin-bottom: 5px;
   border: 1px solid rgba(0,0,0,0.07);
 }
+
+
 
 .card .meta {
   color: var(--muted);
@@ -130,15 +141,18 @@
   gap: 10px;
 }
 
-.btn-agendar, .btn-detalhes {
-  padding: 10px 16px;
+.btn-agendar {
+  padding: 10px 50px;
   border-radius: 12px;
   font-weight: 600;
   font-size: 14px;
   cursor: pointer;
   transition: all 0.3s ease;
   border: none;
+  display: block; 
+  margin: 10px auto 0 auto;
 }
+
 
 .btn-agendar {
   background: linear-gradient(180deg,var(--accent),#0b5fa0);

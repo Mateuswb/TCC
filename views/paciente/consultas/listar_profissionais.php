@@ -26,6 +26,7 @@
     ];
 ?>
 
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -37,6 +38,73 @@
     <link rel="stylesheet" href="../../../public/assets/css/paciente/consultas/listar_profissionais.css">
 
 </head>
+
+<style>
+
+#overlay-fundo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(6px); /* desfoque */
+  background-color: rgba(0,0,0,0.3); /* escurece levemente */
+  opacity: 0; /* começa invisível */
+  visibility: hidden; /* esconde do fluxo */
+  z-index: 900;
+  transition: opacity 0.4s ease, backdrop-filter 0.4s ease;
+}
+
+#overlay-fundo.ativo {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+.card-profissional {
+  transition: transform 0.4s ease, width 0.4s ease, height 0.4s ease, box-shadow 0.4s ease;
+}
+
+.card-profissional.expandido {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.2);
+  width: 500px;
+  height: 550px;
+  z-index: 1000;
+  box-shadow: 0 20px 40px rgba(0,0,50,0.5);
+}
+
+/* Info extra dentro do card expandido */
+.card-profissional.expandido .overlay-card {
+    
+  padding: 35px;
+}
+
+
+.info-extra {
+  display: none; /* escondida por padrão */
+  margin-top: 15px;
+  font-size: 0.95rem;
+  color: #333;
+  text-align: justify;
+  line-height: 1.3;
+}
+
+/* Quando o card estiver expandido, mostrar */
+.card-profissional.expandido .info-extra {
+  display: block;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+</style>
 <body>
     
     <main class="conteudo-principal">
@@ -68,15 +136,21 @@
         <section id="cards-profissionais"></section>
             
     </main>
-
 <script>
-  const modalAgendamento = document.getElementById('modalAgendamento');
+
+const fundos = [
+  "../../../public/assets/fundos/fundo1.jpg",
+  "../../../public/assets/fundos/fundo2.jpeg",
+  "../../../public/assets/fundos/fundo3.avif"
+];
+
+const modalAgendamento = document.getElementById('modalAgendamento');
 const fecharModalAgendamento = document.getElementById('fecharModalAgendamento');
 
 function abrirModalAgendamento(idProfissional, nome) {
   document.getElementById('idProfissional').value = idProfissional;
   document.getElementById('nomeProfissional').textContent = nome;
-  modalAgendamento.style.display = 'flex'; // abre o modal
+  modalAgendamento.style.display = 'flex';
 }
 
 fecharModalAgendamento.addEventListener('click', () => {
@@ -84,195 +158,140 @@ fecharModalAgendamento.addEventListener('click', () => {
 });
 
 window.addEventListener('click', (e) => {
-  if (e.target === modalAgendamento) {
-    modalAgendamento.style.display = 'none';
-  }
+  if (e.target === modalAgendamento) modalAgendamento.style.display = 'none';
 });
 
+// Mostrar ou ocultar campo de anexo
+document.getElementById('tipoConsulta')?.addEventListener('change', function() {
+  const boxAnexo = document.getElementById('box-anexo');
+  if (boxAnexo) boxAnexo.style.display = this.value === 'r' ? 'block' : 'none';
+});
 
-  // mostra ou oculta campo de anexo
-  document.getElementById('tipoConsulta').addEventListener('change', function() {
-    const boxAnexo = document.getElementById('box-anexo');
-    boxAnexo.style.display = this.value === 'r' ? 'block' : 'none';
+// Dados e elementos principais
+const botoes = document.querySelectorAll('.btn-especialidade');
+const resultado = document.getElementById('cards-profissionais');
+const dados = <?php echo json_encode($profissionais['dados']); ?>;
+
+// Função principal que mostra os cards
+function mostrarProfissionais(lista) {
+  resultado.innerHTML = '';
+
+  document.getElementById('totalEncontrados').textContent = lista.length;
+
+  if (lista.length === 0) {
+    resultado.innerHTML = '<p>Nenhum profissional encontrado.</p>';
+    return;
+  }
+
+  lista.forEach(p => {
+    const coresFundo = ['00003d', '191e3e', '0d3113'];
+    const coresTexto = ['ffffff'];
+
+    const avatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(p.nome)}&background=${coresFundo[Math.floor(Math.random() * coresFundo.length)]}&color=${coresTexto[Math.floor(Math.random() * coresTexto.length)]}&size=128`;
+
+    const imgFundo = fundos[Math.floor(Math.random() * fundos.length)];
+
+    resultado.innerHTML += `
+      <div class="card-profissional" style="background-image: url('${imgFundo}');">
+        <div class="overlay-card">
+          <div class="foto-container">
+            <img src="${avatar}" alt="Foto de ${p.nome}">
+          </div>
+          <h3>${p.nome}</h3>
+          <p class="descricao">${p.observacoes || ''}</p>
+
+          <div class="info-extra">
+            <p><strong>Idade:</strong> 'Não informado'}</p>
+            <p><strong>CRM:</strong> 'Não informado'}</p>
+            <p><strong>Especialidades adicionais:</strong> $</p>
+            <p><strong>Consultas realizadas:</strong> </p>
+          </div>
+          <div class="botoes">
+            <button class="btn-agendar" onclick="abrirModalAgendamento('${p.id_profissional}', '${p.nome}')">
+              <i class="fa-solid fa-calendar-check"></i> Agendar consulta
+            </button>
+             <button class="btn-info" onclick="toggleCard(this)">
+                <i class="fa-solid fa-circle-info"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    <div id="overlay-fundo"></div>
+      `;
+    
   });
+}
 
-    const botoes = document.querySelectorAll('.btn-especialidade');
-    const resultado = document.getElementById('cards-profissionais');
-    const dados = <?php echo json_encode($profissionais['dados']); ?>;
+function toggleCard(btn) {
+  const card = btn.closest('.card-profissional');
+  const overlay = document.getElementById('overlay-fundo');
 
-    botoes.forEach(botao => {
-        botao.addEventListener('click', () => {
-            const especialidade = botao.getAttribute('data-especialidade');
-            const profissionais_filtrados = [];
-            filtrarPorEspecialidade(especialidade);
+  card.classList.toggle('expandido');
 
-            dados.forEach(d => {
-                const especialidades_medico = JSON.parse(d.especialidade || '[]');
-                if(especialidades_medico.includes(especialidade)){
-                    profissionais_filtrados.push(d);
-                }
-            });
+  if(card.classList.contains('expandido')) {
+    overlay.classList.add('ativo');
+  } else {
+    overlay.classList.remove('ativo');
+  }
 
-            resultado.innerHTML = "";
-            profissionais_filtrados.forEach(p => {
-                resultado.innerHTML += `
-                    <div class="card">
-                        <img src="../../../public/assets/imgs/cardiologista.jpg" alt="Dr. Luiz">
-                        <div class="card-info">
-                            <h3> ${p.nome} </h3>
-                            <p class="especialidade">
-                            <p class="descricao"> ${p.observacoes} </p>
-                            
-                        <div class="btn-container">
-                            <button class="btn-agendar" 
-                                onclick="abrirModalAgendamento(
-                                    '${p.id_profissional}',
-                                    '${p.nome}'
-                                )">
-                                <i class="fa-solid fa-calendar-check"></i> Agendar consulta
-                            </button>
-
-                            <button class="btn-info">
-                                <i class="fa-solid fa-circle-info"></i>
-                            </button>
-                        </div>
-                        </div>
-                    </div>
-                `;
-            });
-        });
-    });
-
-
-    // barra de pesquisa
-    const especialidadesMap = {
-        clinico_geral: "Clínico Geral",
-        pediatria: "Pediatria",
-        cardiologia: "Cardiologia",
-        ortopedia: "Ortopedia",
-        dermatologia: "Dermatologia",
-        ginecologia: "Ginecologia",
-        obstetricia: "Obstetrícia",
-        endocrinologia: "Endocrinologia",
-        neurologia: "Neurologia",
-        oftalmologia: "Oftalmologia",
-        otorrinolaringologia: "Otorrinolaringologia",
-        psiquiatria: "Psiquiatria",
-        urologia: "Urologia",
-        psicologia_clinica: "Psicologia Clínica"
-    };
-
-    const searchInput = document.getElementById('searchInput');
-    const btnSearch = document.getElementById('btnSearch');
-
-    function pesquisar() {
-    const query = searchInput.value.toLowerCase().trim();
-    if (!query) {
-        return; // simplesmente não faz nada
-    }
-
-    const profissionais_filtrados = dados.filter(p => {
-        const especialidades_medico = JSON.parse(p.especialidade || '[]');
-
-        const especialidades_labels = especialidades_medico.map(v =>
-            (especialidadesMap[v] || v).toLowerCase()
-        );
-
-        const nome = p.nome.toLowerCase();
-        const especialidade_str = especialidades_labels.join(' ');
-
-        return nome.includes(query) || especialidade_str.includes(query);
-    });
-
-    mostrarProfissionais(profissionais_filtrados);
+  overlay.onclick = () => {
+    card.classList.remove('expandido');
+    overlay.classList.remove('ativo');
+  }
 }
 
 
-    btnSearch.addEventListener('click', pesquisar);
+// Filtro por especialidade
+function filtrarPorEspecialidade(especialidade) {
+  const filtrados = dados.filter(d => {
+    const especialidades_medico = JSON.parse(d.especialidade || '[]').map(e => e.toLowerCase());
+    return especialidades_medico.includes(especialidade.toLowerCase());
+  });
+  mostrarProfissionais(filtrados);
+}
 
-    //  Pesquisa ao pressionar Enter
-    searchInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-        e.preventDefault(); 
-        pesquisar();
-    }
-    });
+// Pesquisa
+const searchInput = document.getElementById('searchInput');
+const btnSearch = document.getElementById('btnSearch');
 
+function pesquisar() {
+  const query = searchInput.value.toLowerCase().trim();
+  if (!query) return;
 
-    // mostra os cards
-    function mostrarProfissionais(lista) {
-        resultado.innerHTML = '';
+  const profissionais_filtrados = dados.filter(p => {
+    const especialidades_medico = JSON.parse(p.especialidade || '[]').map(e => e.toLowerCase());
+    const nome = p.nome.toLowerCase();
+    const especialidade_str = especialidades_medico.join(' ');
+    return nome.includes(query) || especialidade_str.includes(query);
+  });
 
-        document.getElementById('totalEncontrados').textContent = lista.length;
-        const principais = dados.slice(0, 4); // pega apenas os 4 primeiros
-        const container = document.getElementById('principaisProfissionais');
+  mostrarProfissionais(profissionais_filtrados);
+}
 
-        if (lista.length === 0) {
-            resultado.innerHTML = '<p>Nenhum profissional encontrado.</p>';
-            return;
-        }
+btnSearch.addEventListener('click', pesquisar);
+searchInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    pesquisar();
+  }
+});
 
-        lista.forEach(p => {
-            const especialidades_medico = JSON.parse(p.especialidade || '[]');
-            resultado.innerHTML += `
-                <div class="card">
-                    <img src="../../../public/assets/imgs/cardiologista.jpg" alt="${p.nome}">
-                    <div class="card-info">
-                        <h3>${p.nome}</h3>
-                        <p class="descricao">${p.observacoes || ''}</p>
+// Inicialização
+const primeiroBotao = document.querySelector(".btn-especialidade");
+if (primeiroBotao) {
+  const primeiraEspecialidade = primeiroBotao.dataset.especialidade;
+  filtrarPorEspecialidade(primeiraEspecialidade);
+  botoes.forEach(b => b.classList.remove("ativo"));
+  primeiroBotao.classList.add("ativo");
+}
 
-                        <div class="btn-container">
-                            <button class="btn-agendar" 
-                                onclick="abrirModalAgendamento(
-                                    '${p.id_profissional}',
-                                    '${p.nome}'
-                                )">
-                                <i class="fa-solid fa-calendar-check"></i> Agendar consulta
-                            </button>
-
-                            <button class="btn-info">
-                                <i class="fa-solid fa-circle-info"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-        });
-    }
-
-
-    function filtrarPorEspecialidade(especialidade) {
-        const profissionais_filtrados = [];
-
-        dados.forEach(d => {
-            const especialidades_medico = JSON.parse(d.especialidade || '[]')
-                                        .map(e => e.toLowerCase()); // garante lowercase
-            if (especialidades_medico.includes(especialidade.toLowerCase())) {
-                profissionais_filtrados.push(d);
-            }
-        });
-
-        mostrarProfissionais(profissionais_filtrados);
-    }
-
-    const primeiroBotao = document.querySelector(".btn-especialidade");
-    if (primeiroBotao) {
-        const primeiraEspecialidade = primeiroBotao.dataset.especialidade;
-        filtrarPorEspecialidade(primeiraEspecialidade);
-
-        botoes.forEach(botao => botao.classList.remove("ativo"));
-        primeiroBotao.classList.add("ativo");
-    }
-
-    botoes.forEach(botao => {
-        botao.addEventListener("click", () => {
-
-            botoes.forEach(b => b.classList.remove("ativo"));
-            botao.classList.add("ativo");
-
-            filtrarPorEspecialidade(botao.dataset.especialidade);
-        });
-    });
+botoes.forEach(botao => {
+  botao.addEventListener("click", () => {
+    botoes.forEach(b => b.classList.remove("ativo"));
+    botao.classList.add("ativo");
+    filtrarPorEspecialidade(botao.dataset.especialidade);
+  });
+});
 
 </script>
 

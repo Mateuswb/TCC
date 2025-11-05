@@ -15,9 +15,6 @@
     font-family: 'Poppins', sans-serif;
 }
 
-.profile{
-    margin-top: 20px;
-}
 body {
     background-color: #f4f6fa;
     display: flex;
@@ -101,40 +98,77 @@ main h1 {
     margin-right: 6px;
 }
 
+
 .btns {
-    margin-top: 16px;
     display: flex;
-    justify-content: space-between;
-    gap: 12px;
+    justify-content: center; 
+    align-items: center;
+    gap: 20px;               
+    width: 100%;
 }
-
-.btn {
-    flex: 1;
-    display: inline-block;
-    padding: 10px;
-    text-align: center;
-    border-radius: 8px;
-    text-decoration: none;
+.btneditar,
+.btn.cancelar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 50px;
+    font-size: 15px;
     font-weight: 600;
-    font-size: 13px;
-    transition: background 0.2s ease;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    line-height: 1;           
+    min-height: 44px;         
+    min-width: 120px;         
 }
 
-.btn-primary {
-    background: linear-gradient(180deg,var(--accent),#0b5fa0);
+
+
+.btneditar i,
+.btn.cancelar i {
+    font-size: 18px;
+    margin-top: 1px;         
+}
+
+
+.btneditar {
+    background: linear-gradient(180deg, #0b8dd8, #0964a8);
     color: #fff;
-    box-shadow: 0 6px 14px rgba(11,59,90,0.12);
 }
 
-.btn-primary:hover {
-    background: linear-gradient(180deg,#0c8bdb,#0b5fa0);
+.btneditar:hover {
+    background: linear-gradient(180deg, #0fa2f0, #075c96);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(11, 123, 208, 0.25);
 }
 
-.btn-danger {
-    background: #dc3545;
+
+.btn.cancelar {
+    background: linear-gradient(180deg, #dc3545, #b82b38);
     color: #fff;
 }
 
-.btn-danger:hover {
-    background: #c82333;
+.btn.cancelar:hover {
+    background: linear-gradient(180deg, #e04756, #9e232f);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(220, 53, 69, 0.25);
+}
+
+
+.btneditar:active,
+.btn.cancelar:active {
+    transform: scale(0.97);
+}
+
+@media (max-width: 600px) {
+    .btneditar,
+    .btn.cancelar {
+        width: 100%;
+        font-size: 14px;
+        padding: 10px;
+        min-width: unset;
+    }
 }

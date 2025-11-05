@@ -13,5 +13,11 @@
             return $this->encaminhamentoModel->listarEncaminhamentosPorPaciente($pacienteId);
         }
 
+        function listarEncaminhamentosProfissioal($profissionaleId){
+            return $this->encaminhamentoModel->listarEncaminhamentosProfissioal($profissionaleId);
+        }
+
+
+
     }
 ?>

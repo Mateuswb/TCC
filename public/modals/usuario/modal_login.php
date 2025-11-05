@@ -11,13 +11,11 @@
     <div class="modal-box">
         <button class="close-btn" onclick="fecharModal()">&times;</button>
 
-        <!-- Lado esquerdo -->
         <div class="container-left">
             <h2>Bem-vindo</h2>
             <p>Organize atendimentos com mais agilidade e segurança. Aqui, sua saúde é prioridade.</p>
         </div>
 
-        <!-- Lado direito -->
         <form action="<?= BASE_URL ?>/controllers/UsuarioController.php" method="post" class="form" id="form-login">
             <h1 class="titleLogin">Login</h1>
             <input type="hidden" name="acao" value="login">
@@ -53,7 +51,6 @@
     font-family: "Poppins", sans-serif;
 }
 
-/* ===== MODAL BASE ===== */
 .modal-bg {
     display: none;
     position: fixed;
@@ -66,7 +63,7 @@
     z-index: 9999;
 }
 
-/* ===== CAIXA PRINCIPAL ===== */
+
 .modal-box {
     display: flex;
     max-width: 1200px;
@@ -79,7 +76,6 @@
     animation: fadeIn 0.3s ease-in-out;
 }
 
-/* Fundo azulado borrado dentro do modal */
 .modal-box::before {
     content: "";
     position: absolute;
@@ -90,13 +86,13 @@
     z-index: 0;
 }
 
-/* Conteúdo acima do blur */
+
 .modal-box > * {
     position: relative;
     z-index: 1;
 }
 
-/* ===== BOTÃO FECHAR ===== */
+
 .close-btn {
     position: absolute;
     top: 18px;
@@ -114,7 +110,7 @@
     transform: scale(1.15);
 }
 
-/* ===== LADO ESQUERDO ===== */
+
 .container-left {
     width: 40%;
     background: linear-gradient(135deg, #0b3b88 40%, #0e58a3 100%);
@@ -138,7 +134,6 @@
     line-height: 1.6;
 }
 
-/* ===== LADO DIREITO (FORMULÁRIO) ===== */
 .form {
     width: 60%;
     padding: 60px 65px;
@@ -153,7 +148,6 @@
     text-align: center;
 }
 
-/* ===== TÍTULO ===== */
 .titleLogin {
     font-size: 40px;
     font-weight: 700;
@@ -161,7 +155,7 @@
     margin-bottom: 40px;
 }
 
-/* ===== CAMPOS ===== */
+
 .form-control {
     position: relative;
     margin-bottom: 25px;
@@ -192,7 +186,7 @@
     box-shadow: 2 1 8px rgba(31,103,211,0.25);
 }
 
-/* Ícones de validação */
+
 .form-control img {
     width: 22px;
     height: 22px;
@@ -218,7 +212,7 @@
 }
 
 
-/* Style da msg de erro */
+
 #error-message{
     background-color: #ffeef0;
     color: #86181d;
@@ -234,7 +228,7 @@
     gap: 10px;
 }
 
-/* ===== BOTÕES ===== */
+
 #btn-criar-conta {
     width: 100%;
     height: 56px;
@@ -255,7 +249,6 @@
     transform: translateY(-2px);
 }
 
-/* ===== LINK ABAIXO ===== */
 #tenho-conta {
     margin-top: 15px;
     font-size: 16px;
@@ -266,7 +259,7 @@
     text-decoration: underline;
 }
 
-/* ===== ERROS GERAIS ===== */
+
 #error-message {
     background-color: #ffeef0;
     color: #86181d;
@@ -292,7 +285,7 @@
     color: #d73a49;
 }
 
-/* ===== RESPONSIVIDADE ===== */
+
 @media (max-width: 950px) {
     .modal-box {
         flex-direction: column;
@@ -308,7 +301,7 @@
     }
 }
 
-/* ===== ANIMAÇÃO ===== */
+
 @keyframes fadeIn {
     from {opacity: 0; transform: scale(0.95);}
     to {opacity: 1; transform: scale(1);}
@@ -316,33 +309,34 @@
 
 </style>
 
-<script>
-const modal = document.getElementById("modal-login");
-function abrirModal() { modal.style.display = "flex"; }
-function fecharModal() { modal.style.display = "none"; }
-
-window.onclick = function(e) {
-    if (e.target === modal) fecharModal();
-};
-</script>
-
 <script src="<?= BASE_URL ?>/public/assets/js/validar_login.js"></script>
 
-<?php if ($erro): ?>
 <script>
-window.addEventListener("DOMContentLoaded", () => {
     const modal = document.getElementById("modal-login");
-    modal.style.display = "flex";
-    const form = document.getElementById("form-login");
-    if (form) {
-        const msg = document.createElement("div");
-        msg.id = "error-message";
-        msg.innerHTML = `
-            <span><?= htmlspecialchars($erro) ?></span>
-            <button class="close-btn2" onclick="this.parentElement.remove()">×</button>
-        `;
-        form.prepend(msg);
-    }
-});
+    function abrirModal() { modal.style.display = "flex"; }
+    function fecharModal() { modal.style.display = "none"; }
+
+    window.onclick = function(e) {
+        if (e.target === modal) fecharModal();
+    };
 </script>
+
+
+<?php if ($erro): ?>
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            const modal = document.getElementById("modal-login");
+            modal.style.display = "flex";
+            const form = document.getElementById("form-login");
+            if (form) {
+                const msg = document.createElement("div");
+                msg.id = "error-message";
+                msg.innerHTML = `
+                    <span><?= htmlspecialchars($erro) ?></span>
+                    <button class="close-btn2" onclick="this.parentElement.remove()">×</button>
+                `;
+                form.prepend(msg);
+            }
+        });
+    </script>
 <?php endif; ?>
