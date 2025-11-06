@@ -16,504 +16,511 @@
   <script src="https://kit.fontawesome.com/4b60c7eafd.js" crossorigin="anonymous"></script>
 
 <style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
 
-  html, body {
-    height: 100%;
-    font-family: "Inter", sans-serif;
-    line-height: 1.5;
-    background: #FAFDFF;
-    color: #002E53;
-    overflow-x: hidden;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  :root {
-    --azul-escuro: #002E53;
-    --azul-forte: #015997;
-    --azul-medio: #1C5FAB;
-    --azul-claro: #065C92;
-    --white: #ffffff;
-    --radius: 16px;
-    --shadow: 0 14px 36px rgba(0, 0, 0, 0.12);
-    --transition: 0.35s cubic-bezier(.25, .8, .25, 1);
-  }
 
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
+html, body {
+  height: 100%;
+  font-family: "Inter", sans-serif;
+  background: #FAFDFF;
+  color: #002E53;
+  overflow-x: hidden;
+  line-height: 1.5;
+}
 
-  img {
-    display: block;
-    max-width: 100%;
-    border-radius: 12px;
-  }
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  border-radius: 12px;
+}
 
 /* header */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 6%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #015997;
+  box-shadow: 0 4px 20px rgba(0, 46, 83, 0.08);
+  z-index: 2000;
+  transition: all 0.3s ease;
+}
+
+header.scrolled {
+  background: white;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+}
+
+.brand {
+  font-weight: 800;
+  font-size: 2.3rem;
+  color: #002E53;
+}
+
+.brand span {
+  color: white;
+}
+
+nav ul {
+  display: flex;
+  gap: 60px;
+  list-style: none;
+}
+
+nav a {
+  position: relative;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  padding-bottom: 4px;
+}
+
+nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 3px;
+  width: 0;
+  background: white;
+  border-radius: 4px;
+  transition: width 0.25s ease;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+.btn-login {
+  background: #0257B8;
+  color: white;
+  padding: 10px 35px;
+  border-radius: 12px;
+  font-weight: 700;
+  border: 1px solid white;
+  transition: all 0.3s ease;
+}
+
+.btn-login:hover {
+  background: #003879;
+  transform: translateY(-3px);
+}
+
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 160px 6% 80px;
+  background: linear-gradient(135deg, #015997, #1C5FAB);
+  color: white;
+  position: relative;
+  
+}
+
+.hero-left {
+  max-width: 700px;
+  text-align: center;
+  background: #0a3472;
+  padding: 60px 40px;
+  border-radius: 5px 190px 150px 200px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+.hero-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin-bottom: 15px;
+}
+
+.hero-sub {
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+}
+
+.btn-primary {
+  background: white;
+  color: #015997;
+  padding: 14px 32px;
+  border-radius: 12px;
+  font-weight: 700;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+}
+
+.hero-right {
+  max-width: 450px;
+  position: relative;
+}
+
+.hero-wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  line-height: 0;
+}
+
+
+.agendar-section {
+  background-color: #1C5FAB;
+  padding: 100px 6%;
+  display: flex;
+  justify-content: center;
+
+  margin-top: 100px;
+}
+
+.agendar-card {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  max-width: 1200px;
+}
+
+.agendar-left img {
+  max-width: 460px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+.agendar-right {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.agendar-right h2 {
+  font-size: 2.4rem;
+  line-height: 1.2;
+}
+
+.feature-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.feature-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.05rem;
+}
+
+.feature-list i {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 10px;
+  border-radius: 50%;
+}
+
+
+.exames-section {
+  background: white;
+  padding: 80px 8%;
+  display: flex;
+  justify-content: center;
+}
+
+.exames-container {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  max-width: 1100px;
+}
+
+.exames-imagens img {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.exames-texto h2 {
+  font-size: 2rem;
+  color: #006699;
+  margin-bottom: 10px;
+}
+
+.exames-texto p {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+
+.session-especialistas {
+  width: 100%;
+  background: rgba(0, 81, 255, 0.07);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 6%;
+}
+
+.especialista-wrap {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  width: 100%;
+  max-width: 1700px;
+  padding: 60px;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  background: white;
+}
+
+.especialista-left {
+  flex: 1;
+}
+
+.especialista-left h2 {
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+  color: #002E53;
+}
+
+.especialista-left p {
+  margin-bottom: 25px;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.especialidades-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.especialidade-item {
+  background: #E8F4FF;
+  padding: 12px 20px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 600;
+  color: #0b4a88;
+  transition: all 0.3s ease;
+}
+
+.especialidade-item:hover {
+  background: #cde6ff;
+}
+
+.btn-visualizar {
+  background: #1C5FAB;
+  color: white;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-visualizar:hover {
+  background: #0a3472;
+}
+
+.especialista-right img {
+  max-width: 460px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+
+.footer-medhub {
+  background: linear-gradient(180deg, #003366 0%, #00264d 100%);
+  color: #fff;
+  padding: 20px 8%;
+  font-family: "Inter", sans-serif;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.footer-left,
+.footer-right {
+  flex: 1;
+  min-width: 220px;
+}
+
+.footer-right {
+  text-align: right;
+}
+
+.footer-center {
+  flex: 2;
+  text-align: center;
+}
+
+.footer-left h4,
+.footer-right h4 {
+  font-size: 1.1rem;
+  color: #d8eaff;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.footer-left p {
+  line-height: 1.6;
+  color: #bcd8f0;
+  font-size: 1rem;
+}
+
+.footer-slogan {
+  color: #cce6ff;
+  font-weight: 500;
+  font-size: 1.05rem;
+  margin-bottom: 10px;
+}
+
+.footer-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 0;
+}
+
+.logo-med {
+  font-weight: 800;
+  font-size: 1.9rem;
+  color: #fff;
+}
+
+.logo-hub {
+  font-weight: 800;
+  font-size: 1.9rem;
+  color: #6bc3ff;
+}
+
+.footer-rights {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  color: #aac9e9;
+}
+
+.footer-btn {
+  background: #0059AC;
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.footer-btn:hover {
+  background: #003ccc;
+  transform: translateY(-3px);
+}
+
+.hero-right {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-right img {
+  width: 100%;
+  max-width: 480px;
+  z-index: 2;
+  position: relative;
+}
+
+
+.circle-deco {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(7px);
+  opacity: 0.8;
+  z-index: 1;
+}
+
+
+.circle-a {
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, #1C5FAB, #003366);
+  top: -40px;
+  right: -60px;
+
+}
+
+
+.circle-b {
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, #2769b4ff, #003366);
+  bottom: -40px;
+  left: -40px;
+  animation-delay: 2s;
+}
+
+
+
+
+@media (max-width: 768px) {
   header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 20px 6%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    background: #035088ff;
-    backdrop-filter: blur(6px);
-    transition: transform var(--transition), background var(--transition), box-shadow var(--transition);
-    z-index: 2000;
-  }
-
-  header.scrolled {
-    background: var(--white);
-    box-shadow: 0 10px 28px rgba(255, 255, 255, 0.08);
-  }
-
-  header.hidden {
-    transform: translateY(-120%);
-  }
-
-  .brand {
-    font-weight: 800;
-    font-size: 2.3rem;
-    color: var(--azul-escuro);
-  }
-
-  .brand span {
-    color: var(--azul-medio);
+    padding: 15px 5%;
   }
 
   nav ul {
-    display: flex;
-    gap: 100px;
-    list-style: none;
-    align-items: center;
-  }
-
-  nav a {
-    position: relative;
-    padding: 6px 0;
-    font-weight: 500;
-    color: white;
-  }
-
-  nav a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -4px;
-    height: 3px;
-    width: 0;
-    background: white;
-    border-radius: 4px;
-    transition: width .28s;
-  }
-
-  nav a:hover::after {
-    width: 100%;
-  }
-
-  .btn-login {
-    background: var(--azul-medio);
-    color: #fff;
-    padding: 12px 26px;
-    border-radius: 12px;
-    font-weight: 700;
-    box-shadow: 0 10px 28px rgba(0, 95, 171, 0.12);
-    transition: transform var(--transition);
-  }
-
-  .btn-login:hover {
-    transform: translateY(-3px);
-  }
-
-
-  .hero {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 32px;
-    padding: 140px 6% 60px;
-    min-height: 560px;
-    position: relative;
-    z-index: 1;
-    background: linear-gradient(180deg, var(--azul-forte), var(--azul-medio));
-    color: #fff;
-  }
-
-  .hero-left {
-    max-width: 640px;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-  }
-
-  .hero-title {
-    font-size: 2.6rem;
-    font-weight: 800;
-    line-height: 1.1;
-    text-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
-  }
-
-  .hero-sub {
-    font-weight: 500;
-    font-size: 1.1rem;
-    opacity: 0.95;
-  }
-
-  .btn-primary {
-    background: var(--white);
-    color: white;
-    padding: 14px 28px;
-    border-radius: 14px;
-    font-weight: 700;
-    box-shadow: 0 12px 36px rgba(8, 40, 80, 0.15);
-    transition: transform var(--transition);
-  }
-
-  .btn-primary:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 24px 48px rgba(8, 40, 80, 0.18);
-  }
-
-  .hero-right {
-    width: 48%;
-    max-width: 480px;
-    background: rgba(255, 255, 255, 0.08);
-    padding: 14px;
-    border-radius: 18px;
-    box-shadow: var(--shadow);
-  }
-
-  section {
-    padding: 80px 6%;
-    position: relative;
-    z-index: 1;
-  }
-
-  section h2 {
-    font-size: 2rem;
-    color: var(--azul-escuro);
-    margin-bottom: 20px;
-  }
-
-  .agendar-section {
-    background-color: #1C5FAB;
-    width: 100%;
-    padding: 60px 6%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-  }
-
-  .agendar-card {
-    display: flex;
-    gap: 40px;
-    width: 100%;
-    max-width: 1200px;
-    align-items: center;
-  }
-
-  .agendar-left {
-    flex: 1 1 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .agendar-left img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  .agendar-right {
-    flex: 1 1 50%;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .agendar-right h2 {
-    font-size: 2rem;
-    font-weight: 700;
-  }
-
-  .agendar-right h2 span {
-    font-weight: 800;
-  }
-
-  .feature-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding-left: 0;
-    margin: 16px 0;
-  }
-
-  .feature-list li {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-weight: 500;
-    font-size: 1rem;
-  }
-
-  .feature-list i {
-    color: #000000ff;
-    font-size: 1.2rem;
-  }
-
-  .btn-primary {
-    background-color: #065C92;
-    color: #000000ff;
-    padding: 12px 28px;
-    border-radius: 12px;
-    font-weight: 700;
-    text-decoration: none;
-    width: fit-content;
-    transition: transform 0.3s ease;
-  }
-
-  .btn-primary:hover {
-    transform: translateY(-3px);
-  }
-
-  @media (max-width: 900px) {
-    .agendar-card {
-      flex-direction: column;
-      text-align: center;
-    }
-
-    .agendar-left,
-    .agendar-right {
-      flex: 1 1 100%;
-    }
-
-    .agendar-right h2 {
-      font-size: 1.6rem;
-    }
-  }
-
-
-  .especialista-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #f7f9fb;
-    width: 120%;
-    padding: 40px;
-    border-radius: 10px;
     gap: 20px;
   }
 
-  .especialista-left {
-    flex: 1;
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    padding-top: 140px;
   }
 
-  .especialista-left h2 {
-    font-size: 28px;
-    margin-bottom: 20px;
-    line-height: 1.3;
+  .agendar-card,
+  .especialista-wrap,
+  .exames-container {
+    flex-direction: column;
+    text-align: center;
   }
 
-  .especialista-left h2 span {
-    font-weight: bold;
-  }
-
-  .especialista-left p {
-    margin-bottom: 25px;
-    color: #555;
-  }
-
-  .especialidades-grid {
-    display: flex;
+  .footer-top {
+    flex-direction: column;
+    text-align: center;
     gap: 15px;
-    flex-wrap: wrap;
-    margin-bottom: 25px;
   }
-
-  .especialidades-grid a {
-    text-decoration: underline;
-    color: #0071f3;
-    font-weight: 500;
-    transition: color 0.3s;
-  }
-
-  .especialidades-grid a:hover {
-    color: #004bb5;
-  }
-
-  .btn-visualizar {
-    padding: 12px 25px;
-    background-color: #0071f3;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-
-  .btn-visualizar:hover {
-    background-color: #005bb5;
-  }
-
-  .especialista-right {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-  }
-
-  .especialista-right img {
-    max-width: 100%;
-    border-radius: 10px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-  }
-
-  .acesso {
-    text-align: center;
-    background: linear-gradient(180deg, #f4f9ff, #ffffff);
-    border-radius: 20px;
-    padding: 60px;
-    box-shadow: var(--shadow);
-  }
-
-  footer {
-    background: var(--azul-escuro);
-    color: #dff3ff;
-    padding: 40px 6%;
-    text-align: center;
-    border-radius: 16px;
-  }
+}
 
 
-  .reveal {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity .7s ease, transform .7s ease;
-  }
 
-  .reveal.show {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-
-  @media (max-width: 1024px) {
-    .cards-grid {
-      flex-direction: column;
-    }
-
-    .card {
-      flex: 1 1 100%;
-    }
-  }
-
-  @media (max-width: 720px) {
-    .hero {
-      flex-direction: column;
-      padding-top: 140px;
-    }
-
-    .hero-right {
-      width: 100%;
-      margin-top: 28px;
-    }
-
-    .agendar-card {
-      flex-direction: column;
-    }
-
-    .especialista-wrap {
-      flex-direction: column;
-    }
-  }
-
-
-  .cards-grid {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 24px;
-    gap: 0;
-  }
-
-  .card {
-    flex: 1 1 33.3333%; 
-    min-height: 300px;
-    border-radius: 0; 
-    margin: 0;
-    padding: 24px;
-    box-shadow: var(--shadow);
-  }
-
-  .hero::before,
-  .agendar-card::before,
-  .especialista-wrap::before,
-  .acesso::before {
-    content: "";
-    position: absolute;
-    width: 300px;
-    height: 300px;
-    background: var(--azul-claro);
-    border-radius: 50%;
-    filter: blur(120px);
-    z-index: 0;
-    opacity: 0.3;
-  }
-
-  .hero::before {
-    top: -50px;
-    left: -50px;
-  }
-
-  .agendar-card::before {
-    top: 0;
-    right: -80px;
-  }
-
-  .especialista-wrap::before {
-    bottom: -60px;
-    left: -60px;
-  }
-
-  .acesso::before {
-    top: 20px;
-    right: -60px;
-  }
-
- 
-  .hero::after {
-    content: "";
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    background: #065C92;
-    border-radius: 50%;
-    filter: blur(100px);
-    right: 30px;
-    bottom: -40px;
-    opacity: 0.25;
-    z-index: 0;
-  }
-
- 
-  .hero > *,
-  .agendar-card > *,
-  .especialista-wrap > *,
-  .acesso > * {
-    position: relative;
-    z-index: 1;
-  }
 </style>
 
 </head>
@@ -524,93 +531,145 @@
     <div class="brand">Med <span>Hub</span></div>
     <nav>
       <ul>
-        <li><a href="#home">Home</a></li>
+        <li><a href="#home">Início</a></li>
         <li><a href="#agendar">Consultas</a></li>
         <li><a href="#exames">Exames</a></li>
-        <li><a href="#acesso">Sobre-nós</a></li>
+        <li><a href="#sobre">Sobre nós</a></li>
       </ul>
     </nav>
-    <a class="btn-login" href="#" onclick="abrirModal()">Entrar</a>
+    <a class="btn-login" href="#" onclick="abrirModal()">Login</a>
   </header>
 
   <main>
-    <!-- HERO -->
+
     <section id="home" class="hero reveal">
       <div class="hero-left">
         <h1 class="hero-title">Agende seus exames e consultas de forma rápida e prática</h1>
-        <p class="hero-sub">Organize atendimentos, exames e resultados em uma plataforma prática, segura e moderna.</p>
+        <p class="hero-sub">
+          Organize atendimentos, exames e resultados em uma plataforma prática, segura e moderna.
+        </p>
         <a class="btn-primary" href="#agendar">Agende já</a>
       </div>
+
       <div class="hero-right">
-        <img src="../public/assets/imgs/teste.png" alt="Agendamento Médico">
+        <img src="fundo_05.png" alt="Agendamento Médico">
+        <div class="circle-deco circle-a"></div>
+        <div class="circle-deco circle-b"></div>
+      </div>
+
+      <div class="hero-wave" aria-hidden="true">
+        <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
+          <path d="M0,85 
+                   C240,110 480,70 720,90 
+                   C960,110 1200,10 1600,85 
+                   L1440 160 L0 160 Z" 
+                fill="#ffffff"></path>
+        </svg>
       </div>
     </section>
 
-    <!-- AGENDAR -->
-    <section id="agendar" class="reveal">
+    <section id="agendar" class="agendar-section reveal">
       <div class="agendar-card">
         <div class="agendar-left">
-          <img src="../public/assets/imgs/download.png" alt="Calendário Médico">
+          <img src="fundo_06.png" alt="Calendário Médico">
         </div>
+
         <div class="agendar-right">
-          <h2>Agende suas <span>Consultas e Exames</span> de forma <span>Rápida</span></h2>
+          <h2>
+            Agende suas<br>
+            <span>Consultas e Exames</span><br>
+            de forma <span>Rápida</span>
+          </h2>
+
           <ul class="feature-list">
-            <li><i class="fa-solid fa-calendar-check"></i> Marque consultas e exames online</li>
-            <li><i class="fa-solid fa-bell"></i> Receba notificações automáticas</li>
+            <li>
+              <i class="fa-solid fa-calendar-check"></i>
+              <span>Marque consultas e exames online</span>
+            </li>
+            <li>
+              <i class="fa-solid fa-bell"></i>
+              <span>Receba notificações automáticas</span>
+            </li>
           </ul>
+
           <a class="btn-primary" href="#">Agendar agora</a>
         </div>
       </div>
     </section>
 
-    <!-- ESPECIALISTAS -->
-   <section id="exames" class="reveal">
-  <div class="especialista-wrap">
-    <div class="especialista-left">
-      <h2>Encontre o especialista certo <span>para o seu atendimento</span></h2>
-      <p>Disponibilizamos profissionais de diversas áreas médicas, garantindo praticidade e qualidade no atendimento.</p>
-      
-      <div class="especialidades-grid">
-        <a href="#">Cardiologista</a>
-        <a href="#">Ortopedista</a>
-        <a href="#">Pediatra</a>
-        <a href="#">Clínico geral</a>
-      </div>
+    <section id="exames" class="exames-section">
+      <div class="exames-container">
+        <div class="exames-imagens">
+          <img src="fundo_07.jpg" alt="Imagem exame 1">
+        </div>
 
-      <button class="btn-visualizar">Visualizar</button>
-    </div>
+        <div class="exames-texto">
+          <h2>Exames</h2>
+          <p>
+            Nossa clínica oferece uma ampla gama de exames laboratoriais e de imagem,
+            todos com agendamento online. Sem filas, sem complicações, você escolhe
+            o melhor horário.
+          </p>
 
-    <div class="especialista-right">
-      <img src="../download.png" alt="Médico" />
-    </div>
-  </div>
-</section>
-
-    <section id="acesso" class="reveal">
-      <div class="acesso">
-        <h2>Acesse onde quiser</h2>
-        <p>Use o Med Hub no celular, tablet ou computador, com acesso rápido e seguro em qualquer lugar.</p>
-        <img src="https://cdn-icons-png.flaticon.com/512/2950/2950611.png" alt="Dispositivos" style="max-width:480px;margin:18px auto 0;display:block">
+          <ul class="exames-lista">
+            <li><strong>Exames laboratoriais:</strong> sangue, urina, glicemia e mais</li>
+            <li><strong>Exames de imagem:</strong> raio-X, ultrassonografia, tomografia</li>
+          </ul>
+        </div>
       </div>
     </section>
+
+    <section id="especialistas" class="session-especialistas reveal">
+      <div class="especialista-wrap">
+
+        <div class="especialista-left">
+          <h2>Encontre o especialista certo <span>para o seu atendimento</span></h2>
+          <p>
+            Disponibilizamos profissionais de diversas áreas médicas, garantindo praticidade
+            e qualidade no atendimento.
+          </p>
+
+          <div class="especialidades-grid">
+            <a href="#" class="especialidade-item">Cardiologista</a>
+            <a href="#" class="especialidade-item">Ortopedista</a>
+            <a href="#" class="especialidade-item">Pediatra</a>
+            <a href="#" class="especialidade-item">Clínico geral</a>
+          </div>
+
+          <button class="btn-visualizar">Visualizar</button>
+        </div>
+
+        <div class="especialista-right">
+          <img src="fundo_07.jpg" alt="Médico" />
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <footer>
-    <div class="logo">Med <span>Hub</span></div>
-    <p>© <span id="year"></span> Med Hub. Todos os direitos reservados.</p>
+  <footer class="footer-medhub">
+    <div class="footer-top">
+      <div class="footer-col footer-left">
+        <h4>Criadores</h4>
+        <p>Henrique Pereira Luiz<br>Mateus Warmling Berti</p>
+      </div>
+
+      <div class="footer-col footer-center">
+        <p class="footer-slogan">
+          Gestão de Consultas e Exames com Agilidade e Segurança
+        </p>
+        <div class="footer-logo">
+          <span class="logo-med">Med</span>
+          <span class="logo-hub">Hub</span>
+        </div>
+        <p class="footer-rights">© 2025 MedHub | Direitos reservados</p>
+      </div>
+
+      <div class="footer-col footer-right">
+        <button class="footer-btn">💬 Fale Conosco</button>
+      </div>
+    </div>
   </footer>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-    document.querySelectorAll('.reveal').forEach(el => {
-      const observer = new IntersectionObserver(entries=>{
-        entries.forEach(entry=>{
-          if(entry.isIntersecting){entry.target.classList.add('show');observer.unobserve(entry.target);}
-        });
-      }, {threshold:0.1});
-      observer.observe(el);
-    });
-    if(typeof abrirModal!=='function'){window.abrirModal=()=>alert('Abrir modal');}
-  </script>
 </body>
 </html>

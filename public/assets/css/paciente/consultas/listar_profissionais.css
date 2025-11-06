@@ -111,7 +111,7 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.8rem;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1400px;
 }
 .btn-container {
     display: flex;
@@ -160,7 +160,7 @@ body {
 .card-profissional {
   position: relative;
   width: 410px;
-  height: 400px;
+  height: 450px;
   border-radius: 20px;
   background-size: cover;
   background-position: center;
@@ -194,11 +194,11 @@ body {
 }
 
 .foto-container {
-  width: 100px;
-  height: 100px;
+  width: 115px;
+  height: 115px;
   border-radius: 50%;
   overflow: hidden;
-  border: 4px solid #002f64ff;
+  border: 4px solid rgb(0, 33, 179);
   margin-top: -40px;
   box-shadow: 0 2px 12px rgba(0, 0, 80, 0.2);
 }
@@ -239,7 +239,7 @@ body {
   color: #fff;
   border: none;
   border-radius: 10px;
-  padding: 10px 20px;
+  padding: 15px 50px;
   font-weight: 700;
   cursor: pointer;
   transition: 0.3s;

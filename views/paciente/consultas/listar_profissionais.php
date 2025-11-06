@@ -47,10 +47,10 @@
   left: 0;
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(6px); /* desfoque */
-  background-color: rgba(0,0,0,0.3); /* escurece levemente */
-  opacity: 0; /* começa invisível */
-  visibility: hidden; /* esconde do fluxo */
+  backdrop-filter: blur(6px);
+  background-color: rgba(0,0,0,0.3); 
+  opacity: 0; 
+  visibility: hidden;
   z-index: 900;
   transition: opacity 0.4s ease, backdrop-filter 0.4s ease;
 }
@@ -76,7 +76,7 @@
   box-shadow: 0 20px 40px rgba(0,0,50,0.5);
 }
 
-/* Info extra dentro do card expandido */
+
 .card-profissional.expandido .overlay-card {
     
   padding: 35px;
@@ -84,7 +84,7 @@
 
 
 .info-extra {
-  display: none; /* escondida por padrão */
+  display: none; 
   margin-top: 15px;
   font-size: 0.95rem;
   color: #333;
@@ -92,7 +92,6 @@
   line-height: 1.3;
 }
 
-/* Quando o card estiver expandido, mostrar */
 .card-profissional.expandido .info-extra {
   display: block;
   animation: fadeIn 0.4s ease;
@@ -161,18 +160,17 @@ window.addEventListener('click', (e) => {
   if (e.target === modalAgendamento) modalAgendamento.style.display = 'none';
 });
 
-// Mostrar ou ocultar campo de anexo
+
 document.getElementById('tipoConsulta')?.addEventListener('change', function() {
   const boxAnexo = document.getElementById('box-anexo');
   if (boxAnexo) boxAnexo.style.display = this.value === 'r' ? 'block' : 'none';
 });
 
-// Dados e elementos principais
 const botoes = document.querySelectorAll('.btn-especialidade');
 const resultado = document.getElementById('cards-profissionais');
 const dados = <?php echo json_encode($profissionais['dados']); ?>;
 
-// Função principal que mostra os cards
+// mostraR os cards
 function mostrarProfissionais(lista) {
   resultado.innerHTML = '';
 
@@ -184,7 +182,9 @@ function mostrarProfissionais(lista) {
   }
 
   lista.forEach(p => {
-    const coresFundo = ['00003d', '191e3e', '0d3113'];
+    const coresFundo = ['001F3F', '003F7D', '0066CC'];
+
+
     const coresTexto = ['ffffff'];
 
     const avatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(p.nome)}&background=${coresFundo[Math.floor(Math.random() * coresFundo.length)]}&color=${coresTexto[Math.floor(Math.random() * coresTexto.length)]}&size=128`;

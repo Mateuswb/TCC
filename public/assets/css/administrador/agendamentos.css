@@ -77,52 +77,6 @@ h1 {
 }
 
 
-.fc .fc-day-today {
-  background: rgba(243, 111, 69, 0.1) !important;
-  border: 2px solid #f36f45 !important;
-}
-
-.fc-event {
-  border-radius: 12px !important;
-  font-size: 15px !important;
-  font-weight: 700 !important;
-  padding: 8px 10px !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  margin: 0 auto !important;
-  width: 90% !important;
-  color: #fff !important;
-  line-height: 1.4;
-  border-left: 5px solid #fff;
-}
-
-.fc-event.consulta {
-  background: #4a90e2 !important;
-  border-left-color: #4a90e2 !important;
-}
-
-.fc-event.exame {
-  background: #f39c12 !important;
-  border-left-color: #f39c12 !important;
-}
-
-.fc-event.retorno {
-  background: #f36f45 !important;
-  border-left-color: #f36f45 !important;
-}
-
-.fc-event .fc-event-title {
-  font-size: 15px;
-  font-weight: 700;
-}
-
-.fc-event .fc-event-time {
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.fc-timegrid-slot {
-  height: 100px !important;
-}
 
 
 .modal {
