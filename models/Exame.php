@@ -77,7 +77,7 @@
 
             #validaçoes de cadastro de exame
             public function existeProfissionalParaCategoria($nomeExame) {
-                $nomeExameTratado = strtolower(str_replace(' ', '_', $nomeExame));
+                $nomeExameTratado = strtolower(str_replace(['-', ' '], '_', $nomeExame));
                 $valorJson = '"exame_' . $nomeExameTratado . '"';
                 
                 $sql = "SELECT COUNT(*) as total

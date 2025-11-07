@@ -16,8 +16,8 @@
       <select id="id_exame" name="idExame" required>
           <option value="" disabled selected>Selecione o exame</option>
           <?php
-          foreach($exames as $ex) {
-              echo "<option value='{$ex['id_exame']}'> {$ex['nome']} </option>";
+          foreach($exames as $exame) {
+              echo "<option value='{$exame['id_exame']}'> {$exame['nome']} </option>";
           }
           ?>
       </select>

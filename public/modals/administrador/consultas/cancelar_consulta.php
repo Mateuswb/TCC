@@ -10,7 +10,7 @@
       <div class="modal-body">
         <p>Você tem certeza que deseja <b>cancelar esta consulta</b>?  
         Essa ação <span style="color: #e74c3c;">não pode ser desfeita</span>.</p>
-        <input type="int" name="idConsulta" id="idConsulta">
+        <input type="hidden" name="idConsulta" id="idConsulta">
       </div>
 
       <div class="modal-footer">

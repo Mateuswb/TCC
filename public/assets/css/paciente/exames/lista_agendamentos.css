@@ -135,14 +135,14 @@ main h1 {
 
 
 .btneditar {
-    background: linear-gradient(180deg, #0b8dd8, #0964a8);
+    background: linear-gradient(180deg, #025e93, #01467b);
     color: #fff;
 }
 
 .btneditar:hover {
-    background: linear-gradient(180deg, #0fa2f0, #075c96);
+     background: linear-gradient(180deg, #004b77, #003c6a);
     transform: translateY(-2px);
-    box-shadow: 0 6px 14px rgba(11, 123, 208, 0.25);
+    box-shadow: 0 6px 14px rgba(1, 62, 109, 0.25);
 }
 
 

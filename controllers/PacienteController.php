@@ -250,7 +250,7 @@
                     exit;
                 }
 
-                $this->UsuarioModel->inativarUsuario($cpf);
+                $this->usuarioModel->inativarUsuario($cpf);
 
                 $_SESSION['flash'] = [
                     'type' => 'success',

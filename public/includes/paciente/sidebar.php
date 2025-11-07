@@ -3,20 +3,22 @@
   $currentFile = basename($_SERVER['PHP_SELF']); 
 ?>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
-   rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+  rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <div class="sidebar" id="sidebar"> 
 <div class="logo">
     <img src="<?= BASE_URL ?>/public/assets/imgs/logo_medhub.png" alt="">
 </div>
 <nav>
     <ul>
-   <li><a href="<?= BASE_URL ?>/views/paciente/home.php"><i class="fa-solid fa-house"></i> Início</a></li>
+   <li><a href="<?= BASE_URL ?>/views/paciente/home.php"
+    class="<?= ($currentFile == 'home.php') ? 'active' : '' ?>">
+    <i class="fa-solid fa-house"></i> Início</a>
+  </li>
 
-    <h4>Gestão de Consultas</h4>
-
+  <h4>Gestão de Consultas</h4>
   <li>
     <a href="<?= BASE_URL ?>/views/paciente/consultas/listar_profissionais.php" 
       class="<?= ($currentFile == 'listar_profissionais.php') ? 'active' : '' ?>">
@@ -31,17 +33,33 @@
     </a>
   </li>
 
-    <li><a href="<?= BASE_URL ?>/views/paciente/consultas/historico_consultas.php"><i class="fa-solid fa-book"></i> Histórico de consultas</a></li>
+    <li><a href="<?= BASE_URL ?>/views/paciente/consultas/historico_consultas.php"
+      class="<?= ($currentFile == 'historico_consultas.php') ? 'active' : '' ?>">
+      <i class="fa-solid fa-book"></i> Histórico de consultas</a>
+    </li>
 
     <h4>Gestão de Exames</h4>
     <li>
-    <a href="<?= BASE_URL ?>/views/paciente/exames/encaminhamento/listar_encaminhamentos.php">
+    <a href="<?= BASE_URL ?>/views/paciente/exames/encaminhamento/listar_encaminhamentos.php"
+        class="<?= ($currentFile == 'listar_encaminhamentos.php') ? 'active' : '' ?>">
         <i class="fa-solid fa-file-lines"></i> Encaminhamentos
     </a>
     </li>
-    <li><a href="<?= BASE_URL ?>/views/paciente/exames/exames_agendados/listar_agendamentos.php"><i class="fa-solid fa-vial"></i> Exames agendados</a></li>
-    <li><a href="<?= BASE_URL ?>/views/paciente/exames/historico/historico_exames.php"><i class="fa-solid fa-file-medical "></i> Histórico de exames</a></li>
-    <li><a href="<?= BASE_URL ?>/views/paciente/exames/resultados/listar_resultados.php"><i class="fa-solid fa-chart-column"></i> Resultado dos exames</a></li>
+
+    <li><a href="<?= BASE_URL ?>/views/paciente/exames/exames_agendados/listar_agendamentos.php"
+      class="<?= ($currentFile == 'listar_agendamentos.php') ? 'active' : '' ?>">
+      <i class="fa-solid fa-vial"></i> Exames agendados</a>
+    </li>
+
+    <li><a href="<?= BASE_URL ?>/views/paciente/exames/historico/historico_exames.php"
+      class="<?= ($currentFile == 'historico_exames.php') ? 'active' : '' ?>">
+      <i class="fa-solid fa-file-medical "></i> Histórico de exames</a>
+    </li>
+
+    <li><a href="<?= BASE_URL ?>/views/paciente/exames/resultados/listar_resultados.php"
+      class="<?= ($currentFile == 'listar_resultados.php') ? 'active' : '' ?>">
+      <i class="fa-solid fa-chart-column"></i> Resultado dos exames</a>
+    </li>
 
     </ul>
 </nav>
@@ -62,7 +80,7 @@
 
 
 .sidebar {
-  width: 250px;
+  width: 260px;
   background-color: #ffffff;
   border-right: 1px solid #e0e0e0;
   display: flex;
@@ -109,11 +127,12 @@ li a i {
 .sidebar nav ul li a {
   text-decoration: none;
   color: #333;
-  font-size: 15px;
+  font-size: 16px;
   display: flex;
   align-items: center;
   padding: 8px 10px;
   border-radius: 8px;
+  font-weight: 500;
   transition: 0.3s;
 }
 

@@ -11,9 +11,10 @@ $exames = $controllerExame->listarExamesDisponiveisParaEncaminhamento();
       
       <input type="hidden" name="idEncaminhamento" id="encaminharId">
       <input type="hidden" name="idAgendamentoConsulta" id="consultaId">
+      <input type="int" name="idAgendamentoExame" id="idAgendamentoExame">
 
-      <label for="id_exame">Tipo de exame:</label>
-      <select id="id_exame" name="idExame" required>
+      <label for="idTipoExame">Tipo de exame:</label>
+      <select id="idTipoExame" name="idTipoExame" required>
           <option value="" disabled selected>Selecione o exame</option>
           <?php foreach($exames as $ex): ?>
               <option value="<?= $ex['id_exame'] ?>"><?= htmlspecialchars($ex['nome']) ?></option>

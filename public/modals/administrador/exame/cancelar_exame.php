@@ -1,6 +1,6 @@
 <div id="cancelarExameModal" class="modal-overlay" style="display: none;">
   <div class="modal-box">
-    <form method="POST" action="../../../controllers/ProfissionalController.php?acao=cancelarExame">
+    <form method="POST" action="../../../controllers/AdministradorController.php?acao=cancelarExame">
 
       <div class="modal-header">
         <h3>Cancelar Exame</h3>
@@ -11,7 +11,7 @@
         <p>Você tem certeza que deseja <b>cancelar este exame</b>?  
         Essa ação <span style="color: #e74c3c;">não pode ser desfeita</span>.</p>
         
-        <input type="hidden" name="idAgendamentoExame" id="idAgendamentoExame">
+        <input type="int" name="idAgendamentoExame" id="idAgendamentoExame">
       </div>
 
       <div class="modal-footer">

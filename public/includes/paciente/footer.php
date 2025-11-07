@@ -20,7 +20,7 @@
 footer {
   position: fixed;
   bottom: 0;
-  left: 250px; 
+  left: 260px; 
   right: 0;
   background-color: #003366;
   color: #fff;

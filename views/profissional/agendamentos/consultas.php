@@ -357,7 +357,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (tipo === 'c') {
                 switch (status) {
                     case 'agendada':  bg = '#2E86C1'; border = '#1B4F72'; break;
-                    case 'realizada': bg = '#2874A6'; border = '#1A5276'; break; 
+                    case 'realizada': bg = '#28a2a6ff'; border = '#1a7670ff'; break; 
                     case 'cancelada': bg = '#E74C3C'; border = '#C0392B'; break; 
                 }
 
@@ -387,12 +387,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 info.el.style.pointerEvents = 'none';
             }
 
-            // Bloqueia os agendamentos cancelados
-            if (status === 'cancelada' || status === 'cancelado') {
+            // Bloqueia os agendamentos cancelados e finalizados
+            if (status === 'cancelada' || status === 'cancelado' || status === 'realizada' || status === 'realizado') {
                 info.el.style.opacity = 0.6;
                 info.event.setProp('editable', false);
                 info.el.style.pointerEvents = 'none';
             }
+
 
             // Adiciona botão de PDF na reconsulta
             if (info.event.extendedProps?.tipo === 'r' && info.event.extendedProps?.pdf) {

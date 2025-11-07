@@ -275,108 +275,125 @@
         public function reencaminharExame()
         {
             $idEncaminhamento = $_POST['idEncaminhamento'];
-            $idExame = $_POST['idExame'];
-            $observacoes = $_POST['observacoes'];
             $idAgendamentoConsulta = $_POST['idAgendamentoConsulta'];
+            $idTipoExame = $_POST['idTipoExame'];
+            $idAgendamentoExame = $_POST['idAgendamentoExame'] ?? null;
+            $observacoes = $_POST['observacoes'];
 
-            // Obtém os dados atuais do encaminhamento e do paciente
             $dados = $this->agendamentoConsultaModel->getAgendamento($idAgendamentoConsulta);
-
-            $reencaminhar = $this->encaminhamentoModel->reencaminharExame($idEncaminhamento, $idExame, $observacoes);
-
-            $mensagem = '
-            <!DOCTYPE html>
-            <html lang="pt-BR">
-            <head>
-            <meta charset="UTF-8">
-            <title>Reencaminhamento de Exame</title>
-            </head>
-            <body style="font-family: Arial, sans-serif; background-color:#f4f6f8; margin:0; padding:0;">
-            <table align="center" width="600" cellpadding="0" cellspacing="0" style="background:#ffffff; border-radius:8px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
-                <tr>
-                <td style="background:#123068; color:#ffffff; text-align:center; padding:20px;">
-                    <h1 style="margin:0; font-size:22px;">Reencaminhamento de Exame</h1>
-                </td>
-                </tr>
-                <tr>
-                <td style="padding:20px; color:#333333; font-size:15px; line-height:1.6;">
-                    <p>Olá <strong>' . $dados['paciente_nome'] . '</strong>,</p>
-                    <p>Informamos que seu exame foi <strong>reencaminhado</strong>.</p>
-
-                    <table width="100%" cellpadding="8" cellspacing="0" style="margin:15px 0; border:1px solid #ddd; border-radius:6px;">
-                    <tr>
-                        <td><strong>Exame:</strong></td>
-                        <td>' . $dados['nome_exame'] . '</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Novo Profissional:</strong></td>
-                        <td>' . $dados['nome_profissional'] . '</td>
-                    </tr>
-                    <tr style="background:#f4f6f8;">
-                        <td><strong>Clínica:</strong></td>
-                        <td>MedHub</td>
-                    </tr>
-                    </table>
-
-                    <p>Você ainda precisa efetuar o agendamento do seu exame. Para continuar, acesse sua conta pelo botão abaixo e finalize o agendamento</p>
-
-                    <p style="text-align:center; margin:30px 0;">
-                    <a href="http://localhost/tcc/views/views/paciente/exames/encaminhamento/listar_encaminhamentos.php" 
-                    style="background:#123068; color:#ffffff; text-decoration:none; padding:12px 24px; border-radius:6px; font-size:16px; display:inline-block;">
-                    Agendar Exame
-                    </a>
-                    </p>
-
-                    <p style="font-size:13px; color:#777;">Se o botão não funcionar, copie e cole este link no navegador:<br>
-                    <a href="http://localhost/tcc/views/paciente/exames/encaminhamento/listar_encaminhamentos.php" style="color:#123068;">
-                        http://localhost/tcc/views/paciente/exames/encaminhamento/listar_encaminhamentos.php
-                    </a>
-                    </p>
-
-                    <p style="margin-top:20px;">Atenciosamente,<br><strong>Equipe Clínica MedHub</strong></p>
-                </td>
-                </tr>
-                <tr>
-                <td style="background:#f4f6f8; text-align:center; font-size:12px; color:#888; padding:15px;">
-                    © ' . date("Y") . ' Clínica MedHub. Todos os direitos reservados.
-                </td>
-                </tr>
-            </table>
-            </body>
-            </html>
-            ';
-
             session_start();
 
-            if ($reencaminhar) {
-                try {
-                    $this->emailController->enviarEmail(
-                        $dados['paciente_email'],
-                        $dados['paciente_nome'],
-                        'Exame Reencaminhado',
-                        $mensagem
-                    );
+            $reencaminhar = $this->encaminhamentoModel->reencaminharExame($idEncaminhamento, $idTipoExame, $observacoes);
 
-                    $_SESSION['flash'] = [
-                        'type' => 'success',
-                        'message' => 'Exame reencaminhado e e-mail enviado com sucesso!'
-                    ];
-                } catch (Exception $e) {
+            
+            try {
+            if (!empty($idAgendamentoExame && $idAgendamentoExame !== null)) {
+                $cancelado = $this->agendamentoExameModel->cancelarAgendamentoExame($idAgendamentoExame);
+
+                if (!$cancelado) {
                     $_SESSION['flash'] = [
                         'type' => 'error',
-                        'message' => 'Erro ao enviar e-mail para ' . $dados['paciente_nome']
+                        'message' => 'Erro ao cancelar o agendamento anterior do exame.'
                     ];
+                    header("Location: ../views/profissional/historico_encaminhamentos/listar_encaminhamentos.php");
+                    exit;
                 }
+            }
+
+            $reencaminhar = $this->encaminhamentoModel->reencaminharExame($idEncaminhamento, $idTipoExame, $observacoes);
+
+      
+            if ($reencaminhar) {
+                $mensagem = '
+                    <!DOCTYPE html>
+                    <html lang="pt-BR">
+                    <head>
+                    <meta charset="UTF-8">
+                    <title>Reencaminhamento de Exame</title>
+                    </head>
+                    <body style="font-family: Arial, sans-serif; background-color:#f4f6f8; margin:0; padding:0;">
+                    <table align="center" width="600" cellpadding="0" cellspacing="0" style="background:#ffffff; border-radius:8px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+                        <tr>
+                        <td style="background:#123068; color:#ffffff; text-align:center; padding:20px;">
+                            <h1 style="margin:0; font-size:22px;">Reencaminhamento de Exame</h1>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td style="padding:20px; color:#333333; font-size:15px; line-height:1.6;">
+                            <p>Olá <strong>' . $dados['paciente_nome'] . '</strong>,</p>
+                            <p>Informamos que seu exame foi <strong>reencaminhado</strong>.</p>
+
+                            <table width="100%" cellpadding="8" cellspacing="0" style="margin:15px 0; border:1px solid #ddd; border-radius:6px;">
+                            <tr>
+                                <td><strong>Exame:</strong></td>
+                                <td>' . $dados['nome_exame'] . '</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Novo Profissional:</strong></td>
+                                <td>' . $dados['nome_profissional'] . '</td>
+                            </tr>
+                            <tr style="background:#f4f6f8;">
+                                <td><strong>Clínica:</strong></td>
+                                <td>MedHub</td>
+                            </tr>
+                            </table>
+
+                            <p>Você ainda precisa efetuar o agendamento do seu exame. Para continuar, acesse sua conta pelo botão abaixo e finalize o agendamento</p>
+
+                            <p style="text-align:center; margin:30px 0;">
+                            <a href="http://localhost/tcc/views/views/paciente/exames/encaminhamento/listar_encaminhamentos.php" 
+                            style="background:#123068; color:#ffffff; text-decoration:none; padding:12px 24px; border-radius:6px; font-size:16px; display:inline-block;">
+                            Agendar Exame
+                            </a>
+                            </p>
+
+                            <p style="font-size:13px; color:#777;">Se o botão não funcionar, copie e cole este link no navegador:<br>
+                            <a href="http://localhost/tcc/views/paciente/exames/encaminhamento/listar_encaminhamentos.php" style="color:#123068;">
+                                http://localhost/tcc/views/paciente/exames/encaminhamento/listar_encaminhamentos.php
+                            </a>
+                            </p>
+
+                            <p style="margin-top:20px;">Atenciosamente,<br><strong>Equipe Clínica MedHub</strong></p>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td style="background:#f4f6f8; text-align:center; font-size:12px; color:#888; padding:15px;">
+                            © ' . date("Y") . ' Clínica MedHub. Todos os direitos reservados.
+                        </td>
+                        </tr>
+                    </table>
+                    </body>
+                    </html>
+                ';
+
+                $this->emailController->enviarEmail(
+                    $dados['paciente_email'],
+                    $dados['paciente_nome'],
+                    'Exame Reencaminhado',
+                    $mensagem
+                );
+
+                $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => 'Exame reencaminhado e e-mail enviado com sucesso!'
+                ];
             } else {
                 $_SESSION['flash'] = [
                     'type' => 'error',
                     'message' => 'Erro ao reencaminhar exame.'
                 ];
             }
+            } catch (Exception $e) {
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => 'Erro inesperado: ' . $e->getMessage()
+                ];
+            }
 
             header("Location: ../views/profissional/historico_encaminhamentos/listar_encaminhamentos.php");
             exit;
         }
+    
 
         public function cancelarEncaminhamentoExame()
         {

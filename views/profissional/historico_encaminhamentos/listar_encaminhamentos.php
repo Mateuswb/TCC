@@ -232,28 +232,25 @@ $encaminhamentos = $controller->listarEncaminhamentosProfissioal($idProfissional
                         </span>
                     </td>
                     <td>
-                    <button class="btn btn-cancelar"
-    onclick="abrirModalCancelar(this)"
-    data-id-encaminhamento="<?= $e['id_encaminhamento'] ?>"
-    data-id-agendamento-exame="<?= $e['id_agendamento_exame'] ?? '' ?>"
-    data-id-agendamento-consulta="<?= $e['id_agendamento'] ?>">
-    <i class="fa-solid fa-ban"></i> Cancelar
-</button>
+                    <button 
+                        class="btn btn-cancelar"
+                        onclick="abrirModalCancelar(this)"
+                        data-id-encaminhamento="<?= $e['id_encaminhamento'] ?>"
+                        data-id-agendamento-exame="<?= $e['id_agendamento_exame'] ?? '' ?>"
+                        data-id-agendamento-consulta="<?= $e['id_agendamento'] ?>">
+                        <i class="fa-solid fa-ban"></i> Cancelar
+                    </button>
 
-
-
-
-                        <button
-                        type="button"
+                    <button
                         class="btn btn-reencaminhar" 
                         onclick="abrirModalReencaminhar(this)"
                         data-id="<?= $e['id_encaminhamento'] ?>"
                         data-id-consulta="<?= $e['id_agendamento'] ?>"
-                        data-exame="<?= $e['id_exame'] ?>"
+                        data-id-agendamento-exame="<?= $e['id_agendamento_exame'] ?>"
                         data-observacoes="<?= htmlspecialchars($e['observacoes']) ?>"
                         >
                         <i class="fa-solid fa-share-from-square"></i> Reencaminhar
-                        </button>
+                    </button>
 
                     </td>
                 </tr>
@@ -265,64 +262,47 @@ $encaminhamentos = $controller->listarEncaminhamentosProfissioal($idProfissional
 </main>
 
 <script>
-let idEncaminhamentoSelecionado = null;
+    // cancelar
+    function abrirModalCancelar(button) {
+        const modal = document.getElementById("modalCancelar");
 
-function abrirModalCancelar(button) {
-    const modal = document.getElementById("modalCancelar");
+        const idEncaminhamento = button.dataset.idEncaminhamento;
+        const idAgendamentoExame = button.dataset.idAgendamentoExame;
+        const idAgendamentoConsulta = button.dataset.idAgendamentoConsulta;
 
-    const idEncaminhamento = button.dataset.idEncaminhamento;
-    const idAgendamentoExame = button.dataset.idAgendamentoExame || '';
-    const idAgendamentoConsulta = button.dataset.idAgendamentoConsulta;
+        modal.querySelector("#inputIdEncaminhamento").value = idEncaminhamento;
+        modal.querySelector("#inputIdAgendamentoExame").value = idAgendamentoExame;
+        modal.querySelector("#inputIdConsulta").value = idAgendamentoConsulta;
+        idEncaminhamentoSelecionado = idEncaminhamento;
 
-    modal.querySelector("#inputIdEncaminhamento").value = idEncaminhamento;
-    modal.querySelector("#inputIdAgendamentoExame").value = idAgendamentoExame;
-    modal.querySelector("#inputIdConsulta").value = idAgendamentoConsulta;
-    idEncaminhamentoSelecionado = idEncaminhamento;
+        modal.style.display = "flex";
+    }
+    function fecharModalCancelar() {
+        document.getElementById("modalCancelar").style.display = "none";
+    }
+
+
+    // encaminhar
+    function abrirModalReencaminhar(button) {
+    const modal = document.getElementById("encaminharModal");
+
+    const idEncaminhamento = button.dataset.id;
+    const idAgendamentoConsulta = button.dataset.idConsulta;
+    const idAgendamentoExame = button.dataset.idAgendamentoExame;
+    const observacoes = button.dataset.observacoes || '';
+
+    modal.querySelector("#encaminharId").value = idEncaminhamento;
+    modal.querySelector("#consultaId").value = idAgendamentoConsulta;
+    modal.querySelector("#idAgendamentoExame").value = idAgendamentoExame;
+    modal.querySelector("#observacoes").value = observacoes;
 
     modal.style.display = "flex";
-}
+    }
 
-
-function fecharModalCancelar() {
-  document.getElementById("modalCancelar").style.display = "none";
-}
-
-document.getElementById("btnConfirmarCancelar").addEventListener("click", () => {
-    if (!idEncaminhamentoSelecionado) return;
-
-    document.getElementById("formCancelarEncaminhamento").submit();
-});
-
-
-
+    function fecharEncaminharModal() {
+    document.getElementById("encaminharModal").style.display = "none";
+    }
 </script>
-
-<script>
-function abrirModalReencaminhar(button) {
-  const idEncaminhamento = button.dataset.id;
-  const idAgendamentoConsulta = button.dataset.idConsulta;
-  const idExame = button.dataset.exame;
-  const observacoes = button.dataset.observacoes || "";
-
-  const modal = document.getElementById("encaminharModal");
-  const campoId = modal.querySelector("#encaminharId");
-  const campoIdConsulta = modal.querySelector("#consultaId");
-  const campoExame = modal.querySelector("#id_exame");
-  const campoObs = modal.querySelector("#observacoes");
-
-  campoId.value = idEncaminhamento;
-  campoIdConsulta.value = idAgendamentoConsulta;
-  campoExame.value = idExame;
-  campoObs.value = observacoes;
-
-  modal.style.display = "flex";
-}
-
-function fecharEncaminharModal() {
-  document.getElementById("encaminharModal").style.display = "none";
-}
-</script>
-
 
 </body>
 </html>

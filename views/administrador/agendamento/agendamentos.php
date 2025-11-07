@@ -7,9 +7,7 @@
 
   // Modals de consulta
   include '../../../public/modals/administrador/consultas/cancelar_consulta.php';
-  include '../../../public/modals/administrador/consultas/encaminhar_consulta.php';
-  include '../../../public/modals/administrador/consultas/finalizar_consulta.php';
-
+  include '../../../public/modals/administrador/exame/cancelar_exame.php';
 
   $controller = new AdministradorController($conn);
   $agendamentos = $controller->listarAgendamentos();
@@ -44,8 +42,12 @@
   border-left: 5px solid #fff;
 }
 
+
+
+
+
 .fc-timegrid-slot {
-  height: 120px !important;
+  height: 140px !important;
 }
 
 .filter-bar {
@@ -155,9 +157,7 @@
        <div id="eventModal" class="modal">
     <div class="modal-content">
       <h3 id="eventTitle">Consulta</h3>
-      <button class="btn-finalizar" onclick="executarAcao('finalizar')">✅ Finalizar</button>
       <button class="btn-cancelar" onclick="executarAcao('cancelar')">❌ Cancelar</button>
-      <button class="btn-encaminhar" onclick="executarAcao('encaminhar')">📤 Encaminhar</button>
       <button class="btn-fechar" onclick="fecharModal()">Fechar</button>
     </div>
   </div>
@@ -165,7 +165,6 @@
     <div id="modalExame" class="modal">
       <div class="modal-content">
         <h3 id="exameTitle">Exame</h3>
-        <button class="btn-finalizar" onclick="executarAcaoExame('finalizar')">✅ Finalizar</button>
         <button class="btn-cancelar" onclick="executarAcaoExame('cancelar')">❌ Cancelar</button>
         <button class="btn-fechar" onclick="fecharModalExame()">Fechar</button>
       </div>
@@ -213,11 +212,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Inicialização
     calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'timeGridWeek',
+         initialView: 'timeGridWeek',
         locale: 'pt-br',
         slotMinTime: "05:00:00",
         slotMaxTime: "23:31:00",
         allDaySlot: false,
+        expandRows: true,
+        height: "auto",
+        events: events,
+        eventOverlap: false,
+        slotEventOverlap: false,
+        eventMaxStack: 5,
+        
         events: events,
         headerToolbar: {
             left: 'prev,next',
@@ -345,7 +351,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             })
             .catch(err => console.error(err));
-    }, 60000);
+    }, 600000);
 });
 
 function fecharModal() {
@@ -387,12 +393,6 @@ console.log(selectedEvent.extendedProps);
 
 function executarAcaoExame(acao) {
     if (!selectedEvent) return;
-
-    if (acao === 'finalizar') {
-      document.getElementById("modalExame").style.display = "none";
-      document.getElementById("finalizarExameModal").style.display = "flex";
-      document.getElementById("idFinalizarExame").value = selectedEvent.id;
-    }
 
     if (acao === 'cancelar') {
       document.getElementById("modalExame").style.display = "none";

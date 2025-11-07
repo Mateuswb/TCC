@@ -77,7 +77,7 @@
 
         public function reencaminharExame($idEncaminhamento, $idExame, $observacoes){
             $sql = " UPDATE encaminhamentos
-                    SET id_exame = :idExame,
+                        SET id_exame = :idExame,
                         observacoes = :observacoes,
                         status = 'pendente'
                     WHERE id_encaminhamento = :idEncaminhamento";

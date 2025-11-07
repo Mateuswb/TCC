@@ -3,6 +3,7 @@
     require_once dirname(__DIR__) . "/models/Usuario.php";
     require_once dirname(__DIR__) . "/models/Paciente.php";
     require_once dirname(__DIR__) . "/models/AgendamentoConsulta.php";
+    require_once dirname(__DIR__) . "/models/AgendamentoExame.php";
     require_once dirname(__DIR__) . "/models/Profissional.php";
     require_once dirname(__DIR__) . "/models/Exame.php";
     require_once dirname(__DIR__) . "/models/Relatorio.php";
@@ -16,9 +17,9 @@
         private $pacienteModel;
         private $profissionalModel;
         private $agendamentoConsultaModel;
+        private $agendamentoExameModel;
         private $exameModel;
         private $encaminhamentoModel;
-        private $relatorioModel;
         private $emailController;
 
         private $usuarioController;
@@ -28,8 +29,8 @@
             $this->pacienteModel = new Paciente($conn);
             $this->profissionalModel = new Profissional($conn);
             $this->agendamentoConsultaModel = new AgendamentoConsulta($conn);
+            $this->agendamentoExameModel = new AgendamentoExame($conn);
             $this->exameModel = new Exame($conn);
-            $this->relatorioModel = new Relatorio($conn);
             $this->encaminhamentoModel = new Encaminhamento($conn);
             $this->usuarioController = new UsuarioController($conn);
             $this->usuarioController = new UsuarioController($conn);
@@ -186,7 +187,11 @@
             return $this->agendamentoConsultaModel->listarAgendamentos();
         }   
 
-
+        # tipos exames 
+        public function listarExames(){
+            return $this->exameModel->listarExames();
+        }
+        
         public function cadastrarExame() {
             $categoria = $_POST['categoria'];
             $nome = $_POST['nome'];
@@ -225,12 +230,7 @@
             header("Location: ../views/administrador/exame/listar_exames.php");
             exit;
         }
-
-
-        public function listarExames(){
-            return $this->exameModel->listarExames();
-        }
-
+        
         public function editarExame(){
             $idExame = $_POST['idExame'];
             $nome = $_POST['nome'];
@@ -276,7 +276,7 @@
             header("Location: ../views/administrador/exame/listar_exames.php");
         }
 
-        #consultas
+        # agedamento consultas
         public function cancelarAgendamentoConsulta(){
             $idConsulta = $_POST['idConsulta'];
 
@@ -317,7 +317,7 @@
                             <p>Se desejar reagendar o exame, clique no botão abaixo e siga as instruções:</p>
                             
                             <p style="text-align:center; margin:30px 0;">
-                                <a href="http://localhost/tcc02/views/paciente/teste.html" 
+                                <a href="http://localhost/tcc/views/paciente/consultas/listar_profissionais.php" 
                                 style="background:#123068; color:#ffffff; text-decoration:none; padding:12px 24px; border-radius:6px; font-size:16px; display:inline-block;">
                                 Reagendar Exame
                                 </a>
@@ -325,7 +325,7 @@
                             
                             <p style="font-size:13px; color:#777;">Se o botão não funcionar, copie e cole este link no navegador:<br>
                             <a href="http://localhost/tcc02/views/paciente/teste.html" style="color:#123068;">
-                                http://localhost/tcc02/views/paciente/teste.html
+                                http://localhost/tcc/views/paciente/consultas/listar_profissionais.php
                             </a></p>
                             
                             <p style="margin-top:20px;">Atenciosamente,<br><strong>Equipe Clínica MedHub</strong></p>
@@ -361,28 +361,6 @@
                 $_SESSION['flash'] = [
                     'type' => 'error',
                     'message' => 'Erro ao cancelar consulta'
-                ];
-            }
-            header("Location: ../views/administrador/agendamento/agendamentos.php");
-            exit;
-        }
-
-        public function finalizarAgendamentoConsulta(){
-            $idConsulta = $_POST['idConsulta'];
-
-            $finalizar = $this->agendamentoConsultaModel->finalizarAgendamentoConsulta($idConsulta);
-            
-            session_start();
-            if($finalizar){
-                $_SESSION['flash'] = [
-                    'type' => 'success',
-                    'message' => 'Consuta Finalizada com sucesso'
-                ];
-            }
-            else{
-               $_SESSION['flash'] = [
-                    'type' => 'error',
-                    'message' => 'Erro ao finalizar consulta'
                 ];
             }
             header("Location: ../views/administrador/agendamento/agendamentos.php");
@@ -490,6 +468,123 @@
             exit;
         }
 
+        # agedamento exame
+        public function cancelarExame()
+        {
+            $idAgendamentoExame = $_POST['idAgendamentoExame'];
+            $idAgendamentoExame = $_POST['idAgendamentoExame'];
+
+            // Busca dados relacionados à consulta e ao paciente
+            $dados = $this->agendamentoExameModel->getAgendamentoExame($idAgendamentoExame);
+
+            // Cancela o exame
+            $cancelarExame = $this->agendamentoExameModel->cancelarAgendamentoExame($idAgendamentoExame);
+
+            $mensagem = '
+            <!DOCTYPE html>
+            <html lang="pt-BR">
+            <head>
+                <meta charset="UTF-8">
+                <title>Cancelamento de Exame</title>
+            </head>
+            <body style="font-family: Arial, sans-serif; background-color:#f4f6f8; margin:0; padding:0;">
+                <table align="center" width="600" cellpadding="0" cellspacing="0" 
+                    style="background:#ffffff; border-radius:8px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+                    <tr>
+                        <td style="background:#004080; color:#ffffff; text-align:center; padding:20px;">
+                            <h1 style="margin:0; font-size:22px;">Cancelamento de Exame</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:20px; color:#333333; font-size:15px; line-height:1.6;">
+                            <p>Olá <strong>' . $dados['paciente_nome'] . '</strong>,</p>
+
+                            <p>Informamos que o seu exame <strong>' . $dados['nome_exame'] . '</strong> foi 
+                            <strong>cancelado</strong> pelo profissional responsável.</p>
+
+                            <table width="100%" cellpadding="8" cellspacing="0" 
+                                style="margin:15px 0; border:1px solid #ddd; border-radius:6px;">
+                                <tr>
+                                    <td><strong>Exame:</strong></td>
+                                    <td>' . $dados['nome_exame'] . '</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Profissional responsável:</strong></td>
+                                    <td>' . $dados['nome_profissional'] . '</td>
+                                </tr>
+                                <tr style="background:#f4f6f8;">
+                                </tr>
+                                <tr>
+                                    <td><strong>Clínica:</strong></td>
+                                    <td>MedHub</td>
+                                </tr>
+                            </table>
+
+                            <p>Se o cancelamento ocorreu por engano ou desejar reagendar, entre em contato com a clínica 
+                            ou acesse sua área do paciente.</p>
+
+                            <p style="text-align:center; margin:30px 0;">
+                                <a href="http://localhost/tcc/views/paciente/exames/exames_agendados/listar_agendamentos.php" 
+                                style="background:#004080; color:#ffffff; text-decoration:none; padding:12px 24px; border-radius:6px; font-size:16px; display:inline-block;">
+                                    Acessar Meus Exames
+                                </a>
+                            </p>
+
+                            <p style="font-size:13px; color:#777;">Se o botão não funcionar, copie e cole este link no navegador:<br>
+                                <a href="http://localhost/tcc/views/paciente/exames/exames_agendados/listar_agendamentos.php" style="color:#004080;">
+                                    http://localhost/tcc/views/paciente/exames/exames_agendados/listar_agendamentos.php
+                                </a>
+                            </p>
+
+                            <p style="margin-top:20px;">Atenciosamente,<br><strong>Equipe Clínica MedHub</strong></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background:#f4f6f8; text-align:center; font-size:12px; color:#888; padding:15px;">
+                            © ' . date("Y") . ' Clínica MedHub. Todos os direitos reservados.
+                        </td>
+                    </tr>
+                </table>
+            </body>
+            </html>
+            ';
+
+            // Garante que a sessão está ativa
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+
+            // Se o cancelamento for bem-sucedido, envia o e-mail
+            if ($cancelarExame) {
+                try {
+                    $this->emailController->enviarEmail(
+                        $dados['paciente_email'],
+                        $dados['paciente_nome'],
+                        'Cancelamento de Exame',
+                        $mensagem
+                    );
+
+                    $_SESSION['flash'] = [
+                        'type' => 'success',
+                        'message' => 'Exame cancelado com sucesso. E-mail enviado ao paciente.'
+                    ];
+                } catch (Exception $e) {
+                    $_SESSION['flash'] = [
+                        'type' => 'warning',
+                        'message' => 'Exame cancelado, mas ocorreu um erro ao enviar o e-mail.'
+                    ];
+                }
+            } else {
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => 'Erro ao cancelar o exame.'
+                ];
+            }
+
+            header("Location: ../views/profissional/agendamentos/consultas.php");
+            exit;
+        }
+
 
         #validar exclusão do profissional
         public function excluirProfissional() {
@@ -563,8 +658,8 @@
             }
         }
 
-        #usuario
-     public function deletarUsuario() {
+        #validar exclusão usuario
+        public function deletarUsuario() {
         $idUsuario = $_POST['idUsuario'] ?? null;
         $cpf = $_POST['cpf'] ?? null;
 
@@ -585,7 +680,7 @@
 
         header("Location: ../views/administrador/usuario/listar_usuarios.php");
         exit;
-    }
+        }
 
 
     }
@@ -620,14 +715,14 @@
             case 'cancelarAgendamentoConsulta':
                 $controller->cancelarAgendamentoConsulta();
                 break;
-            case 'finalizarAgendamentoConsulta':
-                $controller->finalizarAgendamentoConsulta();
-                break;
             case 'encaminharPaciente':
                 $controller->realizarEncaminhamento();
                 break;
             case 'deletarUsuario':
                 $controller->deletarUsuario();
+                break;
+            case 'cancelarExame':
+                $controller->cancelarExame();
                 break;
             default:
                 echo "Ação inválida";

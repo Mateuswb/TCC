@@ -52,18 +52,22 @@ rel="stylesheet">
         <i class="fas fa-history"></i> <span>Histórico de Consultas</span>
     </a>
     </a>
-       <a href="<?= BASE_URL ?>/profissional/historico_encaminhamentos/listar_encaminhamentos.php">
+       <a href="<?= BASE_URL ?>/profissional/historico_encaminhamentos/listar_encaminhamentos.php"
+       class="<?= ($currentFile == 'listar_encaminhamentos.php') ? 'active' : '' ?>">
         <i class="fas fa-history"></i> <span>Encaminhamentos</span>
     </a>
-        <a href="<?= BASE_URL ?>/profissional/agendamentos/consultas.php">
+        <a href="<?= BASE_URL ?>/profissional/agendamentos/consultas.php"
+        class="<?= ($currentFile == 'consultas.php') ? 'active' : '' ?>">
         <i class="fas fa-file-alt"></i> <span>Relatórios</span>
     </a>
 
     </a>
-        <a href="<?= BASE_URL ?>/profissional/horarios/listar_horarios.php">
+        <a href="<?= BASE_URL ?>/profissional/horarios/listar_horarios.php"
+        class="<?= ($currentFile == 'listar_horarios.php') ? 'active' : '' ?>">
         <i class="fas fa-file-alt"></i> <span>Horários</span>
     </a>
-        <a href="<?= BASE_URL ?>/profissional/perfil.php">
+        <a href="<?= BASE_URL ?>/profissional/perfil.php"
+        class="<?= ($currentFile == 'perfil.php') ? 'active' : '' ?>">
         <i class="fa-solid fa-user"></i> <span>Perfil</span>
 
     <a href="<?= BASE_URL ?>/logout/logout.php" class="logout">

@@ -8,7 +8,7 @@
       </div>
       <div class="modal-body">
         <p>Tem certeza que deseja <b>finalizar este Exame</b>?</p>
-        <input type="int" name="idExame" id="idFinalizarExame">
+        <input type="hidden" name="idExame" id="idFinalizarExame">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" onclick="document.getElementById('finalizarExameModal').style.display='none'">Voltar</button>
