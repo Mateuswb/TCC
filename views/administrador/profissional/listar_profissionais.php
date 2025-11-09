@@ -45,7 +45,25 @@
               <li><strong>Sexo:</strong> <?php echo $profissional['sexo']; ?></li>
               <li><strong>Estado Civil:</strong> <?php echo $profissional['estado_civil']; ?></li>
               <li><strong>CRM:</strong> <?php echo $profissional['crm_crp']; ?></li>
-              <li><strong>Especialidade:</strong> <?php echo $profissional['especialidade']; ?></li>
+
+              <li><strong>Especialidade(s):</strong> 
+                <?php 
+                  $dados = json_decode($profissional['especialidade'], true);
+                  if (is_array($dados)) {
+                     $formatado = array_map(function($item) {
+                        $item = preg_replace('/^exame_/', '', $item);
+                        $item = str_replace('_', ' ', $item);
+
+                        return ucwords(trim($item)); 
+                    }, $dados);
+
+
+                      echo implode(', ', $formatado);
+                  } else {
+                      echo "Não informado";
+                  }
+                ?>
+            </li>
               <li><strong>Nº Casa:</strong> <?php echo $profissional['numero_casa']; ?></li>
               <li><strong>Bairro:</strong> <?php echo $profissional['bairro']; ?></li>
               <li><strong>Cidade:</strong> <?php echo $profissional['cidade']; ?></li>  
@@ -56,13 +74,13 @@
 
               <button
                 class="btn-edit" 
-                data-id="<?php echo $profissional['id_profissional']; ?>"
+                data-id-profissional="<?php echo $profissional['id_profissional']; ?>"
                 data-nome="<?php echo $profissional['nome']; ?>"
                 data-rg=" <?php echo $profissional['rg']; ?>"
                 data-email="<?php echo $profissional['email']; ?>"
                 data-data-nascimento="<?php echo $profissional['data_nascimento']; ?>"
                 data-crm=" <?php echo $profissional['crm_crp']; ?>"
-                 data-especialidades="<?= json_encode($profissional['especialidade'])?>"
+                data-especialidades='<?= $profissional["especialidade"] ?>'
                 data-telefone=" <?php echo $profissional['telefone']; ?>"
                 data-sexo="<?php echo $profissional['sexo']; ?>"
                 data-estado-civil="<?php echo $profissional['estado_civil']; ?>"

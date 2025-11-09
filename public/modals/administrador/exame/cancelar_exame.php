@@ -11,7 +11,7 @@
         <p>Você tem certeza que deseja <b>cancelar este exame</b>?  
         Essa ação <span style="color: #e74c3c;">não pode ser desfeita</span>.</p>
         
-        <input type="int" name="idAgendamentoExame" id="idAgendamentoExame">
+        <input type="hidden" name="idAgendamentoExame" id="idAgendamentoExame">
       </div>
 
       <div class="modal-footer">

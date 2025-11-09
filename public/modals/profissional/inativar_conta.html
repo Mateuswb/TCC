@@ -3,8 +3,8 @@
     <div style="background:#fff; padding:20px; border-radius:8px; width:400px; text-align:center; position:relative;">
         <h3 id="modalMensagem">Tem certeza que deseja inativar sua conta?</h3>
         
-        <form action="../../controllers/PacienteController.php?acao=inativarContaPaciente" method="post">
-            <input type="hidden" name="idPaciente" id="idPacienteInativar">
+        <form action="../../controllers/ProfissionalController.php?acao=inativarContaProfissional" method="post">
+            <input type="hidden" name="idProfissioanl" id="idProfissioanlInativar">
             <input type="hidden" name="cpf" id="cpfInativar">
             
             <div style="margin-top:20px; display:flex; justify-content: space-between;">
@@ -13,7 +13,7 @@
                     Cancelar
                 </button>
                 <input type="submit" value="Inativar Conta" 
-                    style="padding:10px 20px; background:#f5e946; color:#fff; border:none; border-radius:5px; cursor:pointer;">
+                    style="padding:10px 20px; background:#d6ca18; color:#fff; border:none; border-radius:5px; cursor:pointer;">
             </div>
         </form>
         
@@ -26,7 +26,7 @@
     function abrirModalInativar(btn) {
         const dados = btn.dataset;
 
-        document.getElementById('idPacienteInativar').value = dados.id;
+        document.getElementById('idProfissioanlInativar').value = dados.id;
         document.getElementById('cpfInativar').value = dados.cpf;
         document.getElementById('modalInativar').style.display = 'flex';
     }

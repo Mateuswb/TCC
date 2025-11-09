@@ -72,21 +72,45 @@
         }
 
         # agendamentos consulta
-        public function listarConsultas($idProfissional){
-            $sql = "
-                SELECT 
+        public function listarAgendamentosProfissional($idProfissional){
+            $sql = "SELECT 
                     ac.id_agendamento,
                     p.nome AS nome_paciente,
                     ac.dia_agendamento,
                     ac.horario_agendamento,
                     ac.status,
-                    ac.tipo_consulta,
-                    ac.observacoes
+                    ac.tipo_consulta AS tipo,
+                    ac.observacoes,
+                    ac.anexo,
+                    NULL AS nome_exame
                 FROM agendamentos_consultas ac
                 INNER JOIN pacientes p ON ac.id_paciente = p.id_paciente
                 INNER JOIN horarios_profissionais hp ON ac.id_horario_profissional = hp.id_horario
                 WHERE hp.id_profissional = :idProfissional
-                ORDER BY ac.dia_agendamento DESC, ac.horario_agendamento ASC
+
+                UNION ALL
+
+                SELECT 
+                    ae.id_agendamento,
+                    p.nome AS nome_paciente,
+                    ae.dia_agendamento,
+                    ae.horario_agendamento,
+                    ae.status,
+                    'e' AS tipo,
+                    ae.observacoes,
+                    NULL AS anexo,
+                    te.nome AS nome_exame
+                FROM agendamentos_exames ae
+                INNER JOIN encaminhamentos e ON ae.id_encaminhamento = e.id_encaminhamento
+                INNER JOIN tipos_exames te ON e.id_exame = te.id_exame
+                INNER JOIN agendamentos_consultas ac ON e.id_agendamento_consulta = ac.id_agendamento
+                INNER JOIN pacientes p ON ac.id_paciente = p.id_paciente
+                INNER JOIN horarios_profissionais hp ON ac.id_horario_profissional = hp.id_horario
+                WHERE hp.id_profissional = :idProfissional
+
+                ORDER BY dia_agendamento DESC, horario_agendamento ASC;
+                ;
+
             ";
 
             $stmt = $this->conn->prepare($sql);
@@ -96,12 +120,25 @@
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
-        public function totalConsultasProfissional($idProfissional){
+        public function totalAgendamentosProfissional($idProfissional){
             $sql = "SELECT COUNT(*) AS total_agendamentos
-                FROM agendamentos_consultas ac
-                JOIN horarios_profissionais hp ON ac.id_horario_profissional = hp.id_horario
-                WHERE hp.id_profissional = :idProfissional
-                AND ac.status != 'agendada'";
+                    FROM (
+                        SELECT ac.id_agendamento
+                        FROM agendamentos_consultas ac
+                        INNER JOIN horarios_profissionais hp ON ac.id_horario_profissional = hp.id_horario
+                        WHERE hp.id_profissional = :idProfissional
+                        AND ac.status != 'agendada'
+
+                        UNION ALL
+
+                        SELECT ae.id_agendamento
+                        FROM agendamentos_exames ae
+                        INNER JOIN encaminhamentos e ON ae.id_encaminhamento = e.id_encaminhamento
+                        INNER JOIN agendamentos_consultas ac ON e.id_agendamento_consulta = ac.id_agendamento
+                        INNER JOIN horarios_profissionais hp ON ac.id_horario_profissional = hp.id_horario
+                        WHERE hp.id_profissional = :idProfissional
+                        AND ae.status != 'agendado'
+                    ) AS todos_agendamentos";
 
             $query = $this->conn->prepare($sql);
             $query->execute([
@@ -110,12 +147,25 @@
             return $query->fetch(PDO::FETCH_ASSOC);
         }
 
-        public function totalConsultasConcluidas($idProfissional) {
+        public function totalAgendamentosConcluidas($idProfissional) {
             $sql = "SELECT COUNT(*) AS total_concluidas
-                    FROM agendamentos_consultas ac
-                    JOIN horarios_profissionais hp ON ac.id_horario_profissional = hp.id_horario
-                    WHERE hp.id_profissional = :idProfissional
-                    AND ac.status = 'realizada'";
+                    FROM (
+                        SELECT ac.id_agendamento
+                        FROM agendamentos_consultas ac
+                        INNER JOIN horarios_profissionais hp ON ac.id_horario_profissional = hp.id_horario
+                        WHERE hp.id_profissional = :idProfissional
+                        AND ac.status = 'realizada'
+
+                        UNION ALL
+
+                        SELECT ae.id_agendamento
+                        FROM agendamentos_exames ae
+                        INNER JOIN encaminhamentos e ON ae.id_encaminhamento = e.id_encaminhamento
+                        INNER JOIN agendamentos_consultas ac ON e.id_agendamento_consulta = ac.id_agendamento
+                        INNER JOIN horarios_profissionais hp ON ac.id_horario_profissional = hp.id_horario
+                        WHERE hp.id_profissional = :idProfissional
+                        AND ae.status = 'realizado'
+                    ) AS concluidos";
 
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':idProfissional', $idProfissional, PDO::PARAM_INT);
@@ -123,12 +173,25 @@
             return $stmt->fetch(PDO::FETCH_ASSOC);
         }
 
-        public function totalConsultasCanceladas($idProfissional) {
+        public function totalAgendamentosCanceladas($idProfissional) {
             $sql = "SELECT COUNT(*) AS total_canceladas
-                    FROM agendamentos_consultas ac
-                    JOIN horarios_profissionais hp ON ac.id_horario_profissional = hp.id_horario
-                    WHERE hp.id_profissional = :idProfissional
-                    AND ac.status = 'cancelada'";
+                    FROM (
+                        SELECT ac.id_agendamento
+                        FROM agendamentos_consultas ac
+                        INNER JOIN horarios_profissionais hp ON ac.id_horario_profissional = hp.id_horario
+                        WHERE hp.id_profissional = :idProfissional
+                        AND ac.status = 'cancelada'
+
+                        UNION ALL
+
+                        SELECT ae.id_agendamento
+                        FROM agendamentos_exames ae
+                        INNER JOIN encaminhamentos e ON ae.id_encaminhamento = e.id_encaminhamento
+                        INNER JOIN agendamentos_consultas ac ON e.id_agendamento_consulta = ac.id_agendamento
+                        INNER JOIN horarios_profissionais hp ON ac.id_horario_profissional = hp.id_horario
+                        WHERE hp.id_profissional = :idProfissional
+                        AND ae.status = 'cancelado'
+                    ) AS cancelados";
 
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':idProfissional', $idProfissional, PDO::PARAM_INT);
@@ -138,16 +201,30 @@
 
         # listar os paciente que já realizaram uma consulta com um profissional
         public function listarPacientesPorProfissional($profissionalId) {
-            $sql = "SELECT DISTINCT p.*, 
-                TIMESTAMPDIFF(YEAR, p.data_nascimento, CURDATE()) AS idade, 
-                u.status,
-                MAX(a.dia_agendamento) AS ultima_consulta 
-                FROM pacientes p 
-                JOIN agendamentos_consultas a ON p.id_paciente = a.id_paciente 
-                JOIN horarios_profissionais h ON a.id_horario_profissional = h.id_horario 
-                JOIN usuarios u ON u.login = p.cpf 
-                WHERE h.id_profissional = :idProfissional AND a.status = 'realizada' 
-                GROUP BY p.id_paciente, p.nome, p.cpf, p.data_nascimento, p.telefone, u.status;";
+            $sql = "SELECT DISTINCT 
+                        p.*, 
+                        TIMESTAMPDIFF(YEAR, p.data_nascimento, CURDATE()) AS idade, 
+                        u.status,
+                        MAX(a.dia_agendamento) AS ultima_consulta,
+                        COUNT(a.id_agendamento) AS total_agendamentos
+                    FROM pacientes p 
+                    JOIN agendamentos_consultas a 
+                        ON p.id_paciente = a.id_paciente 
+                    JOIN horarios_profissionais h 
+                        ON a.id_horario_profissional = h.id_horario 
+                    JOIN usuarios u 
+                        ON u.login = p.cpf 
+                    WHERE 
+                        h.id_profissional = :idProfissional 
+                        AND a.status = 'realizada'
+                    GROUP BY 
+                        p.id_paciente, 
+                        p.nome, 
+                        p.cpf, 
+                        p.data_nascimento, 
+                        p.telefone, 
+                        u.status
+                        ";
 
             $query = $this->conn->prepare($sql);
             $query->execute([

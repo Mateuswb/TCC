@@ -133,6 +133,8 @@ class Profissional {
     }
 
 
+
+
     #validações profissional
     public function temAgendamentoAtivo($idProfissional) {
         $sql = "SELECT COUNT(*) FROM (
@@ -185,6 +187,30 @@ class Profissional {
             $this->conn->rollBack();
             throw $e; 
         }
+    }
+
+    public function temAgendamentoAtivoProfissional($idProfissional) {
+        $sql = "SELECT COUNT(*) FROM (
+                    SELECT a.id_agendamento
+                    FROM agendamentos_consultas a
+                    JOIN horarios_profissionais hp ON a.id_horario_profissional = hp.id_horario
+                    WHERE hp.id_profissional = :idProfissional
+                    AND a.status = 'agendada'
+
+                    UNION ALL
+
+                    SELECT e.id_agendamento
+                    FROM agendamentos_exames e
+                    JOIN encaminhamentos enc ON e.id_encaminhamento = enc.id_encaminhamento
+                    JOIN agendamentos_consultas a2 ON enc.id_agendamento_consulta = a2.id_agendamento
+                    JOIN horarios_profissionais hp2 ON a2.id_horario_profissional = hp2.id_horario
+                    WHERE hp2.id_profissional = :idProfissional
+                    AND e.status = 'agendado'
+                ) AS total";
+
+        $query = $this->conn->prepare($sql);
+        $query->execute([':idProfissional' => $idProfissional]);
+        return $query->fetchColumn() > 0;
     }
 
 }

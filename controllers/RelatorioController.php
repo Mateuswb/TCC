@@ -88,18 +88,18 @@
             return $this->relatorioModel->totalPacientesPorProfissional($idProfissional);
         }
 
-        public function listarConsultas($idProfissional) {
-            return $this->relatorioModel->listarConsultas($idProfissional);
+        public function listarAgendamentosProfissional($idProfissional) {
+            return $this->relatorioModel->listarAgendamentosProfissional($idProfissional);
         }
 
-        public function totalConsultasProfissional($idProfissional) {
-            return $this->relatorioModel->totalConsultasProfissional($idProfissional);
+        public function totalAgendamentosProfissional($idProfissional) {
+            return $this->relatorioModel->totalAgendamentosProfissional($idProfissional);
         }
-        public function totalConsultasConcluidas($idProfissional) {
-            return $this->relatorioModel->totalConsultasConcluidas($idProfissional);
+        public function totalAgendamentosConcluidas($idProfissional) {
+            return $this->relatorioModel->totalAgendamentosConcluidas($idProfissional);
         }
-        public function totalConsultasCanceladas($idProfissional) {
-            return $this->relatorioModel->totalConsultasCanceladas($idProfissional);
+        public function totalAgendamentosCanceladas($idProfissional) {
+            return $this->relatorioModel->totalAgendamentosCanceladas($idProfissional);
         }      
 
 

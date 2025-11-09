@@ -31,7 +31,7 @@
 
 
 <style>
-  .form-control {
+.form-control {
   display: flex;
   flex-direction: column;
   margin-bottom: 18px;
@@ -72,6 +72,8 @@
 .form-control.error small {
   display: block;
 }
+
+
 
 </style>
 <body>
@@ -241,6 +243,7 @@
       <!-- Conta -->
       <form action="../../controllers/UsuarioController.php?" method="POST">
         <input type="hidden" name="idUsuario" value="<?php echo $usuario['id_usuario']; ?>">
+        <input type="hidden" name="tipoUsuario" value="<?php echo $usuario['tipo_usuario']; ?>">
         <input type="hidden" name="acao" value="editarUsuario">
         <div id="conta" class="tab-content">
           <h4>Conta do Usuário</h4>

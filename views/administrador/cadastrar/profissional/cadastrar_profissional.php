@@ -257,7 +257,7 @@ require '../../../../autentica/verifica_login.php';
 .form-control.error select,
 .form-control.error textarea {
   border-bottom-color: #e63946;
-  font-size: 18px; /* mantém fonte grande mesmo com erro */
+  font-size: 18px; 
 }
 
 .form-control.error small {
@@ -374,7 +374,6 @@ require '../../../../autentica/verifica_login.php';
                   <option value="exame_colesterol">Colesterol</option>
                   <option value="exame_glicemia">Glicemia</option>
                   <option value="exame_triglicerideos">Triglicerídeos</option>
-                  <option value="exame_plaquetas">Plaquetas</option>
                   <option value="exame_hemoglobina_glicada">Hemoglobina Glicada</option>
               </optgroup>
 
@@ -390,19 +389,16 @@ require '../../../../autentica/verifica_login.php';
               <optgroup label="Exames cardiológicos">
                   <option value="exame_eletrocardiograma">Eletrocardiograma</option>
                   <option value="exame_ecocardiograma">Ecocardiograma</option>
-                  <option value="exame_holter">Holter</option>
                   <option value="exame_teste_ergometrico">Teste Ergométrico</option>
               </optgroup>
 
               <optgroup label="Exames de urina">
-                  <option value="exame_urina_tipo_i">Urina Tipo I</option>
                   <option value="exame_urocultura">Urocultura</option>
                   <option value="exame_exame_de_urina">Exame de Urina</option>
               </optgroup>
 
               <optgroup label="Exames hormonais">
                   <option value="exame_tsh">TSH</option>
-                  <option value="exame_t4_livre">T4 Livre</option>
                   <option value="exame_testosterona">Testosterona</option>
                   <option value="exame_estradiol">Estradiol</option>
                   <option value="exame_cortisol">Cortisol</option>
@@ -419,7 +415,6 @@ require '../../../../autentica/verifica_login.php';
               <optgroup label="Exames respiratórios">
                   <option value="exame_espirometria">Espirometria</option>
                   <option value="exame_gasometria_arterial">Gasometria Arterial</option>
-                  <option value="exame_teste_de_funcao_pulmonar">Teste de Função Pulmonar</option>
               </optgroup>
           </select>
           <small>Msg de erro</small>

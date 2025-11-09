@@ -20,23 +20,6 @@ body {
     margin-top: 50px;
 }
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #085274;
-    color: #fff;
-    padding: 15px 30px;
-}
-
-.header input {
-    padding: 6px 10px;
-    border: none;
-    border-radius: 20px;
-    outline: none;
-    width: 180px;
-}
-
 .profile {
     display: flex;
     align-items: center;

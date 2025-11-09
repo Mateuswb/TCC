@@ -7,9 +7,9 @@
 
 body {
     background: #f5f6fa;
+    min-height: 100vh;
     display: flex;
 }
-
 
 .sidebar {
     position: fixed;
@@ -17,7 +17,6 @@ body {
 
 
 .topbar {
-    margin-left: 220px;
     height: 60px;
     background: white;
     display: flex;
@@ -40,7 +39,7 @@ body {
 
 
 .content {
-    margin-left: 270px;
+    margin-left: 300px;
     margin-top: 50px;
     padding: 20px;
     width: 100%;
@@ -135,14 +134,14 @@ tbody tr:hover {
 }
 
 
-.status {
+table .status {
     padding: 4px 10px;
     border-radius: 5px;
     color: white;
     font-size: 0.9em;
 }
 
-.ativo {
+table .ativo {
     background: #22c55e;
 }
 

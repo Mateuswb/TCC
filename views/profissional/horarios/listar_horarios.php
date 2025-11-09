@@ -1,129 +1,130 @@
 <?php
-  include '../../../autentica/verifica_login.php';
-  $idProfissional = $_SESSION['idProfissional'];
+include '../../../autentica/verifica_login.php';
+$idProfissional = $_SESSION['idProfissional'];
 
-  include '../../../controllers/HorarioController.php';
-  include '../../../public/includes/profissional/sidebar.php'; 
-  include '../../../public/includes/profissional/header.php';
-  include '../../../public/includes/profissional/footer.html';
+include '../../../controllers/HorarioController.php';
+include '../../../public/includes/profissional/sidebar.php'; 
+include '../../../public/includes/profissional/header.php';
+include '../../../public/includes/profissional/footer.html';
 
-  $controller = new HorarioController($conn);
-  $horarios = $controller->listarHorarios($idProfissional);
+#modals 
+include '../../../public/modals/profissional/editar_horario.php';
 
-  // Mapear dias
-  $mapDias = ['segunda'=>0,'terca'=>1,'quarta'=>2,'quinta'=>3,'sexta'=>4,'sabado'=>5,'domingo'=>6];
+$controller = new HorarioController($conn);
+$horarios = $controller->listarHorarios($idProfissional);
 
-  $horariosJS = [];
-  foreach($horarios as $h){
-      $horariosJS[$mapDias[$h['dia_semana']]] = [
-          'idhorario' => $h['id_horario'],     
-          'hora_inicio' => $h['hora_inicio'],
-          'hora_fim' => $h['hora_fim'],
-          'intervalo_inicio' => $h['inicio_intervalo'],
-          'intervalo_fim' => $h['fim_intervalo']
-      ];
-  }
+// Mapear dias
+$dias = [
+    ['sigla'=>'SEG','nome'=>'Segunda-Feira','cor'=>'#f59e0b','key'=>'segunda'],
+    ['sigla'=>'TER','nome'=>'Terça-Feira','cor'=>'#ef4444','key'=>'terca'],
+    ['sigla'=>'QUA','nome'=>'Quarta-Feira','cor'=>'#10b981','key'=>'quarta'],
+    ['sigla'=>'QUI','nome'=>'Quinta-Feira','cor'=>'#3b82f6','key'=>'quinta'],
+    ['sigla'=>'SEX','nome'=>'Sexta-Feira','cor'=>'#0ea5e9','key'=>'sexta'],
+    ['sigla'=>'SÁB','nome'=>'Sábado','cor'=>'#8b5cf6','key'=>'sabado'],
+    ['sigla'=>'DOM','nome'=>'Domingo','cor'=>'#6366f1','key'=>'domingo']
+];
+
+$mapDias = array_column($dias, null, 'key');
+
+$horariosJS = [];
+foreach($horarios as $h){
+    $key = $h['dia_semana'];
+    $horariosJS[$key] = [
+        'idhorario' => $h['id_horario'],
+        'hora_inicio' => $h['hora_inicio'],
+        'hora_fim' => $h['hora_fim'],
+        'intervalo_inicio' => $h['inicio_intervalo'],
+        'intervalo_fim' => $h['fim_intervalo']
+    ];
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <title>Agenda Semanal</title>
-
-  <!-- IMPORT DO CSS -->
-  <link rel="stylesheet" href="../../../public/assets/css/profissional/horarios/listar_horarios.css">
+<link rel="stylesheet" href="../../../public/assets/css/profissional/horarios/listar_horarios.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
 </head>
 <body>
-
-
 <div class="main">
-  <h1>Horários Semanais - Dr. João da Silva</h1>
-  <table class="agenda-table">
-    <thead>
-      <tr>
-        <th>Dia</th>
-        <th>Início</th>
-        <th>Fim</th>
-        <th>Início Intervalo</th>
-        <th>Fim Intervalo</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-    <?php
-    $dias = ['SEG','TER','QUA','QUI','SEX','SÁB','DOM'];
-    for($i=0;$i<7;$i++){
-        echo '<tr>';
-        echo '<td>'.$dias[$i].'</td>';
-        if(isset($horariosJS[$i])){
-            $h = $horariosJS[$i];
-            echo '<td>'.$h['hora_inicio'].'</td>';
-            echo '<td>'.$h['hora_fim'].'</td>';
-            echo '<td>'.($h['intervalo_inicio'] ?? '-').'</td>';
-            echo '<td>'.($h['intervalo_fim'] ?? '-').'</td>';
-            echo '<td><button onclick="abrirModal('.$i.')" class="btn-Editar">Editar</button></td>';
-        } else {
-            echo '<td>-</td><td>-</td><td>-</td><td>-</td>';
-            echo '<td><button onclick="abrirModal('.$i.')" class="btn-adicionar">Adicionar</button></td>';
-        }
-        echo '</tr>';
-    }
-    ?>
-    </tbody>
-  </table>
-</div>
-
-
-<div id="modal">
-  <form class="modal-content" id="formHorario" method="POST" action="../../../controllers/HorarioController.php?acao=editarHorario">
-    <div class="modal-header">
-      <span>Editar Horário</span>
-      <span class="modal-close" onclick="fecharModal()">&times;</span>
-    </div>
-    <input type="int" name="idHorario" id="idHorario">
-    <input type="int" name="idProfissional" value="<?php echo $idProfissional; ?>">
-    <input type="hidden" name="diaSemana" id="diaSemana">
+    <?php include '../../../public/assets/alerta/flash.php'; ?>
+    <h1>Horários Semanais - Dr. João da Silva</h1>
+    <div class="page">
     
-    <label>Início:</label>
-    <input type="time" name="horaInicio" id="hora_inicio_modal" required>
-    <label>Fim:</label>
-    <input type="time" name="horaFim" id="hora_fim_modal" required>
-    <label>Início Intervalo:</label>
-    <input type="time" name="inicioIntervalo" id="intervalo_inicio_modal">
-    <label>Fim Intervalo:</label>
-    <input type="time" name="fimIntervalo" id="intervalo_fim_modal">
-    <button type="submit">Salvar</button>
-  </form>
+    <div class="page-header">
+        <h1>Agenda Semanal</h1>
+        <button type="button" id="btn-planilha" onclick="abrirModalEdicao()">Abrir Planilha</button>
+    </div>
+    <table class="agenda-table">
+        <thead>
+            <tr>
+                <th>Dia</th>
+                <th>Início</th>
+                <th>Fim</th>
+                <th>Início Intervalo</th>
+                <th>Fim Intervalo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($dias as $dia): 
+                $key = $dia['key'];
+                $h = $horariosJS[$key] ?? null;
+            ?>
+            <tr>
+                <td>
+                    <div class="day-cell">
+                        <span class="day-dot" style="background:<?= $dia['cor'] ?>"></span>
+                        <span class="day-title"><?= $dia['sigla'] ?></span>
+                        <span class="day-sub"><?= $dia['nome'] ?></span>
+                    </div>
+                </td>
+                <td><div class="time-card"><input type="text" value="<?= $h['hora_inicio'] ?? '--:--' ?>" readonly><i class="far fa-clock"></i></div></td>
+                <td><div class="time-card"><input type="text" value="<?= $h['hora_fim'] ?? '--:--' ?>" readonly><i class="far fa-clock"></i></div></td>
+                <td><div class="time-card"><input type="text" value="<?= $h['intervalo_inicio'] ?? '--:--' ?>" readonly><i class="far fa-clock"></i></div></td>
+                <td><div class="time-card"><input type="text" value="<?= $h['intervalo_fim'] ?? '--:--' ?>" readonly><i class="far fa-clock"></i></div></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+  </div>
 </div>
+
 
 <script>
-  let diaAtual = null;
-  let slots = <?php echo json_encode($horariosJS); ?>;
+    const horarios = <?= json_encode($horariosJS); ?>;
+    const modal = document.getElementById('modalPlanilha');
 
-  function abrirModal(dia){
-      diaAtual = dia;
-      document.getElementById('diaSemana').value = dia;
+window.abrirModalEdicao = function(){
+    const modal = document.getElementById('modalPlanilha');
+    modal.style.display = 'flex';
 
-      if(slots[dia]){
-          document.getElementById('idHorario').value = slots[dia].idhorario;
-          document.getElementById('hora_inicio_modal').value = slots[dia].hora_inicio;
-          document.getElementById('hora_fim_modal').value = slots[dia].hora_fim;
-          document.getElementById('intervalo_inicio_modal').value = slots[dia].intervalo_inicio ?? '';
-          document.getElementById('intervalo_fim_modal').value = slots[dia].intervalo_fim ?? '';
-      } else {
-          document.getElementById('idHorario').value = '';
-          document.getElementById('hora_inicio_modal').value = '';
-          document.getElementById('hora_fim_modal').value = '';
-          document.getElementById('intervalo_inicio_modal').value = '';
-          document.getElementById('intervalo_fim_modal').value = '';
-      }
-      document.getElementById('modal').style.display='flex';
-  }
+    // Preencher horários
+    const tableBody = document.getElementById('tableBody');
+    tableBody.querySelectorAll('tr').forEach(tr => {
+        const day = tr.querySelector('input[name="diaSemana[]"]').value.toLowerCase(); // pega o nome do dia
+        if(horarios[day]){
+            tr.querySelector('input[name="horaInicio[]"]').value = horarios[day].hora_inicio || '';
+            tr.querySelector('input[name="horaFim[]"]').value = horarios[day].hora_fim || '';
+            tr.querySelector('input[name="inicioIntervalo[]"]').value = horarios[day].intervalo_inicio || '';
+            tr.querySelector('input[name="fimIntervalo[]"]').value = horarios[day].intervalo_fim || '';
+        } else {
+            tr.querySelector('input[name="horaInicio[]"]').value = '';
+            tr.querySelector('input[name="horaFim[]"]').value = '';
+            tr.querySelector('input[name="inicioIntervalo[]"]').value = '';
+            tr.querySelector('input[name="fimIntervalo[]"]').value = '';
+        }
+    });
+}
 
-  function fecharModal(){
-      document.getElementById('modal').style.display='none';
-  }
+
+
+modal.addEventListener('click', (e) => {
+    if(e.target === modal) modal.style.display = 'none';
+});
+
 </script>
+
 </body>
 </html>

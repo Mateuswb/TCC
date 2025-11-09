@@ -10,7 +10,15 @@
     </div>
 
     <div class="footer-right">
-      <button class="btn-fale"><i class="fa-solid fa-envelope"></i> Fale Conosco</button>
+      <a class="btn-fale"
+        href="https://mail.google.com/mail/?view=cm&fs=1&to=clinicamedhub2025@gmail.com&su=Contato%20MedHub&body=Olá%2C%20gostaria%20de%20falar%20sobre..."
+        target="_blank"
+        style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.png"
+            alt="Gmail"
+            style="width:22px;height:22px;">
+        Enviar e-mail
+      </a>
     </div>
   </div>
 </footer>

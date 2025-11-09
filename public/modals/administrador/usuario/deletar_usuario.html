@@ -6,8 +6,8 @@
 
     <div class="form-buttons">
       <form id="formDeletarUsuario" method="post" action="../../../controllers/AdministradorController.php?acao=deletarUsuario">
-        <input type="int" name="idUsuario" id="delete_id_usuario">
-        <input type="int" name="cpf" id="delete_cpf_usuario">
+        <input type="hidden" name="idUsuario" id="delete_id_usuario">
+        <input type="hidden" name="cpf" id="delete_cpf_usuario">
         <button type="submit" class="btn save">Confirmar</button>
       </form>
       <button type="button" class="btn cancel" id="cancelModalDelete">Cancelar</button>

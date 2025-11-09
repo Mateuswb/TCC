@@ -1,6 +1,5 @@
 
 <style>
-
   .modal-bg {
     position: fixed;
     top: 0;
@@ -138,6 +137,33 @@
   .btn-save:hover {
     background-color: #0b3b8a;
   }
+
+
+  .choices__inner {
+    background: transparent !important;
+    border-radius: 5px !important;
+    padding: 10px 6px !important;
+    font-size: 17px !important;
+    color: #222 !important;
+    font-family: "Poppins", sans-serif;
+  }
+   .choices__list--multiple .choices__item {
+    background-color: var(--azul);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+    padding: 4px 10px;
+    border: none;
+  }
+
+  .choices__input {
+    background: transparent !important;
+    font-size: 17px !important;
+  }
+  
+  .choices__input {
+    display: none !important;
+  }
 </style>
 
 <div class="modal-bg" id="modalEditarProfissional">
@@ -150,11 +176,11 @@
 
         <div class="modal-content">
       <form id="formEditarProfissional" action="../../../controllers/AdministradorController.php?acao=editarDadosProfissional" method="POST">
-        <input type="hidden" name="idProfissional" id="idProfissional">
+        <input type="hidden" name="idProfissional" id="idProfissionalEditar">
         
         <div>
           <label>Nome</label>
-          <input type="text" name="nome" id="nome" required>
+          <input type="text" name="nome" required>
         </div>
 
         <div>
@@ -178,6 +204,35 @@
         </div>
 
         <div>
+          <label>Endereço</label>
+          <input type="text" name="endereco">
+        </div>
+
+        <div>
+          <label>Telefone</label>
+          <input type="text" name="telefone" required>
+        </div>
+
+        <div>
+          <label>Sexo</label>
+          <select name="sexo">
+            <option value="M">Masculino</option>
+            <option value="F">Feminino</option>
+            <option value="O">Outro</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Estado Civil</label>
+          <select name="estadoCivil">
+            <option value="C">Casado</option>
+            <option value="S">Solteiro</option>
+            <option value="V">Viúvo</option>
+          </select>
+        </div>
+
+
+        <div class="full">
           <label>Especialidade</label>
           <select id="multiple" name="especialidades[]" multiple>
               <hr />
@@ -204,7 +259,6 @@
                   <option value="exame_colesterol">Colesterol</option>
                   <option value="exame_glicemia">Glicemia</option>
                   <option value="exame_triglicerideos">Triglicerídeos</option>
-                  <option value="exame_plaquetas">Plaquetas</option>
                   <option value="exame_hemoglobina_glicada">Hemoglobina Glicada</option>
               </optgroup>
 
@@ -220,20 +274,16 @@
               <optgroup label="Exames cardiológicos">
                   <option value="exame_eletrocardiograma">Eletrocardiograma</option>
                   <option value="exame_ecocardiograma">Ecocardiograma</option>
-                  <option value="exame_holter">Holter</option>
                   <option value="exame_teste_ergometrico">Teste Ergométrico</option>
-                  <option value="exame_mapa">MAPA</option>
               </optgroup>
 
               <optgroup label="Exames de urina">
-                  <option value="exame_urina_tipo_i">Urina Tipo I</option>
                   <option value="exame_urocultura">Urocultura</option>
                   <option value="exame_exame_de_urina">Exame de Urina</option>
               </optgroup>
 
               <optgroup label="Exames hormonais">
                   <option value="exame_tsh">TSH</option>
-                  <option value="exame_t4_livre">T4 Livre</option>
                   <option value="exame_testosterona">Testosterona</option>
                   <option value="exame_estradiol">Estradiol</option>
                   <option value="exame_cortisol">Cortisol</option>
@@ -250,39 +300,8 @@
               <optgroup label="Exames respiratórios">
                   <option value="exame_espirometria">Espirometria</option>
                   <option value="exame_gasometria_arterial">Gasometria Arterial</option>
-                  <option value="exame_teste_de_funcao_pulmonar">Teste de Função Pulmonar</option>
               </optgroup>
-
-
           </select>
-        </div>
-
-        <div>
-          <label>Telefone</label>
-          <input type="text" name="telefone" required>
-        </div>
-
-        <div>
-          <label>Sexo</label>
-          <select name="sexo">
-            <option value="M">Masculino</option>
-            <option value="F">Feminino</option>
-            <option value="O">Outro</option>
-          </select>
-        </div>
-
-        <div>
-          <label>Estado Civil</label>
-          <select name="estadoCivil">
-            <option value="C">Casado</option>
-            <option value="S">Solteiro</option>
-            <option value="V">Viúvo</option>
-          </select>
-        </div>
-
-        <div class="full">
-          <label>Endereço</label>
-          <input type="text" name="endereco">
         </div>
 
         <div>
@@ -317,8 +336,13 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
 <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
-
 <script>
+
+let choicesInstance = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+
+});
 
 function abrirModalEditar(botao) {
   const modal = document.getElementById('modalEditarProfissional');
@@ -326,7 +350,7 @@ function abrirModalEditar(botao) {
 
   const dados = botao.dataset;
 
-  document.querySelector('[name="idProfissional"]').value = dados.id || '';
+  document.querySelector('[id="idProfissionalEditar"]').value = dados.idProfissional || '';
   document.querySelector('[name="nome"]').value = dados.nome || '';
   document.querySelector('[name="rg"]').value = dados.rg || '';
   document.querySelector('[name="email"]').value = dados.email || '';
@@ -340,10 +364,58 @@ function abrirModalEditar(botao) {
   document.querySelector('[name="numeroCasa"]').value = dados.numero || '';
   document.querySelector('[name="cidade"]').value = dados.cidade || '';
   document.querySelector('[name="observacoes"]').value = dados.observacoes || '';
+
+
+  const select = document.getElementById('multiple');
+  if (choicesInstance) {
+    try { choicesInstance.destroy(); } catch (err) {  }
+    choicesInstance = null;
+  }
+
+  choicesInstance = new Choices(select, {
+    removeItemButton: true,
+    searchEnabled: true,
+    shouldSort: false,
+    placeholderValue: 'Selecione as especialidades'
+  });
+
+
+  let selecionadas = [];
+  try {
+    
+    selecionadas = JSON.parse(dados.especialidades || '[]');
+    if (!Array.isArray(selecionadas)) selecionadas = [];
+  } catch (err) {
+    console.error('JSON invalido em data-especialidades:', dados.especialidades, err);
+    selecionadas = [];
+  }
+
+  
+  selecionadas.forEach(raw => {
+    const value = String(raw);
+ 
+    const optionExists = Array.from(select.options).some(o => o.value === value);
+
+    if (optionExists) {
+      
+      try {
+        choicesInstance.setChoiceByValue(value);
+      } catch (err) {
+        choicesInstance.setChoices([{ value, label: formatLabel(value), selected: true }], 'value', 'label', false);
+      }
+    } else {
+
+      const label = formatLabel(value);
+      choicesInstance.setChoices([{ value, label, selected: true }], 'value', 'label', false);
+    }
+  });
 }
 
 function fecharModalProfissional() {
   const modal = document.getElementById('modalEditarProfissional');
   modal.style.display = 'none';
+
 }
 </script>
+
+

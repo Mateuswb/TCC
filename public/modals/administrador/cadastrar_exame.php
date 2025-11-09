@@ -24,7 +24,7 @@
                 <input type="number" name="tempoMinutos" id="tempoExame" min="1" placeholder="Ex: 30" required>
 
                 <label>Descrição</label>
-                <textarea name="descricao" rows="3" placeholder="Descrição do exame" required></textarea>
+                <textarea name="descricao" id="descricaoExame" rows="3" placeholder="Descrição do exame" required></textarea>
             
                 <div class="footer">
                     <input type="button" class="btn cancel"  id="cancelModal" value="Cancelar">
@@ -222,53 +222,57 @@
 </style>
 
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const openModalBtn = document.getElementById("openModal");
-        const modal = document.getElementById("modalExame");
-        const closeModalBtn = document.getElementById("closeModal");
-        const cancelModalBtn = document.getElementById("cancelModal");
+   document.addEventListener("DOMContentLoaded", () => {
+    const openModalBtn = document.getElementById("openModal");
+    const modal = document.getElementById("modalExame");
+    const closeModalBtn = document.getElementById("closeModal");
+    const cancelModalBtn = document.getElementById("cancelModal");
 
-        if(openModalBtn) {
-            openModalBtn.addEventListener("click", () => modal.style.display = "flex");
-        }
+    if (openModalBtn) {
+        openModalBtn.addEventListener("click", () => modal.style.display = "flex");
+    }
 
-        const fecharModal = () => modal.style.display = "none";
-        closeModalBtn.addEventListener("click", fecharModal);
-        cancelModalBtn.addEventListener("click", fecharModal);
-        window.addEventListener("click", e => { if(e.target === modal) fecharModal(); });
+    const fecharModal = () => modal.style.display = "none";
+    closeModalBtn.addEventListener("click", fecharModal);
+    cancelModalBtn.addEventListener("click", fecharModal);
+    window.addEventListener("click", e => { if (e.target === modal) fecharModal(); });
 
-        // API para perar a categoria e tempo
-        const exameInput = document.querySelector("input[name='nome']");
-        const categoriaSugeridaInput = document.getElementById("categoriaSugerida");
-        const tempoExameInput = document.getElementById("tempoExame");
+    // Campos do formulário
+    const exameInput = document.querySelector("input[name='nome']");
+    const categoriaSugeridaInput = document.getElementById("categoriaSugerida");
+    const tempoExameInput = document.getElementById("tempoExame");
+    const descricaoExameInput = document.getElementById("descricaoExame");
 
-        const LIMITAR_CONFIANCA = 100;
+    const LIMITAR_CONFIANCA = 100;
 
-        exameInput.addEventListener("blur", async () => {
-            const exame = exameInput.value.trim();
-            if(exame.length < 3) return;
+    exameInput.addEventListener("blur", async () => {
+        const exame = exameInput.value.trim();
+        if (exame.length < 3) return;
 
-            try {
-                const response = await fetch(`https://api-mateus-ca43236e780f.herokuapp.com/mateus?nome=${encodeURIComponent(exame)}`);
-                const data = await response.json();
+        try {
+            const response = await fetch(`https://api-mateus-ca43236e780f.herokuapp.com/mateus?nome=${encodeURIComponent(exame)}`);
+            const data = await response.json();
 
-                const confianca = parseFloat(data.confianca);
+            const confianca = parseFloat(data.confianca);
 
-                if(data.categoria_sugerida !== "Categoria não encontrada" && confianca >= LIMITAR_CONFIANCA) {
-                    categoriaSugeridaInput.value = data.categoria_sugerida;
-                    tempoExameInput.value = data.tempo_estimado || "";
-                } else {
-                    categoriaSugeridaInput.value = "Categoria não encontrada";
-                    tempoExameInput.value = "";
-                }
-
-            } catch(error) {
-                console.error("Erro ao consultar API:", error);
-                categoriaSugeridaInput.value = "Erro ao consultar API";
+            if (data.categoria_sugerida !== "Categoria não encontrada" && confianca >= LIMITAR_CONFIANCA) {
+                categoriaSugeridaInput.value = data.categoria_sugerida;
+                tempoExameInput.value = data.tempo_estimado || "";
+                descricaoExameInput.value = data.descricao || "Descrição não disponível.";
+            } else {
+                categoriaSugeridaInput.value = "Categoria não encontrada";
                 tempoExameInput.value = "";
+                descricaoExameInput.value = "Descrição não encontrada."; 
             }
-        });
+
+        } catch (error) {
+            console.error("Erro ao consultar API:", error);
+            categoriaSugeridaInput.value = "Erro ao consultar API";
+            tempoExameInput.value = "";
+            descricaoExameInput.value = "Erro ao carregar descrição.";
+        }
     });
+});
 
 
     

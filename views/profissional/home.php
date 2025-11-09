@@ -5,7 +5,12 @@
     include '../../public/includes/profissional/sidebar.php';
     include '../../public/includes/profissional/header.php';
     include '../../public/includes/profissional/footer.html';
+    include '../../public/modals/profissional/cadastrar_horario.php';
     require_once '../../controllers/RelatorioController.php';
+    require_once '../../controllers/HorarioController.php';
+
+    $controllerHorario = new HorarioController($conn);
+    $temHorarios = $controllerHorario->verificaHorario($idProfissional);
     
     $controller = new RelatorioController($conn);
     $agendamentosHoje = $controller->agendamentosHoje($idProfissional);
@@ -34,6 +39,7 @@
 </head>
 <body>
   <div class="app">
+    <?php include '../../public/assets/alerta/flash.php'; ?>
 
     <main class="main">
       <div class="top-grid">
@@ -214,3 +220,12 @@ fetch("../../controllers/RelatorioController.php?acao=compararAtendimentosSemana
 </script>
 </body>
 </html>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      <?php if (!$temHorarios): ?>
+        const modal = document.getElementById("modalPlanilha");
+        if (modal) modal.style.display = "flex";
+      <?php endif; ?>
+    });
+</script> 

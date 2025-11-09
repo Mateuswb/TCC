@@ -9,7 +9,8 @@
     </div>
 
     <div class="profile">
-        <img src="<?= BASE_URL ?>/public/assets/icones/icon_admin.png" alt="user">
+
+        <i class="fa-solid fa-user-tie"></i>
         <div><strong>Perfil Admin</strong><br><small>Administrador</small></div>
     </div>
   </header>

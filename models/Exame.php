@@ -112,6 +112,27 @@
                 $stmt->execute(['id' => $idExame]);
                 return $stmt->fetch(PDO::FETCH_ASSOC);
             }
+
+            public function temAgendamentoAtivoExame($idExame) {
+                $sql = "SELECT COUNT(*) AS total
+                        FROM (
+                            SELECT id_encaminhamento
+                            FROM encaminhamentos
+                            WHERE id_exame = :idExame
+                            AND status != 'cancelado'
+
+                            UNION
+
+                            SELECT ae.id_agendamento
+                            FROM agendamentos_exames ae
+                            JOIN encaminhamentos enc ON ae.id_encaminhamento = enc.id_encaminhamento
+                            WHERE enc.id_exame = :idExame
+                            AND ae.status != 'cancelado'
+                        ) AS total";
+                $stmt = $this->conn->prepare($sql);
+                $stmt->execute([':idExame' => $idExame]);
+                return $stmt->fetchColumn() > 0;
+            }
         }
 
     ?>

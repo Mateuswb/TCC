@@ -1,0 +1,189 @@
+<div class="overlay"></div>
+<div class="modal-lateral">
+  <div class="modal-header">
+    <h2 id="modalNome">Nome do Paciente</h2>
+    <button class="modal-close">&times;</button>
+  </div>
+
+  <div class="modal-body">
+    <div class="modal-section">
+      <h3>Informações Pessoais</h3>
+      <p><strong>CPF:</strong> <span id="modalCpf"></span></p>
+      <p><strong>Idade:</strong> <span id="modalIdade"></span></p>
+    </div>
+
+    <div class="modal-section">
+      <h3>Contato</h3>
+      <p><strong>Telefone:</strong> <span id="modalContato"></span></p>
+    </div>
+
+    <div class="modal-section">
+      <h3>Consultas</h3>
+      <p><strong>Última Consulta:</strong> <span id="modalUltima"></span></p>
+      <p><strong>Total de Consultas:</strong> <span id="modalConsultas"></span></p>
+    </div>
+
+    <div class="modal-observacoes">
+      <strong>Observações:</strong>
+      <p id="modalObs" style="margin-top: 6px;"></p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .modal-lateral {
+    position: fixed;
+    top: 0;
+    right: -520px;
+    width: 460px;
+    height: 100%;
+    background: #fff;
+    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.15);
+    transition: right 0.4s ease;
+    z-index: 999;
+    overflow-y: auto;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+    padding: 0;
+    font-family: "Inter", sans-serif;
+  }
+
+  .modal-lateral.ativo {
+    right: 0;
+  }
+
+  .modal-header {
+    position: sticky;
+    top: 0;
+    background: #f7f9fc;
+    border-bottom: 1px solid #e3e8ee;
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 16px;
+  }
+
+  .modal-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #002E53;
+    margin: 0;
+  }
+
+  .modal-close {
+    font-size: 26px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: #555;
+    transition: 0.2s;
+  }
+
+  .modal-close:hover {
+    color: #000;
+    transform: scale(1.1);
+  }
+
+  .modal-body {
+    padding: 24px;
+  }
+
+  .modal-section {
+    background: #f9fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 18px;
+  }
+
+  .modal-section h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #015997;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .modal-section p {
+    font-size: 15.5px;
+    color: #333;
+    margin: 6px 0;
+  }
+
+  .modal-section strong {
+    color: #002E53;
+    font-weight: 600;
+  }
+
+
+  .modal-observacoes {
+    background: #fff8e6;
+    border: 1px solid #ffe3a3;
+    border-radius: 10px;
+    padding: 16px 20px;
+    color: #5a4a00;
+    font-size: 15px;
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    z-index: 998;
+  }
+
+  .overlay.ativo {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  table tbody tr {
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  table tbody tr:hover {
+    background: #f3f7fb;
+  }
+</style>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const linhas = document.querySelectorAll('.paciente-item');
+    const modal = document.querySelector('.modal-lateral');
+    const overlay = document.querySelector('.overlay');
+    const btnClose = document.querySelector('.modal-close');
+
+    linhas.forEach(linha => {
+      linha.addEventListener('click', () => {
+        document.getElementById('modalNome').textContent = linha.dataset.nome;
+        document.getElementById('modalCpf').textContent = linha.dataset.cpf;
+        document.getElementById('modalIdade').textContent = linha.dataset.idade + " anos";
+        document.getElementById('modalContato').textContent = linha.dataset.telefone + " | " + linha.dataset.email;
+        document.getElementById('modalUltima').textContent = linha.dataset.ultima;
+        document.getElementById('modalConsultas').textContent = linha.dataset.consultas;
+        document.getElementById('modalObs').textContent = linha.dataset.observacoes;
+
+        modal.classList.add('ativo');
+        overlay.classList.add('ativo');
+      });
+    });
+
+    const fecharModal = () => {
+      modal.classList.remove('ativo');
+      overlay.classList.remove('ativo');
+    };
+
+    btnClose.addEventListener('click', fecharModal);
+    overlay.addEventListener('click', fecharModal);
+  });
+</script>

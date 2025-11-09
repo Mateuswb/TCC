@@ -36,8 +36,7 @@
                     $_SESSION['especialidades']   = $usuario['especialidade'];
 
                     if (!$this->horarioModel->verificaHorario($_SESSION['idProfissional'])) {
-                        $_SESSION['msg'] = "Antes de continuar, cadastre seus horários";
-                        header("Location: ../views/profissional/horarios/cadastrar_horarios.php");
+                        header("Location: ../views/profissional/home.php");
                         exit;
                     }
 
@@ -77,12 +76,6 @@
                 exit;
             }
 
-            if ($this->usuarioModel->buscarPorCPF($cpf)) {
-                $_SESSION['error'] = "CPF já cadastrado. Tente novamente.";
-                header("Location: ../views/usuario/cadastro.php");
-                exit;
-            }
-
             $_SESSION['cadastroTemp'] = [
                 'cpf' => $cpf,
                 'password' => $senhaHash,
@@ -93,6 +86,11 @@
 
             if (isset($_SESSION['tipoUsuario']) && $_SESSION['tipoUsuario'] == 'admin') {
                 // admin cadastrando
+                if ($this->usuarioModel->buscarPorCPF($cpf)) {
+                    $_SESSION['error'] = "CPF já cadastrado. Tente novamente.";
+                    header("Location: ../views/administrador/cadastrar/cadastrar.php");
+                    exit;
+                }
                 if ($tipoUsuario == 'profissional') {
                     header("Location: ../views/administrador/cadastrar/profissional/cadastrar_profissional.php");
                 } else if($tipoUsuario == 'admin') {
@@ -119,8 +117,16 @@
                 exit;
 
             } else {
-                header("Location: ../views/paciente/criar.php");
-                exit;
+                if ($this->usuarioModel->buscarPorCPF($cpf)) {
+                    $_SESSION['error'] = "CPF já cadastrado. Tente novamente.";
+                    header("Location: ../views/usuario/cadastro.php");
+                    exit;
+                }
+                else{
+                    header("Location: ../views/paciente/criar.php");
+                    exit;
+                }
+                
             }
         }
         
@@ -147,20 +153,66 @@
 
         public function editarUsuario() {
             $idUsuario = $_POST['idUsuario'];
+            $tipoUsuario = $_POST['tipoUsuario'];
             $cpf = $_POST['cpf'];
             $password = $_POST['password'];
+            $senhaHash = password_hash($password, PASSWORD_DEFAULT);
             
             if (empty($cpf) || empty($password)) {
                 echo "CPF e senha são obrigatórios!";
                 return;
             }
 
-            $resultado = $this->usuarioModel->editarUsuario($idUsuario, $cpf, $password);
+            $resultado = $this->usuarioModel->editarUsuario($idUsuario, $cpf, $senhaHash);
 
-            if ($resultado) {
-                echo "Dados atualizados com sucesso!";
-            } else {
-                echo "Nenhuma alteração realizada ou erro ao atualizar.";
+            session_start();
+            if($tipoUsuario == "profissional"){
+                if($resultado){
+                    $_SESSION['flash'] = [
+                        'type' => 'success',
+                        'message' => "Dados atualizados com sucesso."
+                    ];
+                }
+                else{
+                    $_SESSION['flash'] = [
+                            'type' => 'error',
+                            'message' => "Erro ao editar dados. Tente novamente"
+                        ];
+                }
+                header("Location: ../views/profissional/perfil.php");
+                exit;
+            }
+            else if($tipoUsuario == "paciente"){
+                if($resultado){
+                    $_SESSION['flash'] = [
+                        'type' => 'success',
+                        'message' => "Dados atualizados com sucesso."
+                    ];
+                }
+                else{
+                    $_SESSION['flash'] = [
+                            'type' => 'error',
+                            'message' => "Erro ao editar dados. Tente novamente"
+                        ];
+                }
+                header("Location: ../views/paciente/perfil.php");
+                exit;
+            }
+            else{
+                if($resultado){
+                    $_SESSION['flash'] = [
+                        'type' => 'success',
+                        'message' => "Dados atualizados com sucesso."
+                    ];
+                }
+                else{
+                    $_SESSION['flash'] = [
+                            'type' => 'error',
+                            'message' => "Erro ao editar dados. Tente novamente"
+                        ];
+                }
+                header("Location: ../views/administrador/perfil.php");
+                exit;
             }
         }
 

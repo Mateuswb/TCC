@@ -1,18 +1,18 @@
 <?php
-include '../../../autentica/verifica_login.php';
-include '../../../public/includes/profissional/sidebar.php'; 
-include '../../../public/includes/profissional/header.php';
-include '../../../public/includes/profissional/footer.html';
+    include '../../../autentica/verifica_login.php';
+    include '../../../public/includes/profissional/sidebar.php'; 
+    include '../../../public/includes/profissional/header.php';
+    include '../../../public/includes/profissional/footer.html';
 
-include 'modal_reencaminhar.php';
-include 'modal_cancelar_exame.php';
+    include 'modal_reencaminhar.php';
+    include 'modal_cancelar_exame.php';
 
-$idProfissional = $_SESSION['idProfissional'];
+    $idProfissional = $_SESSION['idProfissional'];
 
-require_once "../../../controllers/EncaminhamentoController.php";
-$controller = new EncaminhamentoController($conn);
+    require_once "../../../controllers/EncaminhamentoController.php";
+    $controller = new EncaminhamentoController($conn);
 
-$encaminhamentos = $controller->listarEncaminhamentosProfissioal($idProfissional);
+    $encaminhamentos = $controller->listarEncaminhamentosProfissioal($idProfissional);
 ?>
 
 <!DOCTYPE html>
@@ -21,6 +21,8 @@ $encaminhamentos = $controller->listarEncaminhamentosProfissioal($idProfissional
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Histórico de Encaminhamentos</title>
+    
+    <!-- IMPORT DOS ICONS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
@@ -52,7 +54,7 @@ $encaminhamentos = $controller->listarEncaminhamentosProfissioal($idProfissional
             align-items: center;
         }
 
-        h2 {
+        #title {
             color: #0b3b5a;
             font-size: 2rem;
             font-weight: 700;
@@ -61,13 +63,12 @@ $encaminhamentos = $controller->listarEncaminhamentosProfissioal($idProfissional
             letter-spacing: 0.5px;
         }
 
-        .tabela-container {
+        #tabela-container {
             width: 95%;
-            max-width: 1400px;
+            max-width: 1650px;
             background: #fff;
-            border-radius: 16px;
+            border-radius: 20px;
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-            padding: 25px 30px;
             overflow-x: auto;
         }
 
@@ -100,7 +101,6 @@ $encaminhamentos = $controller->listarEncaminhamentosProfissioal($idProfissional
 
         tbody tr:hover {
             background: #eef6ff;
-            transform: scale(1.01);
         }
 
         .status {
@@ -198,9 +198,9 @@ $encaminhamentos = $controller->listarEncaminhamentosProfissioal($idProfissional
 
 <main>
 <?php include '../../../public/assets/alerta/flash.php'; ?>
-    <h2><i class="fa-solid fa-file-medical"></i> Histórico de Encaminhamentos</h2>
+    <h2 id="title"><i class="fa-solid fa-file-medical"></i> Histórico de Encaminhamentos</h2>
 
-    <div class="tabela-container">
+    <div id="tabela-container">
         <?php if (empty($encaminhamentos)): ?>
             <div class="sem-encaminhamentos">
                 <i class="fa-solid fa-circle-exclamation"></i> Nenhum encaminhamento registrado para este profissional.

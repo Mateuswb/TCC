@@ -173,13 +173,27 @@
             $cidade         = $_POST['cidade'];
             $observacoes    = $_POST['observacoes'];
 
-            $resultado = $this->profissionalModel->editarDadosProfissional(
+            $editar = $this->profissionalModel->editarDadosProfissional(
                 $idProfissional, $nome, $rg, $email, $dataNascimento, 
                 $telefone, $sexo, $estadoCivil, $crmCrp, $especialidade,
                 $endereco, $numCasa, $bairro, $cidade, $observacoes
             );
 
-            echo $resultado ? "Dados atualizados com sucesso." : "Erro ao atualizar dados.";
+            session_start();
+            if($editar){
+                 $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => 'Dados atualizados com sucesso.'
+                ];
+            }
+            else{
+                 $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => 'Erro ao atualizar dados. Tente novamente'
+                ];
+            }
+            header("Location: ../views/administrador/profissional/listar_profissionais.php");
+            exit;
         }
 
         # agendamentos
@@ -257,12 +271,22 @@
 
         }
 
-        public function deletarExame(){
+       public function deletarExame() {
             $idExame = $_POST['idExame'];
-            $deletar = $this->exameModel->deletarExame($idExame);
 
             session_start();
-            if($deletar){
+            if ($this->exameModel->temAgendamentoAtivoExame($idExame)) {
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => 'Este exame possui agendamentos ou encaminhamentos ativos e não pode ser deletado no momento. Cancele todos os agendamentos e encaminhamentos com este exame primeiro.'
+                ];
+                header("Location: ../views/administrador/exame/listar_exames.php");
+                exit;
+            }
+
+            $deletar = $this->exameModel->deletarExame($idExame);
+
+            if ($deletar) {
                 $_SESSION['flash'] = [
                     'type' => 'success',
                     'message' => 'Exame deletado com sucesso'
@@ -273,9 +297,11 @@
                     'message' => 'Erro ao deletar exame. Tente novamente'
                 ];
             }
-            header("Location: ../views/administrador/exame/listar_exames.php");
-        }
 
+            header("Location: ../views/administrador/exame/listar_exames.php");
+            exit;
+        }
+        
         # agedamento consultas
         public function cancelarAgendamentoConsulta(){
             $idConsulta = $_POST['idConsulta'];
@@ -581,7 +607,7 @@
                 ];
             }
 
-            header("Location: ../views/profissional/agendamentos/consultas.php");
+            header("Location: ../views/administrador/agendamento/agendamentos.php");
             exit;
         }
 

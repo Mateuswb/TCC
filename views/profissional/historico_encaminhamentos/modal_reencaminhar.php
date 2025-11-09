@@ -11,7 +11,7 @@ $exames = $controllerExame->listarExamesDisponiveisParaEncaminhamento();
       
       <input type="hidden" name="idEncaminhamento" id="encaminharId">
       <input type="hidden" name="idAgendamentoConsulta" id="consultaId">
-      <input type="int" name="idAgendamentoExame" id="idAgendamentoExame">
+      <input type="hidden" name="idAgendamentoExame" id="idAgendamentoExame">
 
       <label for="idTipoExame">Tipo de exame:</label>
       <select id="idTipoExame" name="idTipoExame" required>

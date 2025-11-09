@@ -33,11 +33,20 @@
                 }
             }
 
+            session_start();
             if ($sucesso) {
-                echo "Horários cadastrados com sucesso!";
+                 $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => "Horários cadastrados com sucesso"
+                ];
             } else {
-                echo "Erro ao cadastrar os horários.";
+                 $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => "Erro ao cadastrar horarios. Tente novamente"
+                ];
             }
+            header("Location: ../views/profissional/home.php"); 
+            exit;
         }
 
         public function listarHorarios($idProfissional){
@@ -48,25 +57,47 @@
             return $this->horarioModel->buscarLimitesDeHorario($idProfissional);
         }
 
-         public function editarHorarioProfissional() {
+        public function editarHorarioProfissional() {
             $idProfissional   = $_POST['idProfissional'];
-            $idHorario        = $_POST['idHorario'];
+            $idHorario        = $_POST['idHorario'] ?? null;
+            $diaSemana        = $_POST['diaSemana'] ?? [];
             $horaInicio       = $_POST['horaInicio'];
             $horaFim          = $_POST['horaFim'];
             $inicioIntervalo  = $_POST['inicioIntervalo'];
             $fimIntervalo     = $_POST['fimIntervalo'];
 
-
-            $editar = $this->horarioModel->editarHorario( 
+            if ($idHorario) {
+                $sucesso = $this->horarioModel->editarHorario( 
                     $horaInicio, $horaFim,
-                    $inicioIntervalo, $fimIntervalo,
-                    $idProfissional, $idHorario
-            );
-            if ($editar) {
-                echo "Horários editados com sucesso!";
+                    $inicioIntervalo, $fimIntervalo, $idHorario
+                );
             } else {
-                echo "Erro ao editadar os horários.";
+                $sucesso = $this->horarioModel->cadastrarHorario(
+                    $idProfissional, $diaSemana, $horaInicio, $horaFim,
+                    $inicioIntervalo, $fimIntervalo
+                );
             }
+
+            session_start();
+            if ($sucesso) {
+                $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => $idHorario ? "Horário editado com sucesso" : "Horário adicionado com sucesso"
+                ];
+            } else {
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => "Erro ao salvar horários. Tente novamente"
+                ];
+            }
+
+            header("Location: ../views/profissional/horarios/listar_horarios.php"); 
+            exit;
+        }
+
+
+        public function verificaHorario($profissionalId){
+            return $this->horarioModel->verificaHorario($profissionalId);
         }
     }
 

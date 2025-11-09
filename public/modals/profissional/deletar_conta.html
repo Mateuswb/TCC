@@ -3,8 +3,8 @@
     <div style="background:#fff; padding:20px; border-radius:8px; width:400px; text-align:center; position:relative;">
         <h3 id="modalMensagem">Tem certeza que deseja excluir sua conta?</h3>
         
-        <form action="../../controllers/PacienteController.php?acao=excluirContaPaciente" method="post">
-            <input type="hidden" name="idPaciente" id="idPaciente">
+        <form action="../../controllers/ProfissionalController.php?acao=excluirContaProfissional" method="post">
+            <input type="hidden" name="idProfissional" id="idProfissional">
             <input type="hidden" name="cpf" id="cpf">
             
             <div style="margin-top:20px; display:flex; justify-content: space-between;">
@@ -26,7 +26,7 @@
     function abrirModalExclusao(btn) {
         const dados = btn.dataset;
 
-        document.getElementById('idPaciente').value = dados.id;
+        document.getElementById('idProfissional').value = dados.id;
         document.getElementById('cpf').value = dados.cpf;
         document.getElementById('modalExcluir').style.display = 'flex';
     }

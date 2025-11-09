@@ -14,7 +14,7 @@ body {
 .main-content  {
   width: 100%;
   margin-top: 20px;
-  margin-left: 250px;
+  margin-left: 290px;
   padding: 20px;
 }
 
@@ -39,21 +39,29 @@ body {
 }
 .header h2 { font-size:22px; color:#111; }
 .header p { color:#666; font-size:14px; margin-top:5px; }
-.header .actions {
-  display:flex;
-  gap:10px;
-  margin-top:10px;
+
+#actions {
+  margin-left: 15px;
+  width: 10px;
+  border-radius: 6px;
+  transition: .4s;
 }
-.header .actions button {
-  border:none;
-  padding:8px 16px;
-  border-radius:6px;
-  cursor:pointer;
-  font-size:14px;
-  display:flex;
-  align-items:center;
-  gap:5px;
+
+#actions i {
+  text-align: center;
+  font-size: 25px;
+  color: #000874;
+
 }
+
+#actions:hover {
+  color: #01024d;
+  transform: translateY(-3px);
+  cursor: pointer;
+}
+
+
+
 .btn-filtro { background:#2b6cdf; color:#fff; }
 .btn-export { background:#28a745; color:#fff; }
 
@@ -113,7 +121,10 @@ td .status {
 }
 .status.agendada { background:#4caf50; }
 .status.realizada { background:#ff9800; }
-.status.Cancelada { background:#f44336; }
+.status.cancelada { background:#f44336; }
+.status.agendado { background:#4caf50; }
+.status.realizado { background:#3a2300; }
+.status.cancelado { background:#f44336; }
 td .actions i {
   cursor:pointer;
   margin-right:10px;

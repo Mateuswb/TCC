@@ -49,17 +49,12 @@ rel="stylesheet">
     </a>
        <a href="<?= BASE_URL ?>/profissional/historico_consultas/listar_consultas.php"
         class="<?= ($currentFile == 'listar_consultas.php') ? 'active' : '' ?>">
-        <i class="fas fa-history"></i> <span>Histórico de Consultas</span>
+        <i class="fas fa-history"></i> <span>Histórico de Agendamentos</span>
     </a>
     </a>
        <a href="<?= BASE_URL ?>/profissional/historico_encaminhamentos/listar_encaminhamentos.php"
        class="<?= ($currentFile == 'listar_encaminhamentos.php') ? 'active' : '' ?>">
         <i class="fas fa-history"></i> <span>Encaminhamentos</span>
-    </a>
-        <a href="<?= BASE_URL ?>/profissional/agendamentos/consultas.php"
-        class="<?= ($currentFile == 'consultas.php') ? 'active' : '' ?>">
-        <i class="fas fa-file-alt"></i> <span>Relatórios</span>
-    </a>
 
     </a>
         <a href="<?= BASE_URL ?>/profissional/horarios/listar_horarios.php"
@@ -78,7 +73,7 @@ rel="stylesheet">
 
 <style>
     .sidebar {
-        width: 270px;
+        width: 300px;
         background: #0c1731ff;
         color: #fff;
         height: 100vh;

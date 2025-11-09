@@ -10,7 +10,7 @@
   <div class="modal-content">
     <h3>Encaminhar Consulta</h3>
     <form action="../../../controllers/ProfissionalController.php?acao=encaminharPaciente" method="POST">
-      <input type="int" name="idAgendamentoConsulta" id="encaminharId">
+      <input type="hidden" name="idAgendamentoConsulta" id="encaminharId">
 
       <label for="id_exame">Tipo de exame:</label>
       <select id="id_exame" name="idExame" required>

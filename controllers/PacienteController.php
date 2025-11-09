@@ -74,7 +74,7 @@
                     $observacoes
                 );
 
-                unset($_SESSION['cadastroTemp']); // limpa temporário
+                unset($_SESSION['cadastroTemp']); 
 
                 if ($usuarioLogadoTipo && $usuarioLogadoTipo == 'admin') {
 
@@ -94,7 +94,7 @@
                         exit;
                     }
                 } else {
-                    header("Location: ../views/index.php"); // paciente comum
+                    header("Location: ../views/index.php"); 
                     exit;
                 }
             } else {

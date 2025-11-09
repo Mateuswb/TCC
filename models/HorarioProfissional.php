@@ -68,14 +68,14 @@
 
         public function editarHorario(
             $horaInicio, $horaFim, $inicioIntervalo, 
-            $fimIntervalo, $profissionalId, $horarioId
+            $fimIntervalo, $horarioId
         ){
             $sql = "UPDATE horarios_profissionais SET
                 hora_inicio = :horaInicio,
                 hora_fim = :horaFim,
                 inicio_intervalo = :inicioIntervalo,
                 fim_intervalo = :fimIntervalo
-            WHERE id_horario = :idHorario AND id_profissional = :idProfissional";
+            WHERE id_horario = :idHorario";
 
             $query = $this->conn->prepare($sql);
 
@@ -84,7 +84,6 @@
                 ':horaFim'        => $horaFim,
                 ':inicioIntervalo'=> $inicioIntervalo,
                 ':fimIntervalo'   => $fimIntervalo,
-                ':idProfissional' => $profissionalId,
                 ':idHorario'      => $horarioId
             ]);
 
@@ -310,7 +309,6 @@
             "Colesterol"                => "exame_colesterol",
             "Glicemia"                  => "exame_glicemia",
             "Triglicerídeos"            => "exame_triglicerideos",
-            "Plaquetas"                 => "exame_plaquetas",
             "Gemoglobina Glicada"       => "exame_hemoglobina_glicada",
 
             // Exames de imagem
@@ -324,17 +322,14 @@
             //  Exames cardiológicos
             "Eletrocardiograma"         => "exame_eletrocardiograma",
             "Ecocardiograma"            => "exame_ecocardiograma",
-            "Holter"                    => "exame_holter",
             "Teste Ergométrico"         => "exame_teste_ergometrico",
 
             //  Exames de urina
-            "Urina tipo I"              => "exame_urina_tipo_i",
             "Urocultura"                => "exame_urocultura",
             "Exame De Urina"            => "exame_exame_de_urina",
 
             //  Exames hormonais
             "Tsh"                       => "exame_tsh",
-            "T4 Livre"                  => "exame_t4_livre",
             "Testosterona"              => "exame_testosterona",
             "Estradiol"                 => "exame_estradiol",
             "Cortisol"                  => "exame_cortisol",
@@ -348,8 +343,7 @@
 
             //  Exames respiratórios
             "Espirometria"              => "exame_espirometria",
-            "Gasometria Arterial"       => "exame_gasometria_arterial",
-            "Teste de Função Pulmonar"  => "exame_teste_de_funcao_pulmonar"
+            "Gasometria Arterial"       => "exame_gasometria_arterial"
         ];
 
 
@@ -461,7 +455,7 @@
                         $inicioAgenda = strtotime($agenda['horario_agendamento']);
                         $fimAgenda = strtotime($agenda['horario_agendamento']) + ($agenda['duracao'] * 60);
                         
-                        // Verifica se há sobreposição de horários
+                        // Verificação se há sobreposição de horários
                         if ($inicioAgenda < $fimDisponivel && $fimAgenda > $inicioDisponivel) {
                             $ocupado = true;
                             break;
@@ -475,7 +469,7 @@
             }
 
             if (empty($horariosLivres[$nomeProfissional])) {
-                return json_encode(["erro" => "Nenhum horário disponivel neste momento. Agende outro dia"]);
+                return json_encode(["erro" => "Nenhum horário disponível neste momento. Agende outro dia"]);
             }
             
             

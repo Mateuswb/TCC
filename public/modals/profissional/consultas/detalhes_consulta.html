@@ -1,0 +1,232 @@
+<div class="overlay"></div>
+<div class="modal-lateral-consulta">
+  <div class="modal-header">
+    <h2 id="modalPaciente">Detalhes do agendamento</h2>
+    <button class="modal-close">&times;</button>
+  </div>
+
+  <div class="modal-body">
+    <div class="modal-section">
+      <h3>Informações da agendamento</h3>
+      <p><strong>Data:</strong> <span id="modalDia"></span></p>
+      <p><strong>Horário:</strong> <span id="modalHora"></span></p>
+      <p><strong>Tipo:</strong> <span id="modalTipo"></span></p>
+      <p><strong>Status:</strong> <span id="modalStatus"></span></p>
+    </div>
+
+    <div class="modal-section">
+      <h3>Paciente</h3>
+      <p><strong>Nome:</strong> <span id="modalNome"></span></p>
+    </div>
+
+    <a id="modalAnexo" href="#" target="_blank" class="btn-anexo" style="display:none;">
+    Biaxar PDF
+    </a>
+
+    <div class="modal-observacoes">
+      <h3>Observações</h3>
+      <p id="modalObs"></p>
+    </div>
+  </div>
+</div>
+
+
+<style>
+.btn-anexo {
+  display: inline-block;
+  background: #015997;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  transition: 0.2s;
+}
+
+.btn-anexo:hover {
+  background: #013f73;
+}
+
+  .modal-lateral-consulta {
+  position: fixed;
+  top: 0;
+  right: -520px;
+  width: 460px;
+  height: 100%;
+  background: #fff;
+  box-shadow: -4px 0 15px rgba(0, 0, 0, 0.15);
+  transition: right 0.4s ease;
+  z-index: 999;
+  overflow-y: auto;
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+}
+
+.modal-lateral-consulta.ativo {
+  right: 0;
+}
+
+.modal-lateral-consulta .modal-header {
+  position: sticky;
+  top: 0;
+  background: #f7f9fc;
+  border-bottom: 1px solid #e3e8ee;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top-left-radius: 16px;
+}
+
+.modal-lateral-consulta .modal-header h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #002E53;
+  margin: 0;
+}
+
+.modal-lateral-consulta .modal-close {
+  font-size: 26px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: #555;
+  transition: 0.2s;
+}
+
+.modal-lateral-consulta .modal-close:hover {
+  color: #000;
+  transform: scale(1.1);
+}
+
+.modal-lateral-consulta .modal-body {
+  padding: 24px;
+}
+
+.modal-lateral-consulta .modal-section {
+  background: #f9fafc;
+  border: 1px solid #e3e8ee;
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 18px;
+}
+
+.modal-lateral-consulta .modal-section h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #015997;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.modal-lateral-consulta .modal-section p {
+  font-size: 15.5px;
+  color: #333;
+  margin: 6px 0;
+}
+
+.modal-lateral-consulta .modal-section strong {
+  color: #002E53;
+  font-weight: 600;
+}
+
+.modal-lateral-consulta .modal-observacoes {
+  background: #fff8e6;
+  border: 1px solid #ffe3a3;
+  border-radius: 10px;
+  padding: 16px 20px;
+  color: #5a4a00;
+  font-size: 15px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 998;
+}
+
+.overlay.ativo {
+  opacity: 1;
+  visibility: visible;
+}
+
+</style>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const linhas = document.querySelectorAll(".consulta-item");
+    const modal = document.querySelector(".modal-lateral-consulta");
+    const overlay = document.querySelector(".overlay");
+    const btnFechar = document.querySelector(".modal-close");
+
+  linhas.forEach(linha => {
+    linha.addEventListener("click", () => {
+        const dia = linha.dataset.dia;
+        const hora = linha.dataset.hora;
+        const paciente = linha.dataset.paciente;
+        const tipo = linha.dataset.tipo;
+        const status = linha.dataset.status;
+        const obs = linha.dataset.observacoes;
+        const anexo = linha.dataset.anexo;
+
+        document.getElementById("modalPaciente").textContent = paciente;
+        document.getElementById("modalNome").textContent = paciente;
+        document.getElementById("modalTipo").textContent = tipo;
+        document.getElementById("modalDia").textContent = dia;
+        document.getElementById("modalHora").textContent = hora;
+        document.getElementById("modalStatus").textContent = status;
+        document.getElementById("modalObs").textContent = obs;
+
+        const linkAnexo = document.getElementById("modalAnexo");
+
+        if (tipo === "Reconsulta" && anexo) {
+            linkAnexo.style.display = "inline-block";
+
+            linkAnexo.onclick = (e) => {
+                e.preventDefault();
+
+                const base64 = anexo.replace(/^data:application\/pdf;base64,/, '');
+                downloadBase64File(base64, "resultado.pdf", "application/pdf");
+            };
+            } else {
+                linkAnexo.style.display = "none";
+            }
+            modal.classList.add("ativo");
+            overlay.classList.add("ativo");
+    });
+  });
+
+    function downloadBase64File(base64, filename, type) {
+        const link = document.createElement("a");
+        link.href = `data:${type};base64,${base64}`;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        cument.body.removeChild(link);
+    }
+
+
+    btnFechar.addEventListener("click", () => {
+        modal.classList.remove("ativo");
+        overlay.classList.remove("ativo");
+    });
+
+    overlay.addEventListener("click", () => {
+        modal.classList.remove("ativo");
+        overlay.classList.remove("ativo");
+    });
+    });
+</script>

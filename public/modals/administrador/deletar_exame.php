@@ -17,32 +17,15 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-cancel" onclick="fecharModalExcluir()">Cancelar</button>
-        <button type="button" class="btn btn-delete" onclick="abrirConfirmacao()">Excluir</button>
+        <input type="submit" class="btn btn-delete" value="Excluir">
       </div>
     </form>
   </div>
 </div>
 
-
-<div class="modal-overlay" id="modalConfirmacao">
-  <div class="modal-box">
-    <div class="modal-header">
-      <h3>Confirmação</h3>
-      <span class="close-btn" onclick="fecharConfirmacao()">&times;</span>
-    </div>
-    <div class="modal-body">
-      <p id="mensagemConfirmacao"></p>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-cancel" onclick="fecharConfirmacao()">Cancelar</button>
-      <button class="btn btn-delete" id="btnConfirmarExcluir">Confirmar</button>
-    </div>
-  </div>
-</div>
-
 <style>
 
-    .modal-overlay {
+.modal-overlay {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
@@ -114,16 +97,21 @@
 .btn {
   padding: 8px 16px;
   border: none;
+  font-size: 16px;
   border-radius: 6px;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .btn-cancel {
   background: #aaa;
   color: #fff;
 }
+.btn-delete{
+  background-color: #c62828;
+  color: white;
 
+}
 
 </style>
 
@@ -144,24 +132,8 @@ function fecharModalExcluir() {
 }
 
 
-function abrirConfirmacao() {
-    const nome = document.getElementById("nomeExameExcluir").innerText;
-    document.getElementById("mensagemConfirmacao").innerText = `Deseja realmente excluir o exame "${nome}"? Esta ação não pode ser desfeita.`;
-    document.getElementById("modalConfirmacao").style.display = "flex";
-}
-
-function fecharConfirmacao() {
-    document.getElementById("modalConfirmacao").style.display = "none";
-}
-
-
-document.getElementById("btnConfirmarExcluir").addEventListener("click", () => {
-    
-});
-
 window.addEventListener("click", e => {
     if(e.target === document.getElementById("modalExcluir")) fecharModalExcluir();
-    if(e.target === document.getElementById("modalConfirmacao")) fecharConfirmacao();
 });
 
 

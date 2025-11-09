@@ -13,24 +13,18 @@
 
     class ProfissionalController {
 
-        private $usuarioController;
         private $profissionalModel;
         private $encaminhamentoModel;
-        private $pacienteModel;
         private $agendamentoConsultaModel;
         private $agendamentoExameModel;
-        private $exameModel;
         private $relatorioModel;
         private $emailController;
 
         public function __construct($conn) {
-            $this->usuarioController = new UsuarioController($conn);
             $this->profissionalModel = new Profissional($conn);
             $this->encaminhamentoModel = new encaminhamento($conn);
             $this->agendamentoConsultaModel = new AgendamentoConsulta($conn);
             $this->agendamentoExameModel = new AgendamentoExame($conn);
-            $this->pacienteModel = new Paciente($conn);
-            $this->exameModel = new Exame($conn);
             $this->relatorioModel = new Relatorio($conn);
             $this->emailController = new Email();
         }
@@ -168,7 +162,7 @@
                 } catch (Exception $e) {
                     $_SESSION['flash'] = [
                         'type' => 'error',
-                        'message' => 'Erro ao eviar email.'
+                        'message' => 'Erro ao enviar email.'
                     ];
                 }
             }
@@ -301,7 +295,6 @@
             }
 
             $reencaminhar = $this->encaminhamentoModel->reencaminharExame($idEncaminhamento, $idTipoExame, $observacoes);
-
       
             if ($reencaminhar) {
                 $mensagem = '
@@ -401,10 +394,9 @@
             $idAgendamentoExame = $_POST['idAgendamentoExame'] ?? null;
             $idAgendamentoConsulta = $_POST['idConsulta'];
 
-            // Buscar dados do paciente e do exame relacionado
             $dados = $this->agendamentoConsultaModel->getAgendamento($idAgendamentoConsulta);
 
-            // Cancelar encaminhamento e exame
+
             $cancelarEncaminhamento = $this->encaminhamentoModel->cancelarEncaminhamento($idEncaminhamento);
 
             if ($idAgendamentoExame) {
@@ -625,7 +617,6 @@
         }
 
 
-
         public function finalizarAgendamentoConsulta(){
             $idConsulta = $_POST['idConsulta'];
 
@@ -670,6 +661,81 @@
             ]);
             exit;
         }
+
+        public function inativarContaProfissional() {
+            $idProfissional = $_POST['idProfissioanl'];
+            $cpf            = $_POST['cpf'];
+
+            session_start();
+            try {
+                $temAgendamento = $this->profissionalModel->temAgendamentoAtivoProfissional($idProfissional);
+
+                if ($temAgendamento) {
+                    $_SESSION['flash'] = [
+                        'type' => 'error',
+                        'message' => "Você possui agendamentos ativos e não pode inativar sua conta no momento. Cancele seus agendamentos primeiro."
+                    ];
+                    header("Location: ../views/profissional/perfil.php");
+                    exit;
+                }
+
+                $this->usuarioModel->inativarUsuario($cpf);
+
+                $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => "Sua conta foi inativada com sucesso."
+                ];
+                session_destroy();
+                header("Location: ../views/index.php");
+                exit;
+
+            } catch (Exception $e) {
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => $e->getMessage()
+                ];
+                header("Location: ../views/paciente/perfil.php");
+                exit;
+            }
+        }
+
+        public function excluirContaProfissional() {
+            $idProfissional = $_POST['idProfissional'];
+            $cpf            = $_POST['cpf'];
+
+            session_start();
+            try {
+                $temAgendamento = $this->profissionalModel->temAgendamentoAtivoProfissional($idProfissional);
+
+                if ($temAgendamento) {
+                    $_SESSION['flash'] = [
+                        'type' => 'error',
+                        'message' => "Você possui agendamentos ativos e não pode excluir sua conta no momento. Cancele seus agendamentos primeiro."
+                    ];
+                    header("Location: ../views/profissional/perfil.php");
+                    exit;
+                }
+
+                $this->profissionalModel->excluirProfissionalComUsuario($idProfissional, $cpf);
+
+                $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => "Sua conta foi excluída com sucesso."
+                ];
+                session_destroy();
+                header("Location: ../views/index.php");
+                exit;
+
+            } catch (Exception $e) {
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => $e->getMessage()
+                ];
+                header("Location: ../views/profissional/perfil.php");
+                exit;
+            }
+        }
+
     }
 
     $controller = new ProfissionalController($conn);
@@ -699,6 +765,12 @@
                 break;
             case 'cancelarExame':
                 $controller->cancelarExame();
+                break;
+            case 'inativarContaProfissional':
+                $controller->inativarContaProfissional();
+                break;
+            case 'excluirContaProfissional':
+                $controller->excluirContaProfissional();
                 break;
             default:
                 echo "Ação inválida";
