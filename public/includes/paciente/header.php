@@ -1,3 +1,7 @@
+<?php
+  include $_SERVER['DOCUMENT_ROOT'] . '/'. $root. '/public/modals/logout.php';
+?>
+
 <header>
   <div class="menu-btn" id="menu-btn">
     <i class="fas fa-bars"></i>
@@ -42,7 +46,7 @@
   <li onclick="location.href='<?= BASE_URL ?>/views/paciente/exames/historico/historico_exames.php'">
     <i class="fas fa-file-medical-alt"></i> Histórico de Exames
   </li>
-  <li onclick="location.href='<?= BASE_URL ?>/views/logout/logout.php'">
+  <li onclick="abrirModalLogout()">
     <i class="fas fa-sign-out-alt"></i> Sair
   </li>
 </ul>

@@ -1,7 +1,10 @@
 <?php
+    
     $parts = explode('/', trim($_SERVER['SCRIPT_NAME'], '/'));
     $root = $parts[0]; 
-    define("BASE_URL", "/$root/views");
+    define("BASE_URL", "/$root");
+
+    include $_SERVER['DOCUMENT_ROOT'] . '/'. $root. '/public/modals/logout.php';
 
     $especialidades = isset($_SESSION['especialidades']) ? 
                     json_decode($_SESSION['especialidades'], true) : [];
@@ -27,45 +30,45 @@ rel="stylesheet">
 <div class="sidebar" id="sidebar">
   <h2>Meu Painel</h2>
 
-    <a href="<?= BASE_URL ?>/profissional/home.php"
+    <a href="<?= BASE_URL ?>/views/profissional/home.php"
         class="<?= ($currentFile == 'home.php') ? 'active' : '' ?>">
         <i class="fas fa-home"></i> <span>Home</span>
     </a>
-    <a href="<?= BASE_URL ?>/profissional/agendamentos/consultas.php"
+    <a href="<?= BASE_URL ?>/views/profissional/agendamentos/consultas.php"
         class="<?= ($currentFile == 'consultas.php') ? 'active' : '' ?>">
         <i class="fas fa-calendar-check"></i> <span>Meus Agendamentos </span>
     </a>
 
     <?php if ($temExame): ?>
-        <a href="<?= BASE_URL ?>/profissional/lancar_resultado_exames/listar_exames.php"
+        <a href="<?= BASE_URL ?>/views/profissional/lancar_resultado_exames/listar_exames.php"
             class="<?= ($currentFile == 'listar_exames.php') ? 'active' : '' ?>">
             <i class="fas fa-vial"></i> <span>Lançar Resultado Exame</span>
         </a>
     <?php endif; ?>
 
-    <a href="<?= BASE_URL ?>/profissional/paciente/listar_pacientes.php"
+    <a href="<?= BASE_URL ?>/views/profissional/paciente/listar_pacientes.php"
         class="<?= ($currentFile == 'listar_pacientes.php') ? 'active' : '' ?>">
         <i class="fas fa-user-injured"></i> <span>Pacientes </span>
     </a>
-       <a href="<?= BASE_URL ?>/profissional/historico_consultas/listar_consultas.php"
+       <a href="<?= BASE_URL ?>/views/profissional/historico_consultas/listar_consultas.php"
         class="<?= ($currentFile == 'listar_consultas.php') ? 'active' : '' ?>">
         <i class="fas fa-history"></i> <span>Histórico de Agendamentos</span>
     </a>
     </a>
-       <a href="<?= BASE_URL ?>/profissional/historico_encaminhamentos/listar_encaminhamentos.php"
+    <a href="<?= BASE_URL ?>/views/profissional/historico_encaminhamentos/listar_encaminhamentos.php"
        class="<?= ($currentFile == 'listar_encaminhamentos.php') ? 'active' : '' ?>">
-        <i class="fas fa-history"></i> <span>Encaminhamentos</span>
+    <i class="fas fa-history"></i> <span>Encaminhamentos</span>
 
     </a>
-        <a href="<?= BASE_URL ?>/profissional/horarios/listar_horarios.php"
+    <a href="<?= BASE_URL ?>/views/profissional/horarios/listar_horarios.php"
         class="<?= ($currentFile == 'listar_horarios.php') ? 'active' : '' ?>">
         <i class="fas fa-file-alt"></i> <span>Horários</span>
     </a>
-        <a href="<?= BASE_URL ?>/profissional/perfil.php"
+    <a href="<?= BASE_URL ?>/views/profissional/perfil.php"
         class="<?= ($currentFile == 'perfil.php') ? 'active' : '' ?>">
-        <i class="fa-solid fa-user"></i> <span>Perfil</span>
+    <i class="fa-solid fa-user"></i> <span>Perfil</span>
 
-    <a href="<?= BASE_URL ?>/logout/logout.php" class="logout">
+    <a onclick="abrirModalLogout()" class="logout">
         <i class="fas fa-sign-out-alt"></i> <span>Sair</span>
     </a>
 

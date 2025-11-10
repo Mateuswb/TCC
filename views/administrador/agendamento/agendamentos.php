@@ -41,6 +41,16 @@
   line-height: 1.4;
   border-left: 5px solid #fff;
 }
+.fc-timegrid-event-harness-inset .fc-timegrid-event {
+  height: 100% !important;
+  min-height: 135px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  white-space: normal !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
+}
 
 
 
@@ -214,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function () {
     calendar = new FullCalendar.Calendar(calendarEl, {
          initialView: 'timeGridWeek',
         locale: 'pt-br',
-        slotMinTime: "05:00:00",
+        slotMinTime: "06:00:00",
         slotMaxTime: "23:31:00",
         allDaySlot: false,
         expandRows: true,

@@ -211,8 +211,19 @@ h1 {
   border-left: 5px solid #fff;
 }
 
+.fc-timegrid-event-harness-inset .fc-timegrid-event {
+  height: 100% !important;
+  min-height: 135px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  white-space: normal !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
+}
+
 .fc-timegrid-slot {
-  height: 120px !important;
+  height: 140px !important;
 }
 
 

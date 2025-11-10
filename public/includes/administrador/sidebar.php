@@ -1,5 +1,6 @@
 <?php
     include 'config.php';
+    include $_SERVER['DOCUMENT_ROOT'] . '/'. $root. '/public/modals/logout.php';
 
     $currentFile = basename($_SERVER['PHP_SELF']); 
 ?>
@@ -45,7 +46,7 @@
         <i class="fas fa-vials"></i> <span>Relatórios</span>
     </a>
 
-    <a href="<?= BASE_URL ?>/views/logout/logout.php" class="logout">
+    <a onclick="abrirModalLogout()" class="logout">
         <i class="fas fa-sign-out-alt"></i> <span>Sair</span>
     </a>
 </div>

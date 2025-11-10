@@ -14,8 +14,7 @@
                     FROM agendamentos_consultas
                     WHERE YEARWEEK(dia_agendamento, 1) = YEARWEEK(CURDATE(), 1)
                     GROUP BY DATE(dia_agendamento)
-                    ORDER BY data_agendamento;
-                    ";
+                    ORDER BY data_agendamento";
             $query = $this->conn->prepare($sql);
             $query->execute();
             return $query->fetchAll(PDO::FETCH_ASSOC);
@@ -301,13 +300,23 @@
         }
 
         public function principalDiaAgendamento($idProfissional) {
-            $sql = "SELECT DAYNAME(ac.dia_agendamento) AS dia, COUNT(*) AS total
-                        FROM agendamentos_consultas ac
-                        JOIN horarios_profissionais hp ON ac.id_horario_profissional = hp.id_horario
-                        WHERE hp.id_profissional = :idProfissional
-                        GROUP BY dia
-                        ORDER BY total DESC
-                        LIMIT 1";
+            $sql = "SELECT 
+                    CASE DAYOFWEEK(ac.dia_agendamento)
+                        WHEN 1 THEN 'Domingo'
+                        WHEN 2 THEN 'Segunda-feira'
+                        WHEN 3 THEN 'Terça-feira'
+                        WHEN 4 THEN 'Quarta-feira'
+                        WHEN 5 THEN 'Quinta-feira'
+                        WHEN 6 THEN 'Sexta-feira'
+                        WHEN 7 THEN 'Sábado'
+                    END AS dia,
+                    COUNT(*) AS total
+                    FROM agendamentos_consultas ac
+                    JOIN horarios_profissionais hp ON ac.id_horario_profissional = hp.id_horario
+                    WHERE hp.id_profissional = :idProfissional
+                    GROUP BY dia
+                    ORDER BY total DESC
+                    LIMIT 1";
             $query = $this->conn->prepare($sql);
             $query->execute([':idProfissional' => $idProfissional]);
             return $query->fetch(PDO::FETCH_ASSOC)['dia'] ?? null;
@@ -333,7 +342,8 @@
                     JOIN horarios_profissionais hp ON ac.id_horario_profissional = hp.id_horario
                     WHERE hp.id_profissional = :idProfissional
                     AND MONTH(ac.dia_agendamento) = MONTH(CURDATE())
-                    AND YEAR(ac.dia_agendamento) = YEAR(CURDATE())";
+                    AND YEAR(ac.dia_agendamento) = YEAR(CURDATE())
+                    AND ac.status = 'realizada'";
             $query = $this->conn->prepare($sql);
             $query->execute([':idProfissional' => $idProfissional]);
             return $query->fetch(PDO::FETCH_ASSOC)['total'];

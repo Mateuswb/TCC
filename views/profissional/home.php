@@ -59,7 +59,7 @@
         </div>
 
         <div class="card">
-          <div class="left"><small>Taxa de cancelamento</small><strong> <?php echo $cancelamentos ?></strong></div>
+          <div class="left"><small>Taxa de cancelamento</small><strong> <?php echo $cancelamentos ?>%</strong></div>
           <div class="icon yellow"><i class="fa-solid fa-calendar-check"></i></div>
         </div>
 

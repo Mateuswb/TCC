@@ -1,3 +1,8 @@
+<!-- <?php
+  include $_SERVER['DOCUMENT_ROOT'] . '/'. $root. '/public/modals/logout.php';
+?> -->
+
+
 <header>
   <div class="menu-btn" id="menu-btn">
     <i class="fas fa-bars"></i>
@@ -34,16 +39,13 @@
     <span class="close-menu" id="close-menu">&times;</span>
   </div>
   <ul>
-  <li onclick="location.href='<?= BASE_URL ?>/profissional/perfil.php'">
+  <li onclick="location.href='<?= BASE_URL ?>/views/profissional/perfil.php'">
     <i class="fas fa-user"></i> Perfil
   </li>
-  <li onclick="location.href='<?= BASE_URL ?>/profissional/historico_consultas/listar_consultas.php'">
-    <i class="fas fa-notes-medical"></i> Histórico de Consulta
+  <li onclick="location.href='<?= BASE_URL ?>/views/profissional/historico_consultas/listar_consultas.php'">
+    <i class="fas fa-notes-medical"></i> Histórico de agendamentos
   </li>
-  <li onclick="location.href='#'">
-    <i class="fas fa-file-medical-alt"></i> Histórico de Exames
-  </li>
-  <li onclick="location.href='<?= BASE_URL ?>/logout/logout.php'">
+  <li onclick="abrirModalLogout()">
     <i class="fas fa-sign-out-alt"></i> Sair
   </li>
 </ul>
@@ -105,7 +107,7 @@ header {
   position: absolute;
   top: 75px;
   right: 30px;
-  width: 300px;
+  width: 330px;
   background: #fdfdfd;
   border: 1px solid #ccc;
   border-radius: 12px;

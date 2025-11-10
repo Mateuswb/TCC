@@ -701,7 +701,7 @@ footer {
       </div>
 
       <div class="col hero-right reveal" aria-hidden="true">
-        <img class="hero-illustration" src="fundo_05.png" alt="Ilustração agendamento médico">
+        <img class="hero-illustration" src="../public/assets/imgs/fundo_05.png" alt="Ilustração agendamento médico">
       </div>
     </div>
 
@@ -713,7 +713,7 @@ footer {
     <div class="section-inner container agendar-card-inner">
       <div class="col agendar-left reveal">
         <div class="agendar-card">
-          <img src="fundo_06.png" alt="Calendário Médico"
+          <img src="../public/assets/imgs/fundo_06.png" alt="Calendário Médico"
                style="border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,0.08);width:100%">
         </div>
       </div>
@@ -768,7 +768,7 @@ footer {
       </div>
 
       <div class="col especialista-right reveal" aria-hidden="true">
-        <img src="fundo_07.jpg" alt="Médico"
+        <img src="../public/assets/imgs/fundo_07.jpg" alt="Médico"
              style="border-radius:12px;box-shadow:0 12px 40px rgba(2,46,83,0.10);width:100%">
       </div>
     </div>
@@ -790,7 +790,7 @@ footer {
 
     <div class="section-inner container">
       <div class="col exames-left reveal" aria-hidden="true">
-        <img src="fundo_08.png" alt="Exames"
+        <img src="../public/assets/imgs/fundo_08.png" alt="Exames"
              style="border-radius:12px;box-shadow:0 12px 40px rgba(2,46,83,0.08);width:100%">
       </div>
 

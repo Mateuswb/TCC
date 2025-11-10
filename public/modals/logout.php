@@ -1,22 +1,22 @@
-<!-- MODAL DE LOGOUT -->
-<div class="modal-overlay" id="modalLogout" style="display: none;">
-  <div class="logout-box">
-    <a class="btn-back" onclick="fecharModalLogout()">
+<!-- MODAL DE LOGOUT (ISOLADO) -->
+<div class="logout-modal-overlay" id="logout-modal" style="display: none;">
+  <div class="logout-modal-box">
+    <a class="logout-btn-back" onclick="fecharLogoutModal()">
       <i class="fas fa-arrow-left"></i> Voltar
     </a>
 
-    <div class="user-photo">
+    <div class="logout-user-photo">
       <i class="fa-solid fa-user"></i>
     </div>
 
-    <h2>Encerrar sessão</h2>
-    <p>Deseja realmente sair da sua conta?</p>
+    <h2 id="logout-title">Encerrar sessão</h2>
+    <p id="logout-subtitle">Deseja realmente sair da sua conta?</p>
 
-    <div class="btn-group">
-      <a href="<?= BASE_URL ?>/autentica/logout.php" class="btn logout">
+    <div class="logout-btn-group">
+      <a href="<?= BASE_URL ?>/autentica/logout.php" class="logout-btn logout-btn-confirm">
         <i class="fa-solid fa-right-from-bracket"></i> Sair
       </a>
-      <button class="btn cancel" onclick="fecharModalLogout()">
+      <button class="logout-btn logout-btn-cancel" onclick="fecharLogoutModal()">
         <i class="fa-solid fa-circle-xmark"></i> Cancelar
       </button>
     </div>
@@ -28,12 +28,12 @@
 
 <style>
   :root {
-    --azul: #007bff;
-    --vermelho: #dc3545;
+    --logout-azul: #007bff;
+    --logout-vermelho: #dc3545;
   }
 
   /* Fundo escuro e desfocado */
-  .modal-overlay {
+  .logout-modal-overlay {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.6);
@@ -41,18 +41,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 9999;
-    animation: fadeInOverlay 0.3s ease;
+    z-index: 99999;
+    animation: logout-fadeInOverlay 0.3s ease;
   }
 
-  @keyframes fadeInOverlay {
+  @keyframes logout-fadeInOverlay {
     from { opacity: 0; }
     to { opacity: 1; }
   }
 
   /* Caixa do modal */
-  .logout-box {
-    background: rgba(255, 255, 255, 0.9);
+  .logout-modal-box {
+    background: rgba(255, 255, 255, 0.92);
     backdrop-filter: blur(10px);
     border-radius: 20px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
@@ -60,19 +60,19 @@
     text-align: center;
     width: 360px;
     position: relative;
-    animation: fadeInBox 0.4s ease;
+    animation: logout-fadeInBox 0.4s ease;
   }
 
-  @keyframes fadeInBox {
+  @keyframes logout-fadeInBox {
     from {opacity: 0; transform: translateY(20px);}
     to {opacity: 1; transform: translateY(0);}
   }
 
-  .btn-back {
+  .logout-btn-back {
     position: absolute;
     top: 15px;
     left: 15px;
-    color: var(--azul);
+    color: var(--logout-azul);
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -81,11 +81,11 @@
     cursor: pointer;
   }
 
-  .btn-back:hover {
+  .logout-btn-back:hover {
     color: #0056b3;
   }
 
-  .user-photo {
+  .logout-user-photo {
     width: 90px;
     height: 90px;
     border-radius: 50%;
@@ -101,25 +101,25 @@
     box-shadow: 0 0 8px rgba(0,0,0,0.15);
   }
 
-  h2 {
+  #logout-title {
     margin-bottom: 10px;
     color: #222;
   }
 
-  p {
+  #logout-subtitle {
     color: #555;
     margin-bottom: 30px;
     font-size: 15px;
   }
 
-  .btn-group {
+  .logout-btn-group {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 12px;
   }
 
-  .btn {
+  .logout-btn {
     padding: 12px;
     border: none;
     border-radius: 10px;
@@ -133,45 +133,43 @@
     transition: transform 0.2s ease;
   }
 
-  .logout {
-    background-color: var(--vermelho);
+  .logout-btn-confirm {
+    background-color: var(--logout-vermelho);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
   }
 
-  .logout:hover {
+  .logout-btn-confirm:hover {
     background-color: #b02a37;
     transform: translateY(-2px);
   }
 
-  .cancel {
-    background-color: var(--azul);
+  .logout-btn-cancel {
+    background-color: var(--logout-azul);
   }
 
-  .cancel:hover {
+  .logout-btn-cancel:hover {
     background-color: #0056b3;
     transform: translateY(-2px);
   }
 </style>
 
 <script>
-  // Abrir modal
   function abrirModalLogout() {
-    document.getElementById('modalLogout').style.display = 'flex';
+    document.getElementById('logout-modal').style.display = 'flex';
   }
 
-  // Fechar modal
-  function fecharModalLogout() {
-    document.getElementById('modalLogout').style.display = 'none';
+  function fecharLogoutModal() {
+    document.getElementById('logout-modal').style.display = 'none';
   }
 
-  // Fecha clicando fora da caixa
   window.addEventListener('click', function(e) {
-    const modal = document.getElementById('modalLogout');
+    const modal = document.getElementById('logout-modal');
     if (e.target === modal) {
-      fecharModalLogout();
+      fecharLogoutModal();
     }
   });
 </script>
+  
