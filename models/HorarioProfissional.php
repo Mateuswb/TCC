@@ -44,6 +44,14 @@
             return $query->fetchAll(PDO::FETCH_ASSOC); 
         }
 
+        public function deletarHorario($horarioId){
+            $sql = "DELETE FROM horarios_profissionais WHERE id_horario = :idHorario";
+            $query = $this->conn->prepare($sql);
+            return $query->execute([
+                ':idHorario' => $horarioId
+            ]);
+        }
+
 
         public function buscarLimitesDeHorario($idProfissional) {
             $sql = "SELECT 
@@ -86,7 +94,6 @@
                 ':fimIntervalo'   => $fimIntervalo,
                 ':idHorario'      => $horarioId
             ]);
-
             return $resultado;
         }
 

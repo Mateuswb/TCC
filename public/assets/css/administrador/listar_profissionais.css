@@ -17,7 +17,7 @@ body {
     display: flex;
     flex-direction: column;
     margin-top: 50px;
-    margin-bottom: 100px;
+    margin-bottom: 50px;
     overflow-y: auto; 
     overflow-x: hidden; 
 }
@@ -37,24 +37,23 @@ h1 {
     font-weight: 700;
 }
 
-/* ===== GRID RESPONSIVO ===== */
+
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(370px, 1fr));
     gap: 25px;
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
 }
 
-/* ===== CARD ===== */
 .card {
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     padding: 25px;
     display: flex;
-     word-wrap: break-word;        /* quebra a palavra apenas se for MUITO longa */
+     word-wrap: break-word; 
     overflow-wrap: break-word;
     flex-direction: column;
     justify-content: space-between;
@@ -78,7 +77,7 @@ h1 {
     white-space: nowrap;
 }
 
-/* ===== LISTA DE INFORMAÇÕES ===== */
+
 .info-list {
     list-style: none;
     margin: 0 0 15px 0;
@@ -156,3 +155,4 @@ h1 {
         margin-bottom: 4px;
     }
 }
+

@@ -27,16 +27,16 @@
 
     <style>
         * {
-            margin: 0; padding: 0; box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
             font-family: "Poppins", sans-serif;
         }
 
         body {
             background: #f5f6fa;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
             min-height: 100vh;
+            display: flex;
         }
 
         .sidebar {

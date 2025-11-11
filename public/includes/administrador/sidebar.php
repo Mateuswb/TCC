@@ -41,10 +41,6 @@
         class="<?= ($currentFile == 'listar_usuarios.php') ? 'active' : '' ?>">
         <i class="fas fa-vials"></i> <span>Usuários</span>
     </a>
-    <a href="<?= BASE_URL ?>"
-        class="<?= ($currentFile == '') ? 'active' : '' ?>">
-        <i class="fas fa-vials"></i> <span>Relatórios</span>
-    </a>
 
     <a onclick="abrirModalLogout()" class="logout">
         <i class="fas fa-sign-out-alt"></i> <span>Sair</span>

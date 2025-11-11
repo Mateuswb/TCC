@@ -1,6 +1,7 @@
+<!-- Modal Editar Usuário -->
 <div id="modalEditarUsuario" class="modal">
   <div class="modal-content">
-    <span class="close" id="closeModal">&times;</span>
+    <span class="close" id="closeModalEditar">&times;</span>
     <h2>Editar Usuário</h2>
     <form id="formEditarUsuario" method="post" action="../../../controllers/AdministradorController.php">
       <input type="hidden" name="id_usuario" id="id_usuario">
@@ -25,41 +26,46 @@
 
       <div class="form-buttons">
         <button type="submit" class="btn save">Salvar</button>
-        <button type="button" class="btn cancel" id="cancelModal">Cancelar</button>
+        <button type="button" class="btn cancel" id="cancelModalEditar">Cancelar</button>
       </div>
     </form>
   </div>
 </div>
 
-
-
-  <style>
-   .modal {
-  display: none;
+<style>
+.modal {
   position: fixed;
-  z-index: 1000;
-  left: 0; top: 0;
+  top: 0; left: 0;
   width: 100%; height: 100%;
-  overflow: auto;
   background-color: rgba(0,0,0,0.6);
-  font-family: "Poppins", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1000;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal.show {
+  opacity: 1;
+  visibility: visible;
 }
 
 .modal-content {
   background-color: #fff;
-  margin: 80px auto;
   padding: 30px 40px;
   border-radius: 12px;
   width: 450px;
   max-width: 90%;
   box-shadow: 0 8px 30px rgba(0,0,0,0.2);
   position: relative;
-  animation: slideDown 0.3s ease-out;
+  transform: translateY(-20px);
+  transition: transform 0.3s ease;
 }
 
-@keyframes slideDown {
-  from { transform: translateY(-50px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+.modal.show .modal-content {
+  transform: translateY(0);
 }
 
 .modal-content h2 {
@@ -147,33 +153,29 @@
 .modal-content .close:hover {
   color: #004aad;
 }
-
-  </style>
-
+</style>
 
 <script>
 const modalEditar = document.getElementById("modalEditarUsuario");
-const closeModal = document.getElementById("closeModal");
-const cancelModal = document.getElementById("cancelModal");
+const closeEditar = document.getElementById("closeModalEditar");
+const cancelEditar = document.getElementById("cancelModalEditar");
 
 function abrirModalEditarUsuario(botao) {
-  modalEditar.style.display = "block";
-
- 
-  document.getElementById("id_usuario").value = botao.getAttribute("data-id");
-  document.getElementById("login").value = botao.getAttribute("data-login");
-  document.getElementById("tipo_usuario").value = botao.getAttribute("data-tipo");
+  document.getElementById("id_usuario").value = botao.dataset.id;
+  document.getElementById("login").value = botao.dataset.login;
+  document.getElementById("tipo_usuario").value = botao.dataset.tipo;
   document.getElementById("senha").value = "";
+  modalEditar.classList.add("show");
 }
 
-
-closeModal.onclick = () => modalEditar.style.display = "none";
-cancelModal.onclick = () => modalEditar.style.display = "none";
-
-window.onclick = function(event) {
-  if (event.target == modalEditar) {
-    modalEditar.style.display = "none";
-  }
+function fecharModalEditarUsuario() {
+  modalEditar.classList.remove("show");
 }
+
+closeEditar.onclick = fecharModalEditarUsuario;
+cancelEditar.onclick = fecharModalEditarUsuario;
+
+window.addEventListener("click", e => {
+  if (e.target === modalEditar) fecharModalEditarUsuario();
+});
 </script>
-

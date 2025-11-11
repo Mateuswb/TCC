@@ -56,26 +56,28 @@
                 <td><?= $usuario['data_criacao']; ?></td>
                 <td>
                   <button class="btn edit" 
-                      data-id="<?= $usuario['id_usuario']; ?>" 
+                      data-id4234="<?= $usuario['id_usuario']; ?>" 
                       data-login="<?= $usuario['login']; ?>" 
                       data-tipo="<?= $usuario['tipo_usuario']; ?>"
                       onclick="abrirModalEditarUsuario(this)">
-                      <i class="fas fa-edit"></i>
+                    <i class="fas fa-edit"></i>
                   </button>
                 </td>
 
                 <td>
-                  <a href="bloquear_user.php?id_usuario=<?= $usuario['id_usuario'];?>" class="btn bloq"
-                    onclick="confirmarBloqueio(this.href); return false;">
+                  <button class="btn bloq" 
+                    data-id="<?= $usuario['id_usuario']; ?>" 
+                    onclick="abrirModalBloquear(this)">
                     <i class="fas fa-user-slash"></i>
-                  </a>
+                  </button >
                 </td>
+
                 <td>
                   <button class="btn delete" 
-                      data-id="<?= $usuario['id_usuario']; ?>" 
-                      data-cpf="<?= $usuario['login']; ?>" 
-                      onclick="abrirModalDeletarUsuario(this)">
-                      <i class="fas fa-trash"></i>
+                          data-id="<?= $usuario['id_usuario']; ?>" 
+                          data-cpf="<?= $usuario['login']; ?>" 
+                          onclick="abrirModalDeletarUsuario(this)">
+                    <i class="fas fa-trash"></i>
                   </button>
                 </td>
               </tr>
@@ -86,12 +88,6 @@
     </div>
   </div>
 </div>
-
-  <script>
-    function toggleSidebar() {
-      document.getElementById("sidebar").classList.toggle("collapsed");
-    }
-  </script>
 </body>
 </html>
 

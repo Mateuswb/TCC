@@ -20,13 +20,16 @@
 
             $query = $this->conn->prepare($sql);
 
-            return $query->execute([
+            $resutado = $query->execute([
                 ':idEncaminhamento' => $idEncaminhamento,
                 ':status' => $status,
                 ':horarioAgendamento' => $horarioAgendamento,
                 ':diaAgendamento' => $diaAgendamento,
                 ':observacoes' => $observacoes
             ]);
+            
+            // $query->debugDumpParams();
+            return $resutado;
         }
 
         public function editarAgendamentoExame(

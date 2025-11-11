@@ -24,12 +24,10 @@
                 $diaAgendamento        = $_POST['diaAgendamento'];
                 $observacao            = $_POST['observacao'] ?? null;
 
-                // Recupera o ID do horário do profissional
                 $idHorarioProfissional = $this->horarioModel->recuperaIdHorario($diaAgendamento, $idProfissional);
 
                 $anexo = null;
 
-                // Só salva anexo se for retorno
                 if ($tipoConsulta === "r" && !empty($_FILES['anexo']) && $_FILES['anexo']['error'] === UPLOAD_ERR_OK) {
                     $ext = strtolower(pathinfo($_FILES['anexo']['name'], PATHINFO_EXTENSION));
                     $permitidas = ['pdf'];

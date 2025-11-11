@@ -29,110 +29,163 @@
 </head>
 
 <style>
+  .calendar {
+    flex: 1;
+    padding: 15px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    overflow: hidden; 
+    position: relative;
+    height: calc(100vh - 90px);
+  }
+
+  .fc .fc-day-today {
+    background: rgba(243, 111, 69, 0.08) !important;
+    border: 2px solid #f36f45 !important;
+  }
+
+
+  .filter-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 8px 20px;
+    background: #fff;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .filter-bar label {
+    color: #333;
+  }
+
+  .filter-bar select {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    background: #f9f9f9;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .filter-bar select:hover {
+    border-color: #2980b9;
+  }
+
+
   .fc-event {
-  border-radius: 12px !important;
-  font-size: 17px !important;
-  font-weight: 700 !important;
-  padding: 8px 10px !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  margin: 0 auto !important;
-  width: 95% !important;
-  color: #fff !important;
-  line-height: 1.4;
-  border-left: 5px solid #fff;
-}
-.fc-timegrid-event-harness-inset .fc-timegrid-event {
-  height: 100% !important;
-  min-height: 135px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  white-space: normal !important;
-  padding: 10px !important;
-  border-radius: 10px !important;
-}
+    position: relative !important;
+    border-radius: 12px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    padding: 8px 10px !important;
+    line-height: 1.4;
+    color: #fff !important;
+    border-left: 5px solid #fff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-align: left;
+    overflow: hidden;
+    white-space: normal !important;
+  }
 
 
+  .fc-event:hover {
+    transform: scale(1.04);
+    z-index: 10 !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  }
 
 
+  .fc-timegrid-event-harness {
+    display: flex !important;
+    align-items: stretch !important;
+    justify-content: center !important;
+  }
 
-.fc-timegrid-slot {
-  height: 140px !important;
-}
-
-.filter-bar {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  padding: 12px 16px;
-  background: #fff;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
-  font-size: 15px;
-  font-weight: 600;
-}
-
-.filter-bar label {
-  color: #333;
-}
-
-.filter-bar select {
-  padding: 6px 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  background: #f9f9f9;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.filter-bar select:hover {
-  border-color: #2980b9;
-}
-
-/* Calendario */
-.calendar {
-  flex: 1;
-  padding: 15px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-  overflow: auto;
-  max-height: calc(100vh - 180px);
-}
-
-.fc .fc-day-today {
-  background: rgba(243, 111, 69, 0.1) !important;
-  border: 2px solid #f36f45 !important;
-}
-
-.fc-event {
-  border-radius: 12px !important;
-  font-size: 15px !important;
-  font-weight: 700 !important;
-  padding: 8px 10px !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  margin: 0 auto !important;
-  width: 90% !important;
-  color: #fff !important;
-  line-height: 1.4;
-  border-left: 5px solid #fff;
-}
+  .fc-timegrid-event {
+    flex: 1 1 auto !important;
+    margin: 3px !important;
+    height: auto !important;
+    min-height: 130px !important;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    box-sizing: border-box;
+    cursor: pointer;
+  }
 
 
-.fc-event.exame:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-}
+  .fc-timegrid-slot {
+    height: 140px !important;
+  }
+
+  .fc-event.consulta {
+    background-color: #2E86C1 !important;
+    border-color: #1B4F72 !important;
+  }
+
+  .fc-event.reconsulta {
+    background-color: #3498DB !important;
+    border-color: #21618C !important;
+  }
+
+  .fc-event.exame {
+    background-color: #5DADE2 !important;
+    border-color: #2E86C1 !important;
+  }
+
+
+  .fc-event.cancelada,
+  .fc-event.cancelado {
+    background-color: #E74C3C !important;
+    border-color: #C0392B !important;
+    opacity: 0.6 !important;
+  }
+
+  .fc-event.finalizada,
+  .fc-event.realizada {
+    background-color: #1F618D !important;
+    border-color: #154360 !important;
+  }
+
+  .btn-pdf {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid #fff;
+    border-radius: 8px;
+    color: #fff;
+    padding: 2px 6px;
+    margin-top: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  .btn-pdf:hover {
+    background: rgba(255, 255, 255, 0.35);
+  }
+  .calendar .fc-scroller {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    max-height: calc(100vh - 240px);
+  }
 </style>
+
 
 <body>
   <div class="main">
     <?php include '../../../public/assets/alerta/flash.php'; ?>
     <div class="content">
-      <h1>Agenda - Dr. João da Silva</h1>
+      <h1>Agendamentos da Clínica</h1>
 
       <div class="filter-bar">
         <label for="tipoFiltro">Tipo:</label>
@@ -230,10 +283,6 @@ document.addEventListener('DOMContentLoaded', function () {
         expandRows: true,
         height: "auto",
         events: events,
-        eventOverlap: false,
-        slotEventOverlap: false,
-        eventMaxStack: 5,
-        
         events: events,
         headerToolbar: {
             left: 'prev,next',
@@ -285,21 +334,18 @@ document.addEventListener('DOMContentLoaded', function () {
             info.el.style.borderColor = border;
             info.el.style.color = color;
 
-            // Bloqueia eventos de dias passados
             if (dataEvento < dataAtual) {
                 info.el.style.opacity = 0.5;
                 info.event.setProp('editable', false);
                 info.el.style.pointerEvents = 'none';
             }
 
-            // Bloqueia os agendamentos cancelados
             if (status === 'cancelada' || status === 'cancelado') {
                 info.el.style.opacity = 0.6;
                 info.event.setProp('editable', false);
                 info.el.style.pointerEvents = 'none';
             }
 
-            // Adiciona botão de PDF na reconsulta
             if (info.event.extendedProps?.tipo === 'r' && info.event.extendedProps?.pdf) {
               const btn = document.createElement('button');
               btn.className = 'btn-pdf';

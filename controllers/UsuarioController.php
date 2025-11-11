@@ -20,7 +20,7 @@
             
             $usuario = $this->usuarioModel->buscarPorCPF($cpf);
 
-            if ($usuario && password_verify($password, $usuario['senha'])) {
+            if ($usuario && password_verify($password, $usuario['senha']) && $usuario['status'] == 'ativo') {
                 $_SESSION['idUsuario'] = $usuario['id_usuario'];
                 $_SESSION['tipoUsuario'] = $usuario['tipo_usuario'];
 

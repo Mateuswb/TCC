@@ -367,6 +367,7 @@ select:focus, input:focus, textarea:focus {
     })
     .then(r => r.json())
     .then(retorno => {
+      console.log(retorno);
       if (retorno.erro) return showError(retorno.erro);
 
       mensagemHorario.style.display = 'block';

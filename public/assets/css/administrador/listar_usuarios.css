@@ -17,6 +17,8 @@ body {
     display: flex;
     flex-direction: column;
     transition: margin-left 0.3s;
+    overflow-y: auto;
+    margin-bottom: 50px;
 }
 
 .sidebar.collapsed ~ .main {
@@ -78,10 +80,11 @@ h1 {
 table {
     width: 100%;
     border-collapse: collapse;
-    background: #fff;
+    background: #f0f0f0;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border: 1px solid black;
+    box-shadow: 1 4px 12px rgba(0,0,0,0.1);
 }
 
 th, td {
@@ -113,7 +116,15 @@ tr:hover {
 }
 
 .status.inativo {
-    background-color: red;
+    background-color: rgb(95, 95, 95);
+    padding: 5px 12px 5px 12px;
+    border-radius: 5px;
+    color: #e1f0ff;
+    font-weight: bold;
+}
+
+.status.bloqueado {
+    background-color: #f39c12;
     padding: 5px 12px 5px 12px;
     border-radius: 5px;
     color: #e1f0ff;

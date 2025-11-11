@@ -686,29 +686,48 @@
 
         #validar exclusão usuario
         public function deletarUsuario() {
-        $idUsuario = $_POST['idUsuario'] ?? null;
-        $cpf = $_POST['cpf'] ?? null;
+            $idUsuario = $_POST['idUsuario'] ?? null;
+            $cpf = $_POST['cpf'] ?? null;
 
-        session_start();
-        try {
-            $this->usuarioModel->excluirUsuario($idUsuario, $cpf);
+            session_start();
+            try {
+                $this->usuarioModel->excluirUsuario($idUsuario, $cpf);
 
-            $_SESSION['flash'] = [
-                'type' => 'success',
-                'message' => "Usuário deletado com sucesso"
-            ];
-        } catch (Exception $e) {
-            $_SESSION['flash'] = [
-                'type' => 'error',
-                'message' => "Erro ao deletar usuário: " . $e->getMessage()
-            ];
+                $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => "Usuário deletado com sucesso"
+                ];
+            } catch (Exception $e) {
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => "Erro ao deletar usuário: " . $e->getMessage()
+                ];
+            }
+
+            header("Location: ../views/administrador/usuario/listar_usuarios.php");
+            exit;
         }
+    
+        public function bloquearUsuario(){
+            $idUsuario = $_POST['idUsuario'];
 
-        header("Location: ../views/administrador/usuario/listar_usuarios.php");
-        exit;
-        }
+            $bloquear = $this->usuarioModel->bloquearUsuario($idUsuario);
 
-
+            if($bloquear){
+                $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => 'Usuário bloqueado com sucesso'
+                ];
+            }
+            else{
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => 'Erro ao bloquear usuário. Tente Novamente.'
+                ];
+            }
+            header("Location: ../views/administrador/usuario/listar_usuarios.php");
+            exit;
+        }   
     }
 
     $controller = new AdministradorController($conn);
@@ -749,6 +768,9 @@
                 break;
             case 'cancelarExame':
                 $controller->cancelarExame();
+                break;
+            case 'bloquearUsuario':
+                $controller->bloquearUsuario();
                 break;
             default:
                 echo "Ação inválida";

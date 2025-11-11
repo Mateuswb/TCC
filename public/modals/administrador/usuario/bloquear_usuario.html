@@ -1,3 +1,4 @@
+<!-- Modal Bloquear Usuário -->
 <div id="modalBloquearUsuario" class="modal">
   <div class="modal-content">
     <span class="close" id="closeModalBloq">&times;</span>
@@ -6,9 +7,100 @@
       Tem certeza que deseja bloquear este usuário? 
       <strong>Ele não poderá mais acessar o sistema até que seja desbloqueado.</strong>
     </p>
-    <div class="form-buttons">
-      <button type="button" class="btn cancel" id="cancelModalBloq">Cancelar</button>
-      <a href="#" id="confirmarBloqueioBtn" class="btn save">Bloquear</a>
-    </div>
+
+    <form action="../../../controllers/AdministradorController.php?acao=bloquearUsuario" method="POST" id="formBloquearUsuario">
+      <input type="hidden" name="idUsuario" id="bloquear_id_usuario">
+
+      <div class="form-buttons">
+        <button type="button" class="btn cancel" id="cancelModalBloq">Cancelar</button>
+        <button type="submit" name="acao" value="bloquear" class="btn save">Bloquear</button>
+      </div>
+    </form>
   </div>
 </div>
+
+<style>
+.modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 25px 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    position: relative;
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+}
+
+.modal.show .modal-content {
+    transform: translateY(0);
+}
+
+.close {
+    position: absolute;
+    top: 15px; right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #555;
+}
+
+.close:hover { color: #000; }
+
+.form-buttons { display: flex; justify-content: flex-end; gap: 10px; }
+
+.btn { padding: 8px 18px; border: none; border-radius: 6px; cursor: pointer; }
+
+.btn.cancel { background-color: #f0f0f0; color: #333; }
+.btn.cancel:hover { background-color: #e0e0e0; }
+
+.btn.save { background-color: #3b82f6; color: #fff; }
+.btn.save:hover { background-color: #2563eb; }
+
+@media (max-width:500px){
+    .modal-content{padding:20px;}
+    .form-buttons{flex-direction:column-reverse;}
+    .form-buttons .btn{width:100%;}
+}
+</style>
+
+<script>
+const modalBloq = document.getElementById("modalBloquearUsuario");
+const closeBloq = document.getElementById("closeModalBloq");
+const cancelBloq = document.getElementById("cancelModalBloq");
+const inputBloqId = document.getElementById("bloquear_id_usuario");
+
+function abrirModalBloquear(btn) {
+  inputBloqId.value = btn.dataset.id;
+  modalBloq.classList.add("show");
+}
+
+function fecharModalBloquear() {
+  modalBloq.classList.remove("show");
+}
+
+closeBloq.onclick = fecharModalBloquear;
+cancelBloq.onclick = fecharModalBloquear;
+
+window.addEventListener("click", (e) => {
+  if(e.target === modalBloq) fecharModalBloquear();
+});
+</script>

@@ -10,7 +10,7 @@
 
       
       <form id="formHorarios" action="../../../controllers/HorarioController.php?acao=editarHorario" method="POST">
-        <input type="hidden" name="idProfissional" value="<?php echo $idProfissional; ?>">
+        <input type="int" name="idProfissional" value="<?php echo $idProfissional; ?>">
 
         <div class="sheet">
             <div class="sheet-header">
@@ -76,15 +76,14 @@
 
     .header {
         text-align: center;
-        margin-bottom: 18px;
+
     }
     .sheet-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 20px;
-  background-color: #fff; /* ou a cor do seu modal */
-}
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #fff; 
+    }
 
 
     h1 {
@@ -116,7 +115,6 @@
         align-items: center;
         justify-content: space-between;
         gap: 12px;
-        margin-bottom: 14px;
     }
 
     .save-btn {
@@ -214,16 +212,9 @@
     .time-input {
         background: #fff;
         border: 1px solid #e6eefc;
-        padding: 8px 20px;
+        padding: 8px 25px;
         border-radius: 8px;
         min-width: 96px;
-    }
-
-    .time-input input {
-        border: 0;
-        outline: none;
-        background: transparent;
-        font-size: 14px;
     }
 
     .btn-small {
@@ -280,7 +271,7 @@
     position: fixed;
     inset: 0;
     background: rgba(17, 24, 39, 0.65);
-    display: none; /* começa invisível */
+    display: none; 
     justify-content: center;
     align-items: flex-start;
     overflow-y: auto;
@@ -293,7 +284,7 @@
     border-radius: 18px;
     box-shadow: 0 10px 35px rgba(15, 23, 42, 0.18);
     width: 90%;
-    max-width: 1200px;
+    max-width: 1300px;
     padding: 20px;
     animation: fadeInScale 0.3s ease forwards;
   }
@@ -304,16 +295,15 @@
   }
 </style>
 
-
 <script>
 (function(){
   const weekdays = [
     { short:'SEG', full:'Segunda', color:'#ef4444' },
-    { short:'TER', full:'Terça', color:'#f97316' },
+    { short:'TER', full:'Terca', color:'#f97316' },
     { short:'QUA', full:'Quarta', color:'#f59e0b' },
     { short:'QUI', full:'Quinta', color:'#10b981' },
     { short:'SEX', full:'Sexta', color:'#06b6d4' },
-    { short:'SAB', full:'Sábado', color:'#8b5cf6' },
+    { short:'SAB', full:'Sabado', color:'#8b5cf6' },
     { short:'DOM', full:'Domingo', color:'#6366f1' }
   ];
 
@@ -325,14 +315,55 @@
   const msgErro = document.getElementById('msgErroHorarios');
 
   let rows = [];
+
+  // 🔹 id vem do backend quando for edição
   function uid(){ return 'r' + Math.random().toString(36).slice(2,9); }
+
 
   function initRows(){
     weekdays.forEach((d, idx) => {
-      rows.push({ id: uid(), dayIndex: idx, start:'', end:'', iStart:'', iEnd:'' });
+      rows.push({
+        id: uid(),
+        idHorario: null,
+        dayIndex: idx,
+        start:'',
+        end:'',
+        iStart:'',
+        iEnd:''
+      });
     });
   }
 
+  // 🔹 usado pelo backend pra preencher horários no modo edição
+  window.preencherHorarios = function(listaHorarios){
+    rows = weekdays.map((d, idx) => {
+      const existente = listaHorarios.find(h => h.diaSemana === d.full);
+      if (existente) {
+        return {
+          id: uid(),
+          idHorario: existente.idHorario,
+          dayIndex: idx,
+          start: existente.horaInicio || '',
+          end: existente.horaFim || '',
+          iStart: existente.inicioIntervalo || '',
+          iEnd: existente.fimIntervalo || ''
+        };
+      } else {
+        return {
+          id: uid(),
+          idHorario: null,
+          dayIndex: idx,
+          start:'',
+          end:'',
+          iStart:'',
+          iEnd:''
+        };
+      }
+    });
+    render();
+  };
+
+  // 🔹 renderiza tabela
   function render(){
     body.innerHTML = '';
     rows.forEach(r=>{
@@ -348,7 +379,9 @@
             <div class="day-title">${day.short}</div>
             <div class="day-sub">${day.full}</div>
           </div>
-          <input type="hidden" name="diaSemana[]" value="${day.full}">
+          <input type="int" name="diaSemana[]" value="${day.full}">
+          <input type="int" name="idHorario[]" value="${r.idHorario || ''}">
+
         </div>
       `;
 
@@ -399,10 +432,7 @@
   }
 
   function showToast(msg){
-    if (!toast) {
-      console.log(msg);
-      return;
-    }
+    if (!toast) return console.log(msg);
     toast.textContent = msg;
     toast.classList.add('show');
     setTimeout(()=>toast.classList.remove('show'),3000);
@@ -429,43 +459,41 @@
     msgErro.style.display = 'none';
   }
 
-  // Validação antes do envio
+  // 🔹 validação ajustada para edição
   form.addEventListener('submit', (e)=>{
     limparErro();
-    let algumPreenchido = false;
+
+    // Se já existir pelo menos um horário vindo do backend, permite salvar
+    const temHorariosExistentes = rows.some(r => r.start || r.end || r.iStart || r.iEnd);
+    if (!temHorariosExistentes) {
+      e.preventDefault();
+      mostrarErro('⚠️ Você precisa cadastrar pelo menos um horário.');
+      return;
+    }
 
     for (let i = 0; i < rows.length; i++) {
       const r = rows[i];
       const dia = weekdays[r.dayIndex].full;
+
+      if (!r.start && !r.end && !r.iStart && !r.iEnd) continue;
 
       const start = toMinutes(r.start);
       const end = toMinutes(r.end);
       const iStart = toMinutes(r.iStart);
       const iEnd = toMinutes(r.iEnd);
 
-      // Se o dia tiver horários, validar
-      if (r.start || r.end || r.iStart || r.iEnd) {
-        algumPreenchido = true;
-
-        if (!r.start || !r.end) {
-          e.preventDefault();
-          mostrarErro(`⚠️ Em ${dia}, é obrigatório informar o horário de início e fim.`);
-          return;
-        }
-
+      // só valida se houver horário principal
+      if (r.start && r.end) {
         if (start >= end) {
           e.preventDefault();
           mostrarErro(`⚠️ Em ${dia}, o horário de início deve ser menor que o de fim.`);
           return;
         }
-
         if ((iStart && iEnd) && (iStart < start || iEnd > end || iStart >= iEnd)) {
           e.preventDefault();
           mostrarErro(`⚠️ Em ${dia}, o intervalo deve estar dentro do horário de trabalho.`);
           return;
         }
-
-        // valida minutos :00 e :30
         const all = [r.start, r.end, r.iStart, r.iEnd].filter(Boolean);
         for (const hora of all) {
           if (!isValido(hora)) {
@@ -476,18 +504,11 @@
         }
       }
     }
-
-    // Nenhum horário preenchido
-    if (!algumPreenchido) {
-      e.preventDefault();
-      mostrarErro('⚠️ Você precisa cadastrar pelo menos um horário.');
-    }
   });
 
-  // Função para abrir o modal
   window.abrirModalPlanilha = function(){
     modal.style.display = 'flex';
-  }
+  };
 
   initRows();
   render();

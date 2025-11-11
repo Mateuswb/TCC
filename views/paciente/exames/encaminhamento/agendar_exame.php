@@ -360,6 +360,7 @@ diaAgendamento.addEventListener('change', function() {
   .then(r => r.json())
   .then(retorno => {
     if (retorno.erro) return showError(retorno.erro);
+    console.log(retorno);
 
     mensagemHorario.style.display = 'block';
     mensagemHorario.innerText = 'Escolha um horário:';

@@ -16,7 +16,7 @@
 
         public function enviarResultadoExame() {
             $idAgendamento = $_POST['idAgendamento'];
-            $dataResultado = date('Y-m-d H:i:s'); // gera a data atual
+            $dataResultado = date('Y-m-d H:i:s');
             $arquivo = $_FILES['resultado_exame'];
 
             $resultadoExame = $this->resultadoExameModel->criarResultado(

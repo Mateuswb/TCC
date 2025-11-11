@@ -1,42 +1,42 @@
 <?php
-include '../../../autentica/verifica_login.php';
-$idProfissional = $_SESSION['idProfissional'];
+    include '../../../autentica/verifica_login.php';
+    $idProfissional = $_SESSION['idProfissional'];
 
-include '../../../controllers/HorarioController.php';
-include '../../../public/includes/profissional/sidebar.php'; 
-include '../../../public/includes/profissional/header.php';
-include '../../../public/includes/profissional/footer.html';
+    include '../../../controllers/HorarioController.php';
+    include '../../../public/includes/profissional/sidebar.php'; 
+    include '../../../public/includes/profissional/header.php';
+    include '../../../public/includes/profissional/footer.html';
 
-#modals 
-include '../../../public/modals/profissional/editar_horario.php';
+    # modals 
+    include '../../../public/modals/profissional/editar_horario.php';
 
-$controller = new HorarioController($conn);
-$horarios = $controller->listarHorarios($idProfissional);
+    $controller = new HorarioController($conn);
+    $horarios = $controller->listarHorarios($idProfissional);
 
-// Mapear dias
-$dias = [
-    ['sigla'=>'SEG','nome'=>'Segunda-Feira','cor'=>'#f59e0b','key'=>'segunda'],
-    ['sigla'=>'TER','nome'=>'Terça-Feira','cor'=>'#ef4444','key'=>'terca'],
-    ['sigla'=>'QUA','nome'=>'Quarta-Feira','cor'=>'#10b981','key'=>'quarta'],
-    ['sigla'=>'QUI','nome'=>'Quinta-Feira','cor'=>'#3b82f6','key'=>'quinta'],
-    ['sigla'=>'SEX','nome'=>'Sexta-Feira','cor'=>'#0ea5e9','key'=>'sexta'],
-    ['sigla'=>'SÁB','nome'=>'Sábado','cor'=>'#8b5cf6','key'=>'sabado'],
-    ['sigla'=>'DOM','nome'=>'Domingo','cor'=>'#6366f1','key'=>'domingo']
-];
 
-$mapDias = array_column($dias, null, 'key');
-
-$horariosJS = [];
-foreach($horarios as $h){
-    $key = $h['dia_semana'];
-    $horariosJS[$key] = [
-        'idhorario' => $h['id_horario'],
-        'hora_inicio' => $h['hora_inicio'],
-        'hora_fim' => $h['hora_fim'],
-        'intervalo_inicio' => $h['inicio_intervalo'],
-        'intervalo_fim' => $h['fim_intervalo']
+    $dias = [
+        ['sigla'=>'SEG','nome'=>'Segunda-Feira','cor'=>'#f59e0b','key'=>'segunda'],
+        ['sigla'=>'TER','nome'=>'Terça-Feira','cor'=>'#ef4444','key'=>'terca'],
+        ['sigla'=>'QUA','nome'=>'Quarta-Feira','cor'=>'#10b981','key'=>'quarta'],
+        ['sigla'=>'QUI','nome'=>'Quinta-Feira','cor'=>'#3b82f6','key'=>'quinta'],
+        ['sigla'=>'SEX','nome'=>'Sexta-Feira','cor'=>'#0ea5e9','key'=>'sexta'],
+        ['sigla'=>'SÁB','nome'=>'Sábado','cor'=>'#8b5cf6','key'=>'sabado'],
+        ['sigla'=>'DOM','nome'=>'Domingo','cor'=>'#6366f1','key'=>'domingo']
     ];
-}
+
+    $mapDias = array_column($dias, null, 'key');
+
+    $horariosJS = [];
+    foreach($horarios as $h){
+        $key = $h['dia_semana'];
+        $horariosJS[$key] = [
+            'idHorario' => $h['id_horario'],
+            'hora_inicio' => $h['hora_inicio'],
+            'hora_fim' => $h['hora_fim'],
+            'intervalo_inicio' => $h['inicio_intervalo'],
+            'intervalo_fim' => $h['fim_intervalo']
+        ];
+    }
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -50,7 +50,6 @@ foreach($horarios as $h){
 <body>
 <div class="main">
     <?php include '../../../public/assets/alerta/flash.php'; ?>
-    <h1>Horários Semanais - Dr. João da Silva</h1>
     <div class="page">
     
     <div class="page-header">
@@ -96,33 +95,32 @@ foreach($horarios as $h){
     const horarios = <?= json_encode($horariosJS); ?>;
     const modal = document.getElementById('modalPlanilha');
 
-window.abrirModalEdicao = function(){
-    const modal = document.getElementById('modalPlanilha');
-    modal.style.display = 'flex';
+    window.abrirModalEdicao = function(){
+        const modal = document.getElementById('modalPlanilha');
+        modal.style.display = 'flex';
 
-    // Preencher horários
-    const tableBody = document.getElementById('tableBody');
-    tableBody.querySelectorAll('tr').forEach(tr => {
-        const day = tr.querySelector('input[name="diaSemana[]"]').value.toLowerCase(); // pega o nome do dia
-        if(horarios[day]){
-            tr.querySelector('input[name="horaInicio[]"]').value = horarios[day].hora_inicio || '';
-            tr.querySelector('input[name="horaFim[]"]').value = horarios[day].hora_fim || '';
-            tr.querySelector('input[name="inicioIntervalo[]"]').value = horarios[day].intervalo_inicio || '';
-            tr.querySelector('input[name="fimIntervalo[]"]').value = horarios[day].intervalo_fim || '';
-        } else {
-            tr.querySelector('input[name="horaInicio[]"]').value = '';
-            tr.querySelector('input[name="horaFim[]"]').value = '';
-            tr.querySelector('input[name="inicioIntervalo[]"]').value = '';
-            tr.querySelector('input[name="fimIntervalo[]"]').value = '';
-        }
+        const tableBody = document.getElementById('tableBody');
+        tableBody.querySelectorAll('tr').forEach(tr => {
+            const day = tr.querySelector('input[name="diaSemana[]"]').value.toLowerCase(); 
+
+            if(horarios[day]){
+                tr.querySelector('input[name="idHorario[]"]').value = horarios[day].idHorario || ''; 
+                tr.querySelector('input[name="horaInicio[]"]').value = horarios[day].hora_inicio || '';
+                tr.querySelector('input[name="horaFim[]"]').value = horarios[day].hora_fim || '';
+                tr.querySelector('input[name="inicioIntervalo[]"]').value = horarios[day].intervalo_inicio || '';
+                tr.querySelector('input[name="fimIntervalo[]"]').value = horarios[day].intervalo_fim || '';
+            } else {
+                tr.querySelector('input[name="horaInicio[]"]').value = '';
+                tr.querySelector('input[name="horaFim[]"]').value = '';
+                tr.querySelector('input[name="inicioIntervalo[]"]').value = '';
+                tr.querySelector('input[name="fimIntervalo[]"]').value = '';
+            }
+        });
+    }
+
+    modal.addEventListener('click', (e) => {
+        if(e.target === modal) modal.style.display = 'none';
     });
-}
-
-
-
-modal.addEventListener('click', (e) => {
-    if(e.target === modal) modal.style.display = 'none';
-});
 
 </script>
 

@@ -15,7 +15,7 @@
 
         public function agendarExame(){
             $idEncaminhamento = $_POST['idEncaminhamento']; 
-            $horarioAgendamento = $_POST['horarioAgendamento']; 
+            $horarioAgendamento    = explode(' - ', $_POST['horarioAgendamento'])[0];
             $diaAgendamento = $_POST['diaAgendamento']; 
             $observacao = $_POST['observacao']; 
 

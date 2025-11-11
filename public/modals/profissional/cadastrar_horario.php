@@ -416,7 +416,7 @@
 
   function isValido(time){
     const [h,m] = time.split(':').map(Number);
-    return m === 0 || m === 30; // só permite 00 ou 30
+    return m === 0 || m === 30; 
   }
 
   function mostrarErro(msg){
@@ -429,7 +429,6 @@
     msgErro.style.display = 'none';
   }
 
-  // Validação antes do envio
   form.addEventListener('submit', (e)=>{
     limparErro();
     let algumPreenchido = false;
@@ -443,7 +442,6 @@
       const iStart = toMinutes(r.iStart);
       const iEnd = toMinutes(r.iEnd);
 
-      // Se o dia tiver horários, validar
       if (r.start || r.end || r.iStart || r.iEnd) {
         algumPreenchido = true;
 
@@ -465,7 +463,6 @@
           return;
         }
 
-        // valida minutos :00 e :30
         const all = [r.start, r.end, r.iStart, r.iEnd].filter(Boolean);
         for (const hora of all) {
           if (!isValido(hora)) {
@@ -477,14 +474,12 @@
       }
     }
 
-    // Nenhum horário preenchido
     if (!algumPreenchido) {
       e.preventDefault();
       mostrarErro('⚠️ Você precisa cadastrar pelo menos um horário.');
     }
   });
 
-  // Função para abrir o modal
   window.abrirModalPlanilha = function(){
     modal.style.display = 'flex';
   }
