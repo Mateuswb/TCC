@@ -15,6 +15,8 @@
   $totalConsultas = $controller->totalConsultasRealizadas($idPaciente);
   $totalConsultasRetorno = $controller->totalConsultasRetorno($idPaciente);
   $totalConsultasCanceladas = $controller->totalConsultasCanceladas($idPaciente);
+
+
 ?>
 
 <!DOCTYPE html>

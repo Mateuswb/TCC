@@ -26,7 +26,6 @@
     ];
 ?>
 
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -59,7 +58,6 @@
   opacity: 1;
   visibility: visible;
 }
-
 
 .card-profissional {
   transition: transform 0.4s ease, width 0.4s ease, height 0.4s ease, box-shadow 0.4s ease;
@@ -95,6 +93,10 @@
 .card-profissional.expandido .info-extra {
   display: block;
   animation: fadeIn 0.4s ease;
+}
+.info-extra strong {
+  color: #00236eff; 
+  font-weight: 650;
 }
 
 @keyframes fadeIn {
@@ -201,11 +203,15 @@ function mostrarProfissionais(lista) {
           <p class="descricao">${p.observacoes || ''}</p>
 
           <div class="info-extra">
-            <p><strong>Idade:</strong> 'Não informado'}</p>
-            <p><strong>CRM:</strong> 'Não informado'}</p>
-            <p><strong>Especialidades adicionais:</strong> $</p>
-            <p><strong>Consultas realizadas:</strong> </p>
+            <p><strong>Idade:</strong> ${p.idade} anos</p>
+            <p><strong>CRM:</strong> ${p.crm_crp}</p>
+            <p><strong>Especialidades adicionais:</strong> 
+              ${p.exames_atendidos ? p.exames_atendidos : 'Nenhum'}
+            </p>
+            <p><strong>Consultas realizadas:</strong> ${p.total_agendamentos}</p>
+            <p><strong>Tempo médio de consulta:</strong> 30 minutos</p>
           </div>
+          
           <div class="botoes">
             <button class="btn-agendar" onclick="abrirModalAgendamento('${p.id_profissional}', '${p.nome}')">
               <i class="fa-solid fa-calendar-check"></i> Agendar consulta
@@ -217,8 +223,7 @@ function mostrarProfissionais(lista) {
         </div>
       </div>
     <div id="overlay-fundo"></div>
-      `;
-    
+    `;
   });
 }
 

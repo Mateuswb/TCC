@@ -18,6 +18,15 @@
 
   $agendamentos = $pacienteController->historicoAgendamentosExame($idPaciente);
 
+   $categorias = [
+    'Sa' => 'Sangue',
+    'Im' => 'Imagem',
+    'Ca' => 'Cardiológicos',
+    'Ur' => 'Urina',
+    'Ho' => 'Hormonais',
+    'In' => 'Infecciosos',
+    'Re' => 'Respiratórios'
+  ];
 ?>
 
 <!doctype html>
@@ -117,7 +126,7 @@
         <h3><?php echo $agendamento['nome_exame']; ?></h3>
         <span class="status <?php echo $agendamento['status_agendamento']; ?> "><?php echo $agendamento['status_agendamento']; ?> </span>
       </div>
-      <p class="categoria"><?php echo $agendamento['nome_categoria']; ?> </p>
+      <p class="categoria"><?= $categorias[$agendamento["nome_categoria"]] ?> </p>
       <p class="data">Exame realizado em: <strong><?php echo $agendamento['dia_agendamento']; ?> </strong> às <strong><?php echo $agendamento['horario_agendamento']; ?> </strong></p>
       <div class="acoes">
         <button class="btn-ver">Ver detalhes</button>

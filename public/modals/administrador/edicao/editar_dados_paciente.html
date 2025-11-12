@@ -151,7 +151,7 @@
 
         <div class="modal-content">
       <form id="formEditarProfissional" action="../../../controllers/AdministradorController.php?acao=editarDadosPaciente" method="POST">
-        <input type="hidden" name="idPaciente" id="id_paciente">
+        <input type="hidden" name="idPaciente" id="idPacienteEditar">
         
         <div>
           <label>Nome</label>
@@ -257,7 +257,7 @@ function abrirModalEditar(botao) {
   modal.style.display = 'flex';
   const dados = botao.dataset;
 
-  document.querySelector('[name="idPaciente"]').value = dados.id || '';
+  document.querySelector('[id="idPacienteEditar"]').value = dados.idPaciente || '';
   document.querySelector('[name="nome"]').value = dados.nome || '';
   document.querySelector('[name="email"]').value = dados.email || '';
   document.querySelector('[name="dataNascimento"]').value = dados.dataNascimento || '';

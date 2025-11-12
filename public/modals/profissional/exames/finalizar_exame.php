@@ -6,8 +6,8 @@
         <h3>Finalizar Exame</h3>
           <span class="close-btn" onclick="document.getElementById('finalizarExameModal').style.display='none'">&times;</span>
       </div>
-      <div class="modal-body">
-        <p>Tem certeza que deseja <b>finalizar este Exame</b>?</p>
+      <div class="modalFinalizar-body">
+        <p id="sub-mensage">Tem certeza que deseja <b>finalizar este Exame</b>?</p>
         <input type="hidden" name="idExame" id="idFinalizarExame">
       </div>
       <div class="modal-footer">
@@ -83,14 +83,14 @@
 }
 
 
-.modal-body {
+.modalFinalizar-body {
   padding: 20px;
   font-size: 16px;
-  color: #555;
+  color: #444444ff;
 }
 
-.modal-body b {
-  color: #e74c3c;
+.modalFinalizar-body #sub-mensage {
+  color: #3d3d3dff;
 }
 
 
@@ -113,12 +113,12 @@
 }
 
 .btn-secondary {
-  background: #ccc;
+  background: #aaaaaaff;
   color: #fff;
 }
 
 .btn-secondary:hover {
-  background: #999;
+  background: #777777ff;
 }
 
 .btn-danger {

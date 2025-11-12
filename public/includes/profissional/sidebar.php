@@ -89,7 +89,7 @@ rel="stylesheet">
         bottom: 20px;        
         left: 20px;
         right: 20px;
-        background: #ef4444;
+        background: #f03131ff;
         color: #fff;
         padding: 10px 15px;
         text-align: center;
@@ -98,10 +98,12 @@ rel="stylesheet">
         display: flex;
         align-items: center;
         justify-content: center;
+        cursor: pointer;
+        transition: .3s;
     }
 
     .sidebar a.logout:hover {
-        background: #fc3636ff;
+        background: #c00000ff;
     }
 
     .sidebar.collapsed {

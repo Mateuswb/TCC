@@ -32,59 +32,63 @@
 </div>
 
 <style>
-    
+  #encaminharModal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+  }
 
-#encaminharModal {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.6);
-  justify-content: center;
-  align-items: center;
-  z-index: 10000;
-}
+  #encaminharModal .modal-content {
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    width: 450px;
+    max-width: 90%;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
 
-#encaminharModal .modal-content {
-  background: #fff;
-  padding: 30px;
-  border-radius: 15px;
-  width: 450px;
-  max-width: 90%;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
+  #encaminharModal h3 {
+    margin: 0 0 15px 0;
+    font-size: 20px;
+    text-align: center;
+  }
 
-#encaminharModal h3 {
-  margin: 0 0 15px 0;
-  font-size: 20px;
-  text-align: center;
-}
+  #encaminharModal input,
+  #encaminharModal select,
+  #encaminharModal textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    box-sizing: border-box;
+    resize: none;
+    border:1px solid black;
+    outline: none;
+  }
 
-#encaminharModal input,
-#encaminharModal select,
-#encaminharModal textarea {
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  box-sizing: border-box;
-}
+  #encaminharModal button {
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
 
-#encaminharModal button {
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  font-size: 15px;
-  cursor: pointer;
-  transition: 0.2s;
-}
+  #encaminharModal .btn-encaminhar { background: #f39c12; color: #fff; }
+  #encaminharModal .btn-encaminhar:hover { background: #c97c00ff; color: #fff; }
+  #encaminharModal .btn-fechar { background: #bdc3c7; color: #fff; }
+  #encaminharModal .btn-fechar:hover { background: #929292ff; color: #fff; }
 
-#encaminharModal .btn-encaminhar { background: #f39c12; color: #fff; }
-#encaminharModal .btn-fechar { background: #bdc3c7; color: #fff; }
-#encaminharModal button:hover { opacity: 0.9; }
+  #encaminharModal button:hover { opacity: 0.9; }
 </style>

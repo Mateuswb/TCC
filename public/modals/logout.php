@@ -1,4 +1,3 @@
-<!-- MODAL DE LOGOUT (ISOLADO) -->
 <div class="logout-modal-overlay" id="logout-modal" style="display: none;">
   <div class="logout-modal-box">
     <a class="logout-btn-back" onclick="fecharLogoutModal()">
@@ -32,7 +31,6 @@
     --logout-vermelho: #dc3545;
   }
 
-  /* Fundo escuro e desfocado */
   .logout-modal-overlay {
     position: fixed;
     inset: 0;
@@ -89,7 +87,7 @@
     width: 90px;
     height: 90px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #0069d1, #00aaff);
+    background: linear-gradient(135deg, #004d9bff, #0057c9ff);
     color: #fff;
     font-weight: 600;
     font-size: 30px;
@@ -147,11 +145,11 @@
   }
 
   .logout-btn-cancel {
-    background-color: var(--logout-azul);
+    background-color: #0054a8ff;
   }
 
   .logout-btn-cancel:hover {
-    background-color: #0056b3;
+    background-color: #00458aff;
     transform: translateY(-2px);
   }
 </style>

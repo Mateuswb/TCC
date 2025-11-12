@@ -198,6 +198,7 @@
                           class="btn editar"
                           data-id-consulta="<?= $consulta['id_agendamento'] ?>"
                           data-tipo="<?= $consulta['tipo_consulta'] ?>"
+                          
                           data-dia="<?= $consulta['dia_agendamento'] ?>"
                           data-hora="<?= $consulta['horario_agendamento'] ?>"
                           data-observacao="<?= htmlspecialchars($consulta['observacoes']) ?>"

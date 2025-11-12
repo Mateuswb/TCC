@@ -1,6 +1,5 @@
 <div id="modalCancelar" class="modal">
   <div class="modal-content">
-    <span class="fechar-modal" onclick="fecharModalCancelar()">&times;</span>
     <h2>Cancelar Encaminhamento</h2>
     <p>Tem certeza de que deseja cancelar este encaminhamento? Esta ação não poderá ser desfeita.</p>
 
@@ -18,7 +17,7 @@
 </div>
 
 <style>
-    .modal {
+  .modal {
   display: none;
   position: fixed;
   z-index: 999;
@@ -44,12 +43,7 @@
   to { transform: scale(1); opacity: 1; }
 }
 
-.fechar-modal {
-  float: right;
-  font-size: 22px;
-  font-weight: bold;
-  cursor: pointer;
-}
+
 
 .modal-buttons {
   margin-top: 20px;
@@ -68,7 +62,10 @@
 }
 
 .btn-secundario {
-  background: #ccc;
+  background: #e0e0e0ff;
+}
+.btn-secundario:hover {
+  background: #b8b8b8ff;
 }
 
 .btn-perigo {

@@ -62,6 +62,26 @@
             ]);
         }
 
+        public function trocarStatusConcluido($idEncaminhamento) {
+            $sql = "UPDATE encaminhamentos 
+                    SET status = 'concluido' 
+                    WHERE id_encaminhamento = :idEncaminhamento";
+            $query = $this->conn->prepare($sql);
+
+            return $query->execute([
+                ':idEncaminhamento' => $idEncaminhamento
+            ]);
+        }
+        public function buscarIdEncaminhamentoPorExame($idExame) {
+            $sql = "SELECT id_encaminhamento 
+                    FROM agendamentos_exames 
+                    WHERE id_agendamento = :idAgendamentoExame";
+            $query = $this->conn->prepare($sql);
+            $query->execute([':idAgendamentoExame' => $idExame]);
+            return $query->fetchColumn();
+        }
+
+
         public function cancelarEncaminhamento($idEncaminhamento) {
             $sql = "UPDATE encaminhamentos 
                     SET status = 'cancelado'

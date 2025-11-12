@@ -49,9 +49,13 @@
                 <input id="searchInput" type="text" placeholder="Pesquisar exame...">
                 <select id="filterCategoria">
                     <option value="">Todas as Categorias</option>
+                    <option value="Sangue">Sangue</option>
                     <option value="Imagem">Imagem</option>
-                    <option value="Laboratorial">Laboratorial</option>
+                    <option value="Urina">Urina</option>
                     <option value="Cardiologia">Cardiologia</option>
+                    <option value="Hormonais">Hormonais</option>
+                    <option value="Infecciosos">Infecciosos</option>
+                    <option value="Respiratórios">Respiratórios</option>
                 </select>
             </div>
 

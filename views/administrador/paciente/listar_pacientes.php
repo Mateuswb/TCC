@@ -58,7 +58,7 @@
             <div class="footer">
               <button
                 class="btn-edit" 
-                data-id="<?php echo $paciente['id_paciente']; ?>"
+                data-id-paciente="<?php echo $paciente['id_paciente']; ?>"
                 data-nome="<?php echo $paciente['nome']; ?>"
                 data-email="<?php echo $paciente['email']; ?>"
                 data-data-nascimento="<?php echo $paciente['data_nascimento']; ?>"

@@ -109,12 +109,12 @@
 }
 
 .btn-secondary {
-  background: #ccc;
+  background: #aaaaaaff;
   color: #fff;
 }
 
 .btn-secondary:hover {
-  background: #999;
+  background: #777777ff;
 }
 
 .btn-danger {

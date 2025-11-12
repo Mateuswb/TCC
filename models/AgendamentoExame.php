@@ -33,20 +33,18 @@
         }
 
         public function editarAgendamentoExame(
-            $idEncaminhamento, $status, 
+            $idAgendamentoExame, 
             $horarioAgendamento, $diaAgendamento, $observacoes
         ) {
             $sql = "UPDATE agendamentos_exames SET
-                        status = :status,
                         horario_agendamento = :horarioAgendamento,
                         dia_agendamento  = :diaAgendamento,
-                        observacoes
-                        WHERE id_encaminhamento = :idEncaminhamento";
+                        observacoes = :observacoes
+                        WHERE id_agendamento = :idAgendamentoExame";
             $query = $this->conn->prepare($sql);
 
             return $query->execute([
-                ':idEncaminhamento' => $idEncaminhamento,
-                ':status' => $status,
+                ':idAgendamentoExame' => $idAgendamentoExame,
                 ':horarioAgendamento' => $horarioAgendamento,
                 ':diaAgendamento' => $diaAgendamento,
                 ':observacoes' => $observacoes
@@ -68,14 +66,12 @@
             $sql = "SELECT 
                     ae.id_agendamento,
                     te.nome AS nome_exame,
-                    te.descricao AS descricao_exame,
                     ae.status AS status_agendamento,
                     ae.dia_agendamento,
                     ae.horario_agendamento,
                     ae.observacoes AS observacoes_agendamento,
                     p.nome AS nome_paciente,
-                    pr.nome AS nome_profissional,
-                    pr.email AS email_profissional
+                    pr.nome AS nome_profissional
                 FROM agendamentos_exames ae
                 INNER JOIN encaminhamentos e ON ae.id_encaminhamento = e.id_encaminhamento
                 INNER JOIN tipos_exames te ON e.id_exame = te.id_exame
@@ -123,7 +119,7 @@
             return $query->fetchAll(PDO::FETCH_ASSOC);
         }
         
-        public function finalizarAgendamentoConsulta($idExame) {
+        public function finalizarAgendamentoExame($idExame) {
             $sql = "UPDATE agendamentos_exames
                     SET status = 'realizado' 
                     WHERE id_agendamento = :idExame";
@@ -166,22 +162,35 @@
 
 
         public function finalizarExamesPassados() {
-             date_default_timezone_set('America/Sao_Paulo');
+            date_default_timezone_set('America/Sao_Paulo');
             $agora = new DateTime();
-
-            $limite = $agora->format('Y-m-d H:i:s'); // hora exata de agora
+            $limite = $agora->format('Y-m-d H:i:s');
 
             $sql = "UPDATE agendamentos_exames
                     SET status = 'realizado'
                     WHERE status = 'agendado'
                     AND CONCAT(dia_agendamento, ' ', horario_agendamento) <= :limite";
 
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute([':limite' => $limite]);
+            $queryExame = $this->conn->prepare($sql);
+            $queryExame->execute([':limite' => $limite]);
 
-            return $stmt->rowCount();
+            $examesFinalizados = $queryExame->rowCount();
+
+            $sqlEnc = "UPDATE encaminhamentos e
+                    INNER JOIN agendamentos_exames ae ON e.id_encaminhamento = ae.id_encaminhamento
+                    SET e.status = 'concluido'
+                    WHERE ae.status = 'realizado'";
+
+            $queryEnc = $this->conn->prepare($sqlEnc);
+            $queryEnc->execute();
+
+            $encaminhamentosAtualizados = $queryEnc->rowCount();
+
+            return [
+                'exames_finalizados' => $examesFinalizados,
+                'encaminhamentos_concluidos' => $encaminhamentosAtualizados
+            ];
         }
-
 
     }
 ?>

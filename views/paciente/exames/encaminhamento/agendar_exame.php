@@ -342,7 +342,6 @@ diaAgendamento.addEventListener('change', function() {
   const dataSelecionada = this.value;
   const select = document.getElementById("profissionais");
 
-  // Limpa select de profissionais e horários
   select.innerHTML = '<option value="">Selecione um profissional</option>';
   container.innerHTML = '';
 
@@ -399,18 +398,15 @@ diaAgendamento.addEventListener('change', function() {
 formAgendar.addEventListener('submit', (e) => {
   const selectProfissional = document.getElementById('profissionais');
   const profissionalSelecionado = selectProfissional.value;
-  
-  // Reseta mensagens
+
   resetMensagens();
 
-  // Verifica se selecionou profissional
   if (!profissionalSelecionado) {
     e.preventDefault();
     showError('Por favor, selecione um profissional antes de agendar.');
     return;
   }
 
-  // Verifica se selecionou algum horário
   const horarioSelecionado = document.querySelector('input[name="horarioAgendamento"]:checked');
   if (!horarioSelecionado) {
     e.preventDefault();
@@ -418,9 +414,6 @@ formAgendar.addEventListener('submit', (e) => {
     return;
   }
 
-  // Se passou nas validações, o form envia normalmente
 });
-
-
 
 </script>

@@ -95,11 +95,20 @@ class Profissional {
     }
 
     public function listarProfissionaisDisponiveis() {
-        $sql = "SELECT DISTINCT p.*
-                FROM profissionais p
-                INNER JOIN usuarios u ON u.login = p.cpf
-                INNER JOIN horarios_profissionais h ON h.id_profissional = p.id_profissional
-                WHERE u.status = 'ativo'";
+        $sql = "SELECT DISTINCT 
+                p.*, 
+                TIMESTAMPDIFF(YEAR, p.data_nascimento, CURDATE()) AS idade,
+                COUNT(DISTINCT ac.id_agendamento) AS total_agendamentos,
+                COUNT(DISTINCT hp.id_horario) AS total_horarios,
+                GROUP_CONCAT(DISTINCT te.nome SEPARATOR ', ') AS exames_atendidos
+            FROM profissionais p
+            INNER JOIN usuarios u ON u.login = p.cpf
+            LEFT JOIN horarios_profissionais hp ON hp.id_profissional = p.id_profissional
+            LEFT JOIN agendamentos_consultas ac ON hp.id_horario = ac.id_horario_profissional
+            LEFT JOIN encaminhamentos e ON e.id_agendamento_consulta = ac.id_agendamento
+            LEFT JOIN tipos_exames te ON e.id_exame = te.id_exame
+            WHERE u.status = 'ativo'
+            GROUP BY p.id_profissional;";
 
         $query = $this->conn->query($sql);
         $resultados = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -131,8 +140,6 @@ class Profissional {
         $query->execute();
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
-
-
 
 
     #validações profissional

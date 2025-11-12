@@ -10,7 +10,7 @@
 
       
       <form id="formHorarios" action="../../../controllers/HorarioController.php?acao=editarHorario" method="POST">
-        <input type="int" name="idProfissional" value="<?php echo $idProfissional; ?>">
+        <input type="hidden" name="idProfissional" value="<?php echo $idProfissional; ?>">
 
         <div class="sheet">
             <div class="sheet-header">
@@ -20,7 +20,6 @@
                 <div>
                     <input type="submit" class="save-btn" id="btnSave" value="Salvar Planilha">
                 </div>
-                
             </div>
 
 
@@ -117,8 +116,8 @@
         gap: 12px;
     }
 
-    .save-btn {
-        background: linear-gradient(180deg, #4f46e5, #3b82f6);
+    #btnSave {
+        background: linear-gradient(180deg, #0939beff, #115dd8ff);
         color: #fff;
         padding: 10px 16px;
         border-radius: 10px;
@@ -127,8 +126,11 @@
         cursor: pointer;
         font-weight: 600;
         display: inline-flex;
-        gap: 10px;
+        margin-bottom: 10px;
         align-items: center;
+    }
+    #btnSave:hover{
+       background: linear-gradient(90deg, #00268dff, #004ecaff);
     }
 
     .sheet-table {
@@ -379,8 +381,8 @@
             <div class="day-title">${day.short}</div>
             <div class="day-sub">${day.full}</div>
           </div>
-          <input type="int" name="diaSemana[]" value="${day.full}">
-          <input type="int" name="idHorario[]" value="${r.idHorario || ''}">
+          <input type="hidden" name="diaSemana[]" value="${day.full}">
+          <input type="hidden" name="idHorario[]" value="${r.idHorario || ''}">
 
         </div>
       `;

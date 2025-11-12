@@ -40,7 +40,6 @@
           <article class="card">
             <span class="badge">Agendado</span>
             <h3><?php echo htmlspecialchars($agendamento['nome_exame']); ?></h3>
-            <h3><?php echo htmlspecialchars($agendamento['id_agendamento']); ?></h3>
 
             <div class="meta">
               <div><i class="fas fa-user-md"></i> Encaminhado por: <strong><?php echo htmlspecialchars($agendamento['nome_profissional']); ?></strong></div>
@@ -55,7 +54,7 @@
                   '<?= htmlspecialchars($agendamento['id_agendamento']) ?>',
                   '<?= htmlspecialchars($agendamento['dia_agendamento']) ?>',
                   '<?= htmlspecialchars($agendamento['horario_agendamento']) ?>',
-                  '<?= htmlspecialchars($agendamento['descricao_exame']) ?>',
+                  '<?= htmlspecialchars($agendamento['observacoes_agendamento']) ?>',
                   '<?= $agendamento['nome_exame']; ?>',
                   '<?= htmlspecialchars($agendamento['nome_profissional']) ?>'
                 )">

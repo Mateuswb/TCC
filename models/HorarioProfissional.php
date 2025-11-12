@@ -100,7 +100,7 @@
 
         # horarios disponiveis para agendamento da consulta
         public function listarHorariosDisponiveis($dataSelecionada, $profissionalId) {
-            date_default_timezone_set('America/Sao_Paulo'); // Define horário de Brasília
+            date_default_timezone_set('America/Sao_Paulo'); 
 
             $dataSelecionada = date("Y-m-d", strtotime($dataSelecionada));
             $dataAtual       = date("Y-m-d");
@@ -166,6 +166,7 @@
                     if($proximaHora > $horaFim){
                         continue;
                     }
+
                     // Pula o intervalo
                     if ($proximaHora <= $inicioIntervalo || $hora >= $fimIntervalo) {
                         if (!$mesmoDia || $hora > strtotime($horaAtual)) {
@@ -230,7 +231,6 @@
                     $inicioAgenda = strtotime($agenda['horario_agendamento']);
                     $fimAgenda = strtotime($agenda['horario_agendamento']) + ($agenda['duracao'] * 60);
                     
-                    // Verifica se há sobreposição de horários
                     if ($inicioAgenda < $fimDisponivel && $fimAgenda > $inicioDisponivel) {
                         $ocupado = true;
                         break;
@@ -286,7 +286,7 @@
 
         # horarios disponiveis para agendamento do exame
         public function listarHorariosDisponiveisExame($dataSelecionada, $exame) {
-            date_default_timezone_set('America/Sao_Paulo'); // Define horário de Brasília
+            date_default_timezone_set('America/Sao_Paulo');
 
             $dataSelecionada = date("Y-m-d", strtotime($dataSelecionada));
             $dataAtual       = date("Y-m-d");
@@ -370,6 +370,10 @@
             ]);
 
             $horariosBd1 = $query->fetchall(PDO::FETCH_ASSOC);
+
+            if (empty($horariosBd1)) {
+                return json_encode(["erro" => "Profissional não atende neste dia."]);
+            }
 
             $horarios = [];
             $sql =  "SELECT tempo_minutos from tipos_exames WHERE nome = :nomeExame";
@@ -461,8 +465,7 @@
                     foreach ($agendas as $agenda) {
                         $inicioAgenda = strtotime($agenda['horario_agendamento']);
                         $fimAgenda = strtotime($agenda['horario_agendamento']) + ($agenda['duracao'] * 60);
-                        
-                        // Verificação se há sobreposição de horários
+                    
                         if ($inicioAgenda < $fimDisponivel && $fimAgenda > $inicioDisponivel) {
                             $ocupado = true;
                             break;
@@ -478,7 +481,6 @@
             if (empty($horariosLivres[$nomeProfissional])) {
                 return json_encode(["erro" => "Nenhum horário disponível neste momento. Agende outro dia"]);
             }
-            
             
             return json_encode($horariosLivres);
         }

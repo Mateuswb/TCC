@@ -72,13 +72,13 @@
         <div class="carousel-card">
           <div class="carousel" id="rightCarousel">
             <div class="slides">
-              <div class="slide" style="background-image:url('../../public/assets/imgs/fundo_1.png');">
+              <div class="slide" style="background-image:url('../../public/assets/imgs/atendimento_qualidade.webp');">
                 <div class="overlay"><h3>Atendimento de qualidade</h3></div>
               </div>
-              <div class="slide" style="background-image:url('../../public/assets/imgs/fundo_1.png');">
+              <div class="slide" style="background-image:url('../../public/assets/imgs/cuidado_humanizado.jpg');">
                 <div class="overlay"><h3>Cuidado humanizado</h3></div>
               </div>
-              <div class="slide" style="background-image:url('../../public/assets/imgs/fundo_1.png');">
+              <div class="slide" style="background-image:url('../../public/assets/imgs/equipe_especializada.png');">
                 <div class="overlay"><h3>Equipe especializada</h3></div>
               </div>
             </div>

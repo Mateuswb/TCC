@@ -43,23 +43,31 @@
         }
 
         public function editarExame(){
-            $idEncaminhamento = $_POST['idEncaminhamento']; 
-            $status = $_POST['status']; 
+            $idAgendamentoExame = $_POST['idAgendamentoExame']; 
             $horarioAgendamento = $_POST['horarioAgendamento']; 
             $diaAgendamento = $_POST['diaAgendamento']; 
             $observacoes = $_POST['observacoes']; 
 
             $editar = $this->agendamentoExameModel->editarAgendamentoExame(
-                $idEncaminhamento, $status, $horarioAgendamento,
+                $idAgendamentoExame, $horarioAgendamento,
                 $diaAgendamento, $observacoes
             );
 
+            session_start();
             if($editar){
-                echo "editado";
+                $_SESSION['flash'] = [
+                'type' => 'success',
+                'message' => 'Agendamento de exame editado com sucesso.'
+                ];
             }
             else{
-                echo "erro ao editar";
+                $_SESSION['flash'] = [
+                'type' => 'error',
+                'message' => 'Erro ao editar agendamento do exame. Tente novamente.'
+                ];
             }
+            header("Location: ../views/paciente/exames/exames_agendados/listar_agendamentos.php");
+            exit;
         }
 
         public function cancelarExame(){
@@ -84,26 +92,34 @@
             exit;
         }
 
-        public function finalizarAgendamentoExame(){
+        public function finalizarAgendamentoExame() {
             $idExame = $_POST['idExame'];
-
             session_start();
-            $finalizar = $this->agendamentoExameModel->finalizarAgendamentoConsulta($idExame);
-            if($finalizar){
+
+            $finalizarExame = $this->agendamentoExameModel->finalizarAgendamentoExame($idExame);
+
+            if ($finalizarExame) {
+                $idEncaminhamento = $this->encaminhamentoModel->buscarIdEncaminhamentoPorExame($idExame);
+
+                if ($idEncaminhamento) {
+                    $this->encaminhamentoModel->trocarStatusConcluido($idEncaminhamento);
+                }
+
                 $_SESSION['flash'] = [
-                'type' => 'success',
-                'message' => 'Exame finalizado com sucesso'
+                    'type' => 'success',
+                    'message' => 'Exame finalizado e encaminhamento concluído com sucesso.'
+                ];
+            } else {
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => 'Erro ao finalizar o exame. Tente novamente.'
                 ];
             }
-            else{
-                $_SESSION['flash'] = [
-                'type' => 'error',
-                'message' => 'Erro ao finalizar exame. Tente novamente.'
-                ];
-            }
+
             header("Location: ../views/profissional/agendamentos/consultas.php");
             exit;
         }
+
 
     }
 

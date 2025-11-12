@@ -73,6 +73,7 @@ $exames = $controllerExame->listarExamesDisponiveisParaEncaminhamento();
   border: 1px solid #ccc;
   font-size: 14px;
   box-sizing: border-box;
+  resize: none;
 }
 
 #encaminharModal button {
@@ -85,6 +86,8 @@ $exames = $controllerExame->listarExamesDisponiveisParaEncaminhamento();
 }
 
 #encaminharModal .btn-encaminhar { background: #f39c12; color: #fff; }
-#encaminharModal .btn-fechar { background: #bdc3c7; color: #fff; }
-#encaminharModal button:hover { opacity: 0.9; }
+#encaminharModal .btn-encaminhar:hover { background: #c57a00ff; color: #fff; }
+#encaminharModal .btn-fechar { background: #b1b1b1ff; color: #fff; }
+#encaminharModal .btn-fechar:hover { background: #727272ff; color: #fff; }
+
 </style>

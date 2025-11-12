@@ -44,10 +44,14 @@
     color: #fff;
     border: none;
     border-radius: 4px;
-    padding: 2px 6px;
+    padding: 4px 7px;
     font-size: 11px;
     cursor: pointer;
     margin-left: 5px;
+    transition: .3s;
+}
+.btn-pdf:hover{
+  background: #06578dff;
 }
 
 
@@ -146,6 +150,7 @@ h1 {
   color: #fff !important;
   line-height: 1.4;
   border-left: 5px solid #fff;
+  transition: .3s;
 }
 
 
@@ -197,6 +202,7 @@ h1 {
   cursor: pointer;
   font-weight: 600;
   transition: transform 0.2s, opacity 0.2s;
+  
 }
 .fc-event {
   border-radius: 12px !important;
@@ -268,6 +274,7 @@ h1 {
       <select id="tipoFiltro" onchange="filtrarEventos()">
         <option value="todos">Todos</option>
         <option value="c">Consulta</option>
+        <option value="e">Exame</option>
         <option value="r">Retorno</option>
       </select>
     </div>

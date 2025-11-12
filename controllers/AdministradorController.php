@@ -207,13 +207,12 @@
         }
         
         public function cadastrarExame() {
-            $categoria = $_POST['categoria'];
+            $categoria = substr($_POST['categoria'], 0, 2);
             $nome = $_POST['nome'];
             $descricao = $_POST['descricao'];
             $tempoMinutos = $_POST["tempoMinutos"];
 
             session_start();
-            //  verifica se tem pelo menos 1 profissional cadastrado
             if(!$this->exameModel->existeProfissionalParaCategoria($nome)) {
                 $_SESSION['error'] = "Não é possível cadastrar este exame. Nenhum profissional na clínica tem essa especialidade.";
                 header("Location: ../views/administrador/exame/listar_exames.php");
@@ -226,7 +225,6 @@
                 exit;
             }
 
-            // Se existe profissional, cadastra normalmente
             $nomeTratado = ucwords(strtolower($nome));
             $cadastro = $this->exameModel->cadastrarExame($categoria, $nomeTratado, $descricao, $tempoMinutos);
 

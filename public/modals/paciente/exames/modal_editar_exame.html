@@ -7,20 +7,20 @@
       <div class="header-left">
         <img src="../../../../public/assets/icones/medico.png" alt="Foto do Profissional">
         <div class="header-info">
-          <h2 id="nomeProfissional">Nome do Profissional</h2>
+          <h2 id="nomeProfissional"></h2>
         </div>
       </div>
       <div class="header-title">
-        <h3>Agendar Exame</h3>
-        <span>Informe os detalhes necessários para realizar o agendamento</span>
+        <h3>Editar Exame</h3>
+        <span>Informe os detalhes necessários para edição do agendamento</span>
       </div>
     </div>
 
 
     <div class="container-modal">
-      <h3>Confirme os dados para o agendamento</h3>
+      <h3>Confirme os dados para edição do agendamento</h3>
 
-      <form action="../../../../controllers/AgendamentoExameController.php?acao=agendarExame" 
+      <form action="../../../../controllers/AgendamentoExameController.php?acao=editarExame" 
             method="post" id="formAgendar" enctype="multipart/form-data">
 
         <input type="hidden" name="idAgendamentoExame" id="idAgendamentoExame">
@@ -50,7 +50,7 @@
 
         <div class="form-control">
           <label for="observacao">Observações</label>
-          <textarea id="observacao" name="observacao" placeholder="Escreva alguma observação..."></textarea>
+          <textarea id="observacao" name="observacoes" placeholder="Escreva alguma observação..."></textarea>
         </div>
 
         <input type="submit" class="btn-agendarConsulta" value="Agendar">
@@ -316,98 +316,97 @@ select:focus, input:focus, textarea:focus {
 
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const modalAgendamento = document.getElementById("modalAgendamento");
-  const fecharModalAgendamento = document.getElementById("fecharModalAgendamento");
-  const formAgendar = document.getElementById("formAgendar");
-  const diaAgendamento = document.getElementById("diaAgendamento");
-  const container = document.getElementById("times");
-  const mensagemErro = document.getElementById("mensagemErro");
-  const mensagemHorario = document.getElementById("mensagemHorario");
-  const exame = document.getElementById("exame");
-
+  const formAgendarExame = document.getElementById('formAgendarExame');
+  const diaAgendamento = document.getElementById('diaAgendamento');
+  const exame = document.getElementById('exame');
+  const profissionaisSelect = document.getElementById('profissionais');
+  const container = document.getElementById('times');
+  const mensagemErro = document.getElementById('mensagemErro');
+  const mensagemHorario = document.getElementById('mensagemHorario');
+  const nomeProfissionalEl = document.getElementById('nomeProfissional');
+  const modal = document.getElementById('modalAgendamento');
+  const closeModal = document.getElementById('fecharModalAgendamento');
+  
   const showError = (msg) => {
-    mensagemErro.style.display = "block";
+    mensagemErro.style.display = 'block';
     mensagemErro.innerText = msg;
   };
 
   const buscarHorarios = () => {
-    const dataSelecionada = diaAgendamento.value;
-    const exameSelecionado = exame.value;
+  const data = diaAgendamento.value;
+  const nomeExame = exame.value;
 
-    container.innerHTML = "";
-    mensagemErro.style.display = mensagemHorario.style.display = "none";
+  const nomeProfissionalAtual = profissionaisSelect.value || window.nomeProfissionalGlobal || '';
 
-    if (!dataSelecionada) {
-      mensagemHorario.style.display = "block";
-      mensagemHorario.innerText = "Selecione um dia para ver os horários disponíveis.";
+  container.innerHTML = '';
+  mensagemErro.style.display = mensagemHorario.style.display = 'none';
+
+  fetch('../../../../controllers/ExameController.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: `data=${encodeURIComponent(data)}&exame=${encodeURIComponent(nomeExame)}`
+  })
+  .then(r => r.json())
+  .then(retorno => {
+    if (retorno.erro) return showError(retorno.erro);
+
+    if (Array.isArray(retorno)) {
+      if (retorno.length === 0) {
+        mensagemHorario.style.display = 'block';
+        mensagemHorario.innerText = 'Não há horários disponíveis para este dia.';
+        return;
+      }
+
+      mensagemHorario.style.display = 'block';
+      mensagemHorario.innerText = 'Escolha um horário:';
+      container.innerHTML = retorno.map(h => `
+        <label class="time-slot">
+          <input type="radio" name="horarioAgendamento" value="${h}" required>
+          <span>${h}</span>
+        </label>
+      `).join('');
+      return;
+    }
+    
+    profissionaisSelect.innerHTML = `<option value="${nomeProfissionalAtual}" selected>${nomeProfissionalAtual}</option>`;
+    profissionaisSelect.disabled = true;
+
+    const horarios = retorno[nomeProfissionalAtual] || [];
+    if (!horarios || horarios.length === 0) {
+      mensagemHorario.style.display = 'block';
+      mensagemHorario.innerText = 'Nenhum horário disponível para este profissional neste dia.';
       return;
     }
 
-    console.log(dataSelecionada);
-    console.log(exameSelecionado);
-
-    fetch("../../../../controllers/ExameController.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `data=${encodeURIComponent(dataSelecionada)}&exame=${encodeURIComponent(exameSelecionado)}`
-    })
-      .then((r) => r.json())
-      .then((retorno) => {
-        if (retorno.erro) return showError(retorno.erro);
-
-        if (retorno.length === 0) {
-          mensagemHorario.style.display = "block";
-          mensagemHorario.innerText = "Não há horários disponíveis para este dia.";
-          return;
-        }
-
-        mensagemHorario.style.display = "block";
-        mensagemHorario.innerText = "Escolha um horário:";
-        container.innerHTML = retorno.map((h) => `
-          <label class="time-slot">
-            <input type="radio" name="horarioAgendamento" value="${h}" required>
-            <span>${h}</span>
-          </label>
-        `).join("");
-      })
-      .catch(() => showError("Erro ao carregar horários. Tente novamente."));
+    mensagemHorario.style.display = 'block';
+    mensagemHorario.innerText = 'Escolha um horário:';
+    container.innerHTML = horarios.map(h => `
+      <label class="time-slot">
+        <input type="radio" name="horarioAgendamento" value="${h}" required>
+        <span>${h}</span>
+      </label>
+    `).join('');
+  })
+  .catch(() => showError('Erro ao carregar horários. Tente novamente.'));
   };
 
-  diaAgendamento.addEventListener("change", buscarHorarios);
+
+  closeModal?.addEventListener('click', () => modal.style.display = 'none');
+  window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+
+  diaAgendamento.addEventListener('change', buscarHorarios);
 
 
-  window.abrirModalAgendamento = function (idAgendamento, dia, observacao, exame, profissional) {
-    document.getElementById("idAgendamentoExame").value = idAgendamento;
-    document.getElementById("diaAgendamento").value = dia || "";
-    document.getElementById("observacao").value = observacao || "";
-    document.getElementById("exame").value = profissional || "";
-    document.getElementById("nomeProfissional").innerText = profissional;
+  function abrirModalAgendamento(idAgendamento, dia, horario, descricao, nomeExame, nomeProfissional) {
+    document.getElementById('idAgendamentoExame').value = idAgendamento || '';
+    diaAgendamento.value = dia || '';
+    exame.value = nomeExame || '';
+    profissionaisSelect.innerHTML = `<option value="${nomeProfissional}" selected>${nomeProfissional}</option>`;
+    profissionaisSelect.disabled = true;
+    nomeProfissionalEl.innerText = nomeProfissional || 'Profissional';
+    document.getElementById('observacao').value = descricao || '';
 
-    modalAgendamento.style.display = "flex";
-
+    modal.style.display = 'flex';
     setTimeout(buscarHorarios, 200);
-  };
-
-  fecharModalAgendamento.addEventListener("click", () => {
-    modalAgendamento.style.display = "none";
-  });
-
-  window.addEventListener("click", (e) => {
-    if (e.target === modalAgendamento) modalAgendamento.style.display = "none";
-  });
-
-  formAgendar.addEventListener("submit", (e) => {
-    const horarioSelecionado = document.querySelector('input[name="horarioAgendamento"]:checked');
-    mensagemErro.style.display = "none";
-
-    if (!horarioSelecionado) {
-      e.preventDefault();
-      return showError("Por favor, selecione um horário antes de agendar.");
-    }
-  });
-});
-
-
-
+  }
 </script>
