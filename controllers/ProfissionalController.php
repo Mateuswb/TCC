@@ -504,13 +504,9 @@
             $idAgendamentoExame = $_POST['idAgendamentoExame'];
             $idAgendamentoExame = $_POST['idAgendamentoExame'];
 
-            // Busca dados relacionados à consulta e ao paciente
             $dados = $this->agendamentoExameModel->getAgendamentoExame($idAgendamentoExame);
-
-            // Cancela o exame
             $cancelarExame = $this->agendamentoExameModel->cancelarAgendamentoExame($idAgendamentoExame);
 
-            // Monta corpo do e-mail
             $mensagem = '
             <!DOCTYPE html>
             <html lang="pt-BR">
@@ -580,12 +576,9 @@
             </html>
             ';
 
-            // Garante que a sessão está ativa
             if (session_status() === PHP_SESSION_NONE) {
                 session_start();
             }
-
-            // Se o cancelamento for bem-sucedido, envia o e-mail
             if ($cancelarExame) {
                 try {
                     $this->emailController->enviarEmail(

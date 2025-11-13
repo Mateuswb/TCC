@@ -7,7 +7,7 @@
     $arquivo = $controller->buscarArquivoResultado($idResultado);
 
     if ($arquivo && $arquivo['arquivo']) {
-        header('Content-Type: application/pdf'); // ou use $arquivo['tipo_arquivo']
+        header('Content-Type: application/pdf');
         header('Content-Disposition: attachment; filename="resultado_' . $idResultado . '.pdf"');
         echo $arquivo['arquivo'];
         exit;

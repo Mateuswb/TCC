@@ -25,123 +25,125 @@
 </div>
 
 <style>
-.modal-editar {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0,0,0,0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  visibility: hidden;
-  z-index: 2000;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-  font-family: 'Poppins', sans-serif;
-}
+  .modal-editar {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 2000;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+  }
 
-.modal-editar.show {
-  opacity: 1;
-  visibility: visible;
-}
+  .modal-editar.show {
+    opacity: 1;
+    visibility: visible;
+  }
 
-.modal-editar-content {
-  background-color: #ffffff;
-  padding: 32px 42px;
-  border-radius: 14px;
-  width: 460px;
-  max-width: 92%;
-  box-shadow: 0 8px 35px rgba(0, 0, 0, 0.25);
-  position: relative;
-  transform: translateY(-25px);
-  transition: transform 0.3s ease;
-}
+  .modal-editar-content {
+    background-color: #ffffff;
+    padding: 32px 42px;
+    border-radius: 14px;
+    width: 460px;
+    max-width: 92%;
+    box-shadow: 0 8px 35px rgba(0, 0, 0, 0.25);
+    position: relative;
+    transform: translateY(-25px);
+    transition: transform 0.3s ease;
+  }
 
-.modal-editar.show .modal-editar-content {
-  transform: translateY(0);
-}
+  .modal-editar.show .modal-editar-content {
+    transform: translateY(0);
+  }
 
-.modal-editar-content h2 {
-  text-align: center;
-  color: #004aad;
-  margin-bottom: 26px;
-  font-size: 24px;
-  font-weight: 600;
-}
+  .modal-editar-content h2 {
+    text-align: center;
+    color: #004aad;
+    margin-bottom: 26px;
+    font-size: 24px;
+    font-weight: 600;
+  }
 
-.modal-editar-form-control {
-  margin-bottom: 18px;
-}
+  .modal-editar-form-control {
+    margin-bottom: 18px;
+  }
 
-.modal-editar-form-control label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: 600;
-  color: #222;
-}
+  .modal-editar-form-control label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #222;
+  }
 
-.modal-editar-form-control input {
-  width: 100%;
-  padding: 10px 12px;
-  font-size: 16px;
-  border: 2px solid #d0d0d0;
-  border-radius: 8px;
-  outline: none;
-  transition: all 0.2s;
-}
+  .modal-editar-form-control input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 16px;
+    border: 2px solid #d0d0d0;
+    border-radius: 8px;
+    outline: none;
+    transition: all 0.2s;
+  }
 
-.modal-editar-form-control input:focus {
-  border-color: #004aad;
-  box-shadow: 0 0 8px rgba(0,74,173,0.3);
-}
+  .modal-editar-form-control input:focus {
+    border-color: #004aad;
+    box-shadow: 0 0 8px rgba(0,74,173,0.3);
+  }
 
-.modal-editar-buttons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  margin-top: 20px;
-}
+  .modal-editar-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+  }
 
-.modal-editar-btn {
-  border: none;
-  padding: 10px 22px;
-  font-weight: 600;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.2s;
-}
+  .modal-editar-btn {
+    border: none;
+    padding: 10px 22px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
 
-.modal-editar-btn.save {
-  background-color: #004aad;
-  color: #fff;
-}
+  .modal-editar-btn.save {
+    font-size: 19px;
+    background-color: #004aad;
+    color: #fff;
+  }
 
-.modal-editar-btn.save:hover {
-  background-color: #003b88;
-}
+  .modal-editar-btn.save:hover {
+    background-color: #003b88;
+  }
 
-.modal-editar-btn.cancel {
-  background-color: #ccc;
-  color: #222;
-}
+  .modal-editar-btn.cancel {
+    font-size: 19px;
+    background-color: #ccc;
+    color: #222;
+  }
 
-.modal-editar-btn.cancel:hover {
-  background-color: #b8b8b8;
-}
+  .modal-editar-btn.cancel:hover {
+    background-color: #b8b8b8;
+  }
 
-.modal-editar-close {
-  position: absolute;
-  right: 18px;
-  top: 18px;
-  font-size: 28px;
-  font-weight: bold;
-  color: #333;
-  cursor: pointer;
-  transition: color 0.2s;
-}
+  .modal-editar-close {
+    position: absolute;
+    right: 18px;
+    top: 18px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
 
-.modal-editar-close:hover {
-  color: #004aad;
-}
+  .modal-editar-close:hover {
+    color: #004aad;
+  }
 </style>
 
 <script>

@@ -398,22 +398,18 @@ document.addEventListener('DOMContentLoaded', function () {
             info.el.style.borderColor = border;
             info.el.style.color = color;
 
-            // Bloqueia eventos de dias passados
             if (dataEvento < dataAtual) {
                 info.el.style.opacity = 0.5;
                 info.event.setProp('editable', false);
                 info.el.style.pointerEvents = 'none';
             }
 
-            // Bloqueia os agendamentos cancelados e finalizados
             if (status === 'cancelada' || status === 'cancelado' || status === 'realizada' || status === 'realizado') {
                 info.el.style.opacity = 0.6;
                 info.event.setProp('editable', false);
                 info.el.style.pointerEvents = 'none';
             }
 
-
-            // Adiciona botão de PDF na reconsulta
             if (info.event.extendedProps?.tipo === 'r' && info.event.extendedProps?.pdf) {
               const btn = document.createElement('button');
               btn.className = 'btn-pdf';
@@ -478,6 +474,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 60000);
 });
 
+  
 function fecharModal() {
     document.getElementById("eventModal").style.display = "none";
 }
@@ -533,14 +530,15 @@ function executarAcaoExame(acao) {
 }
 
 function filtrarEventos() {
-    const filtro = document.getElementById('tipoFiltro').value;
-    calendar.getEvents().forEach(event => {
-        if (filtro === 'todos' || event.extendedProps.tipo === filtro) {
-            event.setProp('display', 'auto');
-        } else {
-            event.setProp('display', 'none');
-        }
-    });
+  const filtro = document.getElementById('tipoFiltro').value;
+
+  calendar.getEvents().forEach(event => {
+    if (filtro === 'todos' || event.extendedProps.tipo === filtro) {
+      event.setProp('display', 'auto');
+    } else {
+      event.setProp('display', 'none');
+    }
+  });
 }
 </script>
 

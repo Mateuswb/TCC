@@ -50,17 +50,17 @@
 
         <div class="card">
           <div class="left"><small>Total de agendamentos do mês</small><strong> <?php echo $agendamentosMes ?></strong></div>
-          <div class="icon green"><i class="fa-solid fa-user-md"></i></div>
+          <div class="icon green"><i class="fa-solid fa-calendar-check"></i></div>
         </div>
 
         <div class="card">
           <div class="left"><small>Total de consultas de retorno</small><strong> <?php echo $totalConsultasRetorno ?></strong></div>
-          <div class="icon blue"><i class="fa-solid fa-user"></i></div>
+          <div class="icon blue"><i class="fa-solid fa-prescription"></i></div>
         </div>
 
         <div class="card">
           <div class="left"><small>Taxa de cancelamento</small><strong> <?php echo $cancelamentos ?>%</strong></div>
-          <div class="icon yellow"><i class="fa-solid fa-calendar-check"></i></div>
+          <div class="icon yellow"><i class="fa-solid fa-credit-card"></i></div>
         </div>
 
         <div class="card">
@@ -75,12 +75,12 @@
 
         <div class="card">
           <div class="left"><small>Total de novos pacientes do mês</small><strong> <?php echo $novosPacientesMes ?></strong></div>
-          <div class="icon green"><i class="fa-solid fa-prescription"></i></div>
+          <div class="icon green"><i class="fa-solid fa-user-md"></i></div>
         </div>
 
         <div class="card">
           <div class="left"><small>Total de pacientes</small><strong><?php echo $totalPacientes; ?></strong></div>
-          <div class="icon blue"><i class="fa-solid fa-credit-card"></i></div>
+          <div class="icon blue"><i class="fa-solid fa-user"></i></div>
         </div>
       </div>
 

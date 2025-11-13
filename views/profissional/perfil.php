@@ -35,30 +35,69 @@
 
   
   <style>
-    
-  .choices__inner {
-    border-radius: 5px !important;
-    font-size: 17px !important;
-    color: #222 !important;
-    font-family: "Poppins", sans-serif;
-  }
-   .choices__list--multiple .choices__item {
-    background-color: var(--azul);
-    border-radius: 8px;
-    color: black;
-    font-size: 14px;
-    padding: 4px 10px;
-    border: none;
-  }
+.choices__inner {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: flex-start !important;
+  gap: 6px !important;
+  border-radius: 10px !important;
+  border: 2px solid #004aad !important;
+  background-color: #f9fbff !important;
+  min-height: 50px;
+}
 
-  .choices__input {
-    background: transparent !important;
-    font-size: 17px !important;
-  }
-  
-  .choices__input {
-    display: none !important;
-  }
+
+.choices__list--multiple {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+
+.choices__list--multiple .choices__item {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-color: #004aad !important;
+  color: #fff !important;
+  font-size: 14px !important;
+  border-radius: 20px !important;
+  padding: 6px 12px !important;
+  white-space: nowrap !important;
+  margin: 0 !important;
+  cursor: default;
+}
+
+.choices__list--multiple .choices__item:hover {
+  background-color: #003b8a !important;
+  transform: scale(1.05);
+}
+
+
+.choices__input {
+  display: none !important;
+}
+
+
+.choices__list--dropdown {
+  border-radius: 8px !important;
+  border: 1px solid #ccc !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-family: "Poppins", sans-serif;
+}
+
+.choices__list--dropdown .choices__item--selectable {
+  padding: 10px 15px !important;
+  font-size: 15px;
+  color: #333;
+  transition: background 0.2s ease;
+}
+
+.choices__list--dropdown .choices__item--selectable:hover {
+  background-color: #f0f5ff !important;
+  color: #004aad !important;
+}
 
      .botoes-acoes {
   display: flex;
@@ -110,7 +149,32 @@
   background-color: #c0392b;
 }
 
+.full .choices {
+  width: 100% !important;
+}
 
+.full .choices__inner {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 6px !important;
+  width: 100% !important;
+}
+
+.full .choices__list--multiple {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  width: 100% !important;
+}
+
+.full .choices__list--multiple .choices__item {
+  display: inline-flex !important;
+  white-space: nowrap !important;
+}
   </style>
 </head>
 <body>
@@ -152,7 +216,6 @@
         <button data-tab="conta">Conta</button>
       </div>
 
-      <!-- Formulário de Dados do Profissional -->
       <form method="POST" action="../../controllers/ProfissionalController.php?acao=editarDadosProfissional">
         <input type="hidden" name="idProfissional" value="<?php echo $profissional['id_profissional']; ?>">
 
@@ -208,7 +271,7 @@
 
         <!-- Dados Profissionais -->
         <div id="dados-profissionais" class="tab-content">
-          <div class="info-grid">
+          <div class="info-gridProfissional">
             <div>
               <label>CRM / CRP</label>
               <input type="text" name="crmCrp" value="<?php echo $profissional['crm_crp']; ?>">
@@ -366,10 +429,9 @@
   </div>
 
   <script>
-  // Seleciona o select
+
   const select = document.getElementById('multiple');
 
-  // Inicializa o Choices
   const choicesInstance = new Choices(select, {
     removeItemButton: true,
     searchEnabled: true,
@@ -420,7 +482,6 @@
       document.getElementById(btn.dataset.tab).classList.add("active");
     });
   });
-
 
 
   </script>

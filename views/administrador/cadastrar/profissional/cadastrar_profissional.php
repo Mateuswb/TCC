@@ -33,7 +33,6 @@ require '../../../../autentica/verifica_login.php';
                 linear-gradient(90deg, #cfe7ff 0%, #eaf4ff 50%, #f8fbff 100%);
   }
 
-  /* container principal */
   .container {
     width: 1100px;
     background: #fff;
@@ -43,10 +42,10 @@ require '../../../../autentica/verifica_login.php';
     overflow: hidden;
   }
 
-  /* Lateral azul */
+
   .lateral {
     width: 120px;
-    background-color: #01538aff;
+    background-color: #003b72ff;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -125,7 +124,7 @@ require '../../../../autentica/verifica_login.php';
     font-weight: 600;
   }
 
-  /* inputs */
+
   input[type="text"],
   input[type="tel"],
   input[type="number"],
@@ -153,7 +152,6 @@ require '../../../../autentica/verifica_login.php';
   font-family: "Poppins", sans-serif;
   }
 
-  /* Choices.js customizado */
   .choices__inner {
     background: transparent !important;
     border: none !important;
@@ -478,12 +476,11 @@ require '../../../../autentica/verifica_login.php';
 
   <script src="../../../../public/assets/js/validar_profissional.js"></script>
   <script>
-    // Choices.js
+
     document.addEventListener('DOMContentLoaded', () => {
       new Choices('#multiple', { removeItemButton: true, searchEnabled: true });
     });
 
-    // Controle de etapas
     const step1 = document.getElementById("step1");
     const step2 = document.getElementById("step2");
     const etapa1 = document.getElementById("etapa1");

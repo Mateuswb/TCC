@@ -113,7 +113,6 @@
     </div>
   </div>
 
-  <!-- Cards dos exames -->
   <div class="cards-exames">
   <?php foreach($agendamentos as $agendamento){ ?>
     <div class="card-exame"
@@ -130,7 +129,7 @@
       <p class="categoria"><?= $categorias[$agendamento["nome_categoria"]] ?> </p>
       <p class="data">Exame realizado em: <strong><?php echo $agendamento['dia_agendamento']; ?> </strong> às <strong><?php echo $agendamento['horario_agendamento']; ?> </strong></p>
       <div class="acoes">
-        <button class="btn-ver">Ver detalhes</button>
+        <!-- <button class="btn-ver">Ver detalhes</button> -->
       </div>
     </div>
   <?php } ?>
@@ -159,8 +158,6 @@
   document.querySelectorAll(".btn-ver").forEach(btn => {
     btn.addEventListener("click", (e) => {
       const card = e.target.closest(".card-exame");
-      
-      // Preencher modal com dados do card
       document.getElementById("modal-exame").textContent = card.dataset.exame;
       document.getElementById("modal-categoria").textContent = card.dataset.categoria;
       document.getElementById("modal-dia").textContent = card.dataset.dia;
@@ -177,7 +174,6 @@
     modal.style.display = "none";
   });
 
-  // Fecha ao clicar fora do modal
   modal.addEventListener("click", (e) => {
     if(e.target === modal) modal.style.display = "none";
   });

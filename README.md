@@ -12,5 +12,3 @@ Sistema de agendamento e gerenciamento de  consultas e exames para clinicas priv
 - `models/` — arquivos PHP que acessam o banco de dados.
 - `views/` — arquivos HTML/JS/CSS/PHP que representam as telas.
 - `libs/` — arquivos de bibliotecas utilizadas.
-
-UI Avatars.

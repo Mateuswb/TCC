@@ -23,12 +23,21 @@
                 $idAgendamento, $dataResultado, $arquivo
             );
             
+            session_start();
             if($resultadoExame){
-                echo "----encaminhou---";
+                $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => "Resultado do exame encaminhado com sucesso."
+                ];
             }
             else{
-                echo "erro";
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => "Erro ao enviar Resultado. Tente novamente."
+                ];
             }
+            header("Location: ../views/profissional/lancar_resultado_exames/listar_exames.php");
+            exit;
         }
 
         public function listarResultadosPorPaciente($PacienteId){

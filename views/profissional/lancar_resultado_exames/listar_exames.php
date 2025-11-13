@@ -234,6 +234,7 @@ input[type="file"] {
 </style>
 </head>
 <body>
+<?php include '../../../public/assets/alerta/flash.php'; ?>
 
 <div class="container">
   <h2 id="title"><i class="fa-solid fa-flask"></i> Exames Pendentes para Lançamento</h2>
@@ -262,7 +263,6 @@ input[type="file"] {
   <?php endif; ?>
 </div>
 
-<!-- MODAL UPLOAD -->
 <div class="modal" id="modalUpload">
   <div class="modal-content">
     <span class="modal-close" id="fecharModal">&times;</span>
@@ -270,11 +270,13 @@ input[type="file"] {
     <form id="formUpload" method="POST" enctype="multipart/form-data" 
           action="../../../controllers/ResultadoExameController.php?acao=enviarResultadoExame">
       <input type="hidden" name="idAgendamento" id="idAgendamento">
+      
+      <span id="nomeArquivo" style="display:block; margin-top:10px; color:#004aad; font-weight:500;"></span>
       <label for="arquivo" class="custom-file-upload">
         <i class="fa-solid fa-file-arrow-up"></i> Escolher arquivo
       </label>
-      
       <input id="arquivo" type="file" name="resultado_exame" accept=".pdf" required>
+  
       <button type="submit"><i class="fa-solid fa-save"></i> Enviar Resultado</button>
     </form>
   </div>
@@ -297,8 +299,18 @@ input[type="file"] {
     const modal = document.getElementById('modalUpload');
     if (e.target === modal) modal.style.display = 'none';
   });
-</script>
 
+    const inputArquivo = document.getElementById('arquivo');
+  const nomeArquivo = document.getElementById('nomeArquivo');
+
+  inputArquivo.addEventListener('change', function() {
+    if (this.files.length > 0) {
+      nomeArquivo.textContent = this.files[0].name;
+    } else {
+      nomeArquivo.textContent = '';
+    }
+  });
+</script>
 
 </body>
 </html>

@@ -42,30 +42,30 @@ $resultados = $controller->listarResultadosPorPaciente($idPaciente);
 }
 
 
-        /* ===== RESET ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Poppins", sans-serif;
-        }
 
-        body {
-            background: #f5f6fa;
-            min-height: 100vh;
-            display: flex;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
 
-        .conteudo-principal {
-            flex: 1;
-            padding: 2rem 3rem;
-            background: #f5f6fa;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            margin-top: 70px;
-            margin-bottom: 70px;
-        }
+body {
+    background: #f5f6fa;
+    min-height: 100vh;
+    display: flex;
+}
+
+.conteudo-principal {
+    flex: 1;
+    padding: 2rem 3rem;
+    background: #f5f6fa;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    margin-top: 70px;
+    margin-bottom: 70px;
+}
 
 
 .content::-webkit-scrollbar {
@@ -79,7 +79,6 @@ $resultados = $controller->listarResultadosPorPaciente($idPaciente);
   background: #e0e0e0;
 }
 
-/* ===== TÍTULO ===== */
 .titulo {
   text-align: center;
   font-size: 1.8rem;
@@ -87,14 +86,13 @@ $resultados = $controller->listarResultadosPorPaciente($idPaciente);
   margin-bottom: 30px;
 }
 
-/* ===== CONTAINER DE AGENDAMENTOS ===== */
+
 .agendamentos-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: 20px;
 }
 
-/* ===== CARD DE AGENDAMENTO ===== */
 .card-agendamento {
   background-color: #fff;
   border-radius: 14px;
@@ -182,15 +180,15 @@ $resultados = $controller->listarResultadosPorPaciente($idPaciente);
   background-color: #b02a37;
 }
 .msg-msg {
-    position: fixed;          /* fixa na tela */
-    top: 50%;                 /* central vertical */
-    left: 50%;                /* central horizontal */
-    transform: translate(-50%, -50%); /* ajuste perfeito */
+    position: fixed;       
+    top: 50%;                 
+    left: 50%;                
+    transform: translate(-50%, -50%);
     padding: 15px 25px;
     border-radius: 8px;
     font-weight: 600;
     font-size: 1rem;
-    z-index: 9999;            /* garante que fique acima de tudo */
+    z-index: 9999;            
     text-align: center;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }

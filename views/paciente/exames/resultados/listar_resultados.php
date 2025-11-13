@@ -45,7 +45,7 @@ main {
   padding: 30px 50px;
 }
 
-h2 {
+#title {
   text-align: center;
   color: #001f54;
   font-size: 1.9rem;
@@ -54,7 +54,6 @@ h2 {
   margin-bottom: 35px;
 }
 
-/* ===== GRID DE CARDS ===== */
 .cards-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -62,7 +61,6 @@ h2 {
   justify-items: center;
 }
 
-/* ===== CARD ===== */
 .card {
   background: #fff;
   border-radius: 14px;
@@ -81,7 +79,6 @@ h2 {
   box-shadow: 0 5px 14px rgba(0, 0, 0, 0.12);
 }
 
-/* ===== CABEÇALHO DO CARD ===== */
 .card-header {
   display: flex;
   justify-content: space-between;
@@ -100,7 +97,7 @@ h2 {
   margin-bottom: 12px;
 }
 
-/* ===== STATUS ===== */
+
 .status {
   padding: 3px 10px;
   border-radius: 6px;
@@ -119,7 +116,6 @@ h2 {
   color: #8a7200;
 }
 
-/* ===== INFORMAÇÕES ===== */
 .info {
   font-size: 0.9rem;
   color: #555;
@@ -133,7 +129,7 @@ h2 {
   color: #007bff;
 }
 
-/* ===== BOTÕES ===== */
+
 .botoes {
   display: flex;
   justify-content: space-between;
@@ -166,6 +162,7 @@ h2 {
 }
 
 .btn-baixar {
+  padding: 10px 30px;
   background-color: #0069d9;
   color: white;
 }
@@ -188,7 +185,7 @@ h2 {
 <body>
 
 <main>
-  <h2>O Resultado de Seus Exames Estão Aqui</h2>
+  <h2 id="title">O Resultado de Seus Exames Estão Aqui</h2>
 
   <div class="cards-container">
     <?php foreach ($resultados as $resultado): ?>
@@ -222,9 +219,9 @@ h2 {
       </div>
 
       <div class="botoes">
-        <a href="#" class="btn-detalhes">
+        <!-- <a href="#" class="btn-detalhes">
           <i class="fa-regular fa-eye"></i> Ver detalhes
-        </a>
+        </a> -->
         <a href="download_resultado.php?idResultado=<?= $resultado['id_resultado']; ?>" class="btn-baixar">
           <i class="fa-solid fa-file-arrow-down"></i> Baixar Resultado
         </a>

@@ -122,7 +122,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #14203B;
+  background: #172b5aff;
   color: #fff;
   padding: 15px;
   position: relative;
@@ -180,6 +180,7 @@ header {
 
 const profileBtn = document.getElementById('profile-btn');
 const profileMenu = document.getElementById('profile-menu');
+const closeMenu = document.getElementById('close-menu');
 
 profileBtn.addEventListener('click', () => {
   profileMenu.style.display = profileMenu.style.display === 'block' ? 'none' : 'block';
@@ -189,5 +190,9 @@ document.addEventListener('click', function(event) {
   if (!profileBtn.contains(event.target) && !profileMenu.contains(event.target)) {
     profileMenu.style.display = 'none';
   }
+});
+
+closeMenu.addEventListener('click', () => {
+  profileMenu.style.display = 'none';
 });
 </script>

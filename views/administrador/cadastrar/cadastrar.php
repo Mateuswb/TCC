@@ -35,7 +35,7 @@
       padding: 20px;
     }
 
-    /* CONTAINER PRINCIPAL */
+
     .container {
       display: flex;
       width: 90%;
@@ -48,10 +48,9 @@
       flex-wrap: wrap;
     }
 
-    /* LADO AZUL */
     .container-left {
       flex: 1 1 35%;
-      background-color: #005F9E;
+      background-color: #003b72ff;
       color: #fff;
       display: flex;
       flex-direction: column;
@@ -106,8 +105,7 @@
       background-color: #eaf1ff;
       transform: scale(1.05);
     }
-
-    /* LADO BRANCO */
+    
     .form {
       flex: 1 1 60%;
       padding: 60px 90px;
@@ -127,12 +125,13 @@
       text-align: center;
     }
     
-.radios{
-    margin-bottom: 3%;
+.radios {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
 }
 
 
-    /* ALERTA FIXO */
     .alert-error {
       position: absolute;
       top: 15px;
@@ -180,7 +179,7 @@
     }
 
     .form-control input:focus {
-      border-color: #1f67d3;
+      border-color: #003363ff;
       box-shadow: 0 0 6px rgba(31,103,211,0.3);
     }
 
@@ -201,7 +200,7 @@
       display: block;
     }
 
-    /* Estados */
+
     .form-control.success input {
       border: 1px solid #24C100;
     }
@@ -224,7 +223,7 @@
 
     #btn-criar-conta {
       width: 100%;
-      background-color: #005F9E;
+      background-color: #003b72ff;
       border: none;
       border-radius: 10px;
       color: #fff;
