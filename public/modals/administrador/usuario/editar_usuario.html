@@ -1,145 +1,134 @@
-<!-- Modal Editar Usuário -->
-<div id="modalEditarUsuario" class="modal">
-  <div class="modal-content">
-    <span class="close" id="closeModalEditar">&times;</span>
+<div id="modalEditarUsuario" class="modal-editar">
+  <div class="modal-editar-content">
+    <span class="modal-editar-close" id="closeModalEditar">&times;</span>
     <h2>Editar Usuário</h2>
-    <form id="formEditarUsuario" method="post" action="../../../controllers/AdministradorController.php">
+    <form id="formEditarUsuario" method="post" action="../../../controllers/AdministradorController.php?acao=editarUsuario">
       <input type="hidden" name="id_usuario" id="id_usuario">
       
-      <div class="form-control">
+      <div class="modal-editar-form-control">
         <label for="login">Login</label>
-        <input type="text" name="login" id="login" required>
+        <input type="text" name="cpf" id="login" required>
       </div>
 
-      <div class="form-control">
-        <label for="tipo_usuario">Tipo de Usuário</label>
-        <select name="tipo_usuario" id="tipo_usuario" required>
-          <option value="admin">Administrador</option>
-          <option value="user">Usuário</option>
-        </select>
-      </div>
-
-      <div class="form-control">
+      <div class="modal-editar-form-control">
         <label for="senha">Nova Senha <small>(opcional)</small></label>
         <input type="password" name="senha" id="senha" placeholder="Deixe em branco para não alterar">
       </div>
 
-      <div class="form-buttons">
-        <button type="submit" class="btn save">Salvar</button>
-        <button type="button" class="btn cancel" id="cancelModalEditar">Cancelar</button>
+      <div class="modal-editar-buttons">
+        <button type="submit" class="modal-editar-btn save">Salvar</button>
+        <button type="button" class="modal-editar-btn cancel" id="cancelModalEditar">Cancelar</button>
       </div>
     </form>
   </div>
 </div>
+</div>
 
 <style>
-.modal {
+.modal-editar {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  inset: 0;
   background-color: rgba(0,0,0,0.6);
   display: flex;
   justify-content: center;
   align-items: center;
   opacity: 0;
   visibility: hidden;
-  z-index: 1000;
+  z-index: 2000;
   transition: opacity 0.3s ease, visibility 0.3s ease;
+  font-family: 'Poppins', sans-serif;
 }
 
-.modal.show {
+.modal-editar.show {
   opacity: 1;
   visibility: visible;
 }
 
-.modal-content {
-  background-color: #fff;
-  padding: 30px 40px;
-  border-radius: 12px;
-  width: 450px;
-  max-width: 90%;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+.modal-editar-content {
+  background-color: #ffffff;
+  padding: 32px 42px;
+  border-radius: 14px;
+  width: 460px;
+  max-width: 92%;
+  box-shadow: 0 8px 35px rgba(0, 0, 0, 0.25);
   position: relative;
-  transform: translateY(-20px);
+  transform: translateY(-25px);
   transition: transform 0.3s ease;
 }
 
-.modal.show .modal-content {
+.modal-editar.show .modal-editar-content {
   transform: translateY(0);
 }
 
-.modal-content h2 {
+.modal-editar-content h2 {
   text-align: center;
   color: #004aad;
-  margin-bottom: 24px;
+  margin-bottom: 26px;
   font-size: 24px;
+  font-weight: 600;
 }
 
-.modal-content .form-control {
+.modal-editar-form-control {
   margin-bottom: 18px;
 }
 
-.modal-content label {
+.modal-editar-form-control label {
   display: block;
   margin-bottom: 6px;
   font-weight: 600;
   color: #222;
 }
 
-.modal-content input,
-.modal-content select {
+.modal-editar-form-control input {
   width: 100%;
   padding: 10px 12px;
   font-size: 16px;
-  border: 2px solid #ccc;
+  border: 2px solid #d0d0d0;
   border-radius: 8px;
   outline: none;
   transition: all 0.2s;
 }
 
-.modal-content input:focus,
-.modal-content select:focus {
+.modal-editar-form-control input:focus {
   border-color: #004aad;
   box-shadow: 0 0 8px rgba(0,74,173,0.3);
 }
 
-.modal-content .form-buttons {
+.modal-editar-buttons {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
   margin-top: 20px;
 }
 
-.modal-content .btn.save {
-  background-color: #004aad;
-  color: #fff;
+.modal-editar-btn {
   border: none;
-  padding: 10px 20px;
+  padding: 10px 22px;
   font-weight: 600;
   border-radius: 8px;
   cursor: pointer;
   transition: 0.2s;
 }
 
-.modal-content .btn.save:hover {
+.modal-editar-btn.save {
+  background-color: #004aad;
+  color: #fff;
+}
+
+.modal-editar-btn.save:hover {
   background-color: #003b88;
 }
 
-.modal-content .btn.cancel {
+.modal-editar-btn.cancel {
   background-color: #ccc;
   color: #222;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.2s;
 }
 
-.modal-content .btn.cancel:hover {
-  background-color: #bbb;
+.modal-editar-btn.cancel:hover {
+  background-color: #b8b8b8;
 }
 
-.modal-content .close {
+.modal-editar-close {
   position: absolute;
   right: 18px;
   top: 18px;
@@ -150,7 +139,7 @@
   transition: color 0.2s;
 }
 
-.modal-content .close:hover {
+.modal-editar-close:hover {
   color: #004aad;
 }
 </style>
@@ -163,7 +152,6 @@ const cancelEditar = document.getElementById("cancelModalEditar");
 function abrirModalEditarUsuario(botao) {
   document.getElementById("id_usuario").value = botao.dataset.id;
   document.getElementById("login").value = botao.dataset.login;
-  document.getElementById("tipo_usuario").value = botao.dataset.tipo;
   document.getElementById("senha").value = "";
   modalEditar.classList.add("show");
 }

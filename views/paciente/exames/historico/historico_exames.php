@@ -38,6 +38,7 @@
 
   <!-- IMPORT DO CSS -->
   <link rel="stylesheet" href="../../../../public/assets/css/paciente/exames/historico_exames.css">
+  <link rel="shortcut icon" href="../../../../public/assets/imgs/logo_medhub.png">
 
 </head>
 

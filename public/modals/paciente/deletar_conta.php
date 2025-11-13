@@ -18,7 +18,8 @@
         </form>
         
         <span onclick="fecharModalExcluir()" 
-              style="position:absolute; top:10px; right:15px; cursor:pointer; font-weight:bold;">&times;</span>
+            style="position:absolute; top:10px; right:15px; cursor:pointer; font-weight:bold;">&times;
+        </span>
     </div>
 </div>
 

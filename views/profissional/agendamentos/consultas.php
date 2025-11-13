@@ -31,7 +31,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Agenda - Profissional</title>
+  <title>MedHub - Agendamentos</title>
 
   <!-- IMPORT DO CALENDER -->
   <script src="../../../libs/calender/index.global.min.js"></script>

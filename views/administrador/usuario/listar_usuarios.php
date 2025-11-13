@@ -56,7 +56,7 @@
                 <td><?= $usuario['data_criacao']; ?></td>
                 <td>
                   <button class="btn edit" 
-                      data-id4234="<?= $usuario['id_usuario']; ?>" 
+                      data-id="<?= $usuario['id_usuario']; ?>" 
                       data-login="<?= $usuario['login']; ?>" 
                       data-tipo="<?= $usuario['tipo_usuario']; ?>"
                       onclick="abrirModalEditarUsuario(this)">

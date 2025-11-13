@@ -726,6 +726,74 @@
             header("Location: ../views/administrador/usuario/listar_usuarios.php");
             exit;
         }   
+
+      public function editarUsuario() {
+            try {
+                session_start();
+
+                $idUsuario = $_POST['id_usuario'];
+                $cpfNovo = str_replace(['.', '-'], '', trim($_POST['cpf']));
+                $senhaNova = isset($_POST['senha']) ? trim($_POST['senha']) : '';
+
+                $usuarioAtual = $this->usuarioModel->buscarPorId($idUsuario);
+
+                if (!$usuarioAtual) {
+                    throw new Exception("Usuário não encontrado.");
+                }
+
+                $cpfAntigo = $usuarioAtual['login'];
+                $tipoUsuario = $usuarioAtual['tipo_usuario'];
+                $senhaAntiga = $usuarioAtual['senha'];
+
+                if (empty($senhaNova)) {
+                    $senhaFinal = $senhaAntiga;
+                } else {
+                    $senhaFinal = password_hash($senhaNova, PASSWORD_DEFAULT);
+                }
+
+                $atualizado = $this->usuarioModel->editarUsuario($idUsuario, $cpfNovo, $senhaFinal);
+
+                if (!$atualizado) {
+                    throw new Exception("Erro ao atualizar os dados do usuário.");
+                }
+
+                if ($cpfAntigo !== $cpfNovo) {
+                    switch ($tipoUsuario) {
+                        case 'paciente':
+                            $this->pacienteModel->atualizarCpfPaciente($cpfAntigo, $cpfNovo);
+                            break;
+
+                        case 'profissional':
+                            $this->profissionalModel->atualizarCpfProfissional($cpfAntigo, $cpfNovo);
+                            break;
+
+                        case 'admin':
+
+                            break;
+                    }
+                }
+
+                $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => 'Dados atualizados com sucesso.'
+                ];
+
+                header("Location: ../views/administrador/usuario/listar_usuarios.php");
+                exit;
+
+            } catch (Exception $e) {
+                session_start();
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => 'Erro ao editar dados: ' . $e->getMessage()
+                ];
+                header("Location: ../views/administrador/usuario/listar_usuarios.php");
+                exit;
+            }
+        }
+
+
+    
     }
 
     $controller = new AdministradorController($conn);
@@ -769,6 +837,9 @@
                 break;
             case 'bloquearUsuario':
                 $controller->bloquearUsuario();
+                break;
+            case 'editarUsuario':
+                $controller->editarUsuario();
                 break;
             default:
                 echo "Ação inválida";

@@ -30,7 +30,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Histórico de Consultas</title>
+<title>MedHub - Histórico agendamentos</title>
 
   <!-- IMPORT DO CSS-->
   <link rel="stylesheet" href="../../../public/assets/css/profissional/historico_consultas.css">

@@ -72,7 +72,7 @@ class Profissional {
             ':sexo' => $sexo,
             ':estado_civil' => $estadoCivil,
             ':crm_crp' => $crmCrp,
-            ':especialidade' => json_encode($especialidade), // array para JSON
+            ':especialidade' => json_encode($especialidade),
             ':endereco' => $endereco,
             ':numero_casa' => $numeroCasa,
             ':bairro' => $bairro,
@@ -219,6 +219,16 @@ class Profissional {
         $query->execute([':idProfissional' => $idProfissional]);
         return $query->fetchColumn() > 0;
     }
+
+    public function atualizarCpfProfissional($cpfAntigo, $cpfNovo) {
+        $sql = "UPDATE profissionais SET cpf = :novoCpf WHERE cpf = :cpfAntigo";
+        $query = $this->conn->prepare($sql);
+        return $query->execute([
+            ':novoCpf' => $cpfNovo,
+            ':cpfAntigo' => $cpfAntigo
+        ]);
+    }
+
 
 }
 ?>

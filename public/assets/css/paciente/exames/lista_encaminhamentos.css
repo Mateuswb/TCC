@@ -99,7 +99,7 @@
   width: 60px;
   height: 60px;
   border-radius: 14px;
-  background: linear-gradient(180deg,#eef7ff,#d0eaff);
+  background: linear-gradient(180deg,#d6ecff,#66b2f0);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -121,7 +121,7 @@
   transform: translateX(-50%);
   background: #fff5cb;
   color: #795c00;
-  padding: 6px 20px;
+  padding: 6px 30px;
   border-radius: 999px;
   font-weight: 700;
   font-size: 15px;
@@ -142,7 +142,7 @@
 }
 
 .btn-agendar {
-  padding: 10px 50px;
+  padding: 10px 60px;
   border-radius: 12px;
   font-weight: 600;
   font-size: 14px;
@@ -175,4 +175,11 @@
 .btn-detalhes:hover {
   background: #d0eaff;
   transform: translateY(-2px);
+}
+
+
+.no-encaminhamentos{
+  text-align: center;
+  color: black;
+  font-size: 15px;
 }

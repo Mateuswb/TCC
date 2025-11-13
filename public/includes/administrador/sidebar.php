@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <div class="sidebar" id="sidebar">
-    <h2>ClinicAdmin</h2>
+    <h2>MedHub Admin</h2>
 
     <a href="<?= BASE_URL ?>/views/administrador/home.php"
         class="<?= ($currentFile == 'home.php') ? 'active' : '' ?>">

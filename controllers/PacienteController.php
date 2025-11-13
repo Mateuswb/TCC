@@ -94,11 +94,18 @@
                         exit;
                     }
                 } else {
-                    header("Location: ../views/index.php"); 
+                     $_SESSION['flash'] = [
+                        'type' => 'success',
+                        'message' => "Conta criada com sucesso."
+                    ];
+                    header("Location: ../views/index.php");
                     exit;
                 }
             } else {
-                $_SESSION['error'] = "Erro ao criar o usuário.";
+                 $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => "Erro ao criar usuário. Tente novamente."
+                ];
                 header("Location: ../views/index.php");
                 exit;
             }

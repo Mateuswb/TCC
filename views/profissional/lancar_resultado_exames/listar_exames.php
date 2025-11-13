@@ -14,7 +14,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Exames Pendentes</title>
+<title>MedHub - Resultados</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 * {
@@ -102,7 +102,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    background: linear-gradient(90deg, #2563eb, #1d4ed8);
+    background: linear-gradient(90deg, #0049d1ff, #0638c2ff);
     color: #fff;
     font-weight: 600;
     border: none;
@@ -115,7 +115,7 @@ body {
   }
 
   .btn-lancar:hover {
-    background: linear-gradient(90deg, #1d4ed8, #1e40af);
+    background: linear-gradient(90deg, #0e46e2ff, #00218dff);
     transform: translateY(-2px);
   }
 
@@ -200,12 +200,12 @@ body {
     color: #000;
   }
 
-  .no-exames {
-    text-align: center;
-    font-size: 1.1rem;
-    color: #475569;
-    padding: 50px 0;
-  }
+.no-exames {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #475569;
+  padding: 50px 0;
+}
 input[type="file"] {
   display: none;
 }
@@ -271,9 +271,10 @@ input[type="file"] {
           action="../../../controllers/ResultadoExameController.php?acao=enviarResultadoExame">
       <input type="hidden" name="idAgendamento" id="idAgendamento">
       <label for="arquivo" class="custom-file-upload">
-  <i class="fa-solid fa-file-arrow-up"></i> Escolher arquivo
-  </label>
-  <input id="arquivo" type="file" name="resultado_exame" accept=".pdf" required>
+        <i class="fa-solid fa-file-arrow-up"></i> Escolher arquivo
+      </label>
+      
+      <input id="arquivo" type="file" name="resultado_exame" accept=".pdf" required>
       <button type="submit"><i class="fa-solid fa-save"></i> Enviar Resultado</button>
     </form>
   </div>

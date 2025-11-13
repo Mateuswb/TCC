@@ -609,6 +609,7 @@ footer {
 
 </head>
 <body>
+
 <header id="site-header" aria-label="Cabeçalho do site">
   <div class="container header-inner">
     <div style="display:flex;align-items:center;gap:12px">
@@ -649,6 +650,7 @@ footer {
 </header>
 
 <main>
+  <?php include '../public/assets/alerta/flash.php'; ?>
 
   <!-- HERO -->
   <section id="home" class="section hero" aria-label="Hero — Agende consultas e exames">

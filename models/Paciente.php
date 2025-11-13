@@ -164,5 +164,16 @@ class Paciente {
             throw $e; 
         }
     }
+
+    public function atualizarCpfPaciente($cpfAntigo, $cpfNovo) {
+        $sql = "UPDATE pacientes SET cpf = :novoCpf WHERE cpf = :cpfAntigo";
+        $query = $this->conn->prepare($sql);
+        return $query->execute([
+            ':novoCpf' => $cpfNovo,
+            ':cpfAntigo' => $cpfAntigo
+        ]);
+    }
+
+
 }
 ?>

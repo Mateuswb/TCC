@@ -132,5 +132,13 @@
             ]);
         }
 
+        public function buscarPorId($idUsuario) {
+            $sql = "SELECT * FROM usuarios WHERE id_usuario = :id";
+            $query = $this->conn->prepare($sql);
+            $query->execute([':id' => $idUsuario]);
+            return $query->fetch(PDO::FETCH_ASSOC); 
+        }
+
+
     }
 ?>

@@ -5,10 +5,11 @@
   include '../../../../public/includes/paciente/sidebar.php';
   include '../../../../public/includes/paciente/header.php';
   include '../../../../public/includes/paciente/footer.php';
-  include 'agendar_exame.php';
+
+  #modals
+  include '../../../../public/modals/paciente/exames/agendar_exame.html';
   
   require_once "../../../../controllers/EncaminhamentoController.php";
-
   $controller = new EncaminhamentoController($conn);
   $encaminhamentos = $controller->listarEncaminhamentosPorPaciente($idPaciente);
 ?>
@@ -22,8 +23,9 @@
 
   <!-- IMPORT DO CSS-->
   <link rel="stylesheet" href="../../../../public/assets/css/paciente/exames/lista_encaminhamentos.css">
-
+  
 </head>
+
   
 <body>
   <?php include '../../../../public/assets/alerta/flash.php'; ?>
@@ -44,7 +46,7 @@
 
               <div style="flex:1">
                 <h3><?php echo htmlspecialchars($p['exame']); ?></h3>
-                <div style="font-size:13px;color:var(--muted);margin-top:6px">
+                <div style="font-size:15px;color:var(--muted);margin-top:6px">
                   Encaminhado por:<br>
                   <strong style="color:#113a58;font-weight:600">
                     <?php echo htmlspecialchars($p['profissional_encaminhou']); ?>
@@ -65,7 +67,7 @@
 
         <?php endforeach; ?>
       <?php else: ?>
-        <p style="text-align:center;color:var(--muted);font-size:15px;">Nenhum encaminhamento disponível no momento.</p>
+        <p class="no-encaminhamentos">Nenhum encaminhamento disponível no momento.</p>
       <?php endif; ?>
     </section>
   </main>

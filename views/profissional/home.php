@@ -28,7 +28,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Dashboard - HealthEase (Clone)</title>
+  <title>MedHub - Profissional Dashboard</title>
 
   <!-- IMPORT DO CSS -->
   <link rel="stylesheet" href="../../public/assets/css/profissional/home.css">

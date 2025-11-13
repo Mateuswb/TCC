@@ -24,7 +24,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Perfil do Profissional</title>
+  <title>MedHub - Perfil</title>
 
   <!-- IMPORT DO CSS -->
   <link rel="stylesheet" href="../../public/assets/css/profissional/perfil.css">

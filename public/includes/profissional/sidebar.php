@@ -28,7 +28,7 @@ rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <div class="sidebar" id="sidebar">
-  <h2>Meu Painel</h2>
+  <h2>Med Hub</h2>
 
     <a href="<?= BASE_URL ?>/views/profissional/home.php"
         class="<?= ($currentFile == 'home.php') ? 'active' : '' ?>">

@@ -31,15 +31,12 @@ body {
     cursor: pointer;
 }
 
-
-
 .profile {
     font-weight: bold;
 }
 
-
 .content {
-    margin-left: 300px;
+    margin-left: 290px;
     margin-top: 50px;
     padding: 20px;
     width: 100%;
