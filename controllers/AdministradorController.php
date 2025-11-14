@@ -711,6 +711,7 @@
 
             $bloquear = $this->usuarioModel->bloquearUsuario($idUsuario);
 
+            session_start();
             if($bloquear){
                 $_SESSION['flash'] = [
                     'type' => 'success',
@@ -721,6 +722,28 @@
                 $_SESSION['flash'] = [
                     'type' => 'error',
                     'message' => 'Erro ao bloquear usuário. Tente Novamente.'
+                ];
+            }
+            header("Location: ../views/administrador/usuario/listar_usuarios.php");
+            exit;
+        }   
+
+        public function desbloquearUsuario(){
+            $idUsuario = $_POST['idUsuario'];
+
+            $bloquear = $this->usuarioModel->desbloquearUsuario($idUsuario);
+
+            session_start();
+            if($bloquear){
+                $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => 'Usuário desbloqueado com sucesso'
+                ];
+            }
+            else{
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => 'Erro ao desbloquear usuário. Tente Novamente.'
                 ];
             }
             header("Location: ../views/administrador/usuario/listar_usuarios.php");
@@ -837,6 +860,9 @@
                 break;
             case 'bloquearUsuario':
                 $controller->bloquearUsuario();
+                break;
+            case 'desbloquearUsuario':
+                $controller->desbloquearUsuario();
                 break;
             case 'editarUsuario':
                 $controller->editarUsuario();

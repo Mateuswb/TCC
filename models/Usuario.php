@@ -132,6 +132,15 @@
             ]);
         }
 
+        public function desbloquearUsuario($usuarioId){
+            $sql = "UPDATE usuarios SET status = 'ativo' WHERE id_usuario = :idUsuario";
+            $query = $this->conn->prepare($sql);
+            
+            return $query->execute([
+                ':idUsuario' => $usuarioId
+            ]);
+        }
+
         public function buscarPorId($idUsuario) {
             $sql = "SELECT * FROM usuarios WHERE id_usuario = :id";
             $query = $this->conn->prepare($sql);

@@ -8,6 +8,7 @@
   require "../../../public/modals/administrador/usuario/editar_usuario.html";
   require "../../../public/modals/administrador/usuario/deletar_usuario.html";
   require "../../../public/modals/administrador/usuario/bloquear_usuario.html";
+  require "../../../public/modals/administrador/usuario/desbloquear_usuario.html";
 
   $controller = new AdministradorController($conn);
   $usuarios = $controller->listarUsuarios();
@@ -44,6 +45,7 @@
               <th>Data Criação</th>
               <th>Editar</th>
               <th>Bloquear</th>
+              <th>Desbloquear</th>
               <th>Deletar</th>
             </tr>
           </thead>
@@ -68,6 +70,13 @@
                   <button class="btn bloq" 
                     data-id="<?= $usuario['id_usuario']; ?>" 
                     onclick="abrirModalBloquear(this)">
+                    <i class="fas fa-user-slash"></i>
+                  </button >
+                </td>
+                <td>
+                  <button class="btn desbloquear" 
+                    data-id-desbloquear="<?= $usuario['id_usuario']; ?>" 
+                    onclick="abrirModalDesbloquear(this)">
                     <i class="fas fa-user-slash"></i>
                   </button >
                 </td>

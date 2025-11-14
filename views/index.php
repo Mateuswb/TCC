@@ -209,6 +209,7 @@ main {
 
 .btn-primary {
   background-color: #00284e;
+  color: white;
   padding: 12px 22px;
   border-radius: 12px;
   font-weight: 800;
@@ -347,7 +348,7 @@ main {
 .agendar {
   background: linear-gradient(180deg, var(--primary), #0f5f8c);
   color: var(--white);
-  margin-top: 90px;
+  margin-top: 2px;
   overflow: visible;
   position: relative;
 }
@@ -725,7 +726,7 @@ footer {
         <ul class="feature-list">
           <li class="feature-item"><i class="fa-solid fa-calendar-check"></i><span>Marque consultas e exames online</span></li>
           <li class="feature-item"><i class="fa-solid fa-bell"></i><span>Receba notificações automáticas</span></li>
-          <li class="feature-item"><i class="fa-solid fa-file-medical"></i><span>Laudos e resultados digitais</span></li>
+          <li class="feature-item"><i class="fa-solid fa-file-medical"></i><span>Resultados digitais</span></li>
         </ul>
 
         <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:10px">
@@ -806,11 +807,11 @@ footer {
           </div>
           <div class="exam-card">
             <strong>Imagem</strong>
-            <p style="margin-top:6px;font-size:.95rem">Ultrassom, raio-X e tomografia com laudo digital.</p>
+            <p style="margin-top:6px;font-size:.95rem">Ultrassom, raio-X e tomografia.</p>
           </div>
           <div class="exam-card">
-            <strong>Check-ups</strong>
-            <p style="margin-top:6px;font-size:.95rem">Programas personalizados para sua saúde.</p>
+            <strong>Sangue</strong>
+            <p style="margin-top:6px;font-size:.95rem">Hemograma, triglicerídeos, glicemia, colesterol</p>
           </div>
         </div>
       </div>
@@ -841,9 +842,7 @@ footer {
           MedHub
         </div>
       </div>
-      <small style="color:rgba(255,255,255,0.8);margin-top:8px;display:block;font-size:0.9rem;">
-        © 2025 <strong>MedHub</strong> | Todos os direitos reservados
-      </small>
+      <p style="color:rgba(255,255,255,0.8);margin-top:8px;display:block;font-size:0.9rem;">© 2025 <strong>MedHub</strong> | Todos os direitos reservados</p>
     </div>
 
     <div>

@@ -44,10 +44,9 @@ session_start();
       flex-wrap: wrap;
     }
 
-    /* LADO AZUL */
     .container-left {
       flex: 1 1 35%;
-      background-color: #005F9E;
+      background: linear-gradient(135deg, #0b3b88 40%, #0e58a3 100%);
       color: #fff;
       display: flex;
       flex-direction: column;
@@ -215,7 +214,7 @@ session_start();
 
     #btn-criar-conta {
       width: 100%;
-      background-color: #005F9E;
+      background-color: #0b3b88;
       border: none;
       border-radius: 10px;
       color: #fff;
@@ -227,7 +226,7 @@ session_start();
     }
 
     #btn-criar-conta:hover {
-      background-color: #00426eff;
+      background-color: #032a69ff;
       transform: scale(1.02);
     }
 
