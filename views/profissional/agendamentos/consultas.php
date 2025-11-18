@@ -297,8 +297,13 @@ h1 {
         </div>
 
         <div class="filter-item">
-            <label for="dataFiltro">Data</label>
-            <input type="date" id="dataFiltro" onchange="filtrarEventos()">
+            <label for="statusFiltro">Status</label>
+            <select id="statusFiltro" onchange="filtrarEventos()">
+                <option value="todos">Todos</option>
+                <option value="agendado">Agendado</option>
+                <option value="cancelado">Cancelado</option>
+                <option value="realizado">Finalizado</option>
+            </select>
         </div>
 
         <div class="filter-item">
@@ -567,62 +572,58 @@ function executarAcaoExame(acao) {
     }
 }
 
-function filtrarEventos() {
-  const filtro = document.getElementById('tipoFiltro').value;
-
-  calendar.getEvents().forEach(event => {
-    if (filtro === 'todos' || event.extendedProps.tipo === filtro) {
-      event.setProp('display', 'auto');
-    } else {
-      event.setProp('display', 'none');
-    }
-  });
-}
 </script>
 
 
 </body>
 </html>
 
-
 <script>
-function filtrarEventos() {
-    const tipoFiltro = document.getElementById("tipoFiltro").value;
-    const dataFiltro = document.getElementById("dataFiltro").value;
-    const pacienteFiltro = document.getElementById("pacienteFiltro").value.toLowerCase();
+  function filtrarEventos() {
+      const tipoFiltro = document.getElementById("tipoFiltro").value;
+      const statusFiltro = document.getElementById("statusFiltro").value.toLowerCase();
+      const pacienteFiltro = document.getElementById("pacienteFiltro").value.toLowerCase();
 
-    // Mapeamento dos valores do select para os tipos usados no evento
-    const tipoMap = {
-        'consulta': 'c',
-        'retorno': 'r',
-        'exame': 'e',
-        'todos': 'todos'
-    };
+      const tipoMap = {
+          'consulta': 'c',
+          'retorno': 'r',
+          'exame': 'e',
+          'todos': 'todos'
+      };
 
-    calendar.getEvents().forEach(event => {
-        let mostrar = true;
+      calendar.getEvents().forEach(event => {
+          let mostrar = true;
 
-        const tipo = event.extendedProps.tipo;
-        const paciente = event.title.toLowerCase(); 
-        const dataEvento = event.start.toISOString().slice(0, 10);
+          const tipo = event.extendedProps.tipo;
+          const paciente = event.title.toLowerCase(); 
+          const status = event.extendedProps.status.toLowerCase(); 
 
-        // filtro por tipo
-        if (tipoFiltro !== "todos" && tipo !== tipoMap[tipoFiltro]) {
-            mostrar = false;
-        }
+          if (tipoFiltro !== "todos" && tipo !== tipoMap[tipoFiltro]) {
+              mostrar = false;
+          }
 
-        // filtro por data
-        if (dataFiltro !== "" && dataEvento !== dataFiltro) {
-            mostrar = false;
-        }
+          if (pacienteFiltro !== "" && !paciente.includes(pacienteFiltro)) {
+              mostrar = false;
+          }
 
-        // filtro por paciente
-        if (pacienteFiltro !== "" && !paciente.includes(pacienteFiltro)) {
-            mostrar = false;
-        }
+          if (statusFiltro !== "todos") {
+              const variacoes = {
+                  agendado: ["agendado", "agendada"],
+                  cancelado: ["cancelado", "cancelada"],
+                  realizado: ["realizado", "realizada"]
+              };
+              if (!variacoes[statusFiltro].includes(status)) {
+                  mostrar = false;
+              }
+          }
+          if (mostrar) {
+              event.setProp("display", "auto");
+          } else {
+              event.setProp("display", "none");
+          }
 
-        event.setProp("display", mostrar ? "auto" : "none");
-    });
-}
+          event.setProp("display", mostrar ? "auto" : "none");
+      });
+  }
 
 </script>
