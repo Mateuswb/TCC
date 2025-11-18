@@ -68,7 +68,7 @@ rel="stylesheet">
         class="<?= ($currentFile == 'perfil.php') ? 'active' : '' ?>">
     <i class="fa-solid fa-user"></i> <span>Perfil</span>
 
-    <a onclick="abrirModalLogout()" class="logout">
+    <a href="javascript:void(0)" onclick="abrirModalLogout()" class="logout">
         <i class="fas fa-sign-out-alt"></i> <span>Sair</span>
     </a>
 
@@ -114,7 +114,7 @@ rel="stylesheet">
     margin-bottom: 30px;
     font-size: 20px;
     text-align: center;
-    transition: 0.3s;
+    /* transition: 0.3s; */
     }
 
     .sidebar.collapsed h2 {

@@ -7,15 +7,6 @@
   include '../../../public/includes/profissional/header.php';
   include '../../../public/includes/profissional/footer.html';
 
-  // Modals de consulta
-  include '../../../public/modals/profissional/consultas/cancelar_consulta.php';
-  include '../../../public/modals/profissional/consultas/encaminhar_consulta.php';
-  include '../../../public/modals/profissional/consultas/finalizar_consulta.php';
-
-  // Modal de exame
-  include '../../../public/modals/profissional/exames/finalizar_exame.php';
-  include '../../../public/modals/profissional/exames/cancelar_exame.php';
-
   $idProfissional = $_SESSION['idProfissional'];
   $controller = new AgendamentoConsultaController($conn);
   $agendamentos = $controller->listarAgendamentosDoProfissional($idProfissional);
@@ -75,6 +66,7 @@ body {
   flex-direction: column;
   margin-bottom: 35px;
   margin-top: 17px;
+  margin-left: -20px;
 }
 
 .content {
@@ -91,36 +83,56 @@ h1 {
   font-weight: 700;
 }
 
+
 .filter-bar {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  padding: 12px 16px;
-  background: #fff;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
-  font-size: 15px;
-  font-weight: 600;
-}
-
-.filter-bar label {
-  color: #333;
-}
-
-.filter-bar select {
-  padding: 6px 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  width: 100%;
+  padding: 16px 20px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
   font-size: 14px;
-  background: #f9f9f9;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  font-weight: 600;
+  margin-bottom: 24px;
 }
 
-.filter-bar select:hover {
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filter-item label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+
+.filter-item select,
+.filter-item input {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  background: #f7f8fa;
+  font-size: 14px;
+  transition: all 0.25s ease;
+}
+
+
+.filter-item select:hover,
+.filter-item input:hover {
+  border-color: #3498db;
+}
+
+.filter-item select:focus,
+.filter-item input:focus {
   border-color: #2980b9;
+  box-shadow: 0 0 0 3px rgba(52,152,219,0.15);
+  outline: none;
 }
 
 /* Calendario */
@@ -159,7 +171,7 @@ h1 {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 
-/* modals */
+
 .modal {
   display: none;
   position: fixed;
@@ -269,15 +281,32 @@ h1 {
 <div class="main">
   <?php include '../../../public/assets/alerta/flash.php'; ?>
   <div class="content">
+   <div class="filter-container">
+    <h3 class="filter-title">Filtros de Agendamentos</h3>
+
     <div class="filter-bar">
-      <label for="tipoFiltro">Filtrar por tipo:</label>
-      <select id="tipoFiltro" onchange="filtrarEventos()">
-        <option value="todos">Todos</option>
-        <option value="c">Consulta</option>
-        <option value="e">Exame</option>
-        <option value="r">Retorno</option>
-      </select>
+
+        <div class="filter-item">
+            <label for="tipoFiltro">Tipo</label>
+            <select id="tipoFiltro" onchange="filtrarEventos()">
+                <option value="todos">Todos</option>
+                <option value="consulta">Consulta</option>
+                <option value="exame">Exame</option>
+                <option value="retorno">Retorno</option>
+            </select>
+        </div>
+
+        <div class="filter-item">
+            <label for="dataFiltro">Data</label>
+            <input type="date" id="dataFiltro" onchange="filtrarEventos()">
+        </div>
+
+        <div class="filter-item">
+            <label for="pacienteFiltro">Paciente</label>
+            <input type="text" id="pacienteFiltro" placeholder="Buscar paciente..." onkeyup="filtrarEventos()">
+        </div>
     </div>
+</div>
 
     <div class="calendar" id="calendar"></div>
 
@@ -303,6 +332,15 @@ h1 {
     </div>
   </div>
 </div>
+
+<?php
+  include '../../../public/modals/profissional/consultas/cancelar_consulta.php';
+  include '../../../public/modals/profissional/consultas/encaminhar_consulta.php';
+  include '../../../public/modals/profissional/consultas/finalizar_consulta.php';
+
+  include '../../../public/modals/profissional/exames/finalizar_exame.php';
+  include '../../../public/modals/profissional/exames/cancelar_exame.php';
+?>
 
 <script>
 let calendar;
@@ -545,3 +583,46 @@ function filtrarEventos() {
 
 </body>
 </html>
+
+
+<script>
+function filtrarEventos() {
+    const tipoFiltro = document.getElementById("tipoFiltro").value;
+    const dataFiltro = document.getElementById("dataFiltro").value;
+    const pacienteFiltro = document.getElementById("pacienteFiltro").value.toLowerCase();
+
+    // Mapeamento dos valores do select para os tipos usados no evento
+    const tipoMap = {
+        'consulta': 'c',
+        'retorno': 'r',
+        'exame': 'e',
+        'todos': 'todos'
+    };
+
+    calendar.getEvents().forEach(event => {
+        let mostrar = true;
+
+        const tipo = event.extendedProps.tipo;
+        const paciente = event.title.toLowerCase(); 
+        const dataEvento = event.start.toISOString().slice(0, 10);
+
+        // filtro por tipo
+        if (tipoFiltro !== "todos" && tipo !== tipoMap[tipoFiltro]) {
+            mostrar = false;
+        }
+
+        // filtro por data
+        if (dataFiltro !== "" && dataEvento !== dataFiltro) {
+            mostrar = false;
+        }
+
+        // filtro por paciente
+        if (pacienteFiltro !== "" && !paciente.includes(pacienteFiltro)) {
+            mostrar = false;
+        }
+
+        event.setProp("display", mostrar ? "auto" : "none");
+    });
+}
+
+</script>

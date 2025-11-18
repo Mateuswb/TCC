@@ -7,11 +7,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>MedHub — Agende Consultas e Exames</title>
+  <link rel="shortcut icon" href="../public/assets/icones/favicon.ico" type="image/x-icon">
 
   <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Icons -->
   <script src="https://kit.fontawesome.com/4b60c7eafd.js" crossorigin="anonymous"></script>
 
  <style>

@@ -5,10 +5,6 @@
     include '../../public/includes/profissional/header.php';
     include '../../public/includes/profissional/footer.html';
     include '../../controllers/UsuarioController.php';
-    
-    #modals
-    include '../../public/modals/profissional/inativar_conta.html';
-    include '../../public/modals/profissional/deletar_conta.html';
 
     $id_profissional = $_SESSION['idProfissional'];
 
@@ -487,3 +483,8 @@
   </script>
 </body>
 </html>
+
+<?php
+  include '../../public/modals/profissional/inativar_conta.html';
+  include '../../public/modals/profissional/deletar_conta.html';
+?>

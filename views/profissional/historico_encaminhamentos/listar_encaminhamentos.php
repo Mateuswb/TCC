@@ -4,9 +4,6 @@
     include '../../../public/includes/profissional/header.php';
     include '../../../public/includes/profissional/footer.html';
 
-    include 'modal_reencaminhar.php';
-    include 'modal_cancelar_exame.php';
-
     $idProfissional = $_SESSION['idProfissional'];
 
     require_once "../../../controllers/EncaminhamentoController.php";
@@ -260,6 +257,11 @@
         <?php endif; ?>
     </div>
 </main>
+
+<?php
+    require 'modal_reencaminhar.php';
+    require 'modal_cancelar_exame.php';
+?>
 
 <script>
     // cancelar

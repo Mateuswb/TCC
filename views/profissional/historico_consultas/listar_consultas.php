@@ -5,9 +5,6 @@
     include '../../../public/includes/profissional/footer.html';
     include '../../../controllers/RelatorioController.php'; 
 
-    #modals
-    include '../../../public/modals/profissional/consultas/detalhes_consulta.html';
-
     $idProfissional = $_SESSION['idProfissional'];
     $controllerRelatorio = new RelatorioController($conn);
     $consultas = $controllerRelatorio->listarAgendamentosProfissional($idProfissional);
@@ -23,7 +20,6 @@
     $percentCanceladas = $totalAgendamentos['total_agendamentos'] > 0
     ? round(($totalCanceladas['total_canceladas'] / $totalAgendamentos['total_agendamentos']) * 100, 1)
     : 0;
-
 ?>
 
 <!DOCTYPE html>
@@ -113,9 +109,12 @@
       <?php } ?>
       </tbody>
     </table>
-
   </div>
 </div>
 </body>
 </html>
+
+<?php
+  include '../../../public/modals/profissional/consultas/detalhes_consulta.html';
+?>
 

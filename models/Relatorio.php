@@ -108,8 +108,6 @@
                 WHERE hp.id_profissional = :idProfissional
 
                 ORDER BY dia_agendamento DESC, horario_agendamento ASC;
-                ;
-
             ";
 
             $stmt = $this->conn->prepare($sql);
@@ -198,10 +196,11 @@
             return $stmt->fetch(PDO::FETCH_ASSOC);
         }
 
-        # listar os paciente que já realizaram uma consulta com um profissional
+        # listar os pacientes que já realizaram uma consulta com um profissional
         public function listarPacientesPorProfissional($profissionalId) {
             $sql = "SELECT DISTINCT 
                         p.*, 
+                        u.status,
                         TIMESTAMPDIFF(YEAR, p.data_nascimento, CURDATE()) AS idade, 
                         u.status,
                         MAX(a.dia_agendamento) AS ultima_consulta,
@@ -429,7 +428,6 @@
         }
 
         public function contarConsultasERetornos($idProfissional) {
-            // total de primeiras consultas
             $sqlConsulta = "SELECT COUNT(*) AS total_consultas
                     FROM agendamentos_consultas ac
                     INNER JOIN horarios_profissionais hp 

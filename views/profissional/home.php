@@ -5,7 +5,6 @@
     include '../../public/includes/profissional/sidebar.php';
     include '../../public/includes/profissional/header.php';
     include '../../public/includes/profissional/footer.html';
-    include '../../public/modals/profissional/cadastrar_horario.php';
     require_once '../../controllers/RelatorioController.php';
     require_once '../../controllers/HorarioController.php';
 
@@ -221,6 +220,10 @@ fetch("../../controllers/RelatorioController.php?acao=compararAtendimentosSemana
 </body>
 </html>
 
+<?php
+  include '../../public/modals/profissional/cadastrar_horario.php';
+?>
+
 <script>
     document.addEventListener("DOMContentLoaded", function() {
       <?php if (!$temHorarios): ?>
@@ -229,3 +232,5 @@ fetch("../../controllers/RelatorioController.php?acao=compararAtendimentosSemana
       <?php endif; ?>
     });
 </script> 
+
+
