@@ -5,8 +5,6 @@
   include '../../../public/includes/paciente/sidebar.php'; 
   include '../../../public/includes/paciente/header.php'; 
   include '../../../public/includes/paciente/footer.php'; 
-  include '../../../public/modals/paciente/modal_cancelamento_consulta.html';
-  include '../../../public/modals/paciente/modal_editar_consulta.html';
 
   require_once "../../../controllers/PacienteController.php";
 
@@ -222,5 +220,9 @@
             </div>
         </div>
     </main>
+    <?php
+      include '../../../public/modals/paciente/modal_cancelamento_consulta.html';
+      include '../../../public/modals/paciente/modal_editar_consulta.html';
+    ?>
 </body>
 </html>

@@ -38,7 +38,7 @@ body {
     max-width: 1600px;
     margin: 0 auto;
     padding: 30px;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgb(255, 255, 255);
     border-radius: 20px;
     box-shadow: 0 12px 32px rgba(0,0,0,0.12);
     overflow-x: auto; 
@@ -61,7 +61,7 @@ body {
 
 
 .agenda-table thead th {
-    background: #f1f6fd;
+    background: #e6f0ff;
     color: #374151;
     text-align: center;
     padding: 12px 15px;
@@ -72,7 +72,7 @@ body {
 
 
 .agenda-table tbody tr {
-    background: #f5f5f585;
+    background: #ffffffd5;
     box-shadow: var(--shadow);
     border: 1px solid black;
     border-radius: 12px;

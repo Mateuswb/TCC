@@ -138,7 +138,7 @@
                     ON e.id_exame = ex.id_exame
                 LEFT JOIN agendamentos_exames ae 
                     ON ae.id_encaminhamento = e.id_encaminhamento
-                WHERE pr.id_profissional = :idProfissional
+                WHERE pr.id_profissional = :idProfissional AND e.status != 'concluido'
                 ORDER BY e.id_encaminhamento DESC";
             $query = $this->conn->prepare($sql);
             $query->execute([

@@ -814,9 +814,6 @@
                 exit;
             }
         }
-
-
-    
     }
 
     $controller = new AdministradorController($conn);

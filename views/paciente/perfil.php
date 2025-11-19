@@ -156,8 +156,7 @@
       </div>
 
 
-
-        <!-- Dados Médicos -->
+      <!-- Dados Médicos -->
       <div id="dados-medicos" class="tab-content">
         <div class="info-grid">
           <div class="form-control">

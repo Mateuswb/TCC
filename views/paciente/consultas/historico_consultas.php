@@ -204,7 +204,7 @@ body {
             </div>
           </div>
         </div>
-
+    
         <div class="consultas">
           <?php foreach($agendamentos as $consulta){ ?>
           <div class="card-consulta">

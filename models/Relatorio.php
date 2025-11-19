@@ -533,7 +533,7 @@
                     INNER JOIN agendamentos_consultas ac ON e.id_agendamento_consulta = ac.id_agendamento
                     INNER JOIN pacientes p ON ac.id_paciente = p.id_paciente
                     INNER JOIN tipos_exames te ON e.id_exame = te.id_exame
-                    WHERE p.id_paciente = :idPaciente
+                    WHERE p.id_paciente = :idPaciente AND ae.status = 'finalizado'
                     GROUP BY te.nome
                     ORDER BY COUNT(ae.id_agendamento) DESC
                     LIMIT 1";

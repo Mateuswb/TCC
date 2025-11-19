@@ -1,6 +1,8 @@
 <?php
     require_once dirname(__DIR__) . "/config/conexao.php";
     require_once dirname(__DIR__) . "/models/Usuario.php";
+    require_once dirname(__DIR__) . "/models/Paciente.php";
+    require_once dirname(__DIR__) . "/models/Profissional.php";
     require_once dirname(__DIR__) . "/models/HorarioProfissional.php";
 
     class UsuarioController {
@@ -10,6 +12,8 @@
         public function __construct($conn) {
             $this->usuarioModel = new Usuario($conn);
             $this->horarioModel = new Horario($conn);
+            $this->pacienteModel = new Paciente($conn);
+            $this->profissionalModel = new Profissional($conn);
         }
 
        public function login() {
@@ -152,69 +156,86 @@
         }
 
         public function editarUsuario() {
-            $idUsuario = $_POST['idUsuario'];
+            session_start();
+
+            $idUsuario   = $_POST['idUsuario'];
             $tipoUsuario = $_POST['tipoUsuario'];
-            $cpf = $_POST['cpf'];
-            $password = $_POST['password'];
-            $senhaHash = password_hash($password, PASSWORD_DEFAULT);
-            
-            if (empty($cpf) || empty($password)) {
-                echo "CPF e senha são obrigatórios!";
+            $cpfNovo     = str_replace(['.', '-'], '', trim($_POST['cpf']));
+            $senhaNova   = $_POST['password'];
+
+            $usuarioAtual = $this->usuarioModel->buscarPorId($idUsuario);
+
+            if (!$usuarioAtual) {
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => "Usuário não encontrado."
+                ];
+                $this->redirectPerfil($tipoUsuario);
                 return;
             }
 
-            $resultado = $this->usuarioModel->editarUsuario($idUsuario, $cpf, $senhaHash);
+            $cpfAntigo   = $usuarioAtual['login'];
+            $senhaAntiga = $usuarioAtual['senha'];
 
-            session_start();
-            if($tipoUsuario == "profissional"){
-                if($resultado){
-                    $_SESSION['flash'] = [
-                        'type' => 'success',
-                        'message' => "Dados atualizados com sucesso."
-                    ];
-                }
-                else{
-                    $_SESSION['flash'] = [
-                            'type' => 'error',
-                            'message' => "Erro ao editar dados. Tente novamente"
-                        ];
-                }
-                header("Location: ../views/profissional/perfil.php");
-                exit;
+            $cpfIgual   = ($cpfNovo === $cpfAntigo);
+            $senhaIgual = empty($senhaNova) || password_verify($senhaNova, $senhaAntiga);
+
+            if ($cpfIgual && $senhaIgual) {
+                $_SESSION['flash'] = [
+                    'type' => 'warning',
+                    'message' => "Nenhuma alteração foi realizada."
+                ];
+                $this->redirectPerfil($tipoUsuario);
+                return;
             }
-            else if($tipoUsuario == "paciente"){
-                if($resultado){
-                    $_SESSION['flash'] = [
-                        'type' => 'success',
-                        'message' => "Dados atualizados com sucesso."
-                    ];
-                }
-                else{
-                    $_SESSION['flash'] = [
-                            'type' => 'error',
-                            'message' => "Erro ao editar dados. Tente novamente"
-                        ];
-                }
-                header("Location: ../views/paciente/perfil.php");
-                exit;
+
+            if (empty($senhaNova)) {
+                $senhaFinal = $senhaAntiga;
+            } else {
+                $senhaFinal = password_hash($senhaNova, PASSWORD_DEFAULT);
             }
-            else{
-                if($resultado){
-                    $_SESSION['flash'] = [
-                        'type' => 'success',
-                        'message' => "Dados atualizados com sucesso."
-                    ];
-                }
-                else{
-                    $_SESSION['flash'] = [
-                            'type' => 'error',
-                            'message' => "Erro ao editar dados. Tente novamente"
-                        ];
-                }
-                header("Location: ../views/administrador/perfil.php");
-                exit;
+
+            $resultado = $this->usuarioModel->editarUsuario($idUsuario, $cpfNovo, $senhaFinal);
+
+            if ($resultado) {
+                $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => "Dados atualizados com sucesso."
+                ];
+            } else {
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => "Erro ao editar dados. Tente novamente."
+                ];
             }
+
+            if ($cpfAntigo !== $cpfNovo) {
+                switch ($tipoUsuario) {
+                    case 'paciente':
+                        $this->pacienteModel->atualizarCpfPaciente($cpfAntigo, $cpfNovo);
+                        break;
+
+                    case 'profissional':
+                        $this->profissionalModel->atualizarCpfProfissional($cpfAntigo, $cpfNovo);
+                        break;
+                }
+            }
+
+            $this->redirectPerfil($tipoUsuario);
         }
+
+
+        private function redirectPerfil($tipo) {
+            if ($tipo == "profissional") {
+                header("Location: ../views/profissional/perfil.php");
+            } 
+            else if ($tipo == "paciente") {
+                header("Location: ../views/paciente/perfil.php");
+            }
+
+            exit;
+        }
+
 
         public function exibirPerfil() {
             $idUsuario = $_SESSION['idUsuario'];

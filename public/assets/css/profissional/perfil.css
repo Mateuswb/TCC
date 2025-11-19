@@ -6,7 +6,7 @@
 }
 
 body {
-    background: #dcdcdc;
+    background: #f0f0f0;
     min-height: 100vh;
     display: flex;
 }
@@ -36,7 +36,7 @@ body {
 
 
 .profile-header {
-   background: linear-gradient(rgb(3, 71, 199), rgb(15, 47, 123));
+   background: linear-gradient(80deg, rgb(0, 81, 173), rgb(26, 50, 107));
     color: #fff;
     padding: 20px;
     border-radius: 8px;

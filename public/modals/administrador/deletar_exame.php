@@ -57,8 +57,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #eee;
-  margin-bottom: 15px;
 }
 
 .modal-header h3 {

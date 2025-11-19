@@ -64,7 +64,7 @@
             width: 95%;
             max-width: 1650px;
             background: #fff;
-            border-radius: 20px;
+            border-radius: 10px;
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
             overflow-x: auto;
         }
@@ -89,7 +89,6 @@
         th {
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.6px;
         }
 
         tbody tr {

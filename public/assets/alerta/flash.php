@@ -2,13 +2,23 @@
     if (isset($_SESSION['flash'])) {
         $flash = $_SESSION['flash'];
         unset($_SESSION['flash']);
-        $class = $flash['type'] === 'success' ? 'flash-success' : 'flash-error';
+        switch ($flash['type']) {
+            case 'success':
+                $class = 'flash-success';
+                break;
+            case 'warning':
+                $class = 'flash-warning';
+                break;
+            default:
+                $class = 'flash-error';
+                break;
+        }
         echo "<div id='flashMessage' class='{$class}'>{$flash['message']}</div>";
     }
 ?>
 
 <style>
-    .flash-success, .flash-error {
+    .flash-success, .flash-error, .flash-warning {
         position: fixed; 
         top: 20px;
         left: 50%;
@@ -28,12 +38,18 @@
         color: #000e3aff;
         border-color: #c3d8e6ff;
     }
-
     .flash-error {
         background-color: #f8d7da;
         color: #721c24;
         border-color: #f5c6cb;
     }
+    .flash-warning {
+        background-color: #fff9c4; 
+        color: #665000ff;             
+        border: 1px solid #ffeb3b;  
+    }
+
+    
 </style>
 
 <script>

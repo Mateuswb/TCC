@@ -131,15 +131,19 @@ li a i {
   display: flex;
   align-items: center;
   padding: 8px 10px;
-  border-radius: 8px;
+  border-radius: 8px 5px 5px  8px;
   font-weight: 500;
   transition: 0.3s;
 }
 
-.sidebar nav ul li a:hover,
+.sidebar nav ul li a:hover{
+  background-color: #e6f0ff;
+  color: #003366;
+}
 .sidebar nav ul li a.active {
   background-color: #e6f0ff;
   color: #003366;
+  border-right: 3px solid #003366;
 }
 
 </style>
