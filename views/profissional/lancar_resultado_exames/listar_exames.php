@@ -8,6 +8,9 @@
   $idProfissional = $_SESSION['idProfissional'];
   $exameController = new ResultadoExameController($conn);
   $exames = $exameController->listarExamesPendentes($idProfissional);
+
+  $exameEnciadosController = new ResultadoExameController($conn);
+  $examesEnviados = $exameEnciadosController->listarExamesEnviados($idProfissional);
 ?>
 
 <!DOCTYPE html>
@@ -31,20 +34,17 @@ body {
 }
 
   .container {
-    width: 100%;
+    height: 83%;
+    width: 99%;
     background: #fff;
     border-radius: 16px;
     box-shadow: 0 6px 20px rgba(0,0,0,0.1);
     padding: 40px;
-    margin-top: 50px;
+    margin-top: 70px;
     margin-bottom: 50px;
-    animation: fadeIn 0.3s ease;
   }
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+
 
   h2#title {
     text-align: center;
@@ -118,122 +118,161 @@ body {
     background: linear-gradient(90deg, #0e46e2ff, #00218dff);
     transform: translateY(-2px);
   }
-
-  /* modal */
-  .modal {
+/* modal */
+.modal {
     display: none;
     position: fixed;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.6);
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
     justify-content: center;
     align-items: center;
     z-index: 1000;
-  }
+    padding: 30px;
+}
 
-  .modal-content {
-    background: #fff;
-    border-radius: 16px;
-    padding: 40px 30px;
-    width: 420px;
+.modal-content {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 50px 40px;
+    max-width: 500px;
+    width: 100%;
     text-align: center;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
     animation: modalShow 0.3s ease;
-  }
+}
 
-  @keyframes modalShow {
-    from { transform: translateY(-20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
+@keyframes modalShow {
+    from { transform: translateY(-20px) scale(0.95); opacity: 0; }
+    to { transform: translateY(0) scale(1); opacity: 1; }
+}
 
-  .modal-content h3 {
-    color: #1d4ed8;
-    margin-bottom: 25px;
+
+.modal-content h3 {
+    color: #1e3a8a; 
     font-weight: 700;
-  }
-
-  .modal-content input[type="file"] {
-    width: 100%;
-    border: 2px dashed #a5b4fc;
-    border-radius: 10px;
-    padding: 18px;
-    cursor: pointer;
-    transition: 0.2s;
-    margin-bottom: 25px;
-  }
-
-  .modal-content input[type="file"]:hover {
-    border-color: #2563eb;
-    background: #f0f4ff;
-  }
-
-  .modal-content button {
-    background: linear-gradient(90deg, #22c55e, #16a34a);
-    color: #fff;
-    border: none;
-    padding: 12px 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    width: 100%;
-    font-size: 1rem;
-  }
-
-  .modal-content button:hover {
-    background: linear-gradient(90deg, #16a34a, #15803d);
-    transform: translateY(-2px);
-  }
-
-  .modal-close {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    color: #64748b;
-    font-size: 26px;
-    cursor: pointer;
-    transition: 0.2s;
-  }
-
-  .modal-close:hover {
-    color: #000;
-  }
-
-.no-exames {
-  text-align: center;
-  font-size: 1.1rem;
-  color: #475569;
-  padding: 50px 0;
+    font-size: 1.75rem;
+    margin-bottom: 10px;
 }
-input[type="file"] {
-  display: none;
-}
+
 
 .custom-file-upload {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: linear-gradient(90deg, #2563eb, #1d4ed8);
-  color: white;
-  padding: 10px 50px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: 0.2s;
-  margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #2563eb;
+    color: #ffffff;
+    padding: 16px 0;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    width: 100%;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
 }
-
 .custom-file-upload:hover {
-  background: linear-gradient(90deg, #0a46ebff, #1e40af);
-  transform: translateY(-2px);
+    background: #1d4ed8;
+    transform: translateY(-2px);
 }
 
+.modal-content input[type="file"] {
+    display: none;
+}
+
+.modal-content button {
+    background: #1e3a8a; 
+    color: #fff;
+    border: none;
+    padding: 16px 0;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 20px;
+    box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3);
+}
+.modal-content button:hover {
+    background: #1b366f;
+    transform: translateY(-2px);
+}
+
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #64748b;
+    font-size: 28px;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+.modal-close:hover {
+    color: #1e3a8a;
+    transform: scale(1.1);
+}
+
+.no-exames {
+    font-size: 1.1rem;
+    color: #475569;
+    padding: 60px 0;
+    line-height: 1.6;
+}
+
+.section-scroll {
+    max-height: 500px; 
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.section-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.section-scroll::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+.upload-dropzone {
+    border: 2px dashed #cbd5e1;
+    border-radius: 16px;
+    padding: 30px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #f9fafb;
+    color: #1e3a8a;
+    font-weight: 600;
+    font-size: 1rem;
+}
+.upload-dropzone:hover {
+    border-color: #1e3a8a;
+    background: #e0e7ff;
+}
+
+.modal-info {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.5;
+}
+
+.page-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
 
 </style>
 </head>
 <body>
+  <div class="page-content">
+
 <?php include '../../../public/assets/alerta/flash.php'; ?>
 
 <div class="container">
@@ -263,6 +302,8 @@ input[type="file"] {
   <?php endif; ?>
 </div>
 
+
+
 <div class="modal" id="modalUpload">
   <div class="modal-content">
     <span class="modal-close" id="fecharModal">&times;</span>
@@ -281,6 +322,7 @@ input[type="file"] {
     </form>
   </div>
 </div>
+</div> <!-- fecha page-content -->
 
 <script>
   document.querySelectorAll('.btn-lancar').forEach(btn => {
@@ -300,7 +342,7 @@ input[type="file"] {
     if (e.target === modal) modal.style.display = 'none';
   });
 
-    const inputArquivo = document.getElementById('arquivo');
+  const inputArquivo = document.getElementById('arquivo');
   const nomeArquivo = document.getElementById('nomeArquivo');
 
   inputArquivo.addEventListener('change', function() {

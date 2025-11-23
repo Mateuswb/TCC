@@ -47,6 +47,36 @@
         public function buscarArquivoResultado($idResultado){
             return $this->resultadoExameModel->buscarArquivoResultado($idResultado);
         }
+
+        public function listarExamesEnviados(){
+            $idProfissional = $_SESSION['idProfissional'];
+            return $this->resultadoExameModel->listarExamesEnviados($idProfissional);
+        }
+
+        public function editarResultado(){
+            $idResultado = $_POST['idResultado'];
+            $arquivo = $_FILES['arquivo'];
+
+            $resultadoExame = $this->resultadoExameModel->atualizarResultado(
+                $idResultado, $arquivo
+            );
+            
+            session_start();
+            if($resultadoExame){
+                $_SESSION['flash'] = [
+                    'type' => 'success',
+                    'message' => "Resultado do exame editado com sucesso."
+                ];
+            }
+            else{
+                $_SESSION['flash'] = [
+                    'type' => 'error',
+                    'message' => "Erro ao editar Resultado. Tente novamente."
+                ];
+            }
+            header("Location: ../views/profissional/lancar_resultado_exames/historico_exames.php");
+            exit;
+        }
     }   
 
     $controller = new ResultadoExameController($conn);
@@ -55,6 +85,8 @@
         switch ($_GET['acao']) {
             case 'enviarResultadoExame':
                 $controller->enviarResultadoExame();
+            case 'editar':
+                $controller->editarResultado();
         }
     }
 ?>

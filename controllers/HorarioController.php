@@ -126,6 +126,7 @@
             }
 
             if($ok){
+                
                  $_SESSION['flash'] = [
                     'type' => 'success',
                     'message' => "Horários atualizados com sucesso."

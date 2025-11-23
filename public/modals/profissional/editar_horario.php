@@ -55,7 +55,6 @@
   </div>
 </div>
 
-<!-- Estilos do modal -->
 <style>
 
       :root {
@@ -75,13 +74,14 @@
 
     .header {
         text-align: center;
-
+        margin-bottom: 18px;
     }
     .sheet-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background-color: #fff; 
+      padding: 8px 20px;
+      background-color: #fff;
     }
 
 
@@ -94,6 +94,7 @@
         margin: 0;
         color: var(--muted);
         font-size: 13px;
+        margin-bottom: -40px;
     }
 
     .prof-id {
@@ -114,10 +115,11 @@
         align-items: center;
         justify-content: space-between;
         gap: 12px;
+        margin-bottom: 14px;
     }
 
-    #btnSave {
-        background: linear-gradient(180deg, #0939beff, #115dd8ff);
+    .save-btn {
+        background: linear-gradient(180deg, #3472c4ff, #0842beff);
         color: #fff;
         padding: 10px 16px;
         border-radius: 10px;
@@ -126,11 +128,8 @@
         cursor: pointer;
         font-weight: 600;
         display: inline-flex;
-        margin-bottom: 10px;
+        gap: 10px;
         align-items: center;
-    }
-    #btnSave:hover{
-       background: linear-gradient(90deg, #00268dff, #004ecaff);
     }
 
     .sheet-table {
@@ -143,22 +142,22 @@
         background: #f3f6fb;
         color: #374151;
         padding: 12px 10px;
-        text-align: left;
+        text-align: center !important;
         font-size: 13px;
         border-bottom: 1px solid #e6eefc;
     }
     .erro-horario {
-    color: #dc2626; 
-    background: #fee2e2; 
-    border: 1px solid #fca5a5;
-    padding: 6px 14px;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 500;
-    text-align: center;
-    max-width: 60%;
-    margin: 0 auto;
-    transition: all 0.2s ease;
+      color: #dc2626; 
+      background: #fee2e2; 
+      border: 1px solid #fca5a5;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 17px;
+      font-weight: 500;
+      text-align: center;
+      max-width: 60%;
+      margin-left: 150px;
+      transition: all 0.2s ease;
     }
 
     .sheet-table tbody td {
@@ -168,12 +167,20 @@
     }
 
     .col-day {
-        width: 210px;
+      width: 210px;
+      text-align: center;
     }
-
-    .col-time {
-        width: 160px;
-        text-align: center;
+    
+    .day-cell {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+  }
+    .day-cell > div {
+        min-width: 80px;  
+        text-align: left;   
     }
 
     .col-actions {
@@ -187,11 +194,14 @@
         gap: 12px;
     }
 
-    .day-dot {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
+    .day-dots {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 50px;
     }
+
 
     .day-title {
         font-weight: 600;
@@ -214,22 +224,30 @@
     .time-input {
         background: #fff;
         border: 1px solid #e6eefc;
-        padding: 8px 25px;
+        padding: 8px 10px;
         border-radius: 8px;
         min-width: 96px;
     }
 
+    .time-input input {
+        border: 0;
+        outline: none;
+        background: transparent;
+        font-size: 14px;
+    }
+
     .btn-small {
         border: 0;
-        padding: 6px 8px;
         border-radius: 8px;
         font-weight: 600;
         cursor: pointer;
+        margin-left: 5px;
     }
 
     .btn-clone {
-        background: #f97316;
-        color: #fff;
+      padding: 10px;
+      background: #f97316;
+      color: #fff;
     }
 
     .btn-small:hover {
@@ -273,7 +291,7 @@
     position: fixed;
     inset: 0;
     background: rgba(17, 24, 39, 0.65);
-    display: none; 
+    display: none;
     justify-content: center;
     align-items: flex-start;
     overflow-y: auto;
@@ -285,10 +303,16 @@
     background: #fff;
     border-radius: 18px;
     box-shadow: 0 10px 35px rgba(15, 23, 42, 0.18);
-    width: 90%;
-    max-width: 1300px;
+    width: 95%;
+    max-width: 1250px;
     padding: 20px;
     animation: fadeInScale 0.3s ease forwards;
+  }
+
+  .btn-clear {
+    padding: 10px;
+    background: #d13939ff;
+    color: #fff;
   }
 
   @keyframes fadeInScale {
@@ -318,7 +342,6 @@
 
   let rows = [];
 
-  // 🔹 id vem do backend quando for edição
   function uid(){ return 'r' + Math.random().toString(36).slice(2,9); }
 
 
@@ -336,7 +359,6 @@
     });
   }
 
-  // 🔹 usado pelo backend pra preencher horários no modo edição
   window.preencherHorarios = function(listaHorarios){
     rows = weekdays.map((d, idx) => {
       const existente = listaHorarios.find(h => h.diaSemana === d.full);
@@ -365,7 +387,6 @@
     render();
   };
 
-  // 🔹 renderiza tabela
   function render(){
     body.innerHTML = '';
     rows.forEach(r=>{
@@ -376,7 +397,7 @@
       const dayCell = document.createElement('td');
       dayCell.innerHTML = `
         <div class="day-cell">
-          <span class="day-dot" style="background:${day.color}"></span>
+          <span class="day-dots" style="background:${day.color}"></span>
           <div>
             <div class="day-title">${day.short}</div>
             <div class="day-sub">${day.full}</div>
@@ -412,8 +433,20 @@
       const tdIE    = inputCell(r.iEnd,'iEnd','fimIntervalo');
 
       const tdActions = document.createElement('td');
-      tdActions.innerHTML = `<button type="button" class="btn-small btn-clone">⎘</button>`;
-      tdActions.querySelector('button').addEventListener('click',()=>cloneRowToAll(r.id));
+      tdActions.innerHTML = `
+        <button type="button" class="btn-small btn-clone">
+          <i class="fa-solid fa-clone" style="color: #ffffff;"></i>
+        </button>
+        <button type="button" class="btn-small btn-clear">
+          <i class="fa-solid fa-trash" style="color: #ffffff;"></i>
+        </button>
+      `;
+
+      tdActions.querySelector('.btn-clone')
+        .addEventListener('click', () => cloneRowToAll(r.id));
+
+      tdActions.querySelector('.btn-clear')
+        .addEventListener('click', () => clearRow(r.id));
 
       tr.append(dayCell, tdStart, tdEnd, tdIS, tdIE, tdActions);
       body.appendChild(tr);
@@ -421,13 +454,49 @@
     updatePeriodCount();
   }
 
-  function cloneRowToAll(rowId){
-    const src = rows.find(r=>r.id===rowId);
-    if(!src) return;
-    rows = rows.map(r=>({...r, start:src.start, end:src.end, iStart:src.iStart, iEnd:src.iEnd}));
-    render();
-    showToast('⏰ Horários clonados para todos os dias');
+
+function cloneRowToAll(rowId){
+  const src = rows.find(r => r.id === rowId);
+  if(!src) return;
+
+  rows.forEach(r => {
+    if(r.id !== rowId){ 
+      r.start  = src.start;
+      r.end    = src.end;
+      r.iStart = src.iStart;
+      r.iEnd   = src.iEnd;
+    }
+  });
+
+  body.querySelectorAll('tr').forEach(tr => {
+    const row = rows.find(r => r.id === tr.dataset.rowId);
+    if(row){
+      tr.querySelector('input[name="horaInicio[]"]').value = row.start;
+      tr.querySelector('input[name="horaFim[]"]').value    = row.end;
+      tr.querySelector('input[name="inicioIntervalo[]"]').value = row.iStart;
+      tr.querySelector('input[name="fimIntervalo[]"]').value    = row.iEnd;
+    }
+  });
+}
+
+
+
+  function clearRow(rowId) {
+      const row = rows.find(r => r.id === rowId);
+      if (!row) return;
+
+      row.start = '';
+      row.end = '';
+      row.iStart = '';
+      row.iEnd = '';
+
+      const tr = document.querySelector(`[data-row-id="${rowId}"]`);
+      if (tr) {
+          tr.querySelectorAll('input[type="time"]').forEach(inp => inp.value = '');
+      }
   }
+
+
 
   function updatePeriodCount(){
     periodCounter.textContent = `Total de períodos: ${rows.length}`;
@@ -460,43 +529,59 @@
     msgErro.textContent = '';
     msgErro.style.display = 'none';
   }
-
-  // 🔹 validação ajustada para edição
-  form.addEventListener('submit', (e)=>{
+  form.addEventListener('submit', (e) => {
     limparErro();
-
-    // Se já existir pelo menos um horário vindo do backend, permite salvar
-    const temHorariosExistentes = rows.some(r => r.start || r.end || r.iStart || r.iEnd);
-    if (!temHorariosExistentes) {
-      e.preventDefault();
-      mostrarErro('⚠️ Você precisa cadastrar pelo menos um horário.');
-      return;
-    }
+    let algumPreenchido = false;
 
     for (let i = 0; i < rows.length; i++) {
       const r = rows[i];
       const dia = weekdays[r.dayIndex].full;
 
-      if (!r.start && !r.end && !r.iStart && !r.iEnd) continue;
+      const start = r.start ? toMinutes(r.start) : null;
+      const end = r.end ? toMinutes(r.end) : null;
+      const iStart = r.iStart ? toMinutes(r.iStart) : null;
+      const iEnd = r.iEnd ? toMinutes(r.iEnd) : null;
 
-      const start = toMinutes(r.start);
-      const end = toMinutes(r.end);
-      const iStart = toMinutes(r.iStart);
-      const iEnd = toMinutes(r.iEnd);
+      const linhaPreenchida = r.start || r.end;
 
-      // só valida se houver horário principal
-      if (r.start && r.end) {
+      if (linhaPreenchida) {
+        algumPreenchido = true;
+
+        if (!r.start || !r.end) {
+          e.preventDefault();
+          mostrarErro(`⚠️ Em ${dia}, é obrigatório informar o horário de início e fim.`);
+          return;
+        }
+
+
         if (start >= end) {
           e.preventDefault();
           mostrarErro(`⚠️ Em ${dia}, o horário de início deve ser menor que o de fim.`);
           return;
         }
-        if ((iStart && iEnd) && (iStart < start || iEnd > end || iStart >= iEnd)) {
+
+        if ((r.iStart && !r.iEnd) || (!r.iStart && r.iEnd)) {
           e.preventDefault();
-          mostrarErro(`⚠️ Em ${dia}, o intervalo deve estar dentro do horário de trabalho.`);
+          mostrarErro(`⚠️ Em ${dia}, preencha o intervalo completamente (início e fim).`);
           return;
         }
+
+        if (r.iStart && r.iEnd) {
+          if (iStart < start || iEnd > end) {
+            e.preventDefault();
+            mostrarErro(`⚠️ Em ${dia}, o intervalo deve estar dentro do horário de trabalho.`);
+            return;
+          }
+
+          if (iStart >= iEnd) {
+            e.preventDefault();
+            mostrarErro(`⚠️ Em ${dia}, o intervalo deve ser menor que o horário final.`);
+            return;
+          }
+        }
+
         const all = [r.start, r.end, r.iStart, r.iEnd].filter(Boolean);
+
         for (const hora of all) {
           if (!isValido(hora)) {
             e.preventDefault();
@@ -506,6 +591,7 @@
         }
       }
     }
+
   });
 
   window.abrirModalPlanilha = function(){

@@ -53,6 +53,20 @@ class ResultadoExame{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function atualizarResultado($idResultado, $arquivo) {
+        $sql = "UPDATE resultados_exames 
+                SET arquivo = :arquivo, data_resultado = NOW() 
+                WHERE id_resultado = :idResultado";
+
+        $conteudoArquivo = file_get_contents($arquivo['tmp_name']);
+        $query = $this->conn->prepare($sql);
+
+        return $query->execute([
+            ':arquivo' => $conteudoArquivo,
+            ':idResultado' => $idResultado
+        ]);
+    }
+
     public function listarResultadosPorPaciente($idPaciente) {
         $sql = "
             SELECT 
@@ -96,4 +110,41 @@ class ResultadoExame{
         return $query->fetch(PDO::FETCH_ASSOC);
     }
    
+    public function listarExamesEnviados($idProfissional) {
+        $sql = "SELECT 
+                te.nome AS nome_exame,
+                p.nome AS nome_paciente,
+                ae.dia_agendamento AS data_exame,
+                ae.horario_agendamento,
+                re.id_resultado
+
+            FROM resultados_exames re
+            INNER JOIN agendamentos_exames ae
+                ON ae.id_agendamento = re.id_agendamento
+            INNER JOIN encaminhamentos e
+                ON e.id_encaminhamento = ae.id_encaminhamento
+            INNER JOIN agendamentos_consultas ac
+                ON ac.id_agendamento = e.id_agendamento_consulta
+            INNER JOIN horarios_profissionais hp
+                ON hp.id_horario = ac.id_horario_profissional
+            INNER JOIN profissionais prof
+                ON prof.id_profissional = hp.id_profissional
+            INNER JOIN tipos_exames te
+                ON te.id_exame = e.id_exame
+            INNER JOIN pacientes p
+                ON p.id_paciente = ac.id_paciente
+
+            WHERE prof.id_profissional = :id
+            AND re.status = 'finalizado'
+            ORDER BY ae.dia_agendamento DESC;
+            ";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':id', $idProfissional);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
 }

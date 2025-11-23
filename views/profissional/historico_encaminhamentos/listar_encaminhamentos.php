@@ -199,7 +199,7 @@
     <div id="tabela-container">
         <?php if (empty($encaminhamentos)): ?>
             <div class="sem-encaminhamentos">
-                <i class="fa-solid fa-circle-exclamation"></i> Nenhum encaminhamento registrado para este profissional.
+                <i class="fa-solid fa-circle-exclamation"></i> Nenhum encaminhamento registrado ainda.
             </div>
         <?php else: ?>
         <table>

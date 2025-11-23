@@ -184,7 +184,7 @@ body {
 .donut-row {
     display: flex;
     gap: 12px;
-    height: 320px;
+    height: 343px;
     padding-top: 8px;
 }
 .donut-box {

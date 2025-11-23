@@ -44,6 +44,10 @@ rel="stylesheet">
             class="<?= ($currentFile == 'listar_exames.php') ? 'active' : '' ?>">
             <i class="fas fa-vial"></i> <span>Lançar Resultado Exame</span>
         </a>
+        <a href="<?= BASE_URL ?>/views/profissional/lancar_resultado_exames/historico_exames.php"
+            class="<?= ($currentFile == 'historico_exames.php') ? 'active' : '' ?>">
+            <i class="fa-solid fa-file-lines"></i> <span>histórico de resultados</span>
+        </a>
     <?php endif; ?>
 
     <a href="<?= BASE_URL ?>/views/profissional/paciente/listar_pacientes.php"
@@ -57,7 +61,7 @@ rel="stylesheet">
     </a>
     <a href="<?= BASE_URL ?>/views/profissional/historico_encaminhamentos/listar_encaminhamentos.php"
        class="<?= ($currentFile == 'listar_encaminhamentos.php') ? 'active' : '' ?>">
-    <i class="fas fa-history"></i> <span>Encaminhamentos</span>
+    <i class="fa-solid fa-share-from-square"></i> <span>Encaminhamentos</span>
 
     </a>
     <a href="<?= BASE_URL ?>/views/profissional/horarios/listar_horarios.php"

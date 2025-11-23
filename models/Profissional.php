@@ -103,7 +103,7 @@ class Profissional {
                 GROUP_CONCAT(DISTINCT te.nome SEPARATOR ', ') AS exames_atendidos
             FROM profissionais p
             INNER JOIN usuarios u ON u.login = p.cpf
-            LEFT JOIN horarios_profissionais hp ON hp.id_profissional = p.id_profissional
+            INNER JOIN horarios_profissionais hp ON hp.id_profissional = p.id_profissional
             LEFT JOIN agendamentos_consultas ac ON hp.id_horario = ac.id_horario_profissional
             LEFT JOIN encaminhamentos e ON e.id_agendamento_consulta = ac.id_agendamento
             LEFT JOIN tipos_exames te ON e.id_exame = te.id_exame
@@ -120,21 +120,33 @@ class Profissional {
     }
 
     public function principaisEspecialidades(){
-        $sql = "SELECT DISTINCT 
-            TRIM(BOTH '\"' FROM JSON_UNQUOTE(JSON_EXTRACT(p.especialidade, '$[0]'))) AS especialidade_principal
-            FROM profissionais p
-            INNER JOIN horarios_profissionais h ON h.id_profissional = p.id_profissional
-            WHERE JSON_UNQUOTE(JSON_EXTRACT(p.especialidade, '$[0]')) NOT LIKE 'exame_%'
+        $sql = "SELECT especialidade as especialidade_principal, COUNT(*) AS total
+            FROM (
+                SELECT TRIM(BOTH '\"' FROM JSON_UNQUOTE(JSON_EXTRACT(p.especialidade, '$[0]'))) AS especialidade
+                FROM profissionais p
+                INNER JOIN horarios_profissionais h ON h.id_profissional = p.id_profissional
 
-            UNION
+                UNION ALL
 
-            SELECT DISTINCT TRIM(BOTH '\"' FROM JSON_UNQUOTE(JSON_EXTRACT(p.especialidade, '$[1]'))) AS especialidade_principal
-            FROM profissionais p
-            INNER JOIN horarios_profissionais h ON h.id_profissional = p.id_profissional
-            WHERE JSON_UNQUOTE(JSON_EXTRACT(p.especialidade, '$[1]')) NOT LIKE 'exame_%'
+                SELECT TRIM(BOTH '\"' FROM JSON_UNQUOTE(JSON_EXTRACT(p.especialidade, '$[1]'))) AS especialidade
+                FROM profissionais p
+                INNER JOIN horarios_profissionais h ON h.id_profissional = p.id_profissional
+            ) AS todas_especialidades
+            WHERE especialidade IS NOT NULL
+            AND especialidade <> ''
+            AND especialidade NOT LIKE 'exame_%'
+            GROUP BY especialidade
+
+            ORDER BY 
+                CASE 
+                    WHEN especialidade = 'clinico_geral' THEN 0
+                    ELSE 1
+                END,
+                total DESC
 
             LIMIT 4
         ";
+
 
         $query = $this->conn->prepare($sql);
         $query->execute();

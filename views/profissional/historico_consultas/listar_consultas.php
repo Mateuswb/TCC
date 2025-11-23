@@ -114,6 +114,25 @@
 </body>
 </html>
 
+<script>
+  const inputSearch = document.querySelector(".search-box input");
+  const linhas = document.querySelectorAll("tbody tr");
+
+  inputSearch.addEventListener("input", function () {
+    const termo = this.value.toLowerCase();
+
+    linhas.forEach(linha => {
+      const texto = linha.textContent.toLowerCase();
+
+      if (texto.includes(termo)) {
+        linha.style.display = "";
+      } else {
+        linha.style.display = "none";
+      }
+    });
+  });
+</script>
+
 <?php
   include '../../../public/modals/profissional/consultas/detalhes_consulta.html';
 ?>
