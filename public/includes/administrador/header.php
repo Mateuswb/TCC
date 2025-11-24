@@ -3,10 +3,6 @@
     <i class="fas fa-bars"></i>
   </div>
 
-  <div class="search-bar">
-    <i class="fas fa-search"></i>
-    <input type="text" placeholder="Buscar paciente, exame, profissional...">
-  </div>
 
   <div class="profile">
       <i class="fa-solid fa-user-tie"></i>

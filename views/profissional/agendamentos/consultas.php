@@ -30,6 +30,7 @@
 </head>
 
 <style>
+  
 .btn-pdf {
     background: #2980b9;
     color: #fff;
@@ -81,6 +82,17 @@ h1 {
   color: #2980b9;
   font-size: 26px;
   font-weight: 700;
+}
+
+.fc-event-main-frame,
+.fc-event-main {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+    width: 100% !important;
+    height: 100% !important;
 }
 
 
@@ -155,7 +167,7 @@ h1 {
   border-radius: 12px !important;
   font-size: 15px !important;
   font-weight: 700 !important;
-  padding: 8px 10px !important;
+  padding: 8px 5px !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   margin: 0 auto !important;
   width: 90% !important;
@@ -228,17 +240,31 @@ h1 {
   line-height: 1.4;
   border-left: 5px solid #fff;
 }
-
 .fc-timegrid-event-harness-inset .fc-timegrid-event {
   height: 100% !important;
   min-height: 135px !important;
   display: flex !important;
   align-items: center !important;
-  justify-content: center !important;
+  justify-content: center !important; 
   white-space: normal !important;
   padding: 10px !important;
   border-radius: 10px !important;
 }
+.fc-timegrid-event {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    padding: 10px !important;
+    text-align: left !important;
+}
+
+.fc-timegrid-event-harness-inset,
+.fc-timegrid-event-harness {
+    height: 140px !important;   /* Altura desejada do card */
+    min-height: 140px !important;
+}
+
 
 .fc-timegrid-slot {
   height: 140px !important;
@@ -357,22 +383,25 @@ document.addEventListener('DOMContentLoaded', function () {
     // Converte os agendamentos pro FullCalendar
     const events = <?php echo json_encode(array_map(function($ag) {
         $tipo = $ag['tipo'];
-        $nomeEvento = '';
 
-        if ($tipo == 'c') {
-            $nomeEvento = 'Consulta';
-        } else if ($tipo == 'r') {
-            $nomeEvento = 'Reconsulta';
-        } else {
-            $nomeEvento = $ag['nome_exame'];
-        }
+      if ($tipo === 'c') {
+          $nomeEvento = 'Consulta';
+
+      } elseif ($tipo === 'r') {
+          $nomeEvento = 'Reconsulta';
+
+      } else {
+          $tipo = 'e';
+          $nomeEvento = $ag['nome_exame'];
+      }
+
 
         $duracao = $ag['duracao'] ?? 30; 
         $dia = $ag['dia'] ?? date('Y-m-d');
 
         return [
             'id' => $ag['id_agendamento'],
-            'title' => $ag['nome_paciente'] . ' - ' . $nomeEvento,
+            'title' => $ag['nome_paciente'] . '  ' . $nomeEvento,
             'start' => $dia . 'T' . $ag['horario'],
             'end' => $dia . 'T' . date('H:i:s', strtotime($ag['horario'] . ' + ' . $duracao . ' minutes')),
             'classNames' => [$tipo],

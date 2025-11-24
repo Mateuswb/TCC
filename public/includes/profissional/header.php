@@ -8,11 +8,6 @@
     <i class="fas fa-bars"></i>
   </div>
 
-  <div class="search-bar">
-    <i class="fas fa-search"></i>
-    <input type="text" placeholder="Buscar paciente, exame, profissional...">
-  </div>
-
   <div class="profile" id="profile-btn">
     <div class="user-info">
       <span id="nome-paciente"><?php echo $_SESSION['nomeProfissional']; ?></span>
