@@ -47,36 +47,49 @@
 
 
   .filter-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 8px 20px;
-    background: #fff;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
-    font-size: 15px;
-    font-weight: 600;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
+      background: #ffffff;
+      padding: 10px;
+      border-radius: 14px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+      margin-bottom: 25px;
   }
 
-  .filter-bar label {
-    color: #333;
+  .filter-item {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
   }
 
-  .filter-bar select {
-    padding: 10px 20px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-    background: #f9f9f9;
-    cursor: pointer;
-    transition: all 0.2s ease;
+  .filter-item label {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2c3e50;
   }
 
-  .filter-bar select:hover {
-    border-color: #2980b9;
+  .filter-item select {
+      padding: 14px 12px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+      background: #f5f7fa;
+      cursor: pointer;
+      transition: all .2s ease;
+      height: 48px;
+  }
+
+  .filter-item select:hover {
+      border-color: #999;
+  }
+
+  .filter-item select:focus {
+      border-color: #3c8dbc;
+      box-shadow: 0 0 0 2px rgba(60,140,188,0.2);
+      background: #fff;
+      outline: none;
   }
 
 
@@ -188,32 +201,39 @@
       <h1>Agendamentos da Clínica</h1>
 
       <div class="filter-bar">
-        <label for="tipoFiltro">Tipo:</label>
-        <select id="tipoFiltro" onchange="aplicarFiltros()">
-          <option value="todos">Todos</option>
-          <option value="consulta">Consulta</option>
-          <option value="exame">Exame</option>
-        </select>
+        <div class="filter-item">
+            <label>Tipo</label>
+            <select id="tipoFiltro" onchange="aplicarFiltros()">
+                <option value="todos">Todos</option>
+                <option value="consulta">Consulta</option>
+                <option value="exame">Exame</option>
+            </select>
+        </div>
 
-        <label for="profissionalFiltro">Profissional:</label>
-        <select id="profissionalFiltro" onchange="aplicarFiltros()">
-          <option value="todos">Todos</option>
-          <?php
-            $profissionais = $controller->listarProfissionais();
-            foreach ($profissionais as $prof) {
-                echo "<option value='{$prof['id_profissional']}'>{$prof['nome']}</option>";
-            }
-          ?>
-        </select>
+        <div class="filter-item">
+            <label>Profissional</label>
+            <select id="profissionalFiltro" onchange="aplicarFiltros()">
+                <option value="todos">Todos</option>
+                <?php
+                    $profissionais = $controller->listarProfissionais();
+                    foreach ($profissionais as $prof) {
+                        echo "<option value='{$prof['id_profissional']}'>{$prof['nome']}</option>";
+                    }
+                ?>
+            </select>
+        </div>
 
-        <label for="statusFiltro">Status:</label>
-        <select id="statusFiltro" onchange="aplicarFiltros()">
-          <option value="todos">Todos</option>
-          <option value="agendada">Agendada</option>
-          <option value="finalizada">Finalizada</option>
-          <option value="cancelada">Cancelada</option>
-        </select>
+        <div class="filter-item">
+            <label>Status</label>
+            <select id="statusFiltro" onchange="aplicarFiltros()">
+                <option value="todos">Todos</option>
+                <option value="agendada">Agendada</option>
+                <option value="finalizada">Finalizada</option>
+                <option value="cancelada">Cancelada</option>
+            </select>
+        </div>
       </div>
+
 
       <div class="calendar" id="calendar"></div>
 
@@ -268,6 +288,7 @@ document.addEventListener('DOMContentLoaded', function () {
             'extendedProps' => [
                 'tipo' => $tipo,
                 'status' => $ag['status'],
+                'id_profissional' => $ag['id_profissional'],
                 'pdf' => !empty($ag['anexo']) ? 'data:application/pdf;base64,' . base64_encode($ag['anexo']) : null
             ]
         ];
@@ -457,17 +478,56 @@ function executarAcaoExame(acao) {
 
     }
 }
+function aplicarFiltros() {
+    const tipoFiltro = document.getElementById("tipoFiltro").value;
+    const statusFiltro = document.getElementById("statusFiltro").value.toLowerCase();
+    const profissionalFiltro = document.getElementById("profissionalFiltro").value;
 
-function filtrarEventos() {
-    const filtro = document.getElementById('tipoFiltro').value;
+    const tipoMap = {
+        'consulta': 'c',
+        'exame': 'e',
+        'retorno': 'r',
+        'todos': 'todos'
+    };
+
     calendar.getEvents().forEach(event => {
-        if (filtro === 'todos' || event.extendedProps.tipo === filtro) {
-            event.setProp('display', 'auto');
+        let mostrar = true;
+
+        const tipo = event.extendedProps.tipo;       
+        const status = event.extendedProps.status.toLowerCase();
+        const idProf = event.extendedProps.id_profissional;
+
+        if (tipoFiltro !== "todos" && tipo !== tipoMap[tipoFiltro]) {
+            mostrar = false;
+        }
+
+        if (statusFiltro !== "todos") {
+            const variacoes = {
+                agendada: ["agendada", "agendado"],
+                finalizada: ["finalizada", "finalizado", "realizada", "realizado"],
+                cancelada: ["cancelada", "cancelado"]
+            };
+            if (!variacoes[statusFiltro].includes(status)) {
+                mostrar = false;
+            }
+        }
+
+        if (profissionalFiltro !== "todos" && idProf != profissionalFiltro) {
+            mostrar = false;
+        }
+
+        if (mostrar) {
+            event.setProp("display", "auto");
         } else {
-            event.setProp('display', 'none');
+            event.setProp("display", "none");
         }
     });
 }
+
 </script>
 </body>
 </html>
+
+<script>
+  
+</script>

@@ -215,6 +215,12 @@ h1 {
   color: #2980b9;
 }
 
+.fc-event:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.22);
+  cursor: pointer;
+}
+
 .modal-content button {
   display: block;
   width: 100%;
@@ -521,7 +527,7 @@ document.addEventListener('DOMContentLoaded', function () {
             selectedEvent = info.event;
             const tipo = selectedEvent.extendedProps.tipo;
 
-            if (tipo === 'exame') {
+            if (tipo == 'e') {
                 document.getElementById("modalExame").style.display = "flex";
                 document.getElementById("idExame").value = selectedEvent.id;
             } else {

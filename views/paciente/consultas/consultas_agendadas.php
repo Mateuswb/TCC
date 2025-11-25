@@ -121,8 +121,8 @@
 .btn {
   border: none;
   outline: none;
-  padding: 8px 16px;
-  border-radius: 20px;
+  padding: 10px 18px;
+  border-radius: 10px;
   cursor: pointer;
   font-size: 0.9rem;
   transition: 0.2s;
@@ -222,7 +222,7 @@
     </main>
     <?php
       include '../../../public/modals/paciente/modal_cancelamento_consulta.html';
-      include '../../../public/modals/paciente/modal_editar_consulta.html';
+      include '../../../public/modals/paciente/modal_editar_consulta.php';
     ?>
 </body>
 </html>

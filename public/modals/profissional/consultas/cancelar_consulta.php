@@ -49,14 +49,7 @@
   font-family: 'Segoe UI', sans-serif;
 }
 
-.modal-header {
-  padding: 20px;
-  background: #f8f8f8;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #eee;
-}
+
 
 .modal-header h3 {
   margin: 0;

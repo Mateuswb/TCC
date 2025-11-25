@@ -162,8 +162,8 @@
             return $profissionais;
         }
 
-        public function exibirHorarios($dataSelecionada, $profissionalId) {
-            $horariosDisponiveis = $this->horarioModel->listarHorariosDisponiveis($dataSelecionada, $profissionalId);
+        public function exibirHorarios($dataSelecionada, $profissionalId, $pacienteId, $idAgendamentoAtual) {
+            $horariosDisponiveis = $this->horarioModel->listarHorariosDisponiveis($dataSelecionada, $profissionalId, $pacienteId, $idAgendamentoAtual);
             header('Content-Type: application/json');
             echo $horariosDisponiveis;
         }
@@ -305,6 +305,8 @@
     if (isset($_POST['data'])) {
         $dataSelecionada = $_POST['data'];
         $idProfissional  = $_POST['idProfissional'];
-        $controller->exibirHorarios($dataSelecionada, $idProfissional);
+        $idPaciente  = $_POST['idPaciente'];
+        $idAgendamentoAtual  = $_POST['idAgendamentoConsulta'] ?? null;
+        $controller->exibirHorarios($dataSelecionada, $idProfissional, $idPaciente, $idAgendamentoAtual);
     }
 ?>

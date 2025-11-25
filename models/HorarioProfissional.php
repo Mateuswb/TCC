@@ -97,23 +97,75 @@
             return $resultado;
         }
 
+        public function pacientePossuiAgendamentoNoDia($idPaciente, $data, $idAgendamentoAtual) {
+            $sql = "
+                SELECT COUNT(*) as total FROM (
+                    -- Consultas do paciente
+                    SELECT id_agendamento
+                    FROM agendamentos_consultas
+                    WHERE id_paciente = :idPaciente
+                    AND dia_agendamento = :data
+                    AND status != 'cancelado'
+                    " . ($idAgendamentoAtual ? "AND id_agendamento != :idAgendamentoAtual" : "") . "
+
+                    UNION ALL
+
+                    -- Exames do paciente (conta todos, mesmo vinculados à consulta sendo editada)
+                    SELECT ae.id_agendamento
+                    FROM agendamentos_exames ae
+                    JOIN encaminhamentos e ON ae.id_encaminhamento = e.id_encaminhamento
+                    JOIN agendamentos_consultas ac ON e.id_agendamento_consulta = ac.id_agendamento
+                    WHERE ac.id_paciente = :idPaciente
+                    AND ae.dia_agendamento = :data
+                    AND ae.status != 'cancelado'
+                ) AS total_agendamentos
+            ";
+
+            $stmt = $this->conn->prepare($sql);
+
+            $params = [
+                'idPaciente' => $idPaciente,
+                'data' => $data
+            ];
+
+            if ($idAgendamentoAtual) {
+                $params['idAgendamentoAtual'] = $idAgendamentoAtual;
+            }
+
+            $stmt->execute($params);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $result['total'];
+        }
+
 
         # horarios disponiveis para agendamento da consulta
-        public function listarHorariosDisponiveis($dataSelecionada, $profissionalId) {
+        public function listarHorariosDisponiveis($dataSelecionada, $profissionalId, $pacienteId, $idAgendamentoAtual) {
             date_default_timezone_set('America/Sao_Paulo'); 
 
             $dataSelecionada = date("Y-m-d", strtotime($dataSelecionada));
             $dataAtual       = date("Y-m-d");
             $horaAtual       = date("H:i");
 
+            $limiteMaximo = date("Y-m-d", strtotime("+90 days"));
+            if ($dataSelecionada > $limiteMaximo) {
+                return json_encode([
+                    "erro" => "Não é possível agendar consultas com mais de 90 dias de antecedência."
+                ]);
+            }
             if ($dataSelecionada < $dataAtual) {
                 return json_encode([
                     "erro" => "Não é possível realizar agendamentos em dias já passados."
                 ]);
             }
+            
+            if ($this->pacientePossuiAgendamentoNoDia($pacienteId, $dataSelecionada, $idAgendamentoAtual)) {
+                return json_encode([
+                    "erro" => "Você já possui um  agendamento neste dia."
+                ]);
+            }
 
             $mesmoDia = $dataSelecionada == $dataAtual;
-
 
             $nomeDias = [
                 "Sunday"    => "domingo",
@@ -292,6 +344,12 @@
             $dataAtual       = date("Y-m-d");
             $horaAtual       = date("H:i");
 
+            $limiteMaximo = date("Y-m-d", strtotime("+90 days"));
+            if ($dataSelecionada > $limiteMaximo) {
+                return json_encode([
+                    "erro" => "Não é possível agendar exames com mais de 90 dias de antecedência."
+                ]);
+            }
             if ($dataSelecionada < $dataAtual) {
                 return json_encode([
                     "erro" => "Não é possível realizar agendamentos em dias já passados."

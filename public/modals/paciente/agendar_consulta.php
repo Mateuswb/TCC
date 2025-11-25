@@ -20,7 +20,7 @@
       <form action="../../../controllers/AgendamentoConsultaController.php?acao=agendarConsulta"
             method="post" id="formAgendar" enctype="multipart/form-data">
 
-        <input type="hidden" name="idPaciente" value="<?php echo $_SESSION['idPaciente']; ?>">
+        <input type="hidden" name="idPaciente" value="<?php echo $_SESSION['idPaciente']; ?>" id="idPaciente">
         <input type="hidden" name="idProfissional" id="idProfissional">
 
         <div class="form-control">
@@ -352,6 +352,7 @@ select:focus, input:focus, textarea:focus {
   diaAgendamento.addEventListener('change', () => {
     const data = diaAgendamento.value;
     const idProfissional = document.getElementById('idProfissional').value;
+    const idPaciente = document.getElementById('idPaciente').value;
 
     container.innerHTML = '';
     mensagemErro.style.display = mensagemHorario.style.display = 'none';
@@ -363,7 +364,7 @@ select:focus, input:focus, textarea:focus {
     fetch('../../../controllers/PacienteController.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `data=${encodeURIComponent(data)}&idProfissional=${encodeURIComponent(idProfissional)}`
+      body: `data=${encodeURIComponent(data)}&idProfissional=${encodeURIComponent(idProfissional)}&idPaciente=${encodeURIComponent(idPaciente)}`
     })
     .then(r => r.json())
     .then(retorno => {

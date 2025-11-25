@@ -8,7 +8,7 @@
       </div>
 
       <div class="modal-body">
-        <p>Você tem certeza que deseja <b>finalizar esta consulta</b>?  
+        <p>Você tem certeza que deseja <b id="cor">finalizar esta consulta</b>?  
         Essa ação irá marcar a consulta como concluída.</p>
         <input type="hidden" name="idConsulta" id="idFinalizarConsulta">
       </div>
@@ -51,7 +51,7 @@
 .modal-box {
   background: #fff;
   border-radius: 12px;
-  width: 400px;
+  width: 450px;
   max-width: 90%;
   box-shadow: 0 8px 20px rgba(0,0,0,0.3);
   animation: slideDown 0.3s ease;
@@ -93,8 +93,8 @@
   color: #555;
 }
 
-.modal-body b {
-  color: #e74c3c;
+.modal-body #cor {
+  color: #0c9100ff;
 }
 
 

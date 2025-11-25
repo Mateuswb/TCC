@@ -177,6 +177,7 @@
                     a.horario_agendamento AS horario,
                     p.nome AS nome_paciente,
                     pr.nome AS nome_profissional,
+                    pr.id_profissional,
                     a.tipo_consulta,
                     a.anexo,
                     NULL AS nome_exame,
@@ -196,6 +197,7 @@
                     e.horario_agendamento AS horario,
                     p.nome AS nome_paciente,
                     pr.nome AS nome_profissional,
+                    pr.id_profissional,
                     NULL AS tipo_consulta,
                     NULL AS anexo,
                     te.nome AS nome_exame,
@@ -208,7 +210,7 @@
                 JOIN profissionais pr ON h.id_profissional = pr.id_profissional
                 JOIN tipos_exames te ON enc.id_exame = te.id_exame
 
-                ORDER BY dia, horario";
+                ORDER BY dia, horario;";
 
             $query = $this->conn->prepare($sql);
             $query->execute(); 

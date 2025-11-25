@@ -97,3 +97,34 @@
 </body>
 </html>
 
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+        const searchInput = document.getElementById("searchInput");
+        const filterCategoria = document.getElementById("filterCategoria");
+        const cards = document.querySelectorAll(".exam-card");
+
+        function filtrar() {
+            const texto = searchInput.value.toLowerCase().trim();
+            const categoria = filterCategoria.value;
+
+            cards.forEach(card => {
+                const nome = card.querySelector("h4").textContent.toLowerCase();
+                const categoriaCard = card.querySelector(".tag").textContent;
+
+                const matchTexto = nome.includes(texto);
+                const matchCategoria = categoria === "" || categoriaCard === categoria;
+
+                if (matchTexto && matchCategoria) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+
+        searchInput.addEventListener("input", filtrar);
+        filterCategoria.addEventListener("change", filtrar);
+    });
+</script>
+
