@@ -8,6 +8,7 @@
     $controller = new RelatorioController($conn);
     $usuarios = $controller->usuariosMaisRecentes();
 
+    $agendamentosHojeAdmin = $controller->agendamentosHojeAdmin();
     $totalPacientes = $controller->totalPacientes();
     $totalProfissionais = $controller->totalProfissionais();
     $totalUsuarios = $controller->totalUsuarios();
@@ -188,7 +189,7 @@
       <!-- Cards -->
       <div class="cards">
         <div class="card blue">
-          <h3>120</h3>
+          <h3><?php echo $agendamentosHojeAdmin['agendamentosHojeAdmin']; ?></h3>
           <p>Agendamentos Hoje</p>
         </div>
         <div class="card purple">

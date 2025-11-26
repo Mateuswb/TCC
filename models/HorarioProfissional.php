@@ -105,7 +105,7 @@
                     FROM agendamentos_consultas
                     WHERE id_paciente = :idPaciente
                     AND dia_agendamento = :data
-                    AND status != 'cancelado'
+                    AND status != 'cancelada'
                     " . ($idAgendamentoAtual ? "AND id_agendamento != :idAgendamentoAtual" : "") . "
 
                     UNION ALL

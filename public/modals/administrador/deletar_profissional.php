@@ -1,6 +1,6 @@
 <div id="modalAviso" class="modalDeletar">
   <div id="modal-content">
-    <h3>Aviso</h3>
+    <h3 id="aviso">Aviso</h3>
     <p id="modalMensagem"></p>
     <form id="formExclusao" method="POST" action="../../../controllers/AdministradorController.php?acao=excluirProfissional">
       <input type="hidden" name="idProfissional" id="idProfissional">
@@ -23,19 +23,25 @@
 }
 #modal-content {
     background:#fff;
-    padding:20px;
+    padding:30px;
     border-radius:12px;
     text-align:center;
-    width: 300px;
+    width: 420px;
 }
 #modal-content button {
-    margin: 5px;
+    margin: 10px;
     padding: 8px 12px;
     border-radius: 6px;
-    border: none;
+    border: 1px solid black;
     cursor: pointer;
 }
-
+#modal-content button:hover{
+  background-color: #dbdbdbff;
+}
+#aviso{
+  font-size: 22px;
+  margin-bottom: 10px;
+}
 #bnt-cancelar{
   margin: 5px;
   padding: 8px 12px;
@@ -44,6 +50,9 @@
   cursor: pointer;
   color: white;
   background-color: #BF2312;
+}
+#bnt-cancelar:hover{
+  background-color: #e41700ff;
 }
 </style>
 

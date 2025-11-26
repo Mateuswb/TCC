@@ -44,6 +44,9 @@
         public function totalUsuarios() {
             return $this->relatorioModel->totalUsuarios();
         }
+        public function agendamentosHojeAdmin() {
+            return $this->relatorioModel->agendamentosHojeAdmin();
+        }
         
         public function totalPacientes() {
             return $this->relatorioModel->totalPacientes();

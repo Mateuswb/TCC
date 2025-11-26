@@ -63,6 +63,17 @@
             $query = $this->conn->query($sql);
             return $query->fetch(PDO::FETCH_ASSOC);
         }
+
+        public function agendamentosHojeAdmin() {
+            $sql = "SELECT COUNT(*) AS agendamentosHojeAdmin 
+                    FROM agendamentos_consultas
+                    WHERE dia_agendamento = CURDATE()
+                    AND status != 'cancelada'";
+
+            $query = $this->conn->query($sql);
+            return $query->fetch(PDO::FETCH_ASSOC);
+        }
+
         
         public function totalProfissionais(){
             $sql = "SELECT COUNT(*) AS totalProfissional FROM profissionais";

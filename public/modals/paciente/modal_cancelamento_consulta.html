@@ -1,26 +1,26 @@
 
-    <div id="modalCancelar" class="modalCancelarConsulta">
-    <div id="modal-content">
-        <span class="fechar-modal" id="fecharModalCancelar">&times;</span>
+<div id="modalCancelar" class="modalCancelarConsulta">
+<div id="modal-content">
+    <span class="fechar-modal" id="fecharModalCancelar">&times;</span>
 
-        <div id="modal-header">
-        <h2>Cancelar Agendamento</h2>
-        </div>
-
-        <p class="">Tem certeza que deseja cancelar este agendamento? Esta ação não poderá ser desfeita.</p>
-
-        <form action="../../../controllers/AgendamentoConsultaController.php?acao=cancelarConsulta" method="POST">
-        <input type="hidden" name="idAgendamento" id="idAgendamentoCancelar">
-
-        <div class="botoes-modal">
-            <button type="button" class="btn-secundario" id="cancelarFechar">Voltar</button>
-            <input type="submit"class="btn-primario" value="Confirmar Cancelamento">
-        </div>
-        </form>
-    </div>
+    <div id="modal-header">
+    <h2>Cancelar Agendamento</h2>
     </div>
 
-    <style>
+    <p class="">Tem certeza que deseja cancelar este agendamento? Esta ação não poderá ser desfeita.</p>
+
+    <form action="../../../controllers/AgendamentoConsultaController.php?acao=cancelarConsulta" method="POST">
+    <input type="hidden" name="idAgendamento" id="idAgendamentoCancelar">
+
+    <div class="botoes-modal">
+        <button type="button" class="btn-secundario" id="cancelarFechar">Voltar</button>
+        <input type="submit"class="btn-primario" value="Confirmar Cancelamento">
+    </div>
+    </form>
+</div>
+</div>
+
+<style>
     .modalCancelarConsulta {
     display: none;
     position: fixed;
@@ -110,8 +110,7 @@
     }   
     </style>
 
-    <script>
-
+<script>
     function abrirModalCancelar(botao) {
     const id = botao.getAttribute('data-id');
     document.getElementById('idAgendamentoCancelar').value = id;
@@ -133,7 +132,4 @@
         modal.style.display = 'none';
     }
     };
-
-
-
 </script>
