@@ -22,7 +22,6 @@
   </div>
 </div>
 
-<!-- FONT AWESOME -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
@@ -48,7 +47,6 @@
     to { opacity: 1; }
   }
 
-  /* Caixa do modal */
   .logout-modal-box {
     background: rgba(255, 255, 255, 0.97);
     backdrop-filter: blur(10px);

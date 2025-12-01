@@ -32,136 +32,135 @@
 
 
 <style>
-.btn-anexo {
-  display: inline-block;
-  background: #015997;
-  color: #fff;
-  text-decoration: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-weight: 600;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  transition: 0.2s;
-}
+  .btn-anexo {
+    display: inline-block;
+    background: #015997;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    transition: 0.2s;
+  }
 
-.btn-anexo:hover {
-  background: #013f73;
-}
+  .btn-anexo:hover {
+    background: #013f73;
+  }
 
-  .modal-lateral-consulta {
-  position: fixed;
-  top: 0;
-  right: -520px;
-  width: 460px;
-  height: 100%;
-  background: #fff;
-  box-shadow: -4px 0 15px rgba(0, 0, 0, 0.15);
-  transition: right 0.4s ease;
-  z-index: 999;
-  overflow-y: auto;
-  border-top-left-radius: 16px;
-  border-bottom-left-radius: 16px;
-  padding: 0;
-  font-family: "Inter", sans-serif;
-}
+    .modal-lateral-consulta {
+    position: fixed;
+    top: 0;
+    right: -520px;
+    width: 460px;
+    height: 100%;
+    background: #fff;
+    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.15);
+    transition: right 0.4s ease;
+    z-index: 999;
+    overflow-y: auto;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+    padding: 0;
+    font-family: "Inter", sans-serif;
+  }
 
-.modal-lateral-consulta.ativo {
-  right: 0;
-}
+  .modal-lateral-consulta.ativo {
+    right: 0;
+  }
 
-.modal-lateral-consulta .modal-header {
-  position: sticky;
-  top: 0;
-  background: #f7f9fc;
-  border-bottom: 1px solid #e3e8ee;
-  padding: 20px 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top-left-radius: 16px;
-}
+  .modal-lateral-consulta .modal-header {
+    position: sticky;
+    top: 0;
+    background: #f7f9fc;
+    border-bottom: 1px solid #e3e8ee;
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 16px;
+  }
 
-.modal-lateral-consulta .modal-header h2 {
-  font-size: 22px;
-  font-weight: 700;
-  color: #002E53;
-  margin: 0;
-}
+  .modal-lateral-consulta .modal-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #002E53;
+    margin: 0;
+  }
 
-.modal-lateral-consulta .modal-close {
-  font-size: 26px;
-  cursor: pointer;
-  border: none;
-  background: none;
-  color: #555;
-  transition: 0.2s;
-}
+  .modal-lateral-consulta .modal-close {
+    font-size: 26px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: #555;
+    transition: 0.2s;
+  }
 
-.modal-lateral-consulta .modal-close:hover {
-  color: #000;
-  transform: scale(1.1);
-}
+  .modal-lateral-consulta .modal-close:hover {
+    color: #000;
+    transform: scale(1.1);
+  }
 
-.modal-lateral-consulta .modal-body {
-  padding: 24px;
-}
+  .modal-lateral-consulta .modal-body {
+    padding: 24px;
+  }
 
-.modal-lateral-consulta .modal-section {
-  background: #f9fafc;
-  border: 1px solid #e3e8ee;
-  border-radius: 10px;
-  padding: 16px 20px;
-  margin-bottom: 18px;
-}
+  .modal-lateral-consulta .modal-section {
+    background: #f9fafc;
+    border: 1px solid #e3e8ee;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 18px;
+  }
 
-.modal-lateral-consulta .modal-section h3 {
-  font-size: 15px;
-  font-weight: 600;
-  color: #015997;
-  margin-bottom: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
+  .modal-lateral-consulta .modal-section h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #015997;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
 
-.modal-lateral-consulta .modal-section p {
-  font-size: 15.5px;
-  color: #333;
-  margin: 6px 0;
-}
+  .modal-lateral-consulta .modal-section p {
+    font-size: 15.5px;
+    color: #333;
+    margin: 6px 0;
+  }
 
-.modal-lateral-consulta .modal-section strong {
-  color: #002E53;
-  font-weight: 600;
-}
+  .modal-lateral-consulta .modal-section strong {
+    color: #002E53;
+    font-weight: 600;
+  }
 
-.modal-lateral-consulta .modal-observacoes {
-  background: #fff8e6;
-  border: 1px solid #ffe3a3;
-  border-radius: 10px;
-  padding: 16px 20px;
-  color: #5a4a00;
-  font-size: 15px;
-}
+  .modal-lateral-consulta .modal-observacoes {
+    background: #fff8e6;
+    border: 1px solid #ffe3a3;
+    border-radius: 10px;
+    padding: 16px 20px;
+    color: #5a4a00;
+    font-size: 15px;
+  }
 
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease;
-  z-index: 998;
-}
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    z-index: 998;
+  }
 
-.overlay.ativo {
-  opacity: 1;
-  visibility: visible;
-}
-
+  .overlay.ativo {
+    opacity: 1;
+    visibility: visible;
+  }
 </style>
 
 
@@ -209,24 +208,24 @@
     });
   });
 
-    function downloadBase64File(base64, filename, type) {
-        const link = document.createElement("a");
-        link.href = `data:${type};base64,${base64}`;
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        cument.body.removeChild(link);
-    }
+  function downloadBase64File(base64, filename, type) {
+      const link = document.createElement("a");
+      link.href = `data:${type};base64,${base64}`;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      cument.body.removeChild(link);
+  }
 
 
-    btnFechar.addEventListener("click", () => {
-        modal.classList.remove("ativo");
-        overlay.classList.remove("ativo");
-    });
+  btnFechar.addEventListener("click", () => {
+      modal.classList.remove("ativo");
+      overlay.classList.remove("ativo");
+  });
 
-    overlay.addEventListener("click", () => {
-        modal.classList.remove("ativo");
-        overlay.classList.remove("ativo");
-    });
-    });
+  overlay.addEventListener("click", () => {
+      modal.classList.remove("ativo");
+      overlay.classList.remove("ativo");
+  });
+  });
 </script>

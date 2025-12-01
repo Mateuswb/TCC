@@ -95,5 +95,4 @@
       modalAgendamento.style.display = 'none';
     }
   });
-
 </script>

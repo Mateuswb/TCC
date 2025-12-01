@@ -1,5 +1,4 @@
 <?php
-    
     $parts = explode('/', trim($_SERVER['SCRIPT_NAME'], '/'));
     $root = $parts[0]; 
     define("BASE_URL", "/$root");
@@ -21,8 +20,6 @@
     $currentFile = basename($_SERVER['PHP_SELF']); 
 ?>
 
-
- <!-- Fonte -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
 rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -118,7 +115,6 @@ rel="stylesheet">
     margin-bottom: 30px;
     font-size: 20px;
     text-align: center;
-    /* transition: 0.3s; */
     }
 
     .sidebar.collapsed h2 {
@@ -151,5 +147,4 @@ rel="stylesheet">
     background-color: #144FD2;
     color: #ffffffff;
     }
-
 </style>

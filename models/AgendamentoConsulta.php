@@ -230,7 +230,8 @@
                         ON hp.id_profissional = p.id_profissional
                     WHERE 
                         ac.id_paciente = :idPaciente
-                        AND ac.status = 'agendada'";
+                        AND ac.status = 'agendada'
+                    ORDER BY ac.dia_agendamento;";
             $query = $this->conn->prepare($sql);
             $query->execute([
                 'idPaciente'=> $idPaciente

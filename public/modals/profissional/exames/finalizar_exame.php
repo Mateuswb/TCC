@@ -18,121 +18,118 @@
   </div>
 </div>
 
-
-
 <style>
+  .btn-success {
+    background: #27ae60;
+    color: #fff;
+  }
 
-.btn-success {
-  background: #27ae60;
-  color: #fff;
-}
+  .btn-success:hover {
+    background: #1e8449;
+  }
 
-.btn-success:hover {
-  background: #1e8449;
-}
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: opacity 0.3s ease;
+  }
 
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  transition: opacity 0.3s ease;
-}
+  .modal-box {
+    background: #fff;
+    border-radius: 12px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    animation: slideDown 0.3s ease;
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+  }
 
-.modal-box {
-  background: #fff;
-  border-radius: 12px;
-  width: 400px;
-  max-width: 90%;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-  animation: slideDown 0.3s ease;
-  overflow: hidden;
-  font-family: 'Segoe UI', sans-serif;
-}
+  .modal-header {
+    padding: 20px;
+    background: #f8f8f8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+  }
 
-.modal-header {
-  padding: 20px;
-  background: #f8f8f8;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #eee;
-}
+  .modal-header h3 {
+    margin: 0;
+    font-size: 20px;
+    color: #333;
+  }
 
-.modal-header h3 {
-  margin: 0;
-  font-size: 20px;
-  color: #333;
-}
+  .close-btn {
+    cursor: pointer;
+    font-size: 24px;
+    color: #888;
+    transition: color 0.2s ease;
+  }
 
-.close-btn {
-  cursor: pointer;
-  font-size: 24px;
-  color: #888;
-  transition: color 0.2s ease;
-}
-
-.close-btn:hover {
-  color: #e74c3c;
-}
-
-
-.modalFinalizar-body {
-  padding: 20px;
-  font-size: 16px;
-  color: #444444ff;
-}
-
-.modalFinalizar-body #sub-mensage {
-  color: #3d3d3dff;
-}
+  .close-btn:hover {
+    color: #e74c3c;
+  }
 
 
-.modal-footer {
-  display: flex;
-  justify-content: flex-end;
-  padding: 15px 20px;
-  gap: 10px;
-  background: #f8f8f8;
-  border-top: 1px solid #eee;
-}
+  .modalFinalizar-body {
+    padding: 20px;
+    font-size: 16px;
+    color: #444444ff;
+  }
 
-.btn {
-  padding: 8px 16px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-  transition: all 0.2s ease;
-}
-
-.btn-secondary {
-  background: #aaaaaaff;
-  color: #fff;
-}
-
-.btn-secondary:hover {
-  background: #777777ff;
-}
-
-.btn-danger {
-  background: #e74c3c;
-  color: #fff;
-}
-
-.btn-danger:hover {
-  background: #c0392b;
-}
+  .modalFinalizar-body #sub-mensage {
+    color: #3d3d3dff;
+  }
 
 
-@keyframes slideDown {
-  from { transform: translateY(-20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 15px 20px;
+    gap: 10px;
+    background: #f8f8f8;
+    border-top: 1px solid #eee;
+  }
+
+  .btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+  }
+
+  .btn-secondary {
+    background: #aaaaaaff;
+    color: #fff;
+  }
+
+  .btn-secondary:hover {
+    background: #777777ff;
+  }
+
+  .btn-danger {
+    background: #e74c3c;
+    color: #fff;
+  }
+
+  .btn-danger:hover {
+    background: #c0392b;
+  }
+
+
+  @keyframes slideDown {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
 </style>

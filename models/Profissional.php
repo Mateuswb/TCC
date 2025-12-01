@@ -10,7 +10,7 @@ class Profissional {
         $nome, $cpf, $rg, $email, $dataNascimento, $telefone,
         $sexo, $estadoCivil, $crmCrp, $especialidade,
         $endereco, $numeroCasa, $bairro, $cidade, $observacoes
-    ) {
+        ) {
         $sql = "INSERT INTO profissionais (
                     nome, cpf, rg, email, data_nascimento, telefone, sexo, estado_civil, 
                     crm_crp, especialidade, endereco, numero_casa, bairro, cidade, observacoes

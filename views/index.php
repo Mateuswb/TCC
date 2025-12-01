@@ -826,7 +826,7 @@ footer {
 
 </main>
 
-<footer aria-label="Rodapé">
+<footer aria-label="Rodapé" id="sobre">
   <div class="container footer-inner" style="display:flex;align-items:center;justify-content:space-between;gap:12px">
     <div>
       <h4 style="color:rgba(255,255,255,0.95);margin-bottom:6px">Criadores</h4>

@@ -1,12 +1,12 @@
 <?php
     require_once dirname(__DIR__) . "/config/conexao.php";
-    require_once dirname(__DIR__) . "/controllers/UsuarioController.php";
     require_once dirname(__DIR__) . "/controllers/Email.php";
     require_once dirname(__DIR__) . "/models/Profissional.php";
     require_once dirname(__DIR__) . "/models/encaminhamento.php";
     require_once dirname(__DIR__) . "/models/AgendamentoConsulta.php";
     require_once dirname(__DIR__) . "/models/AgendamentoExame.php";
     require_once dirname(__DIR__) . "/models/Paciente.php";
+    require_once dirname(__DIR__) . "/models/Usuario.php";
     require_once dirname(__DIR__) . "/models/Exame.php";
     require_once dirname(__DIR__) . "/models/Relatorio.php";
 
@@ -17,6 +17,7 @@
         private $encaminhamentoModel;
         private $agendamentoConsultaModel;
         private $agendamentoExameModel;
+        private $usuarioModel;
         private $relatorioModel;
         private $emailController;
 
@@ -25,6 +26,7 @@
             $this->encaminhamentoModel = new encaminhamento($conn);
             $this->agendamentoConsultaModel = new AgendamentoConsulta($conn);
             $this->agendamentoExameModel = new AgendamentoExame($conn);
+            $this->usuarioModel = new Usuario($conn);
             $this->relatorioModel = new Relatorio($conn);
             $this->emailController = new Email();
         }
@@ -656,7 +658,7 @@
         }
 
         public function inativarContaProfissional() {
-            $idProfissional = $_POST['idProfissioanl'];
+            $idProfissional = $_POST['idProfissional'];
             $cpf            = $_POST['cpf'];
 
             session_start();

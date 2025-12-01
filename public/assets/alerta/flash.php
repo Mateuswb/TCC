@@ -48,8 +48,6 @@
         color: #665000ff;             
         border: 1px solid #ffeb3b;  
     }
-
-    
 </style>
 
 <script>

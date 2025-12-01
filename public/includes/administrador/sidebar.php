@@ -48,78 +48,79 @@
 </div>
 
 <style>
-  .sidebar {
-    width: 250px;
-    background: #062359ff;
-    color: #fff;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    padding: 20px;
-    overflow: hidden;
-}
+    .sidebar {
+        width: 250px;
+        background: #062359ff;
+        color: #fff;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding: 20px;
+        overflow: hidden;
+    }
 
-.sidebar a.logout {
-    position: absolute;
-    bottom: 40px;      
-    left: 20px;        
-    right: 20px;       
-    background: #e6000b;
-    color: #fff;
-    padding: 10px 15px;
+    .sidebar a.logout {
+        position: absolute;
+        bottom: 40px;      
+        left: 20px;        
+        right: 20px;       
+        background: #e6000b;
+        color: #fff;
+        padding: 10px 15px;
+        text-align: center;
+        border-radius: 5px;
+        text-decoration: none;
+        display: flex;
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .sidebar a.logout:hover {
+        background: #ac0009;
+    }
+
+    .sidebar.collapsed {
+    width: 80px;
+    }
+
+    .sidebar h2 {
+    margin-bottom: 30px;
+    font-size: 20px;
     text-align: center;
-    border-radius: 5px;
-    text-decoration: none;
+    transition: 0.3s;
+    }
+
+    .sidebar.collapsed h2 {
+    opacity: 0;
+    }
+    i{
+        margin-right: 5px;
+        font-size: 20px;
+    }
+
+    .sidebar a {
     display: flex;
     align-items: center;
-    justify-content: center;
-}
+    gap: 15px;
+    color: #f7fbff;
+    text-decoration: none;
+    padding: 17px 15px;
+    font-weight: 510;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    transition: 0.2s;
+    white-space: nowrap;
+    }
 
-.sidebar a.logout:hover {
-    background: #ac0009;
-}
+    .sidebar.collapsed a span {
+    display: none;
+    }
 
-.sidebar.collapsed {
-width: 80px;
-}
-
-.sidebar h2 {
-margin-bottom: 30px;
-font-size: 20px;
-text-align: center;
-transition: 0.3s;
-}
-
-.sidebar.collapsed h2 {
-opacity: 0;
-}
-i{
-    margin-right: 5px;
-    font-size: 20px;
-}
-
-.sidebar a {
-display: flex;
-align-items: center;
-gap: 15px;
-color: #f7fbff;
-text-decoration: none;
-padding: 17px 15px;
-font-weight: 510;
-border-radius: 8px;
-margin-bottom: 8px;
-transition: 0.2s;
-white-space: nowrap;
-}
-
-.sidebar.collapsed a span {
-display: none;
-}
-
-.sidebar a:hover,
-.sidebar  a.active {
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-}
+    .sidebar a:hover,
+    .sidebar  a.active {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+    }
 </style>

@@ -81,7 +81,7 @@
             $anexo = null;
 
             // Só salva anexo se for retorno
-           if ($tipoConsulta === "r" && !empty($_FILES['anexo']) && $_FILES['anexo']['error'] === UPLOAD_ERR_OK) {
+            if ($tipoConsulta === "r" && !empty($_FILES['anexo']) && $_FILES['anexo']['error'] === UPLOAD_ERR_OK) {
                 $ext = strtolower(pathinfo($_FILES['anexo']['name'], PATHINFO_EXTENSION));
                 $permitidas = ['pdf'];
                 if (!in_array($ext, $permitidas)) {

@@ -264,7 +264,6 @@
                                     ELSE null
                                 END)) = :idHorario and ae.dia_agendamento = :dataSelecionada
                         ORDER BY 1;
-
             ";
             $query2 = $this->conn->prepare($sql2);
             $query2->execute([
@@ -369,47 +368,47 @@
             ];
 
            $nomeExames = [
-            // Exames de sangue
-            "Hemograma"                 => "exame_hemograma",
-            "Colesterol"                => "exame_colesterol",
-            "Glicemia"                  => "exame_glicemia",
-            "Triglicerídeos"            => "exame_triglicerideos",
-            "Gemoglobina Glicada"       => "exame_hemoglobina_glicada",
+                // Exames de sangue
+                "Hemograma"                 => "exame_hemograma",
+                "Colesterol"                => "exame_colesterol",
+                "Glicemia"                  => "exame_glicemia",
+                "Triglicerídeos"            => "exame_triglicerideos",
+                "Gemoglobina Glicada"       => "exame_hemoglobina_glicada",
 
-            // Exames de imagem
-            "Raio-x"                    => "exame_raio_x",
-            "Ressonância Magnética"     => "exame_ressonancia_magnetica",
-            "Tomografia"                => "exame_tomografia",
-            "Ultrassonografia"          => "exame_ultrassonografia",
-            "Mamografia"                => "exame_mamografia",
-            "Densitometria óssea"       => "exame_densitometria_ossea",
+                // Exames de imagem
+                "Raio-x"                    => "exame_raio_x",
+                "Ressonância Magnética"     => "exame_ressonancia_magnetica",
+                "Tomografia"                => "exame_tomografia",
+                "Ultrassonografia"          => "exame_ultrassonografia",
+                "Mamografia"                => "exame_mamografia",
+                "Densitometria óssea"       => "exame_densitometria_ossea",
 
-            //  Exames cardiológicos
-            "Eletrocardiograma"         => "exame_eletrocardiograma",
-            "Ecocardiograma"            => "exame_ecocardiograma",
-            "Teste Ergométrico"         => "exame_teste_ergometrico",
+                //  Exames cardiológicos
+                "Eletrocardiograma"         => "exame_eletrocardiograma",
+                "Ecocardiograma"            => "exame_ecocardiograma",
+                "Teste Ergométrico"         => "exame_teste_ergometrico",
 
-            //  Exames de urina
-            "Urocultura"                => "exame_urocultura",
-            "Exame De Urina"            => "exame_exame_de_urina",
+                //  Exames de urina
+                "Urocultura"                => "exame_urocultura",
+                "Exame De Urina"            => "exame_exame_de_urina",
 
-            //  Exames hormonais
-            "Tsh"                       => "exame_tsh",
-            "Testosterona"              => "exame_testosterona",
-            "Estradiol"                 => "exame_estradiol",
-            "Cortisol"                  => "exame_cortisol",
-            "Progesterona"              => "exame_progesterona",
+                //  Exames hormonais
+                "Tsh"                       => "exame_tsh",
+                "Testosterona"              => "exame_testosterona",
+                "Estradiol"                 => "exame_estradiol",
+                "Cortisol"                  => "exame_cortisol",
+                "Progesterona"              => "exame_progesterona",
 
-            //  Exames infecciosos
-            "Hiv"                       => "exame_hiv",
-            "Hepatite B"                => "exame_hepatite_b",
-            "Hepatite C"                => "exame_hepatite_c",
-            "Sífilis"                   => "exame_sifilis",
+                //  Exames infecciosos
+                "Hiv"                       => "exame_hiv",
+                "Hepatite B"                => "exame_hepatite_b",
+                "Hepatite C"                => "exame_hepatite_c",
+                "Sífilis"                   => "exame_sifilis",
 
-            //  Exames respiratórios
-            "Espirometria"              => "exame_espirometria",
-            "Gasometria Arterial"       => "exame_gasometria_arterial"
-        ];
+                //  Exames respiratórios
+                "Espirometria"              => "exame_espirometria",
+                "Gasometria Arterial"       => "exame_gasometria_arterial"
+            ];
 
 
             $diaSemana = $nomeDias[date("l", strtotime($dataSelecionada))];
@@ -501,9 +500,7 @@
                                                     FROM profissionais 
                                                     WHERE JSON_CONTAINS(especialidade, JSON_QUOTE(:nomeExame)))
                             and ae.dia_agendamento = :dataSelecionada
-                        ORDER BY 1;
-
-            ";
+                        ORDER BY 1";
             $query2 = $this->conn->prepare($sql2);
             $query2->execute([
                 'nomeExame' => $nomeExames[$exame],

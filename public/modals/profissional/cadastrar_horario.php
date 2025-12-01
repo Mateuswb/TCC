@@ -57,15 +57,14 @@
 </div>
 
 <style>
-
-      :root {
-        --bg: #eef6ff;
-        --card: #ffffff;
-        --primary: #3b82f6;
-        --muted: #6b7280;
-        --green-400: #34d399;
-        --shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
-        --accent: #4f46e5;
+    :root {
+      --bg: #eef6ff;
+      --card: #ffffff;
+      --primary: #3b82f6;
+      --muted: #6b7280;
+      --green-400: #34d399;
+      --shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+      --accent: #4f46e5;
     }
 
     .page {
@@ -78,12 +77,12 @@
         margin-bottom: 18px;
     }
     .sheet-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 20px;
-  background-color: #fff;
-}
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 20px;
+      background-color: #fff;
+    }
 
 
     h1 {

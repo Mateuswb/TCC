@@ -3,16 +3,13 @@
     <i class="fas fa-bars"></i>
   </div>
 
-
   <div class="profile">
       <i class="fa-solid fa-user-tie"></i>
       <div><strong>Perfil Admin</strong><br><small>Administrador</small></div>
   </div>
 </header>
 
-
 <style>
-
   header {
     background-color: #fff;
     height: 60px;
@@ -38,17 +35,17 @@
   }
 
   .header input {
-  padding: 8px 12px;
-  border: none;
-  border-radius: 20px;
-  outline: none;
-  width: 200px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    width: 200px;
   }
 
   .profile {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
 
   .profile img {
@@ -58,9 +55,9 @@
   }
 
   .menu-btn {
-  cursor: pointer;
-  font-size: 20px;
-  margin-right: 15px;
+    cursor: pointer;
+    font-size: 20px;
+    margin-right: 15px;
   }
 
   .search-bar input {

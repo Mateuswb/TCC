@@ -1,8 +1,3 @@
-<!-- <?php
-  include $_SERVER['DOCUMENT_ROOT'] . '/'. $root. '/public/modals/logout.php';
-?> -->
-
-
 <header>
   <div class="menu-btn" id="menu-btn">
     <i class="fas fa-bars"></i>
@@ -20,7 +15,6 @@
     </div>
   </div>
 </header>
-
 
 <div class="profile-menu" id="profile-menu">
   <div id="profile-header">
@@ -47,147 +41,145 @@
 </div>
 
 <style>
+  header {
+    background-color: #fff;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    border-bottom: 1px solid #e0e0e0;
+    position: fixed;
+    top: 0;
+    left: 300px;
+    right: 0;
+    z-index: 10;
+  }
 
-header {
-  background-color: #fff;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  border-bottom: 1px solid #e0e0e0;
-  position: fixed;
-  top: 0;
-  left: 300px;
-  right: 0;
-  z-index: 10;
-}
+  .search-bar input {
+    width: 350px;
+    padding: 8px 12px;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 14px;
+  }
 
-.search-bar input {
-  width: 350px;
-  padding: 8px 12px;
-  border-radius: 25px;
-  border: 1px solid #ccc;
-  outline: none;
-  font-size: 14px;
-}
+  .user-info {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
 
-.user-info {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
+  .user-info span {
+    margin-right: 10px;
+    font-weight: 600;
+    color: #003366;
+  }
 
-.user-info span {
-  margin-right: 10px;
-  font-weight: 600;
-  color: #003366;
-}
-
-.user-info .avatar {
-  background-color: #003366;
-  color: #fff;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  border-radius: 50%;
-  font-weight: 600;
-}
+  .user-info .avatar {
+    background-color: #003366;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    border-radius: 50%;
+    font-weight: 600;
+  }
 
 
-.profile-menu {
-  position: absolute;
-  top: 75px;
-  right: 30px;
-  width: 330px;
-  background: #fdfdfd;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-  display: none;
-  font-family: "Poppins", sans-serif;
-  z-index: 20;
-  overflow: hidden;
-}
+  .profile-menu {
+    position: absolute;
+    top: 75px;
+    right: 30px;
+    width: 330px;
+    background: #fdfdfd;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    display: none;
+    font-family: "Poppins", sans-serif;
+    z-index: 20;
+    overflow: hidden;
+  }
 
-#profile-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #172b5aff;
-  color: #fff;
-  padding: 15px;
-  position: relative;
-}
+  #profile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #172b5aff;
+    color: #fff;
+    padding: 15px;
+    position: relative;
+  }
 
-.avatar-large {
-  width: 40px;
-  height: 40px;
-  background: #fff;
-  color: #003366;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  margin-right: 10px;
-}
+  .avatar-large {
+    width: 40px;
+    height: 40px;
+    background: #fff;
+    color: #003366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    margin-right: 10px;
+  }
 
-.profile-name {
-  flex: 1;
-  font-weight: 600;
-}
+  .profile-name {
+    flex: 1;
+    font-weight: 600;
+  }
 
-.close-menu {
-  cursor: pointer;
-  font-size: 18px;
-}
+  .close-menu {
+    cursor: pointer;
+    font-size: 18px;
+  }
 
-.profile-menu ul {
-  list-style: none;
-  margin: 0;
-  padding: 10;
-}
+  .profile-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 10;
+  }
 
-.profile-menu ul li {
-  padding: 18px 10px;
-  display: flex;
-  align-items: center;
-  font-size: 18px;
-  cursor: pointer;
-  color: #003366;
-}
+  .profile-menu ul li {
+    padding: 18px 10px;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    cursor: pointer;
+    color: #003366;
+  }
 
-.profile-menu ul li i {
-  margin-right: 10px;
-}
+  .profile-menu ul li i {
+    margin-right: 10px;
+  }
 
-.profile-menu ul li:hover {
-  background: #e6f0ff;
-  border-left: 4px solid #003366;
-}
-</style>
+  .profile-menu ul li:hover {
+    background: #e6f0ff;
+    border-left: 4px solid #003366;
+  }
+  </style>
 
 <script>
+  const profileBtn = document.getElementById('profile-btn');
+  const profileMenu = document.getElementById('profile-menu');
+  const closeMenu = document.getElementById('close-menu');
 
-const profileBtn = document.getElementById('profile-btn');
-const profileMenu = document.getElementById('profile-menu');
-const closeMenu = document.getElementById('close-menu');
+  profileBtn.addEventListener('click', () => {
+    profileMenu.style.display = profileMenu.style.display === 'block' ? 'none' : 'block';
+  });
 
-profileBtn.addEventListener('click', () => {
-  profileMenu.style.display = profileMenu.style.display === 'block' ? 'none' : 'block';
-});
+  document.addEventListener('click', function(event) {
+    if (!profileBtn.contains(event.target) && !profileMenu.contains(event.target)) {
+      profileMenu.style.display = 'none';
+    }
+  });
 
-document.addEventListener('click', function(event) {
-  if (!profileBtn.contains(event.target) && !profileMenu.contains(event.target)) {
+  closeMenu.addEventListener('click', () => {
     profileMenu.style.display = 'none';
-  }
-});
-
-closeMenu.addEventListener('click', () => {
-  profileMenu.style.display = 'none';
-});
+  });
 </script>

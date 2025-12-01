@@ -39,73 +39,71 @@
 </head>
 
 <style>
+  #overlay-fundo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(6px);
+    background-color: rgba(0,0,0,0.3); 
+    opacity: 0; 
+    visibility: hidden;
+    z-index: 900;
+    transition: opacity 0.4s ease, backdrop-filter 0.4s ease;
+  }
 
-#overlay-fundo {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  backdrop-filter: blur(6px);
-  background-color: rgba(0,0,0,0.3); 
-  opacity: 0; 
-  visibility: hidden;
-  z-index: 900;
-  transition: opacity 0.4s ease, backdrop-filter 0.4s ease;
-}
+  #overlay-fundo.ativo {
+    opacity: 1;
+    visibility: visible;
+  }
 
-#overlay-fundo.ativo {
-  opacity: 1;
-  visibility: visible;
-}
+  .card-profissional {
+    transition: transform 0.4s ease, width 0.4s ease, height 0.4s ease, box-shadow 0.4s ease;
+  }
 
-.card-profissional {
-  transition: transform 0.4s ease, width 0.4s ease, height 0.4s ease, box-shadow 0.4s ease;
-}
-
-.card-profissional.expandido {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(1.2);
-  width: 500px;
-  height: 550px;
-  z-index: 1000;
-  box-shadow: 0 20px 40px rgba(0,0,50,0.5);
-}
-
-
-.card-profissional.expandido .overlay-card {
-    
-  padding: 35px;
-}
+  .card-profissional.expandido {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.2);
+    width: 500px;
+    height: 550px;
+    z-index: 1000;
+    box-shadow: 0 20px 40px rgba(0,0,50,0.5);
+  }
 
 
-.info-extra {
-  display: none; 
-  margin-top: 15px;
-  font-size: 0.95rem;
-  color: #333;
-  text-align: justify;
-  line-height: 1.3;
-}
-
-.card-profissional.expandido .info-extra {
-  display: block;
-  animation: fadeIn 0.4s ease;
-}
-.info-extra strong {
-  color: #00236eff; 
-  font-weight: 650;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+  .card-profissional.expandido .overlay-card {
+      
+    padding: 35px;
+  }
 
 
+  .info-extra {
+    display: none; 
+    margin-top: 15px;
+    font-size: 0.95rem;
+    color: #333;
+    text-align: justify;
+    line-height: 1.3;
+  }
+
+  .card-profissional.expandido .info-extra {
+    display: block;
+    animation: fadeIn 0.4s ease;
+  }
+  .info-extra strong {
+    color: #00236eff; 
+    font-weight: 650;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 </style>
+
 <body>
     
     <main class="conteudo-principal">

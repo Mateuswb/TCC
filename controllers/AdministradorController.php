@@ -33,7 +33,6 @@
             $this->exameModel = new Exame($conn);
             $this->encaminhamentoModel = new Encaminhamento($conn);
             $this->usuarioController = new UsuarioController($conn);
-            $this->usuarioController = new UsuarioController($conn);
             $this->emailController = new Email();
         }
 
