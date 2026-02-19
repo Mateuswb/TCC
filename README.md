@@ -1,47 +1,73 @@
-SISTEMA PARA GESTÃO MÉDICA: MEDHUB
-1. Descrição do Sistema
+# 🏥 MEDHUB — Sistema para Gestão Médica
 
-O MEDHUB é um sistema web desenvolvido para o gerenciamento de consultas e exames em clínicas privadas de saúde.
+## 📖 Descrição
 
-A plataforma permite o agendamento, controle e acompanhamento de atendimentos médicos, proporcionando maior organização, eficiência operacional e melhoria na experiência de pacientes, profissionais de saúde e administradores.
+O **MEDHUB** é um sistema web desenvolvido para o gerenciamento de consultas e exames em clínicas privadas de saúde.
 
-O sistema foi projetado com foco em usabilidade, segurança da informação e organização estrutural baseada no padrão arquitetural MVC (Model-View-Controller).
+A plataforma permite realizar o agendamento, controle e acompanhamento de atendimentos médicos, oferecendo maior organização administrativa e melhor experiência para pacientes, profissionais de saúde e administradores.
 
-2. Tecnologias e Bibliotecas Utilizadas
+O projeto foi estruturado com base no padrão arquitetural **MVC (Model-View-Controller)**, visando organização do código, facilidade de manutenção e escalabilidade.
 
-O desenvolvimento do sistema utilizou tecnologias voltadas ao desenvolvimento web backend e frontend, garantindo desempenho, interatividade e organização do código.
+---
 
-Bibliotecas externas
+## 🛠️ Tecnologias Utilizadas
 
-Chart.js v4.5.0
-Biblioteca JavaScript utilizada para a geração de gráficos dinâmicos, permitindo a visualização de indicadores de desempenho, estatísticas de atendimentos e relatórios administrativos.
+* **PHP** — Backend e regras de negócio
+* **MySQL** — Banco de dados
+* **HTML5** — Estrutura das páginas
+* **CSS3** — Estilização da interface
+* **JavaScript** — Interatividade do sistema
 
-FullCalendar v6.1.19
-Biblioteca JavaScript responsável pela criação de calendários interativos para agendamento de consultas e visualização de compromissos médicos.
+---
 
-3. Estrutura do Projeto
+## 📚 Bibliotecas Externas
 
-O sistema foi organizado seguindo uma arquitetura baseada no padrão MVC, visando separação de responsabilidades e melhor manutenção do código.
+* **Chart.js (v4.5.0)**
+  Utilizada para geração de gráficos estatísticos e indicadores de desempenho do sistema.
 
-/controllers
-/models
-/views
-/libs
-📁 controllers/
+* **FullCalendar (v6.1.19)**
+  Responsável pela criação do calendário interativo para agendamento e visualização das consultas.
 
-Contém os arquivos PHP responsáveis pelo controle da lógica da aplicação.
-Gerenciam requisições, regras de negócio e comunicação entre Models e Views.
+---
 
-📁 models/
+## 🧱 Estrutura do Projeto
 
-Arquivos PHP responsáveis pela manipulação e acesso aos dados no banco de dados.
-Implementam consultas, inserções, atualizações e exclusões de registros utilizando PDO.
+O sistema foi organizado seguindo o padrão MVC:
 
-📁 views/
+```
+MEDHUB/
+│
+├── controllers/   → Controlam a lógica da aplicação e recebem as requisições
+├── models/        → Realizam acesso e manipulação dos dados no banco
+├── views/         → Telas e interface do sistema (HTML, CSS, JS e PHP)
+└── libs/          → Bibliotecas externas utilizadas pelo sistema
+```
 
-Arquivos responsáveis pela interface do sistema.
-Incluem HTML, CSS, JavaScript e trechos de PHP para renderização dinâmica de informações.
+### 📁 controllers/
 
-📁 libs/
+Arquivos PHP responsáveis por processar as requisições do usuário, aplicar regras de negócio e intermediar a comunicação entre as *views* e os *models*.
 
-Contém as bibliotecas externas utilizadas no projeto, como ferramentas para gráficos e calendários interativos.
+### 📁 models/
+
+Responsáveis pela comunicação com o banco de dados, realizando operações de inserção, consulta, atualização e exclusão de informações.
+
+### 📁 views/
+
+Contém a interface do sistema. Inclui páginas HTML, folhas de estilo (CSS), scripts JavaScript e trechos PHP para renderização dinâmica.
+
+### 📁 libs/
+
+Armazena as bibliotecas externas utilizadas pelo sistema, como o calendário de agendamentos e os gráficos estatísticos.
+
+---
+
+## 🎯 Objetivo do Sistema
+
+O objetivo do MEDHUB é reduzir problemas comuns em clínicas, como:
+
+* Longo tempo de espera
+* Dificuldade no controle de agendas
+* Falta de organização nos atendimentos
+* Ausência de acompanhamento histórico do paciente
+
+O sistema centraliza as informações e automatiza processos administrativos, auxiliando na gestão clínica e no atendimento ao paciente.
