@@ -12,7 +12,7 @@ O projeto foi estruturado com base no padrão arquitetural **MVC (Model-View-Con
 
 ## 🛠️ Tecnologias Utilizadas
 
-* **PHP** — Backend e regras de negócio
+* **PHP** e **Python** — Backend e regras de negócio
 * **MySQL** — Banco de dados
 * **HTML5** — Estrutura das páginas
 * **CSS3** — Estilização da interface
